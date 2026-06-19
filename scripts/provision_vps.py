@@ -183,17 +183,21 @@ users:
 
 # Two-stage boot: install on first boot, finalize + webhook on second boot
 runcmd:
-  - echo "=== SAOS Provisioning Started ===" > /var/log/saos-provision.log
-  - date >> /var/log/saos-provision.log
+  # Use /var/lib/cloud/instance/ for log persistence across reboots
+  - |
+    SAOS_LOG="/var/lib/cloud/instance/saas-provision.log"
+    echo "=== SAOS Provisioning Started ===" > "$SAOS_LOG"
+    date >> "$SAOS_LOG"
+    export SAOS_LOG
   
   # ── Stage detection ─────────────────────────────────────────────────
   - |
     FIRST_BOOT="/var/lib/cloud/instance/saos-first-boot-done"
     if [ -f "$FIRST_BOOT" ]; then
-      echo "=== Second boot detected — finalizing services ===" >> /var/log/saos-provision.log
+      echo "=== Second boot detected — finalizing services ===" >> "$SAOS_LOG"
       IS_SECOND_BOOT=true
     else
-      echo "=== First boot detected — installing dependencies ===" >> /var/log/saos-provision.log
+      echo "=== First boot detected — installing dependencies ===" >> "$SAOS_LOG"
       touch "$FIRST_BOOT"
       IS_SECOND_BOOT=false
     fi
@@ -205,8 +209,8 @@ runcmd:
       # Block until network is actually usable (30 retries x 5s = 150s max)
       for i in $(seq 1 30); do
         curl -fsSL --connect-timeout 3 https://tailscale.com >/dev/null 2>&1 && \
-          echo "Network ready on attempt $i" >> /var/log/saos-provision.log && break
-        echo "Network not ready, retry $i/30..." >> /var/log/saos-provision.log
+          echo "Network ready on attempt $i" >> "$SAOS_LOG" && break
+        echo "Network not ready, retry $i/30..." >> "$SAOS_LOG"
         sleep 5
       done
     fi
@@ -215,7 +219,7 @@ runcmd:
   - |
     if [ "$IS_SECOND_BOOT" != "true" ]; then
       curl -fsSL https://tailscale.com/install.sh | sh
-      tailscale up --authkey {tailscale_auth_key} --hostname saos-{client_id} --advertise-tags tag:saos-client >> /var/log/saos-provision.log 2>&1
+      tailscale up --authkey {tailscale_auth_key} --hostname saos-{client_id} --advertise-tags tag:saos-client >> "$SAOS_LOG" 2>&1
     fi
   
   # Install Ollama + enable service
@@ -224,14 +228,26 @@ runcmd:
       curl -fsSL https://ollama.com/install.sh | sh
       systemctl enable ollama
       # Don't pull model yet — group fix + reboot needed first
-      echo "Ollama installed, model pull deferred to second boot" >> /var/log/saos-provision.log
+      echo "Ollama installed, model pull deferred to second boot" >> "$SAOS_LOG"
     fi
   
   # Install OpenClaw
   - |
     if [ "$IS_SECOND_BOOT" != "true" ]; then
-      mkdir -p /opt/openclaw && cd /opt/openclaw
-      curl -fsSL https://get.openclaw.ai | bash >> /var/log/saos-provision.log 2>&1 || echo "OpenClaw install failed - manual required" >> /var/log/saos-provision.log
+      # Retry OpenClaw install with exponential backoff
+      for attempt in 1 2 3; do
+        mkdir -p /opt/openclaw && cd /opt/openclaw
+        curl -fsSL --connect-timeout 10 --max-time 60 https://get.openclaw.ai | bash >> "$SAOS_LOG" 2>&1
+        if [ $? -eq 0 ]; then
+          echo "OpenClaw installed on attempt $attempt" >> "$SAOS_LOG"
+          break
+        fi
+        echo "OpenClaw install attempt $attempt failed, retrying in ${{attempt}}0s..." >> "$SAOS_LOG"
+        sleep ${{attempt}}0
+      done
+      if [ ! -d /opt/openclaw/bin ]; then
+        echo "OpenClaw install failed after 3 attempts - manual required" >> "$SAOS_LOG"
+      fi
     fi
   
   # Configure firewall
@@ -257,7 +273,7 @@ runcmd:
       systemctl start saos-docker-group-fix
       
       # Pull model now that groups are settled — background so boot isn't blocked
-      sudo -u systack -H ollama pull qwen2.5:7b >> /var/log/saos-provision.log 2>&1 &
+      sudo -u systack -H ollama pull qwen2.5:7b >> "$SAOS_LOG" 2>&1 &
       MODEL_PID=$!
       
       # Start n8n (if installed via OpenClaw or separately)
@@ -284,18 +300,18 @@ runcmd:
           -H "Content-Type: application/json" \
           -d "{{\"client_id\":\"{client_id}\",\"vps_ip\":\"$VPS_IP\",\"tailscale_ip\":\"$TAILSCALE_IP\",\"status\":\"ready\",\"timestamp\":\"$(date -Iseconds)\",\"boot_stage\":\"second\"}}" \
           && break
-        echo "Webhook attempt $i/5 failed, retrying in 10s..." >> /var/log/saos-provision.log
+        echo "Webhook attempt $i/5 failed, retrying in 10s..." >> "$SAOS_LOG"
         sleep 10
       done
       
-      echo "=== SAOS Provisioning Complete ===" >> /var/log/saos-provision.log
-      date >> /var/log/saos-provision.log
+      echo "=== SAOS Provisioning Complete ===" >> "$SAOS_LOG"
+      date >> "$SAOS_LOG"
     fi
   
   # ── Stage 1 exit: schedule reboot ─────────────────────────────────
   - |
     if [ "$IS_SECOND_BOOT" != "true" ]; then
-      echo "First boot complete — scheduling reboot in 60s" >> /var/log/saos-provision.log
+      echo "First boot complete — scheduling reboot in 60s" >> "$SAOS_LOG"
       (sleep 60 && reboot) &
     fi
 
