@@ -251,17 +251,7 @@ runcmd:
   # ── Stage 2: Finalize services (second boot only) ──────────────────
   - |
     if [ "$IS_SECOND_BOOT" = "true" ]; then
-      # Fix Docker group membership — systemd one-shot for persistence
-      cat <<'EOF' > /etc/systemd/system/saos-docker-group-fix.service
-[Unit]
-Description=SAOS Docker Group Fix
-After=docker.service
-Requires=docker.service
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/sg docker -c "docker ps"
-RemainAfterExit=yes
-EOF
+      # Fix Docker group membership — write file via cloud-init write_files instead of heredoc
       systemctl daemon-reload
       systemctl enable saos-docker-group-fix
       systemctl start saos-docker-group-fix
@@ -309,17 +299,19 @@ EOF
       (sleep 60 && reboot) &
     fi
 
-# Write status file for health checks
 write_files:
-  - path: /etc/saos-provision-status.json
+  - path: /etc/systemd/system/saos-docker-group-fix.service
     content: |
-      {{
-        "client_id": "{client_id}",
-        "tier": "{tier}",
-        "agent_name": "{agent_name}",
-        "provisioned_at": "$(date -Iseconds)",
-        "status": "in_progress"
-      }}
+      [Unit]
+      Description=SAOS Docker Group Fix
+      After=docker.service
+      Requires=docker.service
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/sg docker -c "docker ps"
+      RemainAfterExit=yes
+      [Install]
+      WantedBy=multi-user.target
     owner: root:root
     permissions: '0644'
 """
