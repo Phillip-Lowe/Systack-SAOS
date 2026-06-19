@@ -294,7 +294,7 @@ runcmd:
       
       # Signal completion via webhook with retry
       for i in $(seq 1 5); do
-        curl -fsSL -X POST "https://n8n.systack.net/webhook/saas-vps-ready" \
+        curl -fsSL -X POST "https://n8n.systack.net/webhook/saos-provision" \
           -H "Content-Type: application/json" \
           -d "{{\"client_id\":\"{client_id}\",\"vps_ip\":\"$VPS_IP\",\"tailscale_ip\":\"$TAILSCALE_IP\",\"status\":\"ready\",\"timestamp\":\"$(date -Iseconds)\",\"boot_stage\":\"second\"}}" \
           && break
