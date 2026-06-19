@@ -315,7 +315,7 @@ write_files:
       
       # Signal completion via webhook with retry
       for i in 1 2 3 4 5; do
-        curl -fsSL -X POST "https://n8n.systack.net/webhook/saos-provision" \
+        curl -fsSL -X POST "https://n8n.systack.net/webhook/saos-vps-ready" \
           -H "Content-Type: application/json" \
           -d "{{\"client_id\":\"$CLIENT_ID\",\"vps_ip\":\"$VPS_IP\",\"tailscale_ip\":\"$TAILSCALE_IP\",\"status\":\"ready\",\"timestamp\":\"$(date -Iseconds)\",\"boot_stage\":\"second\"}}" \
           && break
