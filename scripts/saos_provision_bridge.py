@@ -122,6 +122,7 @@ def provision_from_task(task):
 def run_once():
     task = poll_pending_tasks()
     if not task:
+        print('[BRIDGE] No pending tasks — idle')
         return False
     
     print(f"[BRIDGE] Found task {task['id']}, retry={task['retry_count']}/{task['max_retries']}")
