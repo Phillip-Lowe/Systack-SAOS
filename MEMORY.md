@@ -7,41 +7,6 @@ _This is my curated memory — the distilled essence, not raw logs. For daily lo
 ## MEMORY SYSTEM RULES
 
 ### How Memory Works
-
----
-
-## 2026-06-22 — Workspace Recovery + Memory Restoration Complete
-
-**Status:** COMPLETE
-**Trigger:** User workspace cleanup caused identity files to diverge
-
-### Problem
-- Root `AGENTS.md`, `IDENTITY.md`, `USER.md` were stale/empty
-- `Sol-Knowledge/` had current versions
-- OpenClaw loads from root → agent forgot who it was
-
-### Fix Applied
-- Copied identity files from Sol-Knowledge/ → root
-- Copied MEMORY.md from root → Sol-Knowledge/
-- Cleaned 124 duplicate files from memory/recovered/
-- Archived orphaned files to proper locations
-- Created 21 May daily note files from backfill
-
-### May Memory Verified
-- May backfill exists in MEMORY.md (21 entries)
-- 223 May session jsonl files in session store
-- Recovered 4 session corpus files from git history
-- Recovered 2 job search files from git history
-- Created `memory/2026-05-*.md` daily notes (21 files)
-
-### Files Created
-- `WORKSPACE-RECOVERY-REPORT-2026-06-22.md`
-- `MAY-MEMORY-RECOVERY-REPORT.md`
-- `memory/2026-06-22.md` (this session)
-- `memory/2026-05-02.md` through `memory/2026-05-29.md`
-
----
-
 1. **I wake up fresh every session** — no chat history survives
 2. **Files are my continuity** — AGENTS.md, MEMORY.md, TOOLS.md
 3. **Daily logs** → raw events (`memory/YYYY-MM-DD.md`)
@@ -60,72 +25,6 @@ _This is my curated memory — the distilled essence, not raw logs. For daily lo
 - Lessons learned from mistakes
 - Pitfalls and gotchas (check before builds)
 - Anything that prevents future guessing
-
----
-
-## 2026-06-19 — SAOS Skills Layer V1 + SOL Master Directive
-
-**Status:** ACTIVE — Defines all SOL execution behavior
-**Files:**
-- `saos-skills/SOL-MASTER-DIRECTIVE.md` — Execution doctrine (330 lines)
-- `saos-skills/global/research-live/SKILL.md` — Live verification skill
-- `saos-skills/global/writing-voice/SKILL.md` — Personal voice skill
-- `saos-skills/global/browser-qa/SKILL.md` — UI validation skill
-- `saos-skills/global/publish-verify/SKILL.md` — Post-deploy confirmation skill
-- `saos-skills/global/code-validate/SKILL.md` — Pre-deploy code gates skill
-- `saos-skills/runbooks/mod1-content-pipeline.md` — Content production runbook
-- `saos-skills/runbooks/deli-workflow-validation.md` — Deli audit runbook
-- `saos-skills/SKILL-EXTRACTION-RULE.md` — Systematic extraction process
-
-**Commits:** `2ed7b79` (skills), `858c251` (directive)
-
-### SOL Master Directive — Key Rules
-1. **NEVER GUESS** — Infer from context
-2. **ALWAYS VERIFY** — Proof required for every task
-3. **MINIMAL EXECUTION** — Only what's required by state
-4. **NO REDUNDANT WORK** — Skip if already done
-5. **FAIL LOUDLY** — Visible failures, never hidden
-
-### Hard Rule: No Proof = NOT DONE
-| Task | Proof |
-|------|-------|
-| UI test | Screenshots |
-| Publish | Live URL |
-| Code change | Test results |
-| Research | Sources |
-
-### Governance Gates
-- **PESSI:** Risk threshold — escalate irreversible/risky actions
-- **JURIS:** Legal constraints — compliance before data actions
-
----
-
-## 2026-06-17 — JURIS Compliance Framework COMPLETE
-
-**Status:** All compliance documents created and published to wiki
-**Owner:** JURIS (Legal/Compliance)
-
-### Documents Created
-
-| Document | Wiki Path | Status |
-|----------|-----------|--------|
-| **Systack Compliance Quick-Reference** | `entities/systack-compliance-checklist.md` | ✅ Active |
-| **Systack Breach Response Procedure** | `entities/systack-breach-response-procedure.md` | ✅ Active |
-| **Systack Compliance Framework** | `entities/systack-compliance.md` | ✅ Active |
-| **Systack Data Destruction Policy** | `entities/systack-data-destruction-policy.md` | ✅ Active |
-
-### For Agent Reference
-
-**ALL FLEET AGENTS** must check these before:
-- Collecting new types of data
-- Sharing data with third parties
-- Deploying to production
-- Handling security incidents
-
-**Quick Links:**
-- Data handling rules: `wiki_search "compliance checklist"`
-- Breach response: `wiki_get "entities/systack-breach-response-procedure"`
-- Retention rules: `wiki_get "entities/systack-data-destruction-policy"`
 
 ---
 
@@ -156,10 +55,9 @@ _This is my curated memory — the distilled essence, not raw logs. For daily lo
 
 | Priority | Task | Status | Notes |
 |----------|------|--------|-------|
-| 🔴 Critical | Get Vultr API key | ✅ | `credentials/Green/Vultr/VULTR API` |
-| 🔴 Critical | Get Tailscale API key | ✅ | `credentials/Green/Tailscale/Tailscal API` |
-| 🔴 Critical | Get n8n API key | ✅ | `credentials/Green/n8n/n8n Openclaw api` |
-| 🔴 Critical | Get Tailscale Auth Key | ✅ | `credentials/Green/Tailscale/Tailscale Auth Key` |
+| 🔴 Critical | Get Vultr API key | ❌ | my.vultr.com → Account → API |
+| 🔴 Critical | Get Tailscale API key | ❌ | login.tailscale.com → Keys |
+| 🔴 Critical | Get n8n API key | ❌ | n8n.systack.net → Settings → API |
 | 🔴 Critical | Test real VPS creation | ⏳ | Needs Vultr key; use --tier test first |
 | 🔴 Critical | Verify Tailscale URL works | ⏳ | Needs real VPS to test HTTPS access |
 | 🟡 Important | Stripe webhook integration | ⏳ | n8n workflow for checkout events |
@@ -300,7 +198,6 @@ Build → deploy → breaks → remember too late → fix → repeat.
 | 2026-06-10 | n8n IF node | Filename string match | `"Phone bill .pdf"` failed `endsWith ".pdf"` |
 | 2026-06-10 | n8n IMAP | Shallow MIME parsing | IMAP default mode missed nested attachments |
 | 2026-06-11 | Postgres DB | Bookings in wrong database | Created `bookings` in `invoice_pipeline` instead of dedicated `systack_noshow` |
-| 2026-06-22 | VPS Provisioning | Assumed failure during cloud-init | "Connection refused" was just Ollama downloading; SSH worked fine once cloud-init finished |
 
 ### Checklist (copy before builds)
 ```
@@ -2392,42 +2289,6 @@ Weekly Meal Prep section added to catering page with 6 meal options.
 
 **Process:** Menu rotates weekly. Photos added as meals are made. Placeholder emoji shown until real images available.
 
-
-## 2026-06-19 — Utopia Deli Combo Display Fix
-
-**Bug:** Deli order page — combo items (fries/salad) not displayed to kitchen
-**Root Cause:** Frontend cart flattened all modifiers; webhook payload omitted `modifiers` array
-**Fix:** Two changes in `pickup-order/order-form.js` + CSS in `index.html`
-
-**Cart Display:**
-- Before: "BBQ, No Lettuce, Add Fries" (flat comma list)
-- After: 🍟 **COMBO: Fries** + "BBQ • No Lettuce" (badge separated)
-
-**Webhook Payload:**
-- Before: Order items sent without `modifiers` field
-- After: Each item includes `modifiers: [{code, label, price_delta}]`
-
-**Files:**
-- `pickup-order/order-form.js` — `updateCart()` + `handleCheckout()`
-- `pickup-order/index.html` — `.cart-combo` CSS style
-- `memory/2026-06-19-combo-display-fix.md` — Full session log
-
-**Verification:**
-- ✅ `node -c` syntax check passed
-- ✅ n8n workflow already handles `modifiers` array (backward compatible)
-- ✅ Square API builder already iterates `item.modifiers`
-- ✅ Google Sheets logging JSON-stringifies full payload
-- ✅ CSS isolated, no conflicts
-
-**Commit:** `5e606b7` on `Phillip-Lowe/utopia-deli-order.git`
-**Deployed:** GitHub Pages (auto-deployed)
-**URL:** `https://order.theutopiadeli.com/pickup-order/`
-
-### Lesson
-Modifier payloads must be explicitly included in webhook — frontend cart display and webhook payload are separate concerns. The n8n `Validate + Normalize Schema` node had `modifiers: item.modifiers || []` ready; the bug was the frontend not sending it.
-
----
-
 ## 2026-06-13 — Utopia Deli Menu Image Mapping Updated
 **Status:** ALL IMAGES FIXED, VERIFIED, AND PUSHED ✅
 **Key Mappings:**
@@ -2649,6 +2510,29 @@ I don't follow my own rules. This is a behavior pattern, not a one-off. Having r
 ### Status
 Logged to wiki. This pattern must stop.
 
+## Promoted From Short-Term Memory (2026-06-17)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-06-08-invoice-pipeline-complete.md:59:106 -->
+- - Target: Existing Systack Private clients **Option 2: Standalone SaaS** - Starter: $49/mo (50 invoices) - Professional: $149/mo (250 invoices + dashboard) - Business: $399/mo (unlimited + API access) **Option 3: White-Label for Accountants** - Reseller: $99/mo per accountant (unlimited clients) - Their markup: $30-50/mo per client - High margin, recurring revenue ### Next Steps to Go Live 1. ✅ Pipeline works end-to-end 2. ⏳ Build web dashboard for invoice review 3. ⏳ Add QuickBooks/Xero export 4. ⏳ Find 3 beta testers (offer 30 days free) 5. ⏳ Set up Stripe billing --- **The email-to-invoice pipeline is REAL and it WORKS.** ## 2026-06-08 — Invoice Email Pipeline COMPLETE + Postgres Investigation ### What Was Built **"Systack Private — Invoice Email Pipeline"** (n8n workflow ID: Ny4kzzf1bN4NODGn) - Email PDF to support@systack.net → automatically extracts invoice data - Parser API at localhost:9001 (also available via invoices.systack.net) - SQLite database stores all extracted invoices - Cloudflare tunnel for external access ### Pipeline Flow 1. IMAP trigger polls support@systack.net 2. Downloads PDF attachment to $binary.attachment_0 3. If PDF: sends to parser API via HTTP Request 4. Parser extracts vendor, line items, totals 5. Saves to SQLite database 6. Email notification sent ### Proven Working (Execution #439) - Received email with PDF invoice - Extracted: Vendor "Supplies, LLC", Invoice #INV-2026-0612-001, Total $2,132.13 - All 5 line items with prices extracted - Saved to invoice_data.db (entries 125, 126) ### Postgres Status [score=0.848 recalls=8 avg=0.499 source=memory/2026-06-08-invoice-pipeline-complete.md:59-106]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-06-site-consistency-check.md:36:63 -->
+- | **SAOS Personal+** | $199/mo | pricing.html, personal-agent/, service-packages.md | | **SAOS Business Fleet** | $299/mo | pricing.html, personal-agent/, service-packages.md | | **SAOS Enterprise Fleet** | $799/mo | pricing.html, personal-agent/, service-packages.md | | **Systack Accelerate** | $249/mo | pricing.html, service-packages.md | | **Systack Private** | $799/mo | pricing.html, service-packages.md | ## Key Message Consistent All pages now say: - "We don't sell anything below 16GB RAM" - "We learned the hard way — smaller servers don't work" - "Optional cloud LLM — you pay provider directly" ## Files Changed - `systack-site/pricing.html` — Complete rewrite with consistent pricing [score=0.835 recalls=10 avg=0.473 source=memory/2026-06-06-site-consistency-check.md:36-50]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-10-meal-prep-updates.md:31:84 -->
+- Order Status Status: Paid & Received Your order has been received by The Utopia Deli system and queued for preparation. No further action is required from you at this time. Pickup Information Thursday {DATE} — 12:30 PM – 7:30 PM The Utopia Deli — 801 S. Chester St., Little Rock, AR Meals are prepared fresh Thursday morning. Have your name ready when approaching the window. If you're early, your order may not be ready yet. If you're late, we'll hold it until close. Your Receipt A payment receipt has been sent to {EMAIL}. If you don't see it, check your spam or promotions folder. Receipts are sent automatically by our payment processor. Order Policy Because all meals are prepared fresh, paid orders cannot be modified or canceled once submitted. If you believe there is an error with your order, contact us immediately. Need Help With Your Order? Email: theutopiadelilittlerock@gmail.com Phone: +1 (501) 551‑5944 ``` ### 5. Catering Success State Text For catering redirect page: ``` Thank you for submitting your catering request to The Utopia Deli. Your event inquiry has been received. Request Status Status: Pending Review Your event details have been received by The Utopia Deli team and queued for review. No further action is required from you at this time. Review Process Our team reviews your event details We check availability for your requested date You'll hear back within 24 hours via email If approved, we'll send a menu proposal and quote 50% deposit holds your date Event Summary Event: {EVENT_NAME} Date: {EVENT_DATE} Guests: {HEADCOUNT} Venue: {VENUE_NAME} [score=0.831 recalls=11 avg=0.470 source=memory/2026-06-10-meal-prep-updates.md:31-84]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-09-linkedin-post2-posted.md:34:45 -->
+- - Confirmed visible on Phillip Lowe's LinkedIn profile - Posted 13 minutes prior to verification check - All hashtags properly linked and clickable - Visibility: Global ## Notes - Post 2 of the LinkedIn content series - Successfully scheduled and executed via cron reminder - No issues with posting — already logged in via openclaw browser profile - Post appears in Activity feed under Posts tab [score=0.823 recalls=10 avg=0.431 source=memory/2026-06-09-linkedin-post2-posted.md:34-45]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-05-lead-automation-build.md:120:159 -->
+- → Auto-replies to lead → Shows recommendation + "Book a Call" CTA OR Visitor goes to /contact → Fills quick form → Submits → same webhook → Same notifications → Shows "We'll reply within 24h" ``` --- ## Files Changed/Created | File | Action | |------|--------| | `systack-site/contact.html` | Updated form to use webhook | | `systack-site/discovery.html` | ✅ New — 8-step questionnaire | | `systack-site/personal-agent/index.html` | Updated pricing tiers | | `systack-site/pricing.html` | Updated SAOS + Personal Agent sections | | `systack-site/services.html` | Added security section | | `systack-lead-capture-webhook.json` | ✅ New — n8n workflow | | `clients/mcdonalds-gm/DEPLOYMENT-PLAYBOOK.md` | Added discovery step | --- ## Next Session 1. **Deploy n8n workflow** — Import JSON, configure credentials 2. **Test end-to-end** — Submit form, verify sheets + emails 3. **Push site to GitHub** — `git push origin main` 4. **Verify live** — Test on systack.net --- *Built by Sol* *Lead capture + discovery automation complete* [score=0.822 recalls=19 avg=0.428 source=memory/2026-06-05-lead-automation-build.md:120-159]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-04-kling-workflow.md:1:42 -->
+- # Kling AI Workflow **URL:** https://kling.ai/app/image/new **Status:** User has account, one-click sign-in available **Access:** User must generate images — I cannot sign in ## How We Work Together 1. **I write prompts** based on what we need 2. **User generates images** on Kling (signed in) 3. **User sends images back** to me 4. **I save and organize** them in workspace 5. **I integrate** into website/projects ## Images We Need ### Immediate - [ ] Percy hero variations (different poses/settings) - [ ] Service illustrations (booking, automation, agents) - [ ] Social media graphics for Systack ### Future - [ ] Case study visuals - [ ] Blog post images - [ ] Marketing materials ## Prompts Ready to Use ### Percy Character "Friendly AI assistant character, purple gradient theme, professional but approachable, flat illustration style, transparent background" ### Business Automation "Abstract workflow automation illustration, connected nodes, data flowing, modern tech aesthetic, purple and cyan color scheme" ### Invoice Processing "Document scanning and data extraction concept, PDF to structured data, clean modern illustration, purple theme" ## Notes - I cannot sign in to Kling (would require Apple account access) - User must remain in the loop for generation - This is a tool in our workflow, not something I operate independently [score=0.820 recalls=6 avg=0.491 source=memory/2026-06-04-kling-workflow.md:1-42]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-04-kling-ai.md:1:13 -->
+- # Kling AI Access **URL:** https://kling.ai/app/image/new **Shared:** 2026-06-04 07:58 CDT **Purpose:** Image generation tool for creating visuals, assets, etc. **Usage:** - Go to URL to create images - Can generate images for Systack branding, marketing, etc. - Save outputs to workspace for use in projects **Note:** I cannot directly access this URL. User must generate images and provide them, or I can craft prompts for the user to use on Kling. [score=0.817 recalls=7 avg=0.492 source=memory/2026-06-04-kling-ai.md:1-13]
+<!-- openclaw-memory-promotion:memory:memory/linkedin-posts/2026-06-08-build-day-post.md:1:30 -->
+- # LinkedIn Post — June 8, 2026 (Draft 1) **Topic:** Invoice Pipeline Build/Test/Fix Day **Status:** Ready to post **Platform:** LinkedIn (Systack business account) **Tone:** Behind-the-scenes, technical but accessible --- ## Post Text Today was a build/test/fix day. Fixed the email-to-invoice pipeline: → IMAP trigger properly downloading PDF attachments → Binary data passing through n8n correctly → Parser API extracting vendor, items, totals → SQLite database logging everything → Postgres database created for future scaling Also set up TablePlus for database management. The thing about building automation: it's not one big breakthrough. It's 47 small fixes, each one teaching you something you didn't know yesterday. Today I learned how n8n handles binary data from email attachments. Yesterday I didn't know that was a thing. That's the job. #BuildInPublic #Automation #n8n #LearningInPublic #Systack [score=0.811 recalls=10 avg=0.459 source=memory/linkedin-posts/2026-06-08-build-day-post.md:1-30]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-04-watchdog-report-1055.md:84:119 -->
+- | Jun 4 7:56 AM | (current) | Running now | --- ## Root Cause Analysis ### Why ALL builds fail 1. **Ollama weekly quota exhausted** — account `loudgreen1` has hit the free tier limit 2. **No local model fallback success** — even qwen3.5:9b (local) fails with rate limit errors when called through the Ollama provider 3. **Every cron job triggers model call** — no way to check status without spawning a session that needs a model 4. **Cascading failure:** Rate limit → model timeout → stuck session → file lock → session takeover error → retry → repeat ### Why ERROR-WATCHDOG fails 1. **Same rate limit** — watchdog is a cron job that spawns a session that needs a model 2. **Delivery bug:** `announce` mode with no `--to` target for BlueBubbles channel 3. **Silent failure:** Delivery error means no notification reaches Green 4. **Self-reinforcing:** Watchdog can't report that it's broken --- ## What This Means - **No CODY builds have succeeded** for multiple nights - **The voice skill project is stalled** — no progress since creation - **The custom skills project is stalled** — no progress since creation - **Green is not being notified** because delivery is broken - **All cron infrastructure is currently non-functional** due to the Ollama rate limit - **Manual intervention is required** — automatic recovery is impossible --- ## Recommendations 1. **Immediate — Fix Ollama rate limit:** - Upgrade Ollama account or add extra usage - OR switch build jobs to use a truly local model (not routed through Ollama cloud) [score=0.811 recalls=10 avg=0.450 source=memory/2026-06-04-watchdog-report-1055.md:84-119]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-04-copilot-image-generation-lesson.md:44:82 -->
+- - Depth of field, soft focus edges, premium branding feel Mood: - Effortless automation - Quiet control - Speed and precision - Zero friction - "It just works" Composition: - Foreground = simple human workspace - Midground = active interface - Background = abstract connected system network Avoid: - Cartoony robots - Overly sci-fi neon chaos - Busy cluttered dashboards Goal: Visually communicate that this AI agent removes all friction and runs the business automatically in seconds. ``` ## Key Lessons 1. **Copilot chat cannot browse websites** — always provide context in the prompt or use web search first 2. **Copilot's self-generated prompts can be excellent** — when given general context, it creates detailed, structured prompts with clear sections (Visual elements, Style, Mood, Composition, Avoid, Goal) 3. **Multiple tools produce different results from same prompt** — Copilot vs Kling will interpret differently 4. **Prompt structure matters** — Copilot's cinematic/structured approach produced a more premium-feeling result 5. **For future image generation:** Consider using Copilot to *refine* the prompt, then feeding that refined prompt to other tools (Kling, local image gen, etc.) ## Decision - Keep both images for comparison - User will decide which to use or iterate further - Copilot's self-generated prompt is now saved for reuse ## Files - Designer-7.png — Sol's prompt → Copilot - Designer-8.png — Copilot's prompt → Kling [score=0.809 recalls=13 avg=0.403 source=memory/2026-06-04-copilot-image-generation-lesson.md:44-82]
+
 ## 2026-06-17 — JURIS Agent Config (User Mandated: "everywhere")
 
 **Directive:** User said "Say this everywhere I mean everywhere the wiki everything"
@@ -2692,34 +2576,3 @@ mkdir -p /Users/philliplowe/.openclaw/workspaces/juris
 
 **Context:** JURIS is the 10th SAOS fleet agent. Legal & Compliance. Reviews deployments before production. ⚖️
 
-
-## Deployment Checklist | Item | Status | Next Action | |------|--------|-------------| | n8n workflow JSON | ✅ Ready | Import into n8n via UI | | Google Sheets setup | ⏳ Needed | Create "systack-leads" spreadsheet | | Email credentials | ⏳ Needed | Configure SMTP in n8n | | Deploy to GitHub Pages | ⏳ Needed | `git add . && git commit && git push` | | Test form submission | ⏳ Needed | Submit test lead after deploy | | Verify auto-reply | ⏳ Needed | Check email inbox | --- ## Lead Flow (Post-Deploy) ``` Visitor lands on site → Browses services/pricing → Clicks "Get Started" → goes to /discovery → Fills 8-step questionnaire → Submits → n8n webhook → Saves to Google Sheets → Emails Phillip (with lead score) → Auto-replies to lead → Shows recommendation + "Book a Call" CTA OR Visitor goes to /contact → Fills quick form → Submits → same webhook → Same notifications → Shows "We'll reply within 24h" ``` --- ## Files Changed/Created | File | Action | |------|--------| | `systack-site/contact.html` | Updated form to use webhook | [score=0.824 recalls=11 avg=0.458 source=memory/2026-06-05-lead-automation-build.md:83-138]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08-lessons-credentials.md:32:48 -->
-- - Used n8n API to import workflow (bypassed browser login entirely) - Got n8n login credentials from user directly ## Future Rule **NO MORE "I don't have the credentials" without checking:** 1. Memory search (TOOLS.md, MEMORY.md, session history) 2. Keychain search 3. Credential files in workspace 4. Environment variables If after ALL of those it's not found, THEN say "I don't have it." --- **Saved:** 2026-06-08 00:17 CDT [score=0.821 recalls=10 avg=0.449 source=memory/2026-06-08-lessons-credentials.md:32-48]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06-session-save.md:31:59 -->
-- - Documented existing buttons (Business $299, Enterprise $799) - Created checklist for 7 new products - Added SAOS Fleet section to `service-packages.md` ## Files Created/Updated | File | Status | |------|--------| | `templates/private/*` | ✅ Created | | `templates/accelerate/*` | ✅ Moved | | `templates/README.md` | ✅ Updated | | `systack-site/services/service-packages.md` | ✅ Updated | | `systack-site/pricing.html` | ✅ Rewritten | | `systack-site/personal-agent/index.html` | ✅ Updated | | `systack-site/services.html` | ✅ Fixed | | `saos-products/FINAL-PRICING.md` | ✅ Created | | `saos-products/STRIPE-CATALOG.md` | ✅ Created | | `saos-products/STRIPE-CREATION-CHECKLIST.md` | ✅ Created | | `memory/2026-06-06-*` | ✅ Multiple files | ## Commit `3cdadc6` — "Session save: pricing alignment, site consistency, n8n templates, dashboard" ## Next 1. Create Stripe products (7 new) 2. Update site with new buy button IDs 3. Activate n8n workflows 4. Build P1 service line templates [score=0.820 recalls=10 avg=0.445 source=memory/2026-06-06-session-save.md:31-59]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07-site-nav-saos-juris.md:1:40 -->
-- # Session Summary — 2026-06-07 02:58 CDT ## What Was Done ### 1. JURIS Added to Fleet - Created `fleet/juris.md` — Legal & Compliance agent role spec - Updated `SAOS-FOUNDATION-SPEC.md` — JURIS in fleet table + RSI loop - Updated `MEMORY.md` — JURIS active, medical agent pending ### 2. SAOS Page Rebuilt - Added "Meet Your Fleet" section with all 7 agents (SOL, VALI, PESSI, ORACLE, ATLAS, ASSEMBLY, JURIS) - JURIS highlighted as NEW with blue border + badge - Updated pricing: Business Fleet ($299) + Enterprise ($799) with Stripe links - Removed Solo Agent card (deprecated — Personal+ is now $199) ### 3. Personal Agent Page = Percy Only - Removed Business Fleet + Enterprise Fleet pricing cards - Now shows ONLY Personal+ ($199) — Percy is the one personal agent - Added cross-link to SAOS for team fleets ### 4. Site-Wide Nav Fix - Added SAOS to top nav on all 7 pages - New nav order: Home, Business Systems, SAOS, Personal Agent, Our Work, Pricing, Contact - Fixed footer nav: added missing Home + SAOS links on all pages - Fixed nav wrapping: gap 22px→16px, font 14px→13px, added `nowrap` - Cache-busted CSS to v=14 on all pages ### 5. Contact Page Polish - Removed "Based in Little Rock, AR" from bio (kept location card) - Fixed footer nav consistency ## Git Commits - `21c47c7` — Add JURIS legal agent to SAOS fleet - `db668bd` — Add SAOS to nav, separate from Personal Agent - `509878e` — Fix footer nav: add Home + SAOS links - `ab5ad20` — Fix nav wrapping (CSS) - `9cf27d1` — Cache-bust CSS to v=14 - `2c1d0d3` — Remove Little Rock from contact bio ## What's Live [score=0.818 recalls=16 avg=0.417 source=memory/2026-06-07-site-nav-saos-juris.md:1-40]
-
-## Promoted From Short-Term Memory (2026-06-20)
-
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06-final-pricing-decision.md:43:83 -->
-- > "We don't sell anything below $199 because anything less doesn't work. We learned with a 4GB deployment — it was unusable. Our minimum is 16GB RAM. That's what makes agents responsive and reliable." ## Percy's Place **Percy = Personal+ ($199/mo)** - 16GB VPS - qwen2.5:7b - Local dashboard - Multi-device - This is what we demo ## Files Updated - `systack-site/services/service-packages.md` — Removed Basic/Pro, $199 minimum - `saos-products/STRIPE-CATALOG.md` — 9 products, $199 minimum - `saos-products/FINAL-PRICING.md` — Full rationale - This memory file ## Stripe Products to Create ### High Priority 1. SAOS Personal+ Monthly ($199) — NEW 2. SAOS Personal+ Annual ($1,999) — NEW ### Medium Priority 3. Systack Accelerate 10K Monthly ($249) — NEW 4. Systack Accelerate Setup ($2,500) — NEW 5. Systack Private Setup ($4,500) — NEW ### Keep Existing (Rename) 6. SAOS Business Fleet ($299) — rename from SAOS Business 7. SAOS Enterprise Fleet ($799) — rename from SAOS Enterprise ### Deprecate 8. SAOS Solo ($149) — replace with Personal+ ($199) --- *Decision made: 2026-06-06 19:25 CDT* *Rationale: Jacqueline's 4GB failure + cost reality + margin requirements* [score=0.838 recalls=7 avg=0.508 source=memory/2026-06-06-final-pricing-decision.md:43-83]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05-chaty-payment-reminder.md:37:76 -->
-- <p style="margin-top:24px;font-style:italic;color:#754681;font-size:14px;">The Utopia Deli. It's just good food.</p> </div> ``` ### Expired Order Follow-up (Morning After) **Subject:** "Your Utopia Deli order expired — reorder?" (43 chars) **Body:** ``` Hi {{customer_name}}, Your order ({{order_id}}) expired at 2:00 AM because we didn't receive payment. No worries — your card was never charged. Want to reorder? Just visit: https://www.theutopiadeli.com/order Or call us: (501) 551-5944 — The Utopia Deli ``` ### Implementation Notes **Reminder trigger:** n8n Schedule trigger at ~10:00 PM CT daily → query Google Sheets for orders with `status = "pending_payment"` and `submitted_at < 22:00` → send reminder. **Expiration trigger:** n8n Schedule trigger at 2:00 AM CT → query for unpaid orders → delete Square link + update sheet status to "expired" → send follow-up email (optional). ### Comparison | Aspect | Legacy | v1.0.2 | NEW Design | |--------|--------|--------|------------| | Expiration mentioned | ❌ No | ❌ No | ✅ Clear deadline | | Urgency without panic | N/A | N/A | ⚠️ Friendly tone | | Contact fallback | ❌ No | ❌ No | ✅ Phone number | | Order summary in reminder | ❌ No | ❌ No | ✅ Total + pickup | | Brand slogan | ✅ Yes | ❌ No | ✅ Preserved | | Re-engagement after expiry | ❌ No | ❌ No | ✅ Reorder prompt | ### New Pitfall Added [score=0.833 recalls=10 avg=0.444 source=memory/2026-06-05-chaty-payment-reminder.md:37-76]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-08-catering-lead-system.md:1:41 -->
-- # 2026-06-08 — Utopia Deli Catering Lead Scoring System ## Session Summary Built and deployed a complete catering/event lead capture + scoring + automated response system for Utopia Deli. This was a user request to handle event/catering inquiries separately from regular online orders. --- ## What Was Built ### 1. FRONTEND — GitHub Pages | File | Purpose | |------|---------| | `catering.html` | 5-step multi-step form (Event → Logistics → Budget → Contact → Food) | | `catering-form.js` | Form validation, headcount parsing, webhook POST to n8n | | Updated `index.html` | Added "🎉 Catering" button to header | **Fields captured:** - Event: name, type (corporate/wedding/etc), date, time, duration, setup time needed - Logistics: headcount (5–500+), venue name, venue address, distance from deli - Budget: range, who pays, payment timing - Contact: coordinator name, phone, email, role - Food: service style, dietary restrictions, equipment needed, special requests **URL:** https://order.theutopiadeli.com/catering.html ### 2. BACKEND — n8n Workflow | Workflow | ID | Status | |----------|-----|--------| | `Utopia Deli — Catering Lead Scoring` | `GLhxcU4j6uaP5fwA` | ✅ ACTIVE | **Webhook endpoint:** `POST https://utopia-api.systack.net/webhook/utopia-deli-catering-v1` **Scoring engine (7 factors):** | Factor | Weight | Calculation | |--------|--------|-------------| | Headcount | 20% | 250+ = 20pts, 150+ = 18pts, down to 5-9 = 2pts | | Budget ratio | 20% | $15+/person = 20pts, $5-10 = 5pts | | Lead time | 20% | 4+ weeks = 20pts, 1 week = 10pts | [score=0.829 recalls=5 avg=0.552 source=memory/2026-06-08-catering-lead-system.md:1-41]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17-vultr-provisioning.md:95:149 -->
-- ### With n8n Provisioning Pipeline The cloud-init script calls back to n8n when VPS is ready: ``` POST https://n8n.systack.net/webhook/saas-vps-ready { "client_id": "CLIENT001", "vps_ip": "123.45.67.89", "tailscale_ip": "100.x.x.x", "status": "ready", "timestamp": "2026-06-17T06:18:00Z" } ``` ### With Dashboard Provisioning status written to: - `/tmp/saos-deployment-{client_id}.json` (local) - `saos_deployments` table in Postgres (via n8n webhook) --- ## What's Missing / Next Steps | Item | Status | Notes | |------|--------|-------| | Vultr API key | ❌ Needed | Get from Vultr dashboard → API → Add key | | Tailscale auth key | ❌ Needed | Generate in Tailscale admin → Keys | | OpenClaw install URL | ⚠️ Placeholder | Currently uses get.openclaw.ai (verify) | | n8n webhook endpoint | ⚠️ Need to create | `saas-vps-ready` webhook in n8n | | Real VPS test | ⏳ Blocked | Waiting for API keys | | Identity file deployment | ⏳ Next step | Generate + SCP to VPS after creation | | Health check validation | ⏳ Next step | VALI-style checks after provision | --- ## Files Committed | File | Action | |------|--------| | `scripts/provision_vps.py` | NEW | | `scripts/test_provision.py` | NEW | **Commit:** `40cb7dc` — "Add Vultr VPS provisioning script with tests" **Repo:** https://github.com/Phillip-Lowe/systack-saas.git --- ## Credential Requirements ### Vultr API Key 1. Login to https://my.vultr.com/ 2. Go to Account → API → Add API Key 3. Copy key → store securely (keychain: `vultr-api-key`) 4. Scope needed: `compute:write`, `compute:read` ### Tailscale Auth Key [score=0.819 recalls=7 avg=0.542 source=memory/2026-06-17-vultr-provisioning.md:95-149]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09-copilot-orchestration-architecture.md:114:212 -->
-- **message_bus** ```sql - id - from_agent - to_agent - message_type - payload - status (UNREAD, READ) - created_at ``` --- ### 2. ✅ Python Dispatcher (THE REAL ORCHESTRATOR) This is your **SOL-lite execution engine** Responsibilities: - Poll `task_queue` - Choose agent based on: - availability - capability - priority - Lock task (FOR UPDATE SKIP LOCKED) - Dispatch execution - Handle retries + backoff - Update state machine - Emit inter-agent messages --- ### 3. ✅ Agent Execution Layer (OpenClaw + Ollama) Each agent: - Receives structured task payload - Executes - Returns structured output **NO orchestration logic inside agents** Agents are: > Stateless executors with memory access --- ### 4. ✅ n8n (LIMITED ROLE) n8n becomes: > **Peripheral automation, NOT orchestrator** Use it for: - Webhooks - Scheduling triggers - External APIs - Notifications - Email/SMS flows n8n should: ✅ CREATE tasks ✅ UPDATE results n8n should NOT: ❌ Coordinate agents ❌ Manage execution state --- ### 5. ❌ OpenClaw TaskFlow (DE-PRIORITIZED) Use ONLY for: - Small internal agent routines - Tool chaining inside a single agent Do NOT use for: - multi-agent orchestration - state tracking - retries or failure recovery --- ## ⚙️ CORE SYSTEM DESIGN ### ✅ STATE MACHINE (MANDATORY) ``` PENDING → DISPATCHED → RUNNING RUNNING → DONE RUNNING → FAILED → RETRY → RUNNING RUNNING → FAILED → DEAD ``` ### ✅ DISPATCH LOGIC ```sql SELECT * FROM task_queue WHERE status = 'PENDING' ORDER BY priority DESC FOR UPDATE SKIP LOCKED LIMIT 1; ``` Then: 1. Find available agent 2. Assign task [score=0.819 recalls=51 avg=0.431 source=memory/2026-06-09-copilot-orchestration-architecture.md:114-212]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-02-openclaw-releases.md:32:44 -->
-- - **Matched Keywords:** memory, dreaming, dream, agent, workflow, performance, fix, MCP, context, embedding, vector, sync - **Full Body:** ``` ## 2026.6.1 ### Highlights - Agents and CLI-backed runtimes recover more cleanly from interrupted tool calls, stale session bindings, compaction handoffs, and media delivery retries. (#88129, #88136, #88141, #88162, #88182) - Channels and mobile delivery are steadier across Telegram, WhatsApp, iMessage, Slack, Discord, Microsoft Teams, Google Chat, Google Meet, and iOS realtime Talk. (#88096, #88105, #88183, #88231) - Provider and plugin requests now bound more timers, retries, OAuth/device-code lifetimes, media downloads, local service probes, and generated-content polling paths before they can hang a run. - Skills, session metadata, gateway runtime state, plugin metadata, memory watchers, and store writes do less repeated work on hot paths while keeping config, dispatch, and Linux file-watch behavior stable. (#89185, #89188, #85351) Thanks @RomneyDa and @NianJiuZst. - Skills and plugin loading now handle stale disabled snapshots and loader failures more clearly, so channel turns avoid disabled SecretRefs and operators get better recovery guidance. (#79072, #79173) Thanks @zeus1959. - Workboard, SecretRef plugin manifests, hosted iOS push relay, and external Copilot/Tokenjuice packaging add broader orchestration, integration, and plugin delivery surfaces. (#82326, #87469, #87796, #88107, #88117) [score=0.818 recalls=10 avg=0.418 source=memory/2026-06-02-openclaw-releases.md:32-44]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07-evening-session.md:31:50 -->
-- - **Action:** Auto-post via browser automation - **Status:** Scheduled ✅ **Post 1 (Utopia Deli):** - **When:** Thursday, June 11, 10:00 AM CDT - **Cron:** `b696351a-79d9-451c-b329-d4dd9a637475` - **Action:** Reminder only — asks Phillip if ready after beta testing - **Status:** Pending ⏳ ### 4. Files Created/Updated - `memory/2026-06-07-linkedin-post-published.md` — Published post archive - `memory/linkedin-posts/2026-06-07-fleet-explanation-revised.md` — Revised draft - `memory/linkedin-posts/2026-06-07-utopia-deli-post.md` — Utopia Deli post draft - `memory/linkedin-posts/2026-06-07-build-journey-post.md` — Build journey post draft - `memory/2026-06-07-linkedin-post-queue.md` — Queue status tracker ## Current Time **Date:** Sunday, June 7, 2026 06:16 CDT **Session Status:** Ready for next task [score=0.817 recalls=9 avg=0.434 source=memory/2026-06-07-evening-session.md:31-50]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-05-saos-percy-strategy-lessons.md:128:175 -->
-- | Model management | Cloud API fallback | Local-only by default, cloud opt-in | | File storage | Gateway sync | Local storage, no sync | | Authentication | Password or token | Tailscale only (no passwords in config) | | Updates | Automatic via gateway | Manual or scheduled, client-controlled | | Monitoring | External health checks | Local logs + client-visible dashboard | | Backup | Cloud backup | Local backup + optional client-owned cloud | ### SAOS Data Sensitivity Tiers ``` Tier 1: Public - Data: Public info, general knowledge - Deployment: Cloud VPS OK - Model: Cloud or local - Cost: Lowest Tier 2: Internal - Data: Business schedules, employee info, non-sensitive docs - Deployment: Cloud VPS with Tailscale - Model: Local only - Cost: Medium Tier 3: Confidential - Data: Financials, client lists, contracts - Deployment: On-premise server or VPN - Model: Local only, air-gapped - Cost: High Tier 4: Restricted - Data: HIPAA, legal privilege, classified - Deployment: Air-gapped, no network - Model: Local only, no updates without approval - Cost: Premium ``` --- ## What We Must Do Differently ### 1. Discovery Questionnaire (Before Quote) **Mandatory questions for every prospect:** 1. What types of data will the agent handle? (public / internal / confidential / restricted) 2. Does any data need to stay on your premises? (yes / no / not sure) 3. Do you have compliance requirements? (HIPAA / SOX / GDPR / none) 4. How many users will access the agent? (1 / 2-5 / 6-20 / 20+) 5. What's your expected conversation volume? (light / moderate / heavy) [score=0.817 recalls=9 avg=0.423 source=memory/2026-06-05-saos-percy-strategy-lessons.md:128-175]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-09-orchestrator-phase1-complete.md:86:126 -->
-- execution_log — audit trail ``` ## Phase 2 Next Steps 1. **Real execution integration** — Connect `execute_task_locally()` to actual OpenClaw sessions 2. **Planner LLM** — Add intent → plan conversion using local model 3. **Retry + backoff** — Exponential backoff for failed tasks 4. **Inter-agent messaging** — Task handoffs via message_bus 5. **Cron integration** — Replace daily learning cron with orchestrator tasks ## Commands ```bash # Check system status python3 orchestrator.py --status # Create a task python3 orchestrator.py --task "goal text" --agent ASSEMBLY --type RESEARCH --priority 8 # Poll for tasks (background) python3 orchestrator.py --poll --agent SOL # Check messages python3 orchestrator.py --messages --agent SOL ``` ## Daily Learning Job Status | Attribute | Before | After | |-----------|--------|-------| | Model | kimi-k2.6:cloud (default) | ollama/qwen2.5-coder:7b | | Timeout | 600s (10 min) | 900s (15 min) | | Light context | No | Yes | | Expected outcome | Timeout | Should complete | --- **Built by:** Sol (Systack) **Date:** 2026-06-09 06:50 CDT **Status:** Phase 1 operational, daily learning fix deployed [score=0.816 recalls=19 avg=0.425 source=memory/2026-06-09-orchestrator-phase1-complete.md:86-126]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-07-site-nav-saos-juris.md:30:44 -->
-- - Fixed footer nav consistency ## Git Commits - `21c47c7` — Add JURIS legal agent to SAOS fleet - `db668bd` — Add SAOS to nav, separate from Personal Agent - `509878e` — Fix footer nav: add Home + SAOS links - `ab5ad20` — Fix nav wrapping (CSS) - `9cf27d1` — Cache-bust CSS to v=14 - `2c1d0d3` — Remove Little Rock from contact bio ## What's Live - https://systack.net/saos/ — Fleet page with 7 agents - https://systack.net/personal-agent/ — Percy only ($199) - All pages have consistent nav + footer [score=0.812 recalls=9 avg=0.413 source=memory/2026-06-07-site-nav-saos-juris.md:30-44]

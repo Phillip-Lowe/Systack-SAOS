@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>net.systack.saos-provision-bridge</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/Cellar/python@3.14/3.14.4_1/bin/python3.14</string>
+        <string>/tmp/systack-saas-init/scripts/saos_provision_bridge.py</string>
+        <string>--interval</string>
+        <string>30</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>5</integer>
+    <key>StandardOutPath</key>
+    <string>/tmp/systack-saas-init/logs/saos-bridge.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/systack-saas-init/logs/saos-bridge.error.log</string>
+    <key>WorkingDirectory</key>
+    <string>/tmp/systack-saas-init</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/Users/philliplowe/.local/bin</string>
+        <key>PYTHONUNBUFFERED</key>
+        <string>1</string>
+        <key>SAOS_DB_HOST</key>
+        <string>localhost</string>
+        <key>SAOS_DB_PORT</key>
+        <string>5432</string>
+        <key>SAOS_DB_NAME</key>
+        <string>systack_memory</string>
+        <key>SAOS_DB_USER</key>
+        <string>systack</string>
+        <key>SAOS_DB_PASS</key>
+        <string>Systack2026!CRM</string>
+        <key>PYTHONPATH</key>
+        <string>/tmp/systack-saas-init/scripts</string>
+    </dict>
+</dict>
+</plist>

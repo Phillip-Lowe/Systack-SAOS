@@ -1,0 +1,297 @@
+<!-- SAOS Enterprise Pre-Payment Onboarding Form -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Onboarding — SyStack</title>
+    <style>
+        :root {
+            --navy: #001a2d;
+            --teal: #007da9;
+            --cyan: #00a1db;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-200: #e2e8f0;
+            --gray-600: #475569;
+            --gray-800: #1e293b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .form-container {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+        .brand {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .brand h1 {
+            color: var(--navy);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .brand p {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            color: var(--gray-800);
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--cyan);
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .checkbox-item:hover {
+            background: var(--gray-50);
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--cyan);
+        }
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+        }
+        .pricing-summary {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .pricing-summary h3 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .price-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--navy);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
+        }
+        .required {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="brand">
+            <h1>SAOS Enterprise Fleet</h1>
+            <p>Complete the form below to configure your infrastructure.</p>
+        </div>
+
+        <form id="enterpriseForm" action="https://buy.stripe.com/9B6fZafZL0FN7oIff887K0e" method="GET">
+            <!-- Hidden fields passed to Stripe -->
+            <input type="hidden" name="client_reference_id" id="client_reference_id" value="">
+
+            <div class="form-group">
+                <label for="businessName">Business Name <span class="required">*</span></label>
+                <input type="text" id="businessName" name="business_name" required
+                       placeholder="Acme Corporation">
+            </div>
+
+            <div class="form-group">
+                <label for="contactEmail">Contact Email <span class="required">*</span></label>
+                <input type="email" id="contactEmail" name="email" required
+                       placeholder="admin@acme.com">
+            </div>
+
+            <div class="form-group">
+                <label for="primaryRegion">Primary Region <span class="required">*</span></label>
+                <select id="primaryRegion" name="primary_region" required>
+                    <option value="" disabled selected>Select primary region...</option>
+                    <option value="ord">Chicago (US) — SOC2, GDPR</option>
+                    <option value="lax">Los Angeles (US) — SOC2, CCPA</option>
+                    <option value="lon">London (UK) — GDPR, UK-GDPR</option>
+                    <option value="ams">Amsterdam (NL) — GDPR</option>
+                    <option value="fra">Frankfurt (DE) — GDPR, BSI</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Additional Locations</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="loc-ord" name="locations" value="ord">
+                        <label for="loc-ord">Chicago</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="loc-lax" name="locations" value="lax">
+                        <label for="loc-lax">Los Angeles</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="loc-lon" name="locations" value="lon">
+                        <label for="loc-lon">London</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="loc-ams" name="locations" value="ams">
+                        <label for="loc-ams">Amsterdam</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="loc-fra" name="locations" value="fra">
+                        <label for="loc-fra">Frankfurt</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Compliance Requirements <span class="required">*</span></label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="comp-soc2" name="compliance" value="SOC2" checked>
+                        <label for="comp-soc2">SOC 2</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="comp-hipaa" name="compliance" value="HIPAA">
+                        <label for="comp-hipaa">HIPAA</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="comp-gdpr" name="compliance" value="GDPR">
+                        <label for="comp-gdpr">GDPR</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="comp-ccpa" name="compliance" value="CCPA">
+                        <label for="comp-ccpa">CCPA</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="industry">Industry (for agent tuning)</label>
+                <select id="industry" name="industry">
+                    <option value="" selected>General / Other</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="finance">Finance / Banking</option>
+                    <option value="retail">Retail / E-commerce</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="technology">Technology / SaaS</option>
+                    <option value="legal">Legal / Compliance</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="brandColor">Brand Color (optional)</label>
+                <input type="text" id="brandColor" name="brand_color"
+                       placeholder="#1a365d" pattern="^#[0-9A-Fa-f]{6}$">
+            </div>
+
+            <div class="pricing-summary">
+                <h3>What's Included</h3>
+                <div class="price-row">
+                    <span>8 vCPU / 32GB RAM</span>
+                    <span>✓</span>
+                </div>
+                <div class="price-row">
+                    <span>Up to 5 locations</span>
+                    <span>✓</span>
+                </div>
+                <div class="price-row">
+                    <span>SOC2/HIPAA/GDPR compliance docs</span>
+                    <span>✓</span>
+                </div>
+                <div class="price-row">
+                    <span>White-label dashboard</span>
+                    <span>✓</span>
+                </div>
+                <div class="price-row">
+                    <span>Total</span>
+                    <span>$799/mo</span>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Proceed to Payment →</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('enterpriseForm').addEventListener('submit', function(e) {
+            // Generate client_reference_id with all form data
+            const formData = new FormData(this);
+            const data = {
+                business_name: formData.get('business_name'),
+                email: formData.get('email'),
+                primary_region: formData.get('primary_region'),
+                locations: formData.getAll('locations'),
+                compliance: formData.getAll('compliance'),
+                industry: formData.get('industry'),
+                brand_color: formData.get('brand_color')
+            };
+            
+            // Encode as base64 for Stripe client_reference_id
+            const encoded = btoa(JSON.stringify(data));
+            document.getElementById('client_reference_id').value = encoded;
+            
+            // Form submits to Stripe Checkout with all data
+        });
+    </script>
+</body>
+</html>

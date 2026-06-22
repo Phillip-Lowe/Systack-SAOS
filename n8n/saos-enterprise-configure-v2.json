@@ -1,0 +1,51 @@
+{
+  "name": "SAOS Enterprise — Configure Fleet",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "saos-enterprise-configure",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Onboarding Form Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nif (!body.business_name || !body.email || !body.primary_region) {\n  return [{json: {success: false, error: 'Missing required fields'}}];\n}\nconst clientId = body.business_name.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').toUpperCase();\nconst locations = [body.primary_region];\nif (body.locations) {\n  const additional = Array.isArray(body.locations) ? body.locations : [body.locations];\n  additional.forEach(loc =\u003e { if (!locations.includes(loc)) locations.push(loc); });\n}\nconst compliance = body.compliance || ['SOC2'];\n\nconst payload = {\n  client_id: clientId,\n  business_name: body.business_name,\n  customer_email: body.email,\n  stripe_session_id: body.stripe_session_id || '',\n  stripe_subscription_id: body.stripe_subscription_id || '',\n  billing_period: body.billing_period || 'monthly',\n  tier: 'enterprise',\n  compliance: (Array.isArray(compliance) ? compliance : [compliance]).join(','),\n  locations: locations.join(','),\n  primary_region: body.primary_region,\n  industry: body.industry || 'general',\n  brand_color: body.brand_color || '#001a2d'\n};\n\nreturn [{json: {\n  success: true,\n  message: 'Configuration received. Provisioning will begin shortly.',\n  client_id: clientId,\n  payload: payload\n}}];"
+      },
+      "name": "Process Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:9876/queue",
+        "sendBody": True,
+        "contentType": "application/json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}",
+        "options": {}
+      },
+      "name": "Queue Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [650, 300]
+    }
+  ],
+  "connections": {
+    "Onboarding Form Webhook": {
+      "main": [[{"node": "Process Config", "type": "main", "index": 0}]]
+    },
+    "Process Config": {
+      "main": [[{"node": "Queue Task", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {"executionOrder": "v1"},
+  "staticData": null
+}

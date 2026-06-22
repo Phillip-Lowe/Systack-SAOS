@@ -1,0 +1,82 @@
+{
+  "name": "SAOS Enterprise — Configure Fleet",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "saos-enterprise-configure",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Onboarding Form Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "webhookId": "saos-enterprise-configure"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\n\n// Validate required fields\nif (!body.business_name || !body.email || !body.primary_region) {\n  return [{json: {error: 'Missing required fields', status: 400}}];\n}\n\n// Generate client_id from business name\nconst clientId = body.business_name\n  .replace(/[^a-zA-Z0-9]/g, '-')\n  .replace(/-+/g, '-')\n  .replace(/^-|-$/g, '')\n  .toUpperCase();\n\n// Build locations array (primary + additional)\nconst locations = [body.primary_region];\nif (body.locations) {\n  const additional = Array.isArray(body.locations) ? body.locations : [body.locations];\n  for (const loc of additional) {\n    if (!locations.includes(loc)) locations.push(loc);\n  }\n}\n\n// Build compliance array\nconst compliance = body.compliance || ['SOC2'];\nconst complianceList = Array.isArray(compliance) ? compliance : [compliance];\n\nreturn [{\n  json: {\n    client_id: clientId,\n    business_name: body.business_name,\n    customer_email: body.email,\n    customer_name: body.business_name,\n    stripe_session_id: body.stripe_session_id || '',\n    stripe_customer_id: body.stripe_customer_id || '',\n    stripe_subscription_id: body.stripe_subscription_id || '',\n    billing_period: body.billing_period || 'monthly',\n    tier: 'enterprise',\n    compliance: complianceList.join(','),\n    locations: locations.join(','),\n    primary_region: body.primary_region,\n    industry: body.industry || 'general',\n    brand_color: body.brand_color || '#001a2d',\n    status: 'configuration_complete'\n  }\n}];"
+      },
+      "name": "Validate and Build Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO task_queue (task_type, payload_json, priority, status, max_retries) VALUES ('DEPLOY', '{{ JSON.stringify($json) }}'::jsonb, 9, 'PENDING', 3) RETURNING id"
+      },
+      "name": "Queue DEPLOY Task",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.2,
+      "position": [650, 300],
+      "credentials": {
+        "postgres": {
+          "id": "iVuy7e5WTC05Hqwe",
+          "name": "Systack Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true, \"message\": \"Fleet deployment queued\", \"task_id\": $json.id, \"client_id\": $json.client_id, \"estimated_minutes\": 8}"
+      },
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "options": {},
+        "responseCode": 400,
+        "responseBody": "={\"success\": false, \"error\": \"Missing required fields: business_name, email, primary_region\"}"
+      },
+      "name": "Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [850, 500]
+    }
+  ],
+  "connections": {
+    "Onboarding Form Webhook": {
+      "main": [[{"node": "Validate and Build Config", "type": "main", "index": 0}]]
+    },
+    "Validate and Build Config": {
+      "main": [
+        [{"node": "Queue DEPLOY Task", "type": "main", "index": 0}],
+        [{"node": "Error Response", "type": "main", "index": 0}]
+      ]
+    },
+    "Queue DEPLOY Task": {
+      "main": [[{"node": "Success Response", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {"executionOrder": "v1"},
+  "staticData": null,
+  "tags": []
+}
