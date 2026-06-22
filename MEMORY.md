@@ -7,6 +7,41 @@ _This is my curated memory — the distilled essence, not raw logs. For daily lo
 ## MEMORY SYSTEM RULES
 
 ### How Memory Works
+
+---
+
+## 2026-06-22 — Workspace Recovery + Memory Restoration Complete
+
+**Status:** COMPLETE
+**Trigger:** User workspace cleanup caused identity files to diverge
+
+### Problem
+- Root `AGENTS.md`, `IDENTITY.md`, `USER.md` were stale/empty
+- `Sol-Knowledge/` had current versions
+- OpenClaw loads from root → agent forgot who it was
+
+### Fix Applied
+- Copied identity files from Sol-Knowledge/ → root
+- Copied MEMORY.md from root → Sol-Knowledge/
+- Cleaned 124 duplicate files from memory/recovered/
+- Archived orphaned files to proper locations
+- Created 21 May daily note files from backfill
+
+### May Memory Verified
+- May backfill exists in MEMORY.md (21 entries)
+- 223 May session jsonl files in session store
+- Recovered 4 session corpus files from git history
+- Recovered 2 job search files from git history
+- Created `memory/2026-05-*.md` daily notes (21 files)
+
+### Files Created
+- `WORKSPACE-RECOVERY-REPORT-2026-06-22.md`
+- `MAY-MEMORY-RECOVERY-REPORT.md`
+- `memory/2026-06-22.md` (this session)
+- `memory/2026-05-02.md` through `memory/2026-05-29.md`
+
+---
+
 1. **I wake up fresh every session** — no chat history survives
 2. **Files are my continuity** — AGENTS.md, MEMORY.md, TOOLS.md
 3. **Daily logs** → raw events (`memory/YYYY-MM-DD.md`)
