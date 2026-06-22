@@ -1,0 +1,43 @@
+# --- Secrets & Credentials ---
+*.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*secret*
+*credential*
+*token*
+*password*
+*api_key*
+
+# --- OAuth / API Configs ---
+client_secret*.json
+*oauth*.json
+*google*.json
+*maps*.json
+
+# --- Directories that should never be committed ---
+credentials/
+secrets/
+tokens/
+auth/
+
+# --- Dependencies ---
+node_modules/
+vendor/
+__pycache__/
+*.egg-info/
+
+# --- OS & IDE ---
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Logs ---
+*.log
+logs/
