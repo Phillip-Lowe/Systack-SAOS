@@ -309,9 +309,20 @@ class DashboardHandler(BaseHTTPRequestHandler):
             elif path == '/health':
                 self._json_response({"status": "ok", "service": "invoice-dashboard-api", "db": str(DB_PATH)})
             
+            elif path == '/':
+                # Serve the dashboard HTML
+                html_path = Path(__file__).parent.parent / "dashboard" / "invoice-dashboard.html"
+                if html_path.exists():
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'text/html')
+                    self.end_headers()
+                    self.wfile.write(html_path.read_bytes())
+                else:
+                    self._json_response({"error": "Dashboard HTML not found", "path": str(html_path)}, 404)
+            
             else:
                 self._json_response({"error": "Not found", "endpoints": [
-                    "/api/summary", "/api/invoices", "/api/invoices/{id}",
+                    "/", "/api/summary", "/api/invoices", "/api/invoices/{id}",
                     "/api/aging", "/api/vendors", "/api/export/csv", "/health"
                 ]}, 404)
         

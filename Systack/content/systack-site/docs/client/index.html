@@ -138,14 +138,6 @@
         .btn-primary:hover {
             background: #007da9;
         }
-        .btn-secondary {
-            background: rgba(255,255,255,0.06);
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.1);
-        }
         .btn-locked {
             background: rgba(255,255,255,0.03);
             color: var(--muted);
@@ -164,9 +156,13 @@
             background: rgba(239, 68, 68, 0.15);
             color: #ef4444;
         }
-        .badge.html {
-            background: rgba(0, 161, 219, 0.15);
-            color: var(--accent);
+        .locked-notice {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--amber);
+            margin-top: 8px;
         }
         .footer {
             margin-top: 40px;
@@ -180,47 +176,38 @@
             color: var(--accent);
             text-decoration: none;
         }
-        .locked-notice {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--amber);
-            margin-top: 8px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>📚 Client Documents</h1>
-            <p>Your SAOS documentation, deployment guides, and reference materials.</p>
+            <p>Real documentation that tells you how to use your SAOS deployment.</p>
             <div class="tier-badge business" id="tier-badge">Business Fleet</div>
         </div>
 
         <!-- Business Tier Documents -->
         <div class="tier-section" id="business-docs">
-            <div class="tier-title">Included with Business Fleet</div>
+            <div class="tier-title">Included with Your Plan</div>
             
             <div class="doc-card">
                 <div class="doc-icon">📖</div>
                 <div class="doc-body">
                     <div class="doc-title">
-                        SyStack Service Manual
+                        SAOS Service Manual
                         <span class="badge pdf">PDF</span>
                     </div>
                     <div class="doc-desc">
-                        Complete overview of your SAOS deployment. Covers 7-agent fleet 
-                        capabilities, security practices, support channels, and FAQs.
-                        This is your primary reference for understanding what's included 
-                        and how to get help.
+                        Your complete reference: what each of your 7 agents does, 
+                        how to access your server, security details, billing info, 
+                        support channels, and FAQ.
                     </div>
                     <div class="doc-meta">
-                        <span>📄 12 pages</span>
-                        <span>🔄 v1.0 — June 2026</span>
+                        <span>📄 7 pages</span>
+                        <span>🔄 v2.0 — June 2026</span>
                     </div>
                     <div class="doc-actions">
-                        <a href="SyStack-Service-Manual-Client-v1.0.pdf" class="btn btn-primary" target="_blank">
+                        <a href="SAOS-Service-Manual-v2.0.pdf" class="btn btn-primary" target="_blank">
                             📥 Download PDF
                         </a>
                     </div>
@@ -228,24 +215,24 @@
             </div>
 
             <div class="doc-card">
-                <div class="doc-icon">📋</div>
+                <div class="doc-icon">🚀</div>
                 <div class="doc-body">
                     <div class="doc-title">
                         SAOS Quick Start Guide
-                        <span class="badge html">WEB</span>
+                        <span class="badge pdf">PDF</span>
                     </div>
                     <div class="doc-desc">
-                        Step-by-step setup instructions for your 7-agent fleet. Covers 
-                        Tailscale connection, agent configuration, first task creation, 
-                        and common troubleshooting.
+                        Step-by-step instructions: Connect via Tailscale, talk to your agents, 
+                        process your first invoice, take customer orders, get morning briefings, 
+                        and troubleshoot common issues.
                     </div>
                     <div class="doc-meta">
-                        <span>📄 Online</span>
-                        <span>🔄 Updated regularly</span>
+                        <span>📄 4 pages</span>
+                        <span>🔄 v1.0 — June 2026</span>
                     </div>
                     <div class="doc-actions">
-                        <a href="https://systack.net/saos/" class="btn btn-primary" target="_blank">
-                            🌐 View Guide
+                        <a href="SAOS-Quick-Start-Guide.pdf" class="btn btn-primary" target="_blank">
+                            📥 Download PDF
                         </a>
                     </div>
                 </div>
@@ -257,16 +244,15 @@
             <div class="tier-title">Enterprise Only</div>
             
             <div class="doc-card locked" id="enterprise-deployment">
-                <div class="doc-icon">🚀</div>
+                <div class="doc-icon">🏗️</div>
                 <div class="doc-body">
                     <div class="doc-title">
                         Enterprise Deployment Guide
                         <span class="badge pdf">PDF</span>
                     </div>
                     <div class="doc-desc">
-                        Technical guide for on-premise SAOS deployments. Covers hardware 
-                        requirements, network configuration, security hardening, and maintenance 
-                        procedures. For Enterprise clients and IT administrators.
+                        On-premise hardware setup, network configuration, security hardening, 
+                        and maintenance procedures. For IT administrators managing Enterprise deployments.
                     </div>
                     <div class="doc-meta">
                         <span>📄 18 pages</span>
@@ -289,17 +275,14 @@
     </div>
 
     <script>
-        // Check URL for tier parameter
         const urlParams = new URLSearchParams(window.location.search);
         const tier = urlParams.get('tier') || 'business';
         
-        // Update badge
         const badge = document.getElementById('tier-badge');
         if (tier === 'enterprise') {
             badge.textContent = 'Enterprise Fleet';
             badge.className = 'tier-badge enterprise';
             
-            // Unlock enterprise documents
             document.getElementById('enterprise-deployment').classList.remove('locked');
             document.getElementById('enterprise-btn').outerHTML = `
                 <a href="SyStack-Enterprise-Deployment-Guide-v1.0.pdf" class="btn btn-primary" target="_blank">

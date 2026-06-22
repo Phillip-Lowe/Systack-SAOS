@@ -8,7 +8,7 @@ Usage:
     python3 api.py --port 8080  # Custom port
 """
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -16,6 +16,15 @@ import os
 
 app = Flask(__name__)
 CORS(app)
+
+# Serve static dashboard files
+@app.route('/')
+def dashboard_root():
+    return send_from_directory('.', 'index.html')
+
+@app.route('/<path:filename>')
+def dashboard_static(filename):
+    return send_from_directory('.', filename)
 
 DB_HOST = os.environ.get("PGHOST", "localhost")
 DB_PORT = int(os.environ.get("PGPORT", "5432"))
