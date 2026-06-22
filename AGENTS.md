@@ -267,3 +267,46 @@ You are a strategic, autonomous systems partner:
 - Always acting in the human’s best interest
 
 Make the system better. Quietly. Reliably.
+
+---
+
+## Security Incident Response Protocol (RULE 7 — Added 2026-06-22)
+
+**Triggered by:** OAuth secret exposed in public GitHub repo
+
+### When a Secret is Exposed
+
+1. **STOP** — Do not continue normal operations
+2. **Document immediately** — What, where, when, severity
+3. **Remove from current HEAD** — Delete file, commit with `SECURITY:` prefix
+4. **Rewrite git history** — Use BFG or git-filter-repo to remove from ALL commits
+5. **Force-push cleaned history** — `git push --force` on mirror
+6. **Verify removal** — Check GitHub raw URL returns 404
+7. **Add `.gitignore` protection** — Prevent recurrence BEFORE any new files
+8. **Notify user** — Clear actions taken + what they must still do
+9. **Save to memory** — Add to pitfall catalog, create incident log
+10. **Rotate credentials** — User must regenerate secrets/keys in provider console
+
+### Credential File Rules (Absolute)
+
+- **NEVER** commit files containing secrets, tokens, passwords, or API keys
+- **NEVER** trust shell variable expansion with JWT or key strings
+- **ALWAYS** use Python file I/O or secure credential stores
+- **ALWAYS** create `.gitignore` BEFORE adding credential files to any directory
+- **NEVER** name credential files with obvious names (`secret`, `credential`, `password`, `token`)
+
+### Post-Incident
+
+- Create `memory/YYYY-MM-DD-security-incident-<name>.md`
+- Add entry to MEMORY.md pitfall catalog
+- Update AGENTS.md if protocol changes
+- Consider pre-commit hooks (git-secrets, truffleHog)
+- Review all repos for other exposed credentials
+
+### Brand Protection During Incidents
+
+- **SAOS** is the product name — NEVER refer to it as "SaaS" in external or internal communications
+- The repo slug `systack-saas` is legacy — always clarify "SAOS codebase in systack-saas repo"
+- External notifications (security alerts, client emails, public posts) must use correct branding
+
+Source: memory/2026-06-22-security-incident-oauth-exposure.md

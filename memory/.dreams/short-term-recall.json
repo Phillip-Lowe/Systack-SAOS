@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-22T15:39:58.991Z",
+  "updatedAt": "2026-06-22T16:36:54.034Z",
   "entries": {
     "memory:memory/2026-06-20-session-post-mortem.md:45:74": {
       "key": "memory:memory/2026-06-20-session-post-mortem.md:45:74",
@@ -265,13 +265,13 @@
       "endLine": 50,
       "source": "memory",
       "snippet": "# 2026-06-05 03:04 CDT — All Three Deployed ## What We Did ### 1. ✅ GitHub Backup (#1534 pattern) **Deployed:** Workflow backup system for all n8n workflows - Created GitHub repo: `Phillip-Lowe/systack-n8n-workflows` - Exported all 30 workflows (active + inactive) - Created `scripts/backup-workflows.sh` automation - Scheduled daily cron: 6 AM automatic backup - Tested and working — auto-commits to GitHub **Repo contents:** - `workflows/deli/` — 11 active workflows - `workflows/systack/` — 19 inactive/archived workflows - `workflows/monitoring/` — Website downtime monitor - `scripts/backup-workflows.sh` — Daily automation - `README.md` — Auto-updated status ### 2. ✅ Uptime Monitoring (#11",
-      "recallCount": 13,
+      "recallCount": 14,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5.051107305288315,
+      "totalScore": 5.507259100675583,
       "maxScore": 0.466370341181755,
       "firstRecalledAt": "2026-06-21T07:46:18.896Z",
-      "lastRecalledAt": "2026-06-22T03:32:09.292Z",
+      "lastRecalledAt": "2026-06-22T16:20:38.370Z",
       "queryHashes": [
         "0e713d0a9f3c",
         "49e5bb5feb0a",
@@ -285,7 +285,8 @@
         "b3c15eb8c024",
         "d5e56e43d9ef",
         "4474521a420f",
-        "f07530e0880d"
+        "f07530e0880d",
+        "8b255f3fd553"
       ],
       "recallDays": [
         "2026-06-21",
@@ -27922,18 +27923,19 @@
       "endLine": 99,
       "source": "memory",
       "snippet": "- **task_queue** table: task dispatch to fleet agents - **agent_state** table: fleet status tracking - **execution_log** table: audit trail --- ## ⏳ TODO — Things To Finish ### Critical (Before First Client) | # | Task | Status | Notes | |---|------|--------|-------| | 1 | **Get Vultr API key** | ❌ Not done | my.vultr.com → Account → API → Add Key | | 2 | **Get Tailscale API key** | ❌ Not done | login.tailscale.com → Settings → Keys → Generate | | 3 | **Get n8n API key** | ❌ Not done | n8n UI → Settings → API | | 4 | **Test real VPS creation** | ⏳ Blocked | Needs Vultr API key; use --tier test first | | 5 | **Verify Tailscale URL works** | ⏳ Blocked | Needs real VPS to test HTTPS access",
-      "recallCount": 4,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.8511574387550354,
+      "totalScore": 2.2975954353809356,
       "maxScore": 0.4764610052108764,
       "firstRecalledAt": "2026-06-22T11:13:18.300Z",
-      "lastRecalledAt": "2026-06-22T12:54:55.300Z",
+      "lastRecalledAt": "2026-06-22T16:36:54.034Z",
       "queryHashes": [
         "59f09408f7c3",
         "33f8e3c2b7c3",
         "b0e994e649aa",
-        "6d544f140602"
+        "6d544f140602",
+        "ff3ce597f2a6"
       ],
       "recallDays": [
         "2026-06-22"
@@ -27992,20 +27994,22 @@
       "endLine": 82,
       "source": "memory",
       "snippet": "systack-site/saos/index.html (+47 lines, Extended Capabilities + pricing) fleet/sol.md (created) fleet/oracle.md (created) fleet/atlas.md (created) fleet/vali.md (created) fleet/pessi.md (created) fleet/assembly.md (created) SAOS-FOUNDATION-SPEC.md (updated fleet + loop) MEMORY.md (added entry) ``` ### Next Actions - [ ] Activate CODY (fix cron jobs) - [ ] Create CHATTY onboarding sequence - [ ] Create first GENI marketing asset - [ ] Add Engagement Engine Stripe product/button - [ ] Update other s",
-      "recallCount": 6,
+      "recallCount": 8,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2.931117779016495,
-      "maxScore": 0.500919759273529,
+      "totalScore": 3.9215117752552033,
+      "maxScore": 0.5012653529644012,
       "firstRecalledAt": "2026-06-22T11:13:18.300Z",
-      "lastRecalledAt": "2026-06-22T15:15:19.986Z",
+      "lastRecalledAt": "2026-06-22T16:26:24.810Z",
       "queryHashes": [
         "59f09408f7c3",
         "a9058b82e1f7",
         "6511cd4c3daa",
         "29dec0aeab22",
         "562f060b9d0e",
-        "38f39c6ead88"
+        "38f39c6ead88",
+        "0df9a74ac2a4",
+        "bfd63fe0087c"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28062,18 +28066,21 @@
       "endLine": 37,
       "source": "memory",
       "snippet": "# Session End — 2026-06-17 05:56 CDT ## Final Status ### Services Running | Service | PID | Port | LaunchAgent | |---------|-----|------|-------------| | Orchestrator Daemon | 70691 | - | `net.systack.orchestrator` | | SAOS Dashboard | 97098 | 8765 | `net.systack.dashboard` | | Invoice Dashboard | 97487 | 8766 | `net.systack.invoice-dashboard` | | Invoice API | 86824 | 9001 | `com.systack.invoice-api` | ### Repos | Repo | URL | Contents | |------|-----|----------| | systack-saas | github.com/Phillip-Lowe/systack-saas | SAOS orchestrator, dashboard, fleet, provisioning | | systack-site | github.com/Phillip-Lowe/systack-site | Systack website | | utopia-deli-order | github.com/Phillip-Lowe/",
-      "recallCount": 4,
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.9787742406129836,
+      "totalScore": 3.405326876044273,
       "maxScore": 0.5414974153041839,
       "firstRecalledAt": "2026-06-22T11:13:18.300Z",
-      "lastRecalledAt": "2026-06-22T12:56:44.104Z",
+      "lastRecalledAt": "2026-06-22T16:36:54.034Z",
       "queryHashes": [
         "59f09408f7c3",
         "f6815e1b11cd",
         "a9058b82e1f7",
-        "6511cd4c3daa"
+        "6511cd4c3daa",
+        "0bf37512a57c",
+        "8b255f3fd553",
+        "ff3ce597f2a6"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28189,15 +28196,16 @@
       "endLine": 30,
       "source": "memory",
       "snippet": "# Session Log — 2026-06-13 ## Work Done ### Systack Site Update — Services Page - **File:** `systack-site/services.html` - **Change:** Added \"Try Live Demo →\" button to the **Online Ordering Systems** card - **Button links to:** `https://order.theutopiadeli.com/pickup-order/` - **Style:** Matches the Automated Booking Systems card above it (CTA button + pricing side-by-side) - **Commit:** `76006de` — pushed to `Phillip-Lowe/systack-site.git` ### Before/After | Card | Before | After | |------|--------|-------| | Automated Booking | ✅ Had demo button | Unchanged | | Online Ordering | ❌ Just pricing text | ✅ Demo button + pricing | ## Technical Notes - Button opens in `target=\"_blank\"` (sam",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.48930598795413965,
+      "totalScore": 0.95688878595829,
       "maxScore": 0.48930598795413965,
       "firstRecalledAt": "2026-06-22T11:13:23.936Z",
-      "lastRecalledAt": "2026-06-22T11:13:23.936Z",
+      "lastRecalledAt": "2026-06-22T16:20:38.370Z",
       "queryHashes": [
-        "f6815e1b11cd"
+        "f6815e1b11cd",
+        "8b255f3fd553"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28251,16 +28259,18 @@
       "endLine": 38,
       "source": "memory",
       "snippet": "# 2026-06-03 — CODY: HTML Webhook Integration Build ## What I Did (15 min sprint) - Replaced `systack-site/niches/food/index.html` landing page with a working order form - Built `systack-site/niches/food/order-form.js` with: - Menu item selection with +/- quantity controls - Live cart with subtotal, tax (9.5%), total calculation - Customer info fields (name, email, phone) - Pickup time dropdown with business hours validation (10 AM–8 PM, 20 min lead time) - Special instructions textarea - JSON POST to `https://utopia-api.systack.net/webhook/utopia-deli-html-order-v1` - Success/error message handling - Form reset after successful order ## Key Technical Choices - **Integer cen",
-      "recallCount": 2,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.9253497421741486,
+      "totalScore": 1.800752329826355,
       "maxScore": 0.4744460642337799,
       "firstRecalledAt": "2026-06-22T11:13:23.936Z",
-      "lastRecalledAt": "2026-06-22T11:13:36.141Z",
+      "lastRecalledAt": "2026-06-22T16:36:54.034Z",
       "queryHashes": [
         "f6815e1b11cd",
-        "b0e994e649aa"
+        "b0e994e649aa",
+        "c11b1ba0fa3c",
+        "ff3ce597f2a6"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28407,15 +28417,16 @@
       "endLine": 50,
       "source": "memory",
       "snippet": "# Session Close — 2026-06-17 07:11 CDT **Status:** Session paused, all work saved **User directive:** \"Save this and I'll be back later\" --- ## What Was Accomplished Tonight ### SAOS Provisioning Pipeline (COMPLETE) - 7 components built, tested, committed - 16/16 tests passing - Database schema verified (saos_clients, task_queue) - Orchestrator daemon verified (PID 70691) ### JURIS Compliance Framework (COMPLETE) - 4 wiki documents created - JURIS workspace identity files updated - Agent references documented ### ORACLE Architecture Review (SAVED) - Full response saved to memory/ORACLE-RESPONSE-2026-06-17.md - Approved: 16GB baseline, cloud-first, Tailscale tagged devices - Flags: Earl",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.7411246970008235,
+      "totalScore": 1.233791910083137,
       "maxScore": 0.7411246970008235,
       "firstRecalledAt": "2026-06-22T12:54:55.300Z",
-      "lastRecalledAt": "2026-06-22T12:54:55.300Z",
+      "lastRecalledAt": "2026-06-22T16:19:24.028Z",
       "queryHashes": [
-        "6d544f140602"
+        "6d544f140602",
+        "0bf37512a57c"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28438,16 +28449,17 @@
       "endLine": 45,
       "source": "memory",
       "snippet": "# SAOS Enterprise — Session Wrap-Up + Next Steps **Date:** 2026-06-19 14:19 CDT **Session End:** Complete --- ## What Was Built Today | Component | Status | |-----------|--------| | Enterprise onboarding form | ✅ Deployed to systack.net/saos/onboard.html | | Business tier provisioning | ✅ Verified end-to-end | | Enterprise tier provisioning | ✅ Verified end-to-end | | Plan configuration | ✅ Updated (8 cores both tiers) | | PDF documentation | ✅ Updated with new specs | | Webhook endpoint | ✅ Active (n8n) | | Execution poller | ✅ Running | | Bridge | ✅ Running | --- ## Next Steps / TODO ### 🔴 High Priority (Next Session) | # | Task | Notes | |---|------|-------| | 1 | **Request Vultr",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.0116200745105743,
+      "totalScore": 1.519612842798233,
       "maxScore": 0.5147435277700424,
       "firstRecalledAt": "2026-06-22T12:54:55.300Z",
-      "lastRecalledAt": "2026-06-22T12:56:41.003Z",
+      "lastRecalledAt": "2026-06-22T16:19:24.028Z",
       "queryHashes": [
         "6d544f140602",
-        "a9058b82e1f7"
+        "a9058b82e1f7",
+        "0bf37512a57c"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28470,16 +28482,17 @@
       "endLine": 40,
       "source": "memory",
       "snippet": "# Session End — 2026-06-17 06:50 CDT ## Summary: Complete SAOS Provisioning Pipeline Built **User directive:** \"Save all of this everywhere and have it on the to do list the things that we need to finish\" --- ## ✅ What Was Built Tonight (Complete) ### 1. SAOS Orchestrator Daemon (Already Running) - **File:** `orchestrator-daemon.py` - **Status:** Running via launchd (PID 70691) - **Function:** Polls task_queue every 10s, dispatches to all 10 fleet agents - **Tables:** `task_queue`, `agent_state`, `execution_log`, `message_bus` ### 2. Client Provisioning Pipeline (n8n) - **Workflow:** \"SAOS Client Provisioning Pipeline\" - **Webhook:** `POST https://n8n.systack.net/webhook/saas-provision",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.9763679951429367,
+      "totalScore": 1.483897405862808,
       "maxScore": 0.5078152567148209,
       "firstRecalledAt": "2026-06-22T12:54:55.300Z",
-      "lastRecalledAt": "2026-06-22T15:03:25.399Z",
+      "lastRecalledAt": "2026-06-22T16:26:24.809Z",
       "queryHashes": [
         "6d544f140602",
-        "5e49fc029968"
+        "5e49fc029968",
+        "ecda8ea0f1c7"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28696,16 +28709,17 @@
       "endLine": 55,
       "source": "memory",
       "snippet": "# Session — 2026-06-17 05:51 CDT ## SAOS Repo Separation + Dashboard Fix **User directive:** \"Save this in all places\" + \"SAOS dashboard is down\" --- ## What Happened 1. **Repo Separation:** Moved SAOS code from `utopia-deli-order` to new `systack-saas` repo 2. **Gateway Restart:** User restarted OpenClaw gateway 3. **Dashboard Down:** `orchestrator-daemon.py` was running (PID 70691) but dashboard API (port 8765) was dead 4. **Root Cause:** Files moved to `/tmp/systack-saas-init/` — running from wrong location --- ## Fix Applied **Dashboard restarted from systack-saas repo:** ```bash cd /tmp/systack-saas-init/dashboard mkdir -p ../logs nohup python3 api.py --port 8765 >../logs/dashbo",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.0054904073476791,
+      "totalScore": 1.459307473897934,
       "maxScore": 0.507765918970108,
       "firstRecalledAt": "2026-06-22T12:56:41.003Z",
-      "lastRecalledAt": "2026-06-22T15:03:25.399Z",
+      "lastRecalledAt": "2026-06-22T16:30:35.929Z",
       "queryHashes": [
         "a9058b82e1f7",
-        "5e49fc029968"
+        "5e49fc029968",
+        "1eef78824650"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28859,17 +28873,18 @@
       "endLine": 40,
       "source": "memory",
       "snippet": "# 2026-06-06 — Pricing Alignment: Systack + SAOS + Percy ## Decision: Percy Lives in SAOS Personal+ Percy is the reference implementation for SAOS Personal+ ($99/mo). It's what we demo, what we document, what we improve. **Percy is NOT sold** — it's the open-source reference. But we sell **\"Percy-powered Personal Agents\"** as configured installs. ## Product Lines Finalized ### Systack Services (B2B, Done-For-You) | Product | Price | Billing | What It Is | |---------|-------|---------|-----------| | Systack Private | $799/mo | Monthly | On-premise automation | | Systack Private Annual | $699/mo | Yearly | 10% discount | | Systack Private Setup | $4,500 | One-time | Hardware install | |",
-      "recallCount": 3,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.4829667687416075,
+      "totalScore": 1.9151240438222883,
       "maxScore": 0.5207627534866333,
       "firstRecalledAt": "2026-06-22T12:56:44.104Z",
-      "lastRecalledAt": "2026-06-22T13:57:51.012Z",
+      "lastRecalledAt": "2026-06-22T16:36:54.032Z",
       "queryHashes": [
         "6511cd4c3daa",
         "29dec0aeab22",
-        "cfdda1c56971"
+        "cfdda1c56971",
+        "c11b1ba0fa3c"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28989,17 +29004,18 @@
       "endLine": 59,
       "source": "memory",
       "snippet": "- Documented existing buttons (Business $299, Enterprise $799) - Created checklist for 7 new products - Added SAOS Fleet section to `service-packages.md` ## Files Created/Updated | File | Status | |------|--------| | `templates/private/*` | ✅ Created | | `templates/accelerate/*` | ✅ Moved | | `templates/README.md` | ✅ Updated | | `systack-site/services/service-packages.md` | ✅ Updated | | `systack-site/pricing.html` | ✅ Rewritten | | `systack-site/personal-agent/index.html` | ✅ Updated | | `systack-site/services.html` | ✅ Fixed | | `saos-products/FINAL-PRICING.md` | ✅ Created | | `saos-products/STRIPE-CATALOG.md` | ✅ Created | | `saos-products/STRIPE-CREATION-CHECKLIST.md` | ✅ Created | |",
-      "recallCount": 3,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.4544905245304105,
+      "totalScore": 1.9238537579774855,
       "maxScore": 0.5065867364406585,
       "firstRecalledAt": "2026-06-22T12:59:23.404Z",
-      "lastRecalledAt": "2026-06-22T15:15:19.986Z",
+      "lastRecalledAt": "2026-06-22T16:26:18.366Z",
       "queryHashes": [
         "29dec0aeab22",
         "8e4fb58a81df",
-        "38f39c6ead88"
+        "38f39c6ead88",
+        "0df9a74ac2a4"
       ],
       "recallDays": [
         "2026-06-22"
@@ -29022,15 +29038,16 @@
       "endLine": 65,
       "source": "memory",
       "snippet": "Replace embedded Buy Buttons with direct Stripe Checkout links: Instead of: ```html <script async src=\"https://js.stripe.com/v3/buy-button.js\"></script> <stripe-buy-button buy-button-id=\"...\" publishable-key=\"...\"> </stripe-buy-button> ``` Use: ```html <a href=\"https://buy.stripe.com/7sYcMYfZLagn9wQ7MG87K03\" class=\"cta-btn\">Subscribe Monthly</a> <a href=\"https://buy.stripe.com/bJecMYdRD88f8sM5Ey87K04\" class=\"cta-btn\">Subscribe Annual</a> ``` ## Files Updated This Session - systack-site/pricing.html — added annual options (but buttons broken) - systack-site/personal-agent/index.html — added annual options (but buttons broken) - systack-site/services/service-packages.md — fixed deprecated b",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.5079312682151794,
+      "totalScore": 0.9748047500848769,
       "maxScore": 0.5079312682151794,
       "firstRecalledAt": "2026-06-22T12:59:26.209Z",
-      "lastRecalledAt": "2026-06-22T12:59:26.209Z",
+      "lastRecalledAt": "2026-06-22T16:26:18.369Z",
       "queryHashes": [
-        "8e4fb58a81df"
+        "8e4fb58a81df",
+        "d7fc2aaafa53"
       ],
       "recallDays": [
         "2026-06-22"
@@ -29150,17 +29167,18 @@
       "endLine": 63,
       "source": "memory",
       "snippet": "| **SAOS Personal+** | $199/mo | pricing.html, personal-agent/, service-packages.md | | **SAOS Business Fleet** | $299/mo | pricing.html, personal-agent/, service-packages.md | | **SAOS Enterprise Fleet** | $799/mo | pricing.html, personal-agent/, service-packages.md | | **Systack Accelerate** | $249/mo | pricing.html, service-packages.md | | **Systack Private** | $799/mo | pricing.html, service-packages.md | ## Key Message Consistent All pages now say: - \"We don't sell anything below 16GB RAM\" - \"We learned the hard way — smaller servers don't work\" - \"Optional cloud LLM — you pay provider directly\" ## Files Changed - `systack-site/pricing.html` — Complete rewrite with consistent pricing",
-      "recallCount": 3,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.507855397462845,
+      "totalScore": 1.974332216382027,
       "maxScore": 0.5203184843063354,
       "firstRecalledAt": "2026-06-22T13:57:51.012Z",
-      "lastRecalledAt": "2026-06-22T15:25:15.714Z",
+      "lastRecalledAt": "2026-06-22T16:26:18.366Z",
       "queryHashes": [
         "cfdda1c56971",
         "4ad45b7d3d35",
-        "e8384534b191"
+        "e8384534b191",
+        "0df9a74ac2a4"
       ],
       "recallDays": [
         "2026-06-22"
@@ -29316,15 +29334,16 @@
       "endLine": 156,
       "source": "memory",
       "snippet": "- `dashboard/api.py` — NEW - `dashboard/index.html` — NEW - `n8n/saas-provisioning-workflow.json` — NEW - `scripts/generate-identity.py` — NEW - `SAOS-PROVISIONING-BUILD-PLAN.md` — NEW - `fleet/juris.md` — NEW - `systack-site/saos/index.html` — MODIFIED - `~/.openclaw/openclaw.json` — MODIFIED (added \"juris\" to allowAgents) --- ## Next Steps (Not Done Tonight) 1. Vultr API integration for auto-VPS provisioning 2. Stripe webhook test with test mode 3. Client dashboard authentication 4. JURIS workspace identity files (SOUL, AGENTS, USER, MEMORY, TOOLS) --- *Session saved 2026-06-17 05:45 CDT* *User directive: \"Save this whole session everywhere Wiki and everything\"* *Pushed to GitHub:",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.49605380594730375,
+      "totalScore": 0.9453176140785217,
       "maxScore": 0.49605380594730375,
       "firstRecalledAt": "2026-06-22T15:03:25.399Z",
-      "lastRecalledAt": "2026-06-22T15:03:25.399Z",
+      "lastRecalledAt": "2026-06-22T16:20:42.451Z",
       "queryHashes": [
-        "5e49fc029968"
+        "5e49fc029968",
+        "a2bd8bf5f629"
       ],
       "recallDays": [
         "2026-06-22"
@@ -29409,15 +29428,16 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "# Session — 2026-06-17 ## ORACLE Fleet Expansion Integrated: 7 → 10 Agents ### Source - ORACLE RSI architecture validation response - Status: PASS (strategically aligned with SAOS maturity) - SOL execution ### What Changed #### 1. Documentation Foundation - **SAOS-FOUNDATION-SPEC.md** updated: - Canonical 10-agent fleet table (Execution/Quality/Intelligence/Engagement/Compliance tiers) - External tiered abstraction: Core 7 + Extended Capabilities (+3) - Updated system loop with full canonical sequence - CODY positioned as Build Engine (technical docs only) - CHATTY + GENI bundled as \"Engagement Engine\" add-on #### 2. Website Updated - **systack-site/saos/index.html**: - Adde",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.5191590160131454,
+      "totalScore": 1.0021414905786514,
       "maxScore": 0.5191590160131454,
       "firstRecalledAt": "2026-06-22T15:13:47.823Z",
-      "lastRecalledAt": "2026-06-22T15:13:47.823Z",
+      "lastRecalledAt": "2026-06-22T16:19:24.028Z",
       "queryHashes": [
-        "562f060b9d0e"
+        "562f060b9d0e",
+        "0bf37512a57c"
       ],
       "recallDays": [
         "2026-06-22"
@@ -29750,15 +29770,20 @@
       "endLine": 82,
       "source": "memory",
       "snippet": "- `systack-site/services/service-packages.md` — Added Stripe buttons + SAOS Fleet section - `systack-site/stripe-products.md` — Quick reference - `templates/private/dashboard-server.py` — Tested locally - `templates/private/dashboard.html` — Verified UI renders - `templates/private/n8n-log-to-dashboard.json` — Created ## Next - [ ] Activate n8n workflows (both Private + Accelerate) - [ ] Build P1 service line templates - [ ] Test end-to-end with real webhook payload",
-      "recallCount": 1,
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.703676443571255,
+      "totalScore": 3.1109185807649347,
       "maxScore": 0.703676443571255,
       "firstRecalledAt": "2026-06-22T15:38:53.337Z",
-      "lastRecalledAt": "2026-06-22T15:38:53.337Z",
+      "lastRecalledAt": "2026-06-22T16:26:24.810Z",
       "queryHashes": [
-        "29688b8a471d"
+        "29688b8a471d",
+        "a2bd8bf5f629",
+        "0df9a74ac2a4",
+        "d7fc2aaafa53",
+        "ecda8ea0f1c7",
+        "bfd63fe0087c"
       ],
       "recallDays": [
         "2026-06-22"
@@ -30239,6 +30264,415 @@
         "inv-2026-0612-001",
         "2132.13",
         "sqlite-id"
+      ]
+    },
+    "memory:memory/2026-06-22-session-0957.md:1:34": {
+      "key": "memory:memory/2026-06-22-session-0957.md:1:34",
+      "path": "memory/2026-06-22-session-0957.md",
+      "startLine": 1,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "# Session — 2026-06-22 09:57 CDT **User directive:** \"Save this everywhere\" --- ## What Was Accomplished ### 1. Rebuilt SAOS Webhook Bridge + Poller (Lost in Workspace Reorg) - **File:** `saos-webhook-bridge.py` — Receives n8n webhook calls, triggers provisioning - **File:** `saos_provision_poller.py` — Polls n8n for webhook execution data - **Status:** Bridge running on port 8767 via launchd - **Tested:** POST to bridge triggers pipeline in test mode ✅ ### 2. Cleaned Up Stripe Payment Links + Pricing - Removed Personal+ tier from pricing page - Fixed Business annual: $3,588 → $2,988 (2 months free) - Fixed Enterprise annual: $9,588 → $7,990 (2 months free) - Personal-agent page now redi",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9584263503551482,
+      "maxScore": 0.48842068314552306,
+      "firstRecalledAt": "2026-06-22T16:19:24.028Z",
+      "lastRecalledAt": "2026-06-22T16:36:54.034Z",
+      "queryHashes": [
+        "0bf37512a57c",
+        "ff3ce597f2a6"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-22-session-0957.md",
+        "saos-webhook-bridge.py",
+        "saos-provision-poller.py",
+        "personal-agent",
+        "cdt",
+        "directive",
+        "save",
+        "everywhere"
+      ]
+    },
+    "memory:memory/2026-06-19-saos-business-tier-verification.md:1:45": {
+      "key": "memory:memory/2026-06-19-saos-business-tier-verification.md:1:45",
+      "path": "memory/2026-06-19-saos-business-tier-verification.md",
+      "startLine": 1,
+      "endLine": 45,
+      "source": "memory",
+      "snippet": "# SAOS Business Tier Verification — 2026-06-19 **Instance:** e8c2ceda-8580-4942-a912-cf94744f78ed **IP:** 64.177.114.129 **Duration:** ~10 minutes **Cost:** ~$0.02 (pro-rated hourly) **Status:** DESTROYED after verification --- ## Hardware Verified | Spec | Value | |------|-------| | CPU | AMD EPYC-Milan, 8 cores | | RAM | 16 GB | | Disk | ~25 GB SSD | | Plan | `vhp-8c-16gb-amd` ($96/mo) | ## Services Verified | Service | Status | Details | |---------|--------|---------| | **Tailscale** | ✅ JOINED | 100.110.106.92 | | **Tailscale DNS** | ✅ | saos-business-verify-001.tail573d57.ts.net | | **Tailscale Tags** | ✅ | `['tag:saos-client']` | | **Ollama** | ✅ RUNNING | qwen2.5:7b load",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.48598613142967223,
+      "maxScore": 0.48598613142967223,
+      "firstRecalledAt": "2026-06-22T16:19:24.028Z",
+      "lastRecalledAt": "2026-06-22T16:19:24.028Z",
+      "queryHashes": [
+        "0bf37512a57c"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "64.177.114.129",
+        "0.02",
+        "pro-rated",
+        "epyc-milan",
+        "vhp-8c-16gb-amd",
+        "96/mo",
+        "100.110.106.92",
+        "saos-client"
+      ]
+    },
+    "memory:memory/2026-06-05-lead-automation-build.md:120:159": {
+      "key": "memory:memory/2026-06-05-lead-automation-build.md:120:159",
+      "path": "memory/2026-06-05-lead-automation-build.md",
+      "startLine": 120,
+      "endLine": 159,
+      "source": "memory",
+      "snippet": "→ Auto-replies to lead → Shows recommendation + \"Book a Call\" CTA OR Visitor goes to /contact → Fills quick form → Submits → same webhook → Same notifications → Shows \"We'll reply within 24h\" ``` --- ## Files Changed/Created | File | Action | |------|--------| | `systack-site/contact.html` | Updated form to use webhook | | `systack-site/discovery.html` | ✅ New — 8-step questionnaire | | `systack-site/personal-agent/index.html` | Updated pricing tiers | | `systack-site/pricing.html` | Updated SAOS + Personal Agent sections | | `systack-site/services.html` | Added security section | | `systack-lead-capture-webhook.json` | ✅ New — n8n workflow | | `clients/mcdonalds-gm/DEPLOY",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.4624249935150146,
+      "maxScore": 0.5073258638381958,
+      "firstRecalledAt": "2026-06-22T16:20:38.370Z",
+      "lastRecalledAt": "2026-06-22T16:26:24.810Z",
+      "queryHashes": [
+        "8b255f3fd553",
+        "ecda8ea0f1c7",
+        "bfd63fe0087c"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "auto-replies",
+        "changed/created",
+        "systack-site/contact.html",
+        "systack-site/discovery.html",
+        "8-step",
+        "systack-site/pricing.html",
+        "systack-site/services.html",
+        "clients/mcdonalds-gm/deploy"
+      ]
+    },
+    "memory:memory/2026-06-22-session-0957.md:59:92": {
+      "key": "memory:memory/2026-06-22-session-0957.md:59:92",
+      "path": "memory/2026-06-22-session-0957.md",
+      "startLine": 59,
+      "endLine": 92,
+      "source": "memory",
+      "snippet": "| Service | Status | Port/PID | File | |---------|--------|----------|------| | SAOS Webhook Bridge | ✅ Running | port 8767 | `saos-webhook-bridge.py` | | LaunchAgent | ✅ Loaded | auto-restart | `net.systack.webhook-bridge.plist` | --- ## Next Steps 1. **Set Stripe redirects** — In Stripe dashboard, set \"After payment\" URLs on 4 active links 2. **Deactivate old links** — 6 duplicate/deprecated links in Stripe dashboard 3. **Test end-to-end** — Stripe test mode → onboard form → webhook → provisioning 4. **Add Vultr key to pipeline** — Pipeline currently runs in test mode without key --- ## Files Changed - `systack-site/pricing.html` — Removed Personal+, fixed annual prices - `systack-sit",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.5041367083787918,
+      "maxScore": 0.5101836770772934,
+      "firstRecalledAt": "2026-06-22T16:20:42.453Z",
+      "lastRecalledAt": "2026-06-22T16:26:24.809Z",
+      "queryHashes": [
+        "0af82f0d5364",
+        "d7fc2aaafa53",
+        "ecda8ea0f1c7"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-22-session-0957.md",
+        "port/pid",
+        "saos-webhook-bridge.py",
+        "auto-restart",
+        "net.systack.webhook-bridge.plist",
+        "duplicate/deprecated",
+        "end-to-end",
+        "systack-site/pricing.html"
+      ]
+    },
+    "memory:memory/2026-06-19-enterprise-stripe-integration.md:48:76": {
+      "key": "memory:memory/2026-06-19-enterprise-stripe-integration.md:48:76",
+      "path": "memory/2026-06-19-enterprise-stripe-integration.md",
+      "startLine": 48,
+      "endLine": 76,
+      "source": "memory",
+      "snippet": "--- ## Files | File | Location | |------|----------| | stripe_enterprise_integration.py | scripts/ + workspace | | enterprise-checkout-buttons.html | docs/ | | enterprise-config.json | credentials/Green/stripe/ | --- ## Git Commit **Commit:** `9c97de4` on `main` **Repo:** github.com/Phillip-Lowe/systack-saas --- ## Next Steps 1. Configure Stripe webhook endpoint in dashboard 2. Set STRIPE_WEBHOOK_SECRET env var 3. Test end-to-end: pay → webhook → queue → provision --- *Enterprise Stripe integration complete. Production-ready for client onboarding.*",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9704344272613525,
+      "maxScore": 0.49250059127807616,
+      "firstRecalledAt": "2026-06-22T16:20:42.453Z",
+      "lastRecalledAt": "2026-06-22T16:26:18.369Z",
+      "queryHashes": [
+        "0af82f0d5364",
+        "d7fc2aaafa53"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "stripe-enterprise-integration.py",
+        "enterprise-checkout-buttons.html",
+        "enterprise-config.json",
+        "credentials/green/stripe",
+        "stripe-webhook-secret",
+        "end-to-end",
+        "production-ready",
+        "enterprise"
+      ]
+    },
+    "memory:memory/2026-06-03.md:110:138": {
+      "key": "memory:memory/2026-06-03.md:110:138",
+      "path": "memory/2026-06-03.md",
+      "startLine": 110,
+      "endLine": 138,
+      "source": "memory",
+      "snippet": "- Studied current webhook response flow — returns `payment_link` but form only shows generic success - Designed new \"Payment Link Card\" visual element for post-submission display ## Key Design Decisions 1. **Show payment link immediately** — don't rely on email alone; many customers won't check email 2. **Square brand colors for CTA** — blue gradient signals \"this is the payment step\" and builds trust 3. **Order summary included** — customer verifies what they're paying for before clicking 4. **Order ID prominent** — needed for customer service / reference calls 5. **Fallback options** — plain text link + copy-to-clipboard for screen readers and sharing 6. **Existing CSS variables** — uses",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4838537186384201,
+      "maxScore": 0.4838537186384201,
+      "firstRecalledAt": "2026-06-22T16:20:42.453Z",
+      "lastRecalledAt": "2026-06-22T16:20:42.453Z",
+      "queryHashes": [
+        "0af82f0d5364"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "payment-link",
+        "post-submission",
+        "copy-to-clipboard",
+        "studied",
+        "current",
+        "webhook",
+        "response",
+        "flow"
+      ]
+    },
+    "memory:memory/2026-06-22-session-0957.md:27:68": {
+      "key": "memory:memory/2026-06-22-session-0957.md:27:68",
+      "path": "memory/2026-06-22-session-0957.md",
+      "startLine": 27,
+      "endLine": 68,
+      "source": "memory",
+      "snippet": "| SAOS Business | $2,988/yr | `systack.net/saos/onboard.html?session_id={CHECKOUT_SESSION_ID}&plan=business` | **Stripe Links to DEACTIVATE:** - SAOS Enterprise — Annual ($9,588) ❌ - SAOS Business — Annual ($3,588) ❌ - SAOS Enterprise — Monthly (old duplicate) ❌ - SAOS Business — Monthly (old duplicate) ❌ - SAOS Personal+ Monthly ($199) ❌ deprecated - SAOS Personal+ Annual ($1,999) ❌ deprecated ### 3. Updated Onboard Form - Reads `?plan=business` or `?plan=enterprise` from URL - Displays correct plan name (SAOS Business Fleet vs Enterprise Fleet) - Sets hidden `tier` field for webhook ### 4. Vultr API Key — TESTED & WORKING - **Credential:** `credentials/Green/Vultr/VULTR API` (copied fro",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4655522733926773,
+      "maxScore": 0.4655522733926773,
+      "firstRecalledAt": "2026-06-22T16:26:18.366Z",
+      "lastRecalledAt": "2026-06-22T16:26:18.366Z",
+      "queryHashes": [
+        "0df9a74ac2a4"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-22-session-0957.md",
+        "988/yr",
+        "systack.net/saos/onboard.html",
+        "session-id",
+        "checkout-session-id",
+        "credentials/green/vultr/vultr",
+        "saos",
+        "business"
+      ]
+    },
+    "memory:memory/2026-06-17-vultr-provisioning.md:136:161": {
+      "key": "memory:memory/2026-06-17-vultr-provisioning.md:136:161",
+      "path": "memory/2026-06-17-vultr-provisioning.md",
+      "startLine": 136,
+      "endLine": 161,
+      "source": "memory",
+      "snippet": "**Commit:** `40cb7dc` — \"Add Vultr VPS provisioning script with tests\" **Repo:** https://github.com/Phillip-Lowe/systack-saas.git --- ## Credential Requirements ### Vultr API Key 1. Login to https://my.vultr.com/ 2. Go to Account → API → Add API Key 3. Copy key → store securely (keychain: `vultr-api-key`) 4. Scope needed: `compute:write`, `compute:read` ### Tailscale Auth Key 1. Login to https://login.tailscale.com/admin 2. Settings → Keys → Generate auth key 3. Tag: `tag:saos-client` 4. Reusable: Yes (for automation) 5. Ephemeral: No 6. Store securely (keychain: `tailscale-auth-key`) --- *Session saved 2026-06-17 06:18 CDT* *Next: Get API keys and run first real VPS test*",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.492609217762947,
+      "maxScore": 0.492609217762947,
+      "firstRecalledAt": "2026-06-22T16:26:24.807Z",
+      "lastRecalledAt": "2026-06-22T16:26:24.807Z",
+      "queryHashes": [
+        "ecb4517bef99"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-17-vultr-provisioning.md",
+        "my.vultr.com",
+        "vultr-api-key",
+        "login.tailscale.com/admin",
+        "saos-client",
+        "tailscale-auth-key",
+        "vultr",
+        "provisioning.md"
+      ]
+    },
+    "memory:memory/2026-06-17-provisioning-complete.md:95:147": {
+      "key": "memory:memory/2026-06-17-provisioning-complete.md:95:147",
+      "path": "memory/2026-06-17-provisioning-complete.md",
+      "startLine": 95,
+      "endLine": 147,
+      "source": "memory",
+      "snippet": "```bash export VULTR_API_KEY=\"your-key\" export TAILSCALE_AUTH_KEY=\"your-key\" export N8N_API_KEY=\"your-key\" python3 scripts/provision_pipeline.py \\ --client-id CLIENT001 \\ --tier business \\ --email \"client@example.com\" \\ --agent-name \"Percy\" ``` --- ## Files Committed | File | Description | |------|-------------| | `scripts/provision_vps.py` | Vultr VPS provisioning | | `scripts/deploy_templates.py` | n8n template deployment | | `scripts/health_check.py` | Deployment validation | | `scripts/send_client_email.py` | Client welcome email | | `scripts/provision_pipeline.py` | Complete orchestrator | | `scripts/test_provision.py` | VPS tests (7) | | `scripts/test_full_pipeline.py` | Pi",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.47269233167171476,
+      "maxScore": 0.47269233167171476,
+      "firstRecalledAt": "2026-06-22T16:26:24.807Z",
+      "lastRecalledAt": "2026-06-22T16:26:24.807Z",
+      "queryHashes": [
+        "ecb4517bef99"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "vultr-api-key",
+        "your-key",
+        "tailscale-auth-key",
+        "n8n-api-key",
+        "scripts/provision-pipeline.py",
+        "client-id",
+        "example.com",
+        "agent-name"
+      ]
+    },
+    "memory:memory/2026-06-17-provisioning-complete.md:1:42": {
+      "key": "memory:memory/2026-06-17-provisioning-complete.md:1:42",
+      "path": "memory/2026-06-17-provisioning-complete.md",
+      "startLine": 1,
+      "endLine": 42,
+      "source": "memory",
+      "snippet": "# SAOS Provisioning Pipeline — Complete Build Summary **Date:** 2026-06-17 06:29 CDT **Status:** ✅ ALL COMPONENTS BUILT AND TESTED **Repo:** https://github.com/Phillip-Lowe/systack-saas.git --- ## Components Built ### 1. VPS Provisioning (`scripts/provision_vps.py`) - **Vultr API v2** integration (create, list, destroy instances) - **Cloud-init** generation for automated setup - **Tier-based plans:** Business (4c/16GB), Enterprise (4c/16GB+support), Test (1c/1GB) - **Auto-installs:** Tailscale, Ollama, Docker, OpenClaw, n8n, UFW, fail2ban - **Test mode** for safe development ### 2. Template Deployment (`scripts/deploy_templates.py`) - **n8n workflow import** via REST API - **Tier-ap",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5251588717103004,
+      "maxScore": 0.5251588717103004,
+      "firstRecalledAt": "2026-06-22T16:26:24.809Z",
+      "lastRecalledAt": "2026-06-22T16:26:24.809Z",
+      "queryHashes": [
+        "ecda8ea0f1c7"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "scripts/provision-vps.py",
+        "cloud-init",
+        "tier-based",
+        "4c/16gb",
+        "1c/1gb",
+        "auto-installs",
+        "scripts/deploy-templates.py",
+        "tier-ap"
+      ]
+    },
+    "memory:memory/2026-06-11-full-session-log.md:40:83": {
+      "key": "memory:memory/2026-06-11-full-session-log.md:40:83",
+      "path": "memory/2026-06-11-full-session-log.md",
+      "startLine": 40,
+      "endLine": 83,
+      "source": "memory",
+      "snippet": "- Posted about no-show prevention system - Focus: customer retention, revenue protection --- ## Key Decisions 1. **Every automation gets docs** — hard rule, three audiences 2. **Test/prod separation** — separate DBs (`systack_noshow` / `systack_test`) 3. **Frontend template** — one canonical form, cloned per client 4. **Pricing updated** — booking system now $2,500 + $299/mo (includes no-show prevention) --- ## Files Created/Modified | File | Action | |------|--------| | `memory/2026-06-11-session-summary.md` | Session recap | | `memory/2026-06-11-noshow-prevention-complete.md` | System status | | `memory/2026-06-11-systack-site-update.md` | Site changes | | `memory/2026-06-11-systack-",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.43827642798423766,
+      "maxScore": 0.43827642798423766,
+      "firstRecalledAt": "2026-06-22T16:36:54.032Z",
+      "lastRecalledAt": "2026-06-22T16:36:54.032Z",
+      "queryHashes": [
+        "c11b1ba0fa3c"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-11-full-session-log.md",
+        "no-show",
+        "test/prod",
+        "systack-noshow",
+        "systack-test",
+        "299/mo",
+        "created/modified",
+        "memory/2026-06-11-systack"
+      ]
+    },
+    "memory:memory/2026-06-06-pricing-alignment.md:68:83": {
+      "key": "memory:memory/2026-06-06-pricing-alignment.md:68:83",
+      "path": "memory/2026-06-06-pricing-alignment.md",
+      "startLine": 68,
+      "endLine": 83,
+      "source": "memory",
+      "snippet": "- What we improve first **The $49 tier** = Basic version without voice, single device, simpler dashboard ## Files Updated - `systack-site/services/service-packages.md` — Added Personal tiers - `saos-products/PRODUCT-LINE.md` — Full product architecture - `saos-products/STRIPE-CATALOG.md` — Stripe SKU reference ## Next Actions 1. Create 11 new Stripe products with buy buttons 2. Update site with new buy button IDs 3. Deprecate SAOS Solo ($149) — redirect to Personal+ ($99) 4. Build Personal tier templates (simpler than Business) 5. Test Percy as Personal+ demo",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4301438152790069,
+      "maxScore": 0.4301438152790069,
+      "firstRecalledAt": "2026-06-22T16:36:54.032Z",
+      "lastRecalledAt": "2026-06-22T16:36:54.032Z",
+      "queryHashes": [
+        "c11b1ba0fa3c"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-06-pricing-alignment.md",
+        "saos-products/product-line.md",
+        "saos-products/stripe-catalog.md",
+        "pricing",
+        "alignment.md",
+        "what",
+        "improve",
+        "first"
+      ]
+    },
+    "memory:memory/2026-06-20-utopia-deli-v1-messaging-activation.md:1:36": {
+      "key": "memory:memory/2026-06-20-utopia-deli-v1-messaging-activation.md:1:36",
+      "path": "memory/2026-06-20-utopia-deli-v1-messaging-activation.md",
+      "startLine": 1,
+      "endLine": 36,
+      "source": "memory",
+      "snippet": "# Session — 2026-06-20 03:28 CDT ## Utopia Deli V1 Messaging System — COMPLETE ### What Was Done #### 1. Consent & Privacy (TCPA/CAN-SPAM Compliance) | File | Change | |------|--------| | `pickup-order/index.html` | Consent text under EMAIL field | | `pickup-order/index.html` | Footer links clickable (Maps, Phone, Email) | | `catering/index.html` | Consent text under EMAIL field | | `catering/index.html` | Pickup info moved AFTER notes, before submit | | `privacy.html` | New page with SMS, Email, Data Protection terms | | `pickup-order/privacy.html` | Copy of privacy page for subdirectory | | `privacy.html` | Clickable logo links to homepage | | `privacy.html` | Footer slogan: \"It's just g",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.45344066023826596,
+      "maxScore": 0.45344066023826596,
+      "firstRecalledAt": "2026-06-22T16:36:54.034Z",
+      "lastRecalledAt": "2026-06-22T16:36:54.034Z",
+      "queryHashes": [
+        "ff3ce597f2a6"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "tcpa/can-spam",
+        "pickup-order/index.html",
+        "catering/index.html",
+        "privacy.html",
+        "pickup-order/privacy.html",
+        "utopia",
+        "deli",
+        "messaging"
       ]
     }
   }

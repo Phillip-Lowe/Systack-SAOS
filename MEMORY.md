@@ -28,6 +28,45 @@ _This is my curated memory — the distilled essence, not raw logs. For daily lo
 
 ---
 
+## 2026-06-22 — SECURITY INCIDENT: OAuth Secret Exposed in Public Repo
+
+**Status:** REMEDIATED — history rewritten, `.gitignore` added, user action pending
+**Incident Log:** `memory/2026-06-22-security-incident-oauth-exposure.md`
+**Protocol Added:** AGENTS.md RULE 7 — Security Incident Response
+
+### What Happened
+- Google Cloud flagged exposed OAuth client secret in `Phillip-Lowe/systack-saas` public repo
+- File: `Sol-Knowledge/credentials/Green/n8n/Google maps api.json`
+- Contained: OAuth client secret + Google Maps API key
+- Exposure: Public GitHub history for unknown duration
+
+### Remediation Completed
+1. Deleted file from current HEAD (commit `cdbd82e`)
+2. Rewrote all 59 commits with BFG — removed file from entire history
+3. Force-pushed cleaned history (`6b98abc`)
+4. Verified removal (GitHub raw URL returns 404)
+5. Added `.gitignore` with credential protection rules
+
+### User Actions Still Required
+- Rotate OAuth client secret in Google Cloud Console
+- Regenerate Google Maps API key
+- Check logs for unauthorized usage
+- Update n8n/applications with new credentials
+
+### Lessons
+- **`.gitignore` must exist BEFORE credential files are added**
+- **Git history is permanent — deletion from HEAD is not enough**
+- **BFG is the right tool for history rewriting** (faster than git-filter-repo)
+- **Force-push affects all collaborators** — they must re-clone
+- **Brand protection during incidents:** SAOS ≠ "SaaS" — always use correct product name
+
+### Prevention
+- Added to pitfall catalog: "Committed credential file without .gitignore"
+- AGENTS.md now has RULE 7: Security Incident Response Protocol
+- `.gitignore` rules: `*secret*`, `*credential*`, `*oauth*`, `*google*.json`, `*maps*.json`, `credentials/` directory
+
+---
+
 ## 2026-06-17 — SAOS Provisioning Pipeline COMPLETE (Build Night)
 
 **Status:** All components built, tested, committed
@@ -198,6 +237,8 @@ Build → deploy → breaks → remember too late → fix → repeat.
 | 2026-06-10 | n8n IF node | Filename string match | `"Phone bill .pdf"` failed `endsWith ".pdf"` |
 | 2026-06-10 | n8n IMAP | Shallow MIME parsing | IMAP default mode missed nested attachments |
 | 2026-06-11 | Postgres DB | Bookings in wrong database | Created `bookings` in `invoice_pipeline` instead of dedicated `systack_noshow` |
+| 2026-06-22 | SAOS branding | Called SAOS "SaaS" in security alert | Exposed secret notification referred to product as "SaaS" instead of SAOS — brand confusion |
+| 2026-06-22 | Git / OAuth | Committed credential file without .gitignore | OAuth client secret + Maps API key exposed publicly in systack-saas repo; required BFG history rewrite |
 
 ### Checklist (copy before builds)
 ```
