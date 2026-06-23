@@ -204,3 +204,14 @@ Port 8768 is in use by another program. Either identify and stop that program, o
 127.0.0.1 - - [22/Jun/2026 11:12:02] "GET /api/portal/client?client_id=1 HTTP/1.1" 200 -
 127.0.0.1 - - [22/Jun/2026 11:12:02] "GET /api/portal/tasks?client_id=1 HTTP/1.1" 200 -
 127.0.0.1 - - [22/Jun/2026 11:12:02] "GET /api/portal/status?client_id=1 HTTP/1.1" 200 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8768
+ * Running on http://192.168.1.248:8768
+[33mPress CTRL+C to quit[0m
+127.0.0.1 - - [22/Jun/2026 11:48:17] "[33mGET /health HTTP/1.1[0m" 404 -
+127.0.0.1 - - [22/Jun/2026 11:48:30] "[33mGET / HTTP/1.1[0m" 404 -
+127.0.0.1 - - [22/Jun/2026 11:48:30] "[33mGET /api/clients HTTP/1.1[0m" 404 -
+127.0.0.1 - - [22/Jun/2026 11:48:48] "GET /api/portal/status HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2026 18:12:54] "GET /api/portal/status HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2026 18:28:00] "GET /api/portal/status HTTP/1.1" 200 -

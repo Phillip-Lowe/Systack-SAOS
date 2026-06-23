@@ -2,50 +2,52 @@ const day = $input.first().json.campaign_day;
 
 const baseURL = "https://order.theutopiadeli.com";
 
+const baseRepoURL = 'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/main';
+
 const images = {
-  logo: 'https://order.theutopiadeli.com/images/logo.png',
+  logo: `${baseRepoURL}/TheUtopiaDeliLogo.png`,
   monday: [
-    'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/Deli%20Meal%20Prep%20Plate%201.jpg',
-    'https://order.theutopiadeli.com/images/mealprep-mediterranean.jpg',
-    'https://order.theutopiadeli.com/images/mealprep-smokey-taco.jpg',
-    'https://order.theutopiadeli.com/images/mealprep-bbq-mac.jpg',
-    'https://order.theutopiadeli.com/images/cold_pressed_juice_v2.jpg',
-    'https://order.theutopiadeli.com/catering/images/dessert-raspberry-mousse.jpg',
+    `${baseRepoURL}/Deli%20Meal%20Prep%20Plate%201.jpg`,
+    `${baseRepoURL}/mealprep-mediterranean.jpg`,
+    `${baseRepoURL}/mealprep-smokey-taco.jpg`,
+    `${baseRepoURL}/mealprep-bbq-mac.jpg`,
+    `${baseRepoURL}/cold_pressed_juice_v2.jpg`,
+    `${baseRepoURL}/images/dessert-raspberry-mousse.jpg`,
   ],
   tuesday: [
-    'https://order.theutopiadeli.com/images/Deli%20Catering%20Salad.jpg',
-    'https://order.theutopiadeli.com/images/Deli%20Catering%20Fruit%20Salad.jpg',
-    'https://order.theutopiadeli.com/images/menu/cowboy_chicken.webp',
+    `${baseRepoURL}/Deli%20Catering%20Salad.jpg`,
+    `${baseRepoURL}/Deli%20Catering%20Fruit%20Salad.jpg`,
+    `${baseRepoURL}/Deli%20Meal%20Prep%20Plate%201.jpg`,
   ],
   wednesday: [
-    'https://order.theutopiadeli.com/images/mealprep-smokey-taco.jpg',
-    'https://order.theutopiadeli.com/images/mealprep-chili-noodles.jpg',
-    'https://order.theutopiadeli.com/images/mealprep-peanut-tofu.jpg'
+    `${baseRepoURL}/mealprep-smokey-taco.jpg`,
+    `${baseRepoURL}/mealprep-chili-noodles.jpg`,
+    `${baseRepoURL}/mealprep-peanut-tofu.jpg`
   ],
   thursday: [
-    'https://order.theutopiadeli.com/catering/images/meal-mediterranean-harvest.jpg',
-    'https://order.theutopiadeli.com/images/menu/stek%20Philly.jpg',
-    'https://order.theutopiadeli.com/images/menu/loaded_bacon_fry.jpg',
-    'https://order.theutopiadeli.com/images/menu/chicken_poppers_v3.jpg',
+    `${baseRepoURL}/Deli%20Meal%20Prep%20Plate%201.jpg`,
+    `${baseRepoURL}/chicken_philly.jpg`,
+    `${baseRepoURL}/loaded_bacon_fry.jpg`,
+    `${baseRepoURL}/chicken_poppers_v3.jpg`,
   ],
   friday: [
-    'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/Deli%20Happy%20customer%20lady.jpg',
-    'https://order.theutopiadeli.com/images/stek%20Philly.jpg',
-    'https://order.theutopiadeli.com/images/loaded_bacon_fry.jpg',
-    'https://order.theutopiadeli.com/images/chicken_poppers_v3.jpg',
-    'https://order.theutopiadeli.com/images/cookies_v2.jpg',
-    'https://order.theutopiadeli.com/images/cold_pressed_juice_v2.jpg'
+    `${baseRepoURL}/Deli%20Happy%20customer%20lady.jpg`,
+    `${baseRepoURL}/chicken_philly.jpg`,
+    `${baseRepoURL}/loaded_bacon_fry.jpg`,
+    `${baseRepoURL}/chicken_poppers_v3.jpg`,
+    `${baseRepoURL}/cookies_v2.jpg`,
+    `${baseRepoURL}/cold_pressed_juice_v2.jpg`
   ],
   saturday: [
-    'https://order.theutopiadeli.com/images/menu/stek%20Philly.jpg',
-    'https://order.theutopiadeli.com/images/menu/chicken_poppers_v3.jpg',
-    'https://order.theutopiadeli.com/images/menu/loaded_bacon_fry.jpg',
-    'https://order.theutopiadeli.com/images/cold_pressed_juice_v2.jpg',
+    `${baseRepoURL}/chicken_philly.jpg`,
+    `${baseRepoURL}/chicken_poppers_v3.jpg`,
+    `${baseRepoURL}/loaded_bacon_fry.jpg`,
+    `${baseRepoURL}/cold_pressed_juice_v2.jpg`,
   ],
   sunday: [
-    'https://order.theutopiadeli.com/catering/images/meal-mediterranean-harvest.jpg',
-    'https://order.theutopiadeli.com/images/menu/stek%20Philly.jpg',
-    'https://order.theutopiadeli.com/images/menu/chicken_poppers_v3.jpg',
+    `${baseRepoURL}/Deli%20Meal%20Prep%20Plate%201.jpg`,
+    `${baseRepoURL}/chicken_philly.jpg`,
+    `${baseRepoURL}/chicken_poppers_v3.jpg`,
   ]
 };
 
@@ -266,8 +268,8 @@ Get a Catering Quote
 <div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
 <img src="${images.tuesday[2]}" style="width:100%;height:140px;object-fit:cover;display:block;">
 <div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Pickup Platters</p>
-<p style="margin:0;color:#888;font-size:12px;">Pre-made platters ready for pickup — perfect for game nights & gatherings</p>
+<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Meal Prep & Bowls</p>
+<p style="margin:0;color:#888;font-size:12px;">Fresh, chef-crafted bowls — perfect for individual meals or group orders</p>
 </div>
 </div>
 

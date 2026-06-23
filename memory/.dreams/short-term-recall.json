@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-22T16:36:54.034Z",
+  "updatedAt": "2026-06-22T23:18:03.466Z",
   "entries": {
     "memory:memory/2026-06-20-session-post-mortem.md:45:74": {
       "key": "memory:memory/2026-06-20-session-post-mortem.md:45:74",
@@ -27737,15 +27737,16 @@
       "endLine": 37,
       "source": "memory",
       "snippet": "# Session Save - 2026-06-13 Utopia Deli Menu Image Updates ## Summary Complete update of all Utopia Deli menu item images to correct photos. ## Changes Made ### Images Updated (All Items) | Item | Old Image | New Image | Status | |------|-----------|-----------|--------| | Buffalo Chik'n Sliders | `IMG_2627.WEBP` (wrong - shared with bourbon) | `buffalo_chikn_slider.jpg` | ✅ Fixed | | Rocktown Bourbon Sliders | `IMG_2627.WEBP` (wrong - shared with buffalo) | `rocktown_bourbon_slider.jpg` | ✅ Fixed | | Chik'n Fried Chik'n Sub | `chicken_fried_chicken_sub.jpg` (wrong - calamari) | `chicken_fried_chikn_sub.png` | ✅ Fixed | | Potato Chip Spirals | `generic_fries.jpg` (wrong - plain fries) | `",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.5361600413918495,
+      "totalScore": 1.0366262689232826,
       "maxScore": 0.5361600413918495,
       "firstRecalledAt": "2026-06-22T11:05:33.026Z",
-      "lastRecalledAt": "2026-06-22T11:05:33.026Z",
+      "lastRecalledAt": "2026-06-22T23:15:21.237Z",
       "queryHashes": [
-        "f08937e13a10"
+        "f08937e13a10",
+        "fdbdd02478ee"
       ],
       "recallDays": [
         "2026-06-22"
@@ -27768,15 +27769,16 @@
       "endLine": 35,
       "source": "memory",
       "snippet": "# Session — 2026-06-18 13:01 CDT — Meal Prep Photos Update ## What Happened Identified new meal prep images in `utopia-deli-revamp/images/Meal Prep/` and matched them to current menu items in `catering/catering-form.js`. ### Images Copied → `catering/images/` | Source File | → Menu Item | New File | |---|---|---| | `Mediterranean Harvest Bowl.JPG` | Mediterranean Harvest Bowl | `meal-mediterranean-harvest.jpg` | | `Thai peanut crunch bowl.JPG` | Thai Peanut Crunch Bowl | `meal-thai-peanut-crunch.jpg` | | `Eggplant parmesean lasagna.JPG` | Eggplant Parmesan | `meal-eggplant-parm.jpg` | | `Mango Chia Seed Pudding.JPG` | Mango Chia Seed Pudding | `dessert-mango-chia.jpg` | | *(already stage",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.5238919764757156,
+      "totalScore": 1.0452048927545547,
       "maxScore": 0.5238919764757156,
       "firstRecalledAt": "2026-06-22T11:05:33.026Z",
-      "lastRecalledAt": "2026-06-22T11:05:33.026Z",
+      "lastRecalledAt": "2026-06-22T23:18:03.466Z",
       "queryHashes": [
-        "f08937e13a10"
+        "f08937e13a10",
+        "41fbfa365c97"
       ],
       "recallDays": [
         "2026-06-22"
@@ -27830,15 +27832,16 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "# Utopia Deli Menu Image Update - Complete **Date:** 2026-06-13 **Time:** ~04:00-04:20 CDT **Status:** ✅ ALL IMAGES FIXED AND PUSHED ## Problem Multiple menu items had incorrect or shared images: - Buffalo Chik'n Sliders and Rocktown Bourbon Sliders both used `IMG_2627.WEBP` - Chik'n Fried Chik'n Sub showed calamari instead of fried chicken - Potato Chip Spirals showed generic fries instead of spiral chips ## Solution Located correct images in `utopia-deli-revamp/images/` folder and updated all references. ## Final Image Mapping | Menu Item | Image File | Source | |-----------|------------|--------| | Buffalo Chik'n Sliders | `images/buffalo_chikn_slider.jpg` | deli-revamp folder | | Roc",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.5187876582145691,
+      "totalScore": 1.0144940346479414,
       "maxScore": 0.5187876582145691,
       "firstRecalledAt": "2026-06-22T11:05:33.026Z",
-      "lastRecalledAt": "2026-06-22T11:05:33.026Z",
+      "lastRecalledAt": "2026-06-22T23:15:21.237Z",
       "queryHashes": [
-        "f08937e13a10"
+        "f08937e13a10",
+        "fdbdd02478ee"
       ],
       "recallDays": [
         "2026-06-22"
@@ -27892,15 +27895,16 @@
       "endLine": 47,
       "source": "memory",
       "snippet": "# Meal Prep Page Update — 2026-06-11 ## Changes Made ### 1. Real Meal Photos Added Copied 7 images from `utopia-deli-revamp/images/Meal Prep/` to `catering/images/` with descriptive names: | File | Food Item | |------|-----------| | `meal-buffalo-chickpea.jpg` | Buffalo Chickpea Ranch Bowl | | `meal-teriyaki-tofu.jpg` | Teriyaki Tofu Bowl | | `meal-red-lentil-masala.jpg` | Red Lentil Coconut Masala | | `meal-peanut-ginger.jpg` | Peanut Ginger Bowl | | `meal-cajun-northern-beans.jpg` | Cajun Northern Beans & Rice | | `meal-rainbow-bbq-tofu.jpg` | Rainbow BBQ Tofu Wild Rice | | `dessert-raspberry-mousse.jpg` | Raspberry Dark Chocolate Mousse | ### 2. Menu Items Updated (`catering-form.js`)",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.5141550421714782,
+      "totalScore": 1.0263264149427413,
       "maxScore": 0.5141550421714782,
       "firstRecalledAt": "2026-06-22T11:05:33.026Z",
-      "lastRecalledAt": "2026-06-22T11:05:33.026Z",
+      "lastRecalledAt": "2026-06-22T23:18:03.466Z",
       "queryHashes": [
-        "f08937e13a10"
+        "f08937e13a10",
+        "41fbfa365c97"
       ],
       "recallDays": [
         "2026-06-22"
@@ -28581,16 +28585,18 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "# Session Context — 2026-06-07 01:01 CDT ## Current Issue: Stripe Buy Buttons Show \"Something went wrong\" Screenshot shows all 3 monthly buttons (Personal+ $199, Business $299, Enterprise $799) display \"Something went wrong\" instead of the checkout button. The annual text links (\"Save $389/year\", \"Pay annually\") appear to work. ## What We Know 1. **Payment links are ACTIVE** in Stripe dashboard 2. **Links return 200** when tested via curl 3. **Buy Button IDs match** payment link IDs (format: buy_btn_[plink_id_without_prefix]) 4. **Publishable key is LIVE mode** (pk_live_51Tckdx...) 5. **But embedded buttons show error** in browser ## Root Cause Analysis Most likely causes: 1. **Paymen",
-      "recallCount": 2,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.9711583465337753,
+      "totalScore": 1.9206727564334867,
       "maxScore": 0.4994360387325287,
       "firstRecalledAt": "2026-06-22T12:56:37.731Z",
-      "lastRecalledAt": "2026-06-22T12:59:26.209Z",
+      "lastRecalledAt": "2026-06-22T23:09:00.473Z",
       "queryHashes": [
         "43f5fb3feae9",
-        "8e4fb58a81df"
+        "8e4fb58a81df",
+        "29308cf04866",
+        "fc32a2aea943"
       ],
       "recallDays": [
         "2026-06-22"
@@ -29038,16 +29044,17 @@
       "endLine": 65,
       "source": "memory",
       "snippet": "Replace embedded Buy Buttons with direct Stripe Checkout links: Instead of: ```html <script async src=\"https://js.stripe.com/v3/buy-button.js\"></script> <stripe-buy-button buy-button-id=\"...\" publishable-key=\"...\"> </stripe-buy-button> ``` Use: ```html <a href=\"https://buy.stripe.com/7sYcMYfZLagn9wQ7MG87K03\" class=\"cta-btn\">Subscribe Monthly</a> <a href=\"https://buy.stripe.com/bJecMYdRD88f8sM5Ey87K04\" class=\"cta-btn\">Subscribe Annual</a> ``` ## Files Updated This Session - systack-site/pricing.html — added annual options (but buttons broken) - systack-site/personal-agent/index.html — added annual options (but buttons broken) - systack-site/services/service-packages.md — fixed deprecated b",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.9748047500848769,
+      "totalScore": 1.445344391465187,
       "maxScore": 0.5079312682151794,
       "firstRecalledAt": "2026-06-22T12:59:26.209Z",
-      "lastRecalledAt": "2026-06-22T16:26:18.369Z",
+      "lastRecalledAt": "2026-06-22T23:09:00.473Z",
       "queryHashes": [
         "8e4fb58a81df",
-        "d7fc2aaafa53"
+        "d7fc2aaafa53",
+        "fc32a2aea943"
       ],
       "recallDays": [
         "2026-06-22"
@@ -30273,16 +30280,17 @@
       "endLine": 34,
       "source": "memory",
       "snippet": "# Session — 2026-06-22 09:57 CDT **User directive:** \"Save this everywhere\" --- ## What Was Accomplished ### 1. Rebuilt SAOS Webhook Bridge + Poller (Lost in Workspace Reorg) - **File:** `saos-webhook-bridge.py` — Receives n8n webhook calls, triggers provisioning - **File:** `saos_provision_poller.py` — Polls n8n for webhook execution data - **Status:** Bridge running on port 8767 via launchd - **Tested:** POST to bridge triggers pipeline in test mode ✅ ### 2. Cleaned Up Stripe Payment Links + Pricing - Removed Personal+ tier from pricing page - Fixed Business annual: $3,588 → $2,988 (2 months free) - Fixed Enterprise annual: $9,588 → $7,990 (2 months free) - Personal-agent page now redi",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.9584263503551482,
+      "totalScore": 1.4367400348186492,
       "maxScore": 0.48842068314552306,
       "firstRecalledAt": "2026-06-22T16:19:24.028Z",
-      "lastRecalledAt": "2026-06-22T16:36:54.034Z",
+      "lastRecalledAt": "2026-06-22T23:09:00.473Z",
       "queryHashes": [
         "0bf37512a57c",
-        "ff3ce597f2a6"
+        "ff3ce597f2a6",
+        "fc32a2aea943"
       ],
       "recallDays": [
         "2026-06-22"
@@ -30369,17 +30377,18 @@
       "endLine": 92,
       "source": "memory",
       "snippet": "| Service | Status | Port/PID | File | |---------|--------|----------|------| | SAOS Webhook Bridge | ✅ Running | port 8767 | `saos-webhook-bridge.py` | | LaunchAgent | ✅ Loaded | auto-restart | `net.systack.webhook-bridge.plist` | --- ## Next Steps 1. **Set Stripe redirects** — In Stripe dashboard, set \"After payment\" URLs on 4 active links 2. **Deactivate old links** — 6 duplicate/deprecated links in Stripe dashboard 3. **Test end-to-end** — Stripe test mode → onboard form → webhook → provisioning 4. **Add Vultr key to pipeline** — Pipeline currently runs in test mode without key --- ## Files Changed - `systack-site/pricing.html` — Removed Personal+, fixed annual prices - `systack-sit",
-      "recallCount": 3,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.5041367083787918,
+      "totalScore": 1.9897293061017989,
       "maxScore": 0.5101836770772934,
       "firstRecalledAt": "2026-06-22T16:20:42.453Z",
-      "lastRecalledAt": "2026-06-22T16:26:24.809Z",
+      "lastRecalledAt": "2026-06-22T23:09:00.472Z",
       "queryHashes": [
         "0af82f0d5364",
         "d7fc2aaafa53",
-        "ecda8ea0f1c7"
+        "ecda8ea0f1c7",
+        "29308cf04866"
       ],
       "recallDays": [
         "2026-06-22"
@@ -30673,6 +30682,384 @@
         "utopia",
         "deli",
         "messaging"
+      ]
+    },
+    "memory:memory/2026-06-08-morning-session.md:46:83": {
+      "key": "memory:memory/2026-06-08-morning-session.md:46:83",
+      "path": "memory/2026-06-08-morning-session.md",
+      "startLine": 46,
+      "endLine": 83,
+      "source": "memory",
+      "snippet": "- Client ID: `777440920973-kuakqlnq701ootpnfbbji977qc3ulf3p.apps.googleusercontent.com` - Status: Configured but not yet wired to workflow ### 3. Lessons Learned 1. **n8n API key expires** — stored in multiple places, check credentials folder when auth fails 2. **JSON → JS code encoding is fragile** — backslashes multiply through JSON parsing. Use template literals for HTML strings. 3. **Routing nodes (Switch/If) via API = broken** — always create in UI or use Code node workarounds 4. **EmailSend nodes replace data** — downstream nodes see email metadata, not original payload 5. **Webhook paths are sticky** — deleting a workflow doesn't unregister its webhook path ## Status | Project | S",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4838396370410919,
+      "maxScore": 0.4838396370410919,
+      "firstRecalledAt": "2026-06-22T23:13:18.387Z",
+      "lastRecalledAt": "2026-06-22T23:13:18.387Z",
+      "queryHashes": [
+        "1fa01cc04c51"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-08-morning-session.md",
+        "switch/if",
+        "morning",
+        "session.md",
+        "client",
+        "status",
+        "configured",
+        "but"
+      ]
+    },
+    "memory:memory/2026-06-22-utopia-deli-email-campaign.md:1:38": {
+      "key": "memory:memory/2026-06-22-utopia-deli-email-campaign.md:1:38",
+      "path": "memory/2026-06-22-utopia-deli-email-campaign.md",
+      "startLine": 1,
+      "endLine": 38,
+      "source": "memory",
+      "snippet": "# Session — 2026-06-22 ~10:00 CDT — Utopia Deli Email Campaign Complete ## Summary Built complete weekly email campaign system for The Utopia Deli in Phillip's exact preferred format. ## What Was Built **Master file:** `email-campaign/utopia-deli-all-days.js` - Single n8n Function node with all 7 days - Phillip's exact format: `images[day]` arrays, `templates[day]` lookup, same HTML structure - Updated schedule: Meal prep closes Wed noon, reopens Thu 8 PM, pickup Thu 12:30-7:30 - Changed all \"Walk up\" → \"Order online\" **7 daily emails:** | Day | Subject | Focus | |-----|---------|-------| | Mon | 🍱 Meal Prep is Open | Opens window | | Tue | 🎉 Planning an Event? | Catering | | Wed | ⏰ C",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.0080610811710358,
+      "maxScore": 0.5413446247577667,
+      "firstRecalledAt": "2026-06-22T23:15:21.237Z",
+      "lastRecalledAt": "2026-06-22T23:15:33.465Z",
+      "queryHashes": [
+        "fdbdd02478ee",
+        "fa776939ae18"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "30-7",
+        "utopia",
+        "deli",
+        "email",
+        "campaign.md",
+        "cdt",
+        "campaign",
+        "complete"
+      ]
+    },
+    "memory:memory/2026-06-20-utopia-deli-v1-messaging.md:1:38": {
+      "key": "memory:memory/2026-06-20-utopia-deli-v1-messaging.md:1:38",
+      "path": "memory/2026-06-20-utopia-deli-v1-messaging.md",
+      "startLine": 1,
+      "endLine": 38,
+      "source": "memory",
+      "snippet": "# Session — 2026-06-20 02:55 CDT ## Utopia Deli V1 Messaging System — Partial Build ### What Was Done #### 1. Site Updates (All Pushed to GitHub Pages) | File | Change | |------|--------| | `pickup-order/index.html` | Added consent text under EMAIL field | | `catering/index.html` | Added consent text under EMAIL field | | `pickup-order/privacy.html` | New: SMS/email terms, opt-out, data protection | | `privacy.html` | New: root copy for link consistency | | `pickup-order/menu-data.js` | Juice: single option $5.00 10oz | | `catering/catering-form.js` | Juice: desc updated to 10oz | | `privacy.html` + `pickup-order/privacy.html` | Clickable logo, footer slogan \"It's just good food.\", footer",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9603315591812133,
+      "maxScore": 0.4931402504444122,
+      "firstRecalledAt": "2026-06-22T23:15:21.237Z",
+      "lastRecalledAt": "2026-06-22T23:15:33.465Z",
+      "queryHashes": [
+        "fdbdd02478ee",
+        "fa776939ae18"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "pickup-order/index.html",
+        "catering/index.html",
+        "pickup-order/privacy.html",
+        "sms/email",
+        "opt-out",
+        "privacy.html",
+        "pickup-order/menu-data.js",
+        "5.00"
+      ]
+    },
+    "memory:memory/2026-06-03-evening-session-complete.md:49:77": {
+      "key": "memory:memory/2026-06-03-evening-session-complete.md:49:77",
+      "path": "memory/2026-06-03-evening-session-complete.md",
+      "startLine": 49,
+      "endLine": 77,
+      "source": "memory",
+      "snippet": "- `workflow_published_version.publishedVersionId` determines which history entry runs - My edits to `workflow_entity` were completely ignored ### Current State (Fixed Before Restart) - `workflow_published_version.publishedVersionId` = `2e82cf8b-00f8-461e-9feb-9f4251a5b357` ✅ - `workflow_history` entry updated with safe Buffer handling ✅ - Build Payment Email node updated to handle missing payment URL gracefully ✅ ## The Restart - `secureCookie` already `false` in `~/.n8n/config` - n8n PID: 54337 (main), 54356 (task-runner) - Kill command: `kill 54337` (should auto-restart via launch agent) - After restart: n8n will load from `workflow_history` via `workflow_published_version` ## Remaining",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.0074401557445525,
+      "maxScore": 0.5144019186496734,
+      "firstRecalledAt": "2026-06-22T23:15:21.238Z",
+      "lastRecalledAt": "2026-06-22T23:15:25.458Z",
+      "queryHashes": [
+        "fb480c2faf1d",
+        "112a28b2534b"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "workflow-entity",
+        "workflow-history",
+        "n8n/config",
+        "task-runner",
+        "auto-restart",
+        "workflow-published-version",
+        "evening",
+        "complete.md"
+      ]
+    },
+    "memory:memory/2026-06-04-n8n-email-fix.md:84:125": {
+      "key": "memory:memory/2026-06-04-n8n-email-fix.md:84:125",
+      "path": "memory/2026-06-04-n8n-email-fix.md",
+      "startLine": 84,
+      "endLine": 125,
+      "source": "memory",
+      "snippet": "### Changes Applied: 1. Branded email HTML with logo, colors, order summary 2. Payment button linking to Square checkout 3. Clean response path (PREP_RESPONSE → Respond) 4. ES5-compatible Code node 5. No `$items()` cross-references 6. Node versions matched to n8n 2.20.7-exp ## Next Steps 1. Access n8n UI when possible 2. Verify workflow visually 3. Save in UI to finalize 4. Test with REAL webhook call (curl or frontend) 5. Verify email renders correctly 6. Check payment link works ## Files Modified - `~/.n8n/database.sqlite` — workflow_entity table ## Testing Command ```bash curl -X POST https://n8n.systack.net/webhook/utopia-deli-html-order-v1 \\ -H \"Content-Type: application/json\" \\",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9810380160808563,
+      "maxScore": 0.4952478796243667,
+      "firstRecalledAt": "2026-06-22T23:15:21.238Z",
+      "lastRecalledAt": "2026-06-22T23:16:08.781Z",
+      "queryHashes": [
+        "fb480c2faf1d",
+        "7864be22c031"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-04-n8n-email-fix.md",
+        "prep-response",
+        "es5-compatible",
+        "cross-references",
+        "2.20.7-exp",
+        "n8n/database.sqlite",
+        "workflow-entity",
+        "content-type"
+      ]
+    },
+    "memory:memory/2026-06-04-n8n-email-fix.md:1:50": {
+      "key": "memory:memory/2026-06-04-n8n-email-fix.md:1:50",
+      "path": "memory/2026-06-04-n8n-email-fix.md",
+      "startLine": 1,
+      "endLine": 50,
+      "source": "memory",
+      "snippet": "# 2026-06-04 — Utopia Deli Email Workflow Fix Session ## What We Were Fixing The Utopia Deli HTML Order v1 workflow was sending plain text emails instead of branded HTML emails with payment links. The user wanted emails that matched the design from the \"Order Received\" workflow. ## What Worked ### ✅ Database Direct Updates - Successfully updated n8n workflow nodes via SQLite - Fixed node connections programmatically - Changed node parameters without UI access ### ✅ Node Version Management - Learned to downgrade node typeVersions for compatibility - Code nodes: v2 → v1 - RespondToWebhook: 1.5 → 1.2 - EmailSend: 2.1 → 2 - HTTPRequest: 4.3 → 4.1 ### ✅ Connection Fixes - Removed duplicate c",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9891267776489258,
+      "maxScore": 0.5047745496034622,
+      "firstRecalledAt": "2026-06-22T23:15:21.238Z",
+      "lastRecalledAt": "2026-06-22T23:15:25.458Z",
+      "queryHashes": [
+        "fb480c2faf1d",
+        "112a28b2534b"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-04-n8n-email-fix.md",
+        "1.5",
+        "1.2",
+        "2.1",
+        "4.3",
+        "4.1",
+        "n8n",
+        "email"
+      ]
+    },
+    "memory:memory/2026-06-03-afternoon-session.md:1:40": {
+      "key": "memory:memory/2026-06-03-afternoon-session.md:1:40",
+      "path": "memory/2026-06-03-afternoon-session.md",
+      "startLine": 1,
+      "endLine": 40,
+      "source": "memory",
+      "snippet": "# 2026-06-03 Afternoon Session — Utopia Deli n8n Fix ## Time: 16:17 CDT ## Status: WORKFLOW PUBLISHED BUT STILL ERRORS ### What We Fixed 1. Identified that MCP update_workflow only updates draft, doesn't activate 2. Used publish_workflow to activate the new version 3. Workflow version a9253036-33cb-4997-9f2d-1fccdaa014db is now active ### Current Problem - Latest execution (565) at 21:16:37 shows ERROR status - Previous executions (561-564) were SUCCESS but were just pings (every 5 min from Cloudflare) - The real order test at 21:16:37 FAILED ### What We Need to Check 1. Get execution 565 error details from n8n UI 2. Check if Normalize + Carry Data Function node is working 3. Verify Post",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.48362027704715727,
+      "maxScore": 0.48362027704715727,
+      "firstRecalledAt": "2026-06-22T23:15:21.238Z",
+      "lastRecalledAt": "2026-06-22T23:15:21.238Z",
+      "queryHashes": [
+        "fb480c2faf1d"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "2026-06-03-afternoon-session.md",
+        "update-workflow",
+        "publish-workflow",
+        "561-564",
+        "afternoon",
+        "session.md",
+        "utopia",
+        "deli"
+      ]
+    },
+    "memory:memory/2026-06-03-evening-session-complete.md:72:100": {
+      "key": "memory:memory/2026-06-03-evening-session-complete.md:72:100",
+      "path": "memory/2026-06-03-evening-session-complete.md",
+      "startLine": 72,
+      "endLine": 100,
+      "source": "memory",
+      "snippet": "- **n8n source**: `packages/@n8n/db/src/entities/workflow-published-version.ts` — entity definition - **n8n source**: `packages/@n8n/db/src/entities/workflow-history.ts` — entity definition - **GitHub Issue #24418**: https://github.com/n8n-io/n8n/issues/24418 — cache not clearing - **GitHub Issue #25071**: https://github.com/n8n-io/n8n/issues/25071 — cached versions persisting ## Files Created - `/Users/philliplowe/.openclaw/workspaces/sol/memory/2026-06-03-afternoon-session.md` - `/Users/philliplowe/.openclaw/workspaces/sol/memory/2026-06-03-afternoon-fix.md` - `/Users/philliplowe/.openclaw/workspaces/sol/memory/2026-06-03-evening-debug.md` - `/Users/philliplowe/.openclaw/workspaces/sol/",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4977140367031097,
+      "maxScore": 0.4977140367031097,
+      "firstRecalledAt": "2026-06-22T23:15:25.458Z",
+      "lastRecalledAt": "2026-06-22T23:15:25.458Z",
+      "queryHashes": [
+        "112a28b2534b"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "users/philliplowe",
+        "openclaw/workspaces/sol",
+        "evening",
+        "complete.md",
+        "n8n",
+        "source",
+        "packages",
+        "src"
+      ]
+    },
+    "memory:memory/2026-06-03.md:28:60": {
+      "key": "memory:memory/2026-06-03.md:28:60",
+      "path": "memory/2026-06-03.md",
+      "startLine": 28,
+      "endLine": 60,
+      "source": "memory",
+      "snippet": "- Test against live n8n webhook - Add modifier/upsell UI if needed - Style polish, mobile responsiveness already built in --- # 2026-06-03 — ASSEMBLY: HTML Order Webhook v1 Build & Fix ## What I Did (15 min sprint) - Reviewed existing `utopia-deli-html-order-v1.json` built on 2026-06-02 - Fixed critical issues from v1.0.0: 1. **Removed conflicting `responseData` from webhook trigger** — can't coexist with `responseMode: \"responseNode\"` 2. **Added CORS headers** (`Access-Control-Allow-Origin`, `Methods`, `Headers`, `Content-Type`) 3. **Wired error outputs** from all nodes to `Format Error Response` → `Error Respond` 4. **Upgraded Google Sheets node to v2** with `documentId`/`sheetN",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9428365617990493,
+      "maxScore": 0.4770268142223358,
+      "firstRecalledAt": "2026-06-22T23:15:33.465Z",
+      "lastRecalledAt": "2026-06-22T23:16:08.781Z",
+      "queryHashes": [
+        "fa776939ae18",
+        "7864be22c031"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "modifier/upsell",
+        "utopia-deli-html-order-v1.json",
+        "v1.0.0",
+        "access-control-allow-origin",
+        "content-type",
+        "test",
+        "against",
+        "live"
+      ]
+    },
+    "memory:memory/2026-06-03.md:51:86": {
+      "key": "memory:memory/2026-06-03.md:51:86",
+      "path": "memory/2026-06-03.md",
+      "startLine": 51,
+      "endLine": 86,
+      "source": "memory",
+      "snippet": "→ Log to Google Sheets → Set Success Response → Respond to Webhook (JSON 200) ``` ## Files - `utopia-deli-revamp/utopia-deli-html-order-v1.json` (v1.0.1) - `utopia-deli-revamp/WEBHOOK-DOCS.md` - `memory/agent-learnings/ASSEMBLY-PITFALLS.md` (updated) - `memory/shared-learning-dump.md` (appended) ## New Pitfall Discovered - **Google Sheets v1 vs v2 syntax**: v1 uses `sheetId` + `range`; v2 uses `documentId` + `sheetName` + `columns.mappingMode`. Importing v1 syntax into modern n8n fails silently. Always use v2 format with explicit column mapping. ## Status Workflow JSON is built and documented. Ready for n8n import. Still needs: - Live n8n import + credential replacement - Environment vari",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4679031282663345,
+      "maxScore": 0.4679031282663345,
+      "firstRecalledAt": "2026-06-22T23:15:33.465Z",
+      "lastRecalledAt": "2026-06-22T23:15:33.465Z",
+      "queryHashes": [
+        "fa776939ae18"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "v1.0.1",
+        "memory/shared-learning-dump.md",
+        "columns.mappingmode",
+        "log",
+        "google",
+        "sheets",
+        "set",
+        "success"
+      ]
+    },
+    "memory:memory/2026-06-12-utopia-deli-confirmation-system-complete.md:1:51": {
+      "key": "memory:memory/2026-06-12-utopia-deli-confirmation-system-complete.md:1:51",
+      "path": "memory/2026-06-12-utopia-deli-confirmation-system-complete.md",
+      "startLine": 1,
+      "endLine": 51,
+      "source": "memory",
+      "snippet": "# Utopia Deli Confirmation Email System — Session Complete **Date:** 2026-06-12 12:23 CDT **Session:** SOL **Status:** ✅ COMPLETE — Added to ordering system --- ## What Was Built ### Frontend Success Pages - **`payment-confirmed/index.html`** — Pickup order confirmation - **`payment-confirmed-meal-prep/index.html`** — Meal prep confirmation Both pages: - Display branded Utopia Deli confirmation with order status - Include pickup info, receipt notice, order policy, contact info - Fire webhook trigger on page load (navigator.sendBeacon) - Have Homepage and Order Again buttons ### Backend n8n Workflow - **`utopia-deli-revamp/utopia-confirmation-email-v3.json`** - Active at: `https://n",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4659285336732864,
+      "maxScore": 0.4659285336732864,
+      "firstRecalledAt": "2026-06-22T23:15:33.465Z",
+      "lastRecalledAt": "2026-06-22T23:15:33.465Z",
+      "queryHashes": [
+        "fa776939ae18"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "payment-confirmed/index.html",
+        "navigator.sendbeacon",
+        "utopia",
+        "deli",
+        "confirmation",
+        "complete.md",
+        "email",
+        "complete"
+      ]
+    },
+    "memory:memory/2026-06-11-meal-prep-weekly-template.md:1:42": {
+      "key": "memory:memory/2026-06-11-meal-prep-weekly-template.md:1:42",
+      "path": "memory/2026-06-11-meal-prep-weekly-template.md",
+      "startLine": 1,
+      "endLine": 42,
+      "source": "memory",
+      "snippet": "# Meal Prep Weekly Image Update Template ## Standard Process (Every Week) When new meal prep photos arrive: 1. **Get photos** from Jacqueline (owner) via text/iCloud/whatever 2. **Identify each meal** using image analysis 3. **Match names** to the current menu items in `catering/catering-form.js` 4. **Rename files** descriptively: `meal-{dish-name}.jpg` or `dessert-{name}.jpg` 5. **Copy to** `catering/images/` 6. **Update JS** — swap the `photo` path in the MEALS or DESSERTS array 7. **Commit and push:** ```bash git add catering/ git commit -m \"feat(menu): Week of [DATE] — new meal prep photos\" git push origin main ``` 8. **Done** — GitHub Pages auto-deploys ## CSS Rule: D",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5368230760097503,
+      "maxScore": 0.5368230760097503,
+      "firstRecalledAt": "2026-06-22T23:18:03.466Z",
+      "lastRecalledAt": "2026-06-22T23:18:03.466Z",
+      "queryHashes": [
+        "41fbfa365c97"
+      ],
+      "recallDays": [
+        "2026-06-22"
+      ],
+      "conceptTags": [
+        "text/icloud/whatever",
+        "catering/catering-form.js",
+        "dish-name",
+        "catering/images",
+        "auto-deploys",
+        "meal",
+        "prep",
+        "weekly"
       ]
     }
   }
