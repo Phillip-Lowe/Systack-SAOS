@@ -1,10 +1,75 @@
 {
   "version": 1,
   "files": {
+    "memory/2026-06-22.md": {
+      "mtimeMs": 1782144711839,
+      "size": 4627,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-22-cloud-init-lesson.md": {
+      "mtimeMs": 1782128385215,
+      "size": 1695,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-22-security-incident-oauth-exposure.md": {
+      "mtimeMs": 1782146057387,
+      "size": 2254,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-22-session-0957.md": {
+      "mtimeMs": 1782140288247,
+      "size": 3835,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-22-session-end-0749.md": {
+      "mtimeMs": 1782132575294,
+      "size": 2094,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-22-utopia-deli-email-campaign.md": {
+      "mtimeMs": 1782140778452,
+      "size": 2565,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-22-vps-provisioning-results.md": {
+      "mtimeMs": 1782131391517,
+      "size": 1423,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-20.md": {
+      "mtimeMs": 1782124917354,
+      "size": 1627,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-20-FINAL-SAVE-RECOVERED.md": {
+      "mtimeMs": 1782124552659,
+      "size": 4067,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-20-FINAL-SAVE.md": {
+      "mtimeMs": 1782124917354,
+      "size": 4067,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-20-mod1-context.md": {
+      "mtimeMs": 1782124917354,
+      "size": 1050,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-20-session-close-0406.md": {
+      "mtimeMs": 1782124917354,
+      "size": 1377,
+      "lastDreamingDayIngested": "2026-06-23"
+    },
     "memory/2026-06-20-session-post-mortem.md": {
       "mtimeMs": 1781960133599,
       "size": 4640,
-      "lastDreamingDayIngested": "2026-06-22"
+      "lastDreamingDayIngested": "2026-06-23"
+    },
+    "memory/2026-06-20-session-save.md": {
+      "mtimeMs": 1782124917354,
+      "size": 2303,
+      "lastDreamingDayIngested": "2026-06-23"
     }
   }
 }
