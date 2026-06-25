@@ -579,6 +579,16 @@ def poll_updates():
     })
 
 # ── PDF Downloads (explicit to avoid Control UI interception) ──
+@app.route('/download/user-guide-v3')
+def serve_user_guide_v3():
+    return send_from_directory(BASE_DIR, 'SAOS-Dashboard-User-Guide-v3.0.pdf',
+                               as_attachment=False, mimetype='application/pdf')
+
+@app.route('/download/architecture-v4')
+def serve_arch_v4():
+    return send_from_directory(BASE_DIR, 'SAOS-Architecture-Overview-v4.0.pdf',
+                               as_attachment=False, mimetype='application/pdf')
+
 @app.route('/download/quickstart-v4')
 def serve_quickstart_v4():
     return send_from_directory(BASE_DIR, 'SAOS-Quick-Start-Guide-v4.0.pdf',

@@ -665,55 +665,78 @@
         /* ── Agent Cards ── */
         .agents-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
         }
         .agent-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 14px;
+            padding: 16px;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            align-items: flex-start;
+            gap: 12px;
+            transition: border-color 0.2s;
+            cursor: pointer;
+        }
+        .agent-card:hover {
+            border-color: var(--border-hover);
         }
         .agent-card .agent-icon {
-            font-size: 24px;
+            font-size: 28px;
             flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.04);
+        }
+        .agent-card .agent-info {
+            flex: 1;
+            min-width: 0;
         }
         .agent-card .agent-name {
             font-weight: 700;
             color: white;
-            font-size: 13px;
+            font-size: 14px;
         }
         .agent-card .agent-status {
             font-size: 11px;
-            color: var(--text-dim);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
         .agent-card .agent-role {
-            font-size: 10px;
-            color: var(--text-dim);
-            margin-top: 1px;
+            font-size: 12px;
+            color: var(--accent-bright);
+            margin-top: 2px;
+            font-weight: 600;
         }
         .agent-card .agent-desc {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-top: 4px;
-            line-height: 1.4;
+            margin-top: 6px;
+            line-height: 1.5;
         }
         .agent-card .agent-caps {
             display: flex;
             flex-wrap: wrap;
             gap: 4px;
-            margin-top: 6px;
+            margin-top: 8px;
         }
         .agent-card .agent-cap {
             font-size: 10px;
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
-            background: rgba(255,255,255,0.05);
-            color: var(--text-dim);
+            background: rgba(0,161,219,0.08);
+            color: var(--text-muted);
         }
+        .agent-status-IDLE { color: var(--text-dim); }
+        .agent-status-BUSY { color: var(--accent-bright); }
+        .agent-status-ERROR { color: var(--red); }
+        .agent-status-OFFLINE { color: var(--text-dim); }
 
         /* ── Service Cards (NEW — tier-specific) ── */
         .services-grid {
@@ -801,23 +824,110 @@
             letter-spacing: 0.5px;
         }
         .task-table td {
-            padding: 10px 14px;
+            padding: 12px 14px;
             border-bottom: 1px solid var(--border);
             font-size: 13px;
+            vertical-align: top;
+        }
+        .task-table tbody tr {
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .task-table tbody tr:hover {
+            background: rgba(255,255,255,0.03);
         }
         .task-desc {
             font-size: 12px;
             color: var(--text-muted);
             line-height: 1.4;
-            margin-top: 2px;
-            max-width: 300px;
+            margin-top: 4px;
+            max-width: 320px;
         }
         .task-meta {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-top: 2px;
+            margin-top: 4px;
         }
+        /* ── Task Detail Modal ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 22px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover { color: white; }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+        .detail-label {
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .detail-value {
+            color: white;
+            font-weight: 600;
+            text-align: right;
+        }
+        /* ── Settings Tab ── */
+        .settings-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .settings-card h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        .settings-row:last-child { border-bottom: none; }
+        .settings-label { color: var(--text-muted); }
+        .settings-value { color: white; font-weight: 600; }
         .status-pill {
             display: inline-block;
             padding: 2px 10px;
@@ -984,7 +1094,7 @@
                 border-radius: 10px;
             }
             .app-body { overflow-y: auto; }
-            #chatTab, #dashboardTab, #servicesTab, #tasksTab, #activityTab, #docsTab { min-height: 100%; }
+            #chatTab, #dashboardTab, #servicesTab, #tasksTab, #activityTab, #docsTab, #settingsTab { min-height: 100%; }
             .activity-item { padding: 10px 12px; }
             .activity-meta { gap: 6px; }
             .login-card { padding: 32px 24px; margin: 16px; }
@@ -994,6 +1104,9 @@
             .metrics-grid { grid-template-columns: 1fr; }
             .nav-brand { font-size: 14px; }
             .nav-avatar { width: 26px; height: 26px; font-size: 11px; }
+            .modal { padding: 16px; }
+            .agents-grid { grid-template-columns: 1fr; }
+            .settings-card { padding: 16px; }
         }
     </style>
 </head>
@@ -1082,6 +1195,7 @@
                 <button class="nav-link" onclick="showTab('tasks', this)">✅ Tasks</button>
                 <button class="nav-link" onclick="showTab('activity', this)">📋 Activity</button>
                 <button class="nav-link" onclick="showTab('docs', this)">📄 Docs</button>
+                <button class="nav-link" onclick="showTab('settings', this)">⚙️ Settings</button>
             </div>
             <div class="nav-right">
                 <span class="badge-unread" id="navUnread" style="display:none">0</span>
@@ -1172,6 +1286,20 @@
                 <h2>📄 Documentation</h2>
                 <div id="docsContent">Loading...</div>
             </div>
+
+            <!-- Settings Tab -->
+            <div class="content-tab" id="settingsTab" style="display:none">
+                <h2>⚙️ Account Settings</h2>
+                <div id="settingsContent">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div class="modal-overlay" id="taskModal" onclick="if(event.target===this)closeTaskModal()">
+        <div class="modal">
+            <button class="modal-close" onclick="closeTaskModal()">✕</button>
+            <div id="taskModalContent"></div>
         </div>
     </div>
 
@@ -1573,7 +1701,7 @@
             if (sidebar) sidebar.classList.remove('open');
 
             // Hide all tabs
-            ['chatTab','dashboardTab','servicesTab','tasksTab','activityTab','docsTab'].forEach(id => {
+            ['chatTab','dashboardTab','servicesTab','tasksTab','activityTab','docsTab','settingsTab'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.style.display = 'none';
             });
@@ -1596,6 +1724,7 @@
             if (tab === 'tasks') loadTasks();
             if (tab === 'activity') loadActivity();
             if (tab === 'docs') loadDocs();
+            if (tab === 'settings') loadSettings();
         }
 
         // ── DASHBOARD ──────────────────────────────────────────
@@ -1635,11 +1764,11 @@
                 <h3>Agent Fleet</h3>
                 <div class="agents-grid">
                     ${(data.agents || []).map(a => `
-                        <div class="agent-card">
+                        <div class="agent-card" onclick="showAgentDetail('${a.agent_name}')">
                             <div class="agent-icon">${a.avatar_emoji || getAgentAvatar(a.agent_name)}</div>
-                            <div>
+                            <div class="agent-info">
                                 <div class="agent-name">${a.agent_name}</div>
-                                <div class="agent-status">${a.status || 'idle'}</div>
+                                <div class="agent-status agent-status-${a.status || 'IDLE'}">${a.status || 'IDLE'}</div>
                                 <div class="agent-role">${a.role || ''}</div>
                                 ${a.role_description ? `<div class="agent-desc">${a.role_description}</div>
                                 <div class="agent-caps">${(a.capabilities || []).map(c => `<span class="agent-cap">${c}</span>`).join('')}</div>` : ''}
@@ -1704,8 +1833,16 @@
         // ── TASKS ──────────────────────────────────────────────
         async function loadTasks() {
             const tasks = await api('GET', '/api/portal/tasks');
+            window._allTasks = tasks; // cache for modal
             document.getElementById('tasksContent').innerHTML = tasks.length ? `
-                <table class="task-table">
+                <div style="margin-bottom:12px; display:flex; gap:8px; flex-wrap:wrap">
+                    <button class="btn btn-secondary btn-sm" onclick="filterTasks('all', this)" style="background:var(--accent); color:white">All (${tasks.length})</button>
+                    <button class="btn btn-secondary btn-sm" onclick="filterTasks('PENDING', this)">⏳ Pending (${tasks.filter(t=>t.status==='PENDING').length})</button>
+                    <button class="btn btn-secondary btn-sm" onclick="filterTasks('RUNNING', this)">🔄 Running (${tasks.filter(t=>t.status==='RUNNING').length})</button>
+                    <button class="btn btn-secondary btn-sm" onclick="filterTasks('DONE', this)">✅ Done (${tasks.filter(t=>t.status==='DONE').length})</button>
+                    <button class="btn btn-secondary btn-sm" onclick="filterTasks('FAILED', this)">❌ Failed (${tasks.filter(t=>t.status==='FAILED').length})</button>
+                </div>
+                <table class="task-table" id="taskTable">
                     <thead>
                         <tr>
                             <th>Task</th>
@@ -1714,27 +1851,113 @@
                             <th>Created</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        ${tasks.map(t => `
-                            <tr>
-                                <td>
-                                    <div style="font-weight:600; color:white">${t.display_name || t.task_type}</div>
-                                    <div class="task-desc">${t.description || ''}</div>
-                                    <div class="task-meta">
-                                        <span style="color:var(--text-dim); font-size:11px">#${t.id}</span>
-                                        ${t.priority ? `<span style="color:var(--amber); font-size:11px">P${t.priority}</span>` : ''}
-                                    </div>
-                                </td>
-                                <td>${t.assigned_agent || '-'}</td>
-                                <td>
-                                    <span class="status-pill status-${t.status.toLowerCase()}">${t.status}</span>
-                                </td>
-                                <td style="color:var(--text-dim)">${formatTime(t.created_at)}</td>
-                            </tr>
-                        `).join('')}
+                    <tbody id="taskTableBody">
+                        ${tasks.map(t => renderTaskRow(t)).join('')}
                     </tbody>
                 </table>
             ` : '<div style="color:var(--text-dim); text-align:center; padding:40px">No tasks yet. Start a chat conversation to create tasks.</div>';
+        }
+
+        function renderTaskRow(t) {
+            return `
+                <tr onclick="showTaskDetail(${t.id})">
+                    <td>
+                        <div style="font-weight:600; color:white">${t.display_name || t.task_type}</div>
+                        ${t.description ? `<div class="task-desc">${escapeHtml(t.description).substring(0, 120)}${t.description.length > 120 ? '...' : ''}</div>` : ''}
+                        <div class="task-meta">
+                            <span style="color:var(--text-dim); font-size:11px">#${t.id}</span>
+                            ${t.priority ? `<span style="color:var(--amber); font-size:11px">P${t.priority}</span>` : ''}
+                        </div>
+                    </td>
+                    <td>${t.assigned_agent || '-'}</td>
+                    <td>
+                        <span class="status-pill status-${t.status.toLowerCase()}">${t.status}</span>
+                    </td>
+                    <td style="color:var(--text-dim)">${formatTime(t.created_at)}</td>
+                </tr>
+            `;
+        }
+
+        function filterTasks(status, btn) {
+            const tasks = window._allTasks || [];
+            const filtered = status === 'all' ? tasks : tasks.filter(t => t.status === status);
+            document.getElementById('taskTableBody').innerHTML = filtered.map(t => renderTaskRow(t)).join('');
+            // Update button styles
+            document.querySelectorAll('#tasksTab .btn-sm').forEach(b => { b.style.background = ''; b.style.color = ''; });
+            btn.style.background = 'var(--accent)';
+            btn.style.color = 'white';
+        }
+
+        function showTaskDetail(taskId) {
+            const t = (window._allTasks || []).find(x => x.id === taskId);
+            if (!t) return;
+            
+            const modal = document.getElementById('taskModal');
+            const content = document.getElementById('taskModalContent');
+            
+            content.innerHTML = `
+                <h3>${t.display_name || t.task_type} <span style="color:var(--text-dim); font-size:14px">#${t.id}</span></h3>
+                ${t.description ? `<div style="color:var(--text-muted); font-size:14px; line-height:1.5; margin-bottom:16px">${escapeHtml(t.description)}</div>` : ''}
+                <div class="detail-row">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value"><span class="status-pill status-${t.status.toLowerCase()}">${t.status}</span></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Assigned Agent</span>
+                    <span class="detail-value">${t.assigned_agent ? getAgentAvatar(t.assigned_agent) + ' ' + t.assigned_agent : 'Unassigned'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Priority</span>
+                    <span class="detail-value">${t.priority || 'Normal'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Created</span>
+                    <span class="detail-value">${new Date(t.created_at).toLocaleString()}</span>
+                </div>
+                ${t.completed_at ? `<div class="detail-row">
+                    <span class="detail-label">Completed</span>
+                    <span class="detail-value">${new Date(t.completed_at).toLocaleString()}</span>
+                </div>` : ''}
+                ${t.error_message ? `<div style="margin-top:16px; padding:12px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:8px">
+                    <div style="color:var(--red); font-size:12px; font-weight:600; margin-bottom:4px">⚠️ Error</div>
+                    <div style="color:var(--text); font-size:13px; line-height:1.5">${escapeHtml(t.error_message)}</div>
+                </div>` : ''}
+            `;
+            modal.classList.add('active');
+        }
+
+        function closeTaskModal() {
+            document.getElementById('taskModal').classList.remove('active');
+        }
+
+        function showAgentDetail(agentName) {
+            // Find agent in cached data
+            const modal = document.getElementById('taskModal');
+            const content = document.getElementById('taskModalContent');
+            
+            // Fetch fresh agent data
+            fetch(`${API_BASE}/api/portal/agents`).then(r => r.json()).then(agents => {
+                const a = agents.find(x => x.agent_name === agentName);
+                if (!a) return;
+                
+                content.innerHTML = `
+                    <h3>${a.avatar_emoji || getAgentAvatar(a.agent_name)} ${a.agent_name}</h3>
+                    <div style="color:var(--accent-bright); font-size:14px; font-weight:600; margin-bottom:8px">${a.role || ''}</div>
+                    <div style="color:var(--text-muted); font-size:13px; line-height:1.6; margin-bottom:16px">${a.role_description || ''}</div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value agent-status-${a.status}">${a.status}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Tier Access</span>
+                        <span class="detail-value">${a.tier_access || 'all'}</span>
+                    </div>
+                    ${a.capabilities && a.capabilities.length ? `
+                    <h4 style="color:white; font-size:13px; margin:16px 0 8px">Capabilities</h4>
+                    <div class="agent-caps">${a.capabilities.map(c => `<span class="agent-cap" style="font-size:11px; padding:4px 10px">${c}</span>`).join('')}</div>` : ''}
+                `;
+                modal.classList.add('active');
+            });
         }
 
         // ── DOCS ────────────────────────────────────────────────
@@ -1760,19 +1983,21 @@
         // ── ACTIVITY ────────────────────────────────────────────
         async function loadActivity() {
             const tasks = await api('GET', '/api/portal/tasks');
-            const recentTasks = tasks.slice(0, 20); // Show last 20
+            window._allTasks = tasks;
+            const recentTasks = tasks.slice(0, 20);
 
             document.getElementById('activityContent').innerHTML = `
                 <h3>Recent Activity</h3>
                 <div class="activity-feed">
                     ${recentTasks.length ? recentTasks.map(t => `
-                        <div class="activity-item">
+                        <div class="activity-item" onclick="showTaskDetail(${t.id})" style="cursor:pointer">
                             <div class="activity-icon">${getStatusIcon(t.status)}</div>
                             <div class="activity-content">
-                                <div class="activity-title">Task #${t.id} — ${t.task_type}</div>
+                                <div class="activity-title">${t.display_name || t.task_type} <span style="color:var(--text-dim); font-size:12px">#${t.id}</span></div>
+                                ${t.description ? `<div style="font-size:12px; color:var(--text-muted); margin-top:2px; line-height:1.4">${escapeHtml(t.description).substring(0, 100)}${t.description.length > 100 ? '...' : ''}</div>` : ''}
                                 <div class="activity-meta">
                                     <span class="status-pill status-${t.status.toLowerCase()}">${t.status}</span>
-                                    <span>${t.assigned_agent || 'Unassigned'}</span>
+                                    <span>${getAgentAvatar(t.assigned_agent)} ${t.assigned_agent || 'Unassigned'}</span>
                                     <span>${formatTime(t.created_at)}</span>
                                 </div>
                             </div>
@@ -1959,8 +2184,9 @@
         function getDocsForTier(tier) {
             const base = [
                 { icon: '📄', name: 'Quick Start Guide v4.0', desc: 'Get started with your SAOS deployment — includes PIN auth and mobile access', url: '/dashboard/download/quickstart-v4' },
+                { icon: '📘', name: 'Dashboard User Guide v3.0', desc: 'Complete guide to all 7 tabs, PIN management, and mobile access', url: '/dashboard/download/user-guide-v3' },
                 { icon: '📘', name: 'Service Manual v4.0', desc: 'Complete reference for your SAOS system — updated for 6-tab dashboard', url: '/dashboard/download/manual-v4' },
-                { icon: '🏗️', name: 'Architecture Overview v3.0', desc: 'Technical architecture and component details — includes mobile and auth', url: '/dashboard/download/architecture-v3' },
+                { icon: '🏗️', name: 'Architecture Overview v4.0', desc: 'Technical architecture, API endpoints, and database schema', url: '/dashboard/download/architecture-v4' },
                 { icon: '📱', name: 'Dashboard Mobile Access Guide', desc: 'iPhone and Android setup for mobile dashboard access', url: '/dashboard/download/mobile-guide' },
             ];
 
@@ -1974,6 +2200,106 @@
             };
 
             return [...base, ...(extra[tier] || [])];
+        }
+
+        // ── SETTINGS ─────────────────────────────────────────────
+        function loadSettings() {
+            const tier = client?.tier || 'business';
+            document.getElementById('settingsContent').innerHTML = `
+                <div class="settings-card">
+                    <h3>📋 Account Info</h3>
+                    <div class="settings-row">
+                        <span class="settings-label">Client ID</span>
+                        <span class="settings-value">#${client.id}</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Name</span>
+                        <span class="settings-value">${client.customer_name || 'N/A'}</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Email</span>
+                        <span class="settings-value">${client.customer_email || 'N/A'}</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Plan</span>
+                        <span class="settings-value"><span class="tier-badge tier-${tier.toLowerCase().replace('+','-plus')}">${getTierLabel(tier)}</span></span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">Status</span>
+                        <span class="settings-value" style="color:var(--green)">● Active</span>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>🔐 Security</h3>
+                    <div class="settings-row">
+                        <span class="settings-label">PIN</span>
+                        <span class="settings-value">••••••</span>
+                    </div>
+                    <div style="margin-top:16px">
+                        <button class="btn btn-secondary" onclick="showChangePinForm()">Change PIN</button>
+                    </div>
+                    <div id="changePinForm" style="display:none; margin-top:16px">
+                        <div class="form-group" style="margin-bottom:12px">
+                            <label>Current PIN</label>
+                            <input type="password" id="changePinCurrent" placeholder="Enter current PIN" maxlength="10" inputmode="numeric" style="font-size:16px">
+                        </div>
+                        <div class="form-group" style="margin-bottom:12px">
+                            <label>New PIN (4-10 digits)</label>
+                            <input type="password" id="changePinNew" placeholder="Enter new PIN" maxlength="10" inputmode="numeric" style="font-size:16px">
+                        </div>
+                        <button class="btn btn-primary" onclick="submitChangePin()">Update PIN</button>
+                        <div class="error-msg" id="changePinError" style="display:none"></div>
+                        <div class="success-msg" id="changePinSuccess" style="display:none"></div>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>🚀 Deployment</h3>
+                    <div class="settings-row">
+                        <span class="settings-label">Type</span>
+                        <span class="settings-value">${client.deployment_type || 'N/A'}</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="settings-label">VPS Status</span>
+                        <span class="settings-value">${client.vps_status || 'pending'}</span>
+                    </div>
+                    ${client.tailscale_url ? `<div class="settings-row">
+                        <span class="settings-label">Access URL</span>
+                        <span class="settings-value" style="font-size:12px">${client.tailscale_url}</span>
+                    </div>` : ''}
+                </div>
+            `;
+        }
+
+        function showChangePinForm() {
+            document.getElementById('changePinForm').style.display = 'block';
+        }
+
+        async function submitChangePin() {
+            const current = document.getElementById('changePinCurrent').value.trim();
+            const newPin = document.getElementById('changePinNew').value.trim();
+            const errEl = document.getElementById('changePinError');
+            const successEl = document.getElementById('changePinSuccess');
+            
+            errEl.style.display = 'none';
+            successEl.style.display = 'none';
+            
+            if (!current || !newPin) { errEl.textContent = 'Both fields required'; errEl.style.display = 'block'; return; }
+            if (newPin.length < 4) { errEl.textContent = 'PIN must be at least 4 digits'; errEl.style.display = 'block'; return; }
+            
+            try {
+                const data = await api('POST', '/api/auth/change-pin', {current_pin: current, new_pin: newPin});
+                if (data.error) throw new Error(data.error);
+                successEl.textContent = data.message || 'PIN updated successfully';
+                successEl.style.display = 'block';
+                document.getElementById('changePinCurrent').value = '';
+                document.getElementById('changePinNew').value = '';
+                setTimeout(() => document.getElementById('changePinForm').style.display = 'none', 2000);
+            } catch (e) {
+                errEl.textContent = e.message;
+                errEl.style.display = 'block';
+            }
         }
 
         // ── UTILS ────────────────────────────────────────────────
@@ -2039,24 +2365,6 @@
                     if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
                         navLinks.classList.remove('open');
                     }
-                });
-            }
-
-            // Login form button handler (button is type=button now, onclick calls login)
-            const loginBtn = document.getElementById('loginBtn');
-            const loginForm = document.getElementById('loginForm');
-            if (loginForm) {
-                loginForm.setAttribute('novalidate', 'novalidate');
-                loginForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                });
-            }
-            if (loginBtn) {
-                loginBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    login();
                 });
             }
         });
