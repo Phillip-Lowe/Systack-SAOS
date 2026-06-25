@@ -953,7 +953,7 @@
             gap: 14px;
             transition: border-color 0.2s;
         }
-        .doc-card:hover { border-color: var(--border-hover); }
+        .doc-card:hover { border-color: var(--border-hover); cursor: pointer; }
         .doc-card .doc-icon { font-size: 32px; flex-shrink: 0; }
         .doc-card .doc-name { font-weight: 700; color: white; font-size: 14px; margin-bottom: 3px; }
         .doc-card .doc-desc { font-size: 12px; color: var(--text-muted); }
@@ -1967,17 +1967,47 @@
 
             document.getElementById('docsContent').innerHTML = `
                 <div style="display:grid; gap:12px">
-                    ${docs.map(d => `
-                        <a href="${d.url}" class="doc-card" target="_blank" rel="noopener">
+                    ${docs.map((d, i) => `
+                        <div class="doc-card" onclick="downloadDoc('${d.url}', '${d.name}')" style="cursor:pointer">
                             <div class="doc-icon">${d.icon}</div>
                             <div>
                                 <div class="doc-name">${d.name}</div>
                                 <div class="doc-desc">${d.desc}</div>
                             </div>
-                        </a>
+                        </div>
                     `).join('')}
                 </div>
             `;
+        }
+
+        async function downloadDoc(url, filename) {
+            try {
+                const res = await fetch(url, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                });
+                if (!res.ok) throw new Error('Download failed');
+                const blob = await res.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                
+                // Open in new tab for viewing
+                const viewWindow = window.open(blobUrl, '_blank');
+                if (!viewWindow || viewWindow.closed) {
+                    // Popup blocked — fall back to download
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = filename + '.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+                
+                // Clean up blob URL after a delay
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
+            } catch (e) {
+                console.error('Doc download failed:', e);
+                // Fallback: direct navigation
+                window.location.href = url;
+            }
         }
 
         // ── ACTIVITY ────────────────────────────────────────────
@@ -2182,20 +2212,22 @@
         }
 
         function getDocsForTier(tier) {
+            // Use relative paths so they work both at / and /dashboard/
+            const prefix = window.location.pathname.startsWith('/dashboard') ? '/dashboard' : '';
             const base = [
-                { icon: '📄', name: 'Quick Start Guide v5.0', desc: 'Get started with PIN auth, onboarding, and mobile access', url: '/dashboard/download/quickstart-v5' },
-                { icon: '📘', name: 'Dashboard User Guide v3.0', desc: 'Complete guide to all 7 tabs, PIN management, and mobile access', url: '/dashboard/download/user-guide-v3' },
-                { icon: '📘', name: 'Service Manual v5.0', desc: 'Complete reference for dashboard v2.1 — auth, APIs, troubleshooting', url: '/dashboard/download/manual-v5' },
-                { icon: '🏗️', name: 'Architecture Overview v4.0', desc: 'Technical architecture, API endpoints, and database schema', url: '/dashboard/download/architecture-v4' },
-                { icon: '📱', name: 'Dashboard Mobile Access Guide v2.0', desc: 'iPhone and Android setup with Tailscale and home screen shortcuts', url: '/dashboard/download/mobile-guide-v2' },
+                { icon: '📄', name: 'Quick Start Guide v5.0', desc: 'Get started with PIN auth, onboarding, and mobile access', url: `${prefix}/download/quickstart-v5` },
+                { icon: '📘', name: 'Dashboard User Guide v3.0', desc: 'Complete guide to all 7 tabs, PIN management, and mobile access', url: `${prefix}/download/user-guide-v3` },
+                { icon: '📘', name: 'Service Manual v5.0', desc: 'Complete reference for dashboard v2.1 — auth, APIs, troubleshooting', url: `${prefix}/download/manual-v5` },
+                { icon: '🏗️', name: 'Architecture Overview v4.0', desc: 'Technical architecture, API endpoints, and database schema', url: `${prefix}/download/architecture-v4` },
+                { icon: '📱', name: 'Dashboard Mobile Access Guide v2.0', desc: 'iPhone and Android setup with Tailscale and home screen shortcuts', url: `${prefix}/download/mobile-guide-v2` },
             ];
 
             const extra = {
                 'enterprise': [
-                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: '/dashboard/download/enterprise-guide' },
+                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: `${prefix}/download/enterprise-guide` },
                 ],
                 'private': [
-                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: '/dashboard/download/enterprise-guide' },
+                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: `${prefix}/download/enterprise-guide` },
                 ],
             };
 
