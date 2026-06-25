@@ -578,10 +578,20 @@ def poll_updates():
         "timestamp": datetime.now().isoformat()
     })
 
-# ── PDF Downloads (explicit to avoid Control UI interception) ──
+# ── PDF Downloads (updated for v2.1) ──
+@app.route('/download/quickstart-v5')
+def serve_quickstart_v5():
+    return send_from_directory(BASE_DIR, 'SAOS-Quick-Start-Guide-v5.0.pdf',
+                               as_attachment=False, mimetype='application/pdf')
+
 @app.route('/download/user-guide-v3')
 def serve_user_guide_v3():
     return send_from_directory(BASE_DIR, 'SAOS-Dashboard-User-Guide-v3.0.pdf',
+                               as_attachment=False, mimetype='application/pdf')
+
+@app.route('/download/manual-v5')
+def serve_manual_v5():
+    return send_from_directory(BASE_DIR, 'SAOS-Service-Manual-v5.0.pdf',
                                as_attachment=False, mimetype='application/pdf')
 
 @app.route('/download/architecture-v4')
@@ -589,24 +599,9 @@ def serve_arch_v4():
     return send_from_directory(BASE_DIR, 'SAOS-Architecture-Overview-v4.0.pdf',
                                as_attachment=False, mimetype='application/pdf')
 
-@app.route('/download/quickstart-v4')
-def serve_quickstart_v4():
-    return send_from_directory(BASE_DIR, 'SAOS-Quick-Start-Guide-v4.0.pdf',
-                               as_attachment=False, mimetype='application/pdf')
-
-@app.route('/download/manual-v4')
-def serve_manual_v4():
-    return send_from_directory(BASE_DIR, 'SAOS-Service-Manual-v4.0.pdf',
-                               as_attachment=False, mimetype='application/pdf')
-
-@app.route('/download/architecture-v3')
-def serve_arch_v3():
-    return send_from_directory(BASE_DIR, 'SAOS-Architecture-Overview-v3.0.pdf',
-                               as_attachment=False, mimetype='application/pdf')
-
-@app.route('/download/mobile-guide')
-def serve_mobile_guide():
-    return send_from_directory(BASE_DIR, 'SAOS-Dashboard-Mobile-Access-Guide-v1.0.pdf',
+@app.route('/download/mobile-guide-v2')
+def serve_mobile_guide_v2():
+    return send_from_directory(BASE_DIR, 'SAOS-Dashboard-Mobile-Access-Guide-v2.0.pdf',
                                as_attachment=False, mimetype='application/pdf')
 
 @app.route('/download/enterprise-guide')
