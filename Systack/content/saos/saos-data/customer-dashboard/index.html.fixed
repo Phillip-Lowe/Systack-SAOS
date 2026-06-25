@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAOS Client Portal — Systack</title>
     <style>
         :root {
@@ -34,7 +34,6 @@
             min-height: 100vh;
             line-height: 1.5;
             overflow: hidden;
-            -webkit-overflow-scrolling: touch;
         }
 
         /* ── Navigation ── */
@@ -42,48 +41,38 @@
             background: rgba(0,26,45,0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
-            padding: env(safe-area-inset-top, 0) 16px 0 16px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
-            height: calc(56px + env(safe-area-inset-top, 0));
+            height: 56px;
             flex-shrink: 0;
-            position: relative;
-            z-index: 100;
-            gap: 8px;
         }
         .nav-brand {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             color: white;
             text-decoration: none;
-            flex-shrink: 0;
-            white-space: nowrap;
         }
         .nav-links {
             display: flex;
-            gap: 2px;
-            margin-left: 12px;
-            flex: 1;
-            min-width: 0;
-            overflow: hidden;
+            gap: 4px;
+            margin-left: 32px;
         }
         .nav-link {
             color: var(--text-muted);
             text-decoration: none;
-            padding: 6px 10px;
+            padding: 6px 14px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 500;
             transition: all 0.2s;
             cursor: pointer;
             border: none;
             background: none;
             font-family: inherit;
-            white-space: nowrap;
-            flex-shrink: 0;
         }
         .nav-link:hover, .nav-link.active {
             color: white;
@@ -94,23 +83,22 @@
             margin-left: auto;
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
+            gap: 12px;
         }
         .nav-avatar {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--accent), var(--purple));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             color: white;
         }
         .nav-client-name {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text);
             font-weight: 500;
         }
@@ -208,30 +196,10 @@
             padding: 6px 12px;
             font-size: 12px;
         }
-        .login-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 20px;
-            font-size: 13px;
-        }
-        .login-links a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        .login-links a:hover { text-decoration: underline; }
-        .success-msg {
-            color: var(--green);
+        .error-msg {
+            color: var(--red);
             font-size: 13px;
             margin-top: 12px;
-        }
-        .info-msg {
-            color: var(--amber);
-            font-size: 13px;
-            margin-top: 12px;
-            background: rgba(245,158,11,0.1);
-            padding: 10px;
-            border-radius: 8px;
         }
 
         /* ── Main Layout ── */
@@ -261,21 +229,6 @@
         .sidebar-header {
             padding: 16px;
             border-bottom: 1px solid var(--border);
-            position: relative;
-        }
-        .sidebar-close-btn {
-            display: none;
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 20px;
-            cursor: pointer;
-        }
-        @media (max-width: 768px) {
-            .sidebar-close-btn { display: block; }
         }
         .sidebar-header h2 {
             font-size: 14px;
@@ -363,26 +316,6 @@
         .chat-header-info p {
             font-size: 11px;
             color: var(--text-dim);
-        }
-        .sidebar-toggle {
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 20px;
-            cursor: pointer;
-            padding: 8px;
-            margin-right: 8px;
-            min-width: 44px;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-        .sidebar-toggle:hover {
-            background: rgba(255,255,255,0.06);
-            color: white;
         }
         .chat-status {
             display: flex;
@@ -536,25 +469,6 @@
             flex-shrink: 0;
             white-space: nowrap;
         }
-
-        /* ── Mobile Input Area Fix ── */
-        @media (max-width: 480px) {
-            .input-area {
-                padding: 8px 12px;
-                gap: 8px;
-            }
-            .message-input {
-                font-size: 16px; /* Prevents iOS zoom */
-                padding: 8px 12px;
-                height: 40px;
-                min-height: 40px;
-            }
-            .send-btn {
-                height: 40px;
-                padding: 0 14px;
-                font-size: 14px;
-            }
-        }
         .send-btn:hover { background: #007da9; }
 
         /* ── Empty State ── */
@@ -618,7 +532,6 @@
             flex: 1;
             overflow-y: auto;
             padding: 24px 32px;
-            -webkit-overflow-scrolling: touch;
         }
         .content-tab h2 {
             color: white;
@@ -694,25 +607,6 @@
             font-size: 10px;
             color: var(--text-dim);
             margin-top: 1px;
-        }
-        .agent-card .agent-desc {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 4px;
-            line-height: 1.4;
-        }
-        .agent-card .agent-caps {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 6px;
-        }
-        .agent-card .agent-cap {
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            background: rgba(255,255,255,0.05);
-            color: var(--text-dim);
         }
 
         /* ── Service Cards (NEW — tier-specific) ── */
@@ -805,19 +699,6 @@
             border-bottom: 1px solid var(--border);
             font-size: 13px;
         }
-        .task-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.4;
-            margin-top: 2px;
-            max-width: 300px;
-        }
-        .task-meta {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 2px;
-        }
         .status-pill {
             display: inline-block;
             padding: 2px 10px;
@@ -848,21 +729,6 @@
         .doc-card .doc-name { font-weight: 700; color: white; font-size: 14px; margin-bottom: 3px; }
         .doc-card .doc-desc { font-size: 12px; color: var(--text-muted); }
 
-        /* ── Activity Feed ── */
-        .activity-feed { display: flex; flex-direction: column; gap: 8px; }
-        .activity-item {
-            display: flex; align-items: flex-start; gap: 12px;
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); padding: 14px 16px;
-        }
-        .activity-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
-        .activity-content { flex: 1; min-width: 0; }
-        .activity-title { font-weight: 600; color: white; font-size: 14px; margin-bottom: 6px; }
-        .activity-meta {
-            display: flex; align-items: center; gap: 10px;
-            flex-wrap: wrap;
-        }
-
         /* ── Loading ── */
         .loading-overlay {
             position: fixed;
@@ -884,188 +750,33 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── Mobile Menu Button ── */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 22px;
-            cursor: pointer;
-            padding: 8px 12px;
-            margin-left: auto;
-            position: relative;
-            z-index: 101;
-            min-height: 44px;
-            min-width: 44px;
-        }
-        .mobile-menu-btn:hover { color: white; }
-        .mobile-menu-btn:hover { color: white; }
-
-        /* ── Login Mobile Fixes ── */
-        .login-card input {
-            -webkit-appearance: none;
-            appearance: none;
-        }
-        .login-card input[type="password"] {
-            font-size: 16px; /* Prevents iOS zoom on focus */
-        }
-
         /* ── Responsive ── */
         @media (max-width: 768px) {
-            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; margin-top: env(safe-area-inset-top, 0); }
-            .nav-links { 
-                display: none;
-                position: absolute;
-                top: 56px;
-                left: 0;
-                right: 0;
-                background: rgba(0,26,45,0.98);
-                border-bottom: 1px solid var(--border);
-                flex-direction: column;
-                padding: 8px;
-                z-index: 200;
-            }
-            .nav-links.open { display: flex; }
-            .nav-link { width: 100%; text-align: left; padding: 10px 16px; }
-            .nav-right {
-                gap: 6px;
-            }
-            .nav-right .nav-client-name {
-                display: none;
-            }
-            .nav-right .btn-secondary {
-                padding: 4px 8px;
-                font-size: 11px;
-            }
-            .nav {
-                padding: env(safe-area-inset-top, 0) 10px 0 10px !important;
-                gap: 4px;
-            }
-            .nav-brand {
-                font-size: 14px;
-                gap: 4px;
-            }
-            .nav-links {
-                margin-left: 4px;
-            }
-            .nav-avatar {
-                width: 26px;
-                height: 26px;
-                font-size: 11px;
-            }
-            .nav-client-name {
-                display: none;
-            }
-            .sidebar { 
-                width: 280px; 
-                position: fixed; 
-                z-index: 50; 
-                left: 0;
-                top: 56px;
-                height: calc(100vh - 56px);
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-            }
-            .sidebar.open { transform: translateX(0); }
+            .sidebar { width: 100%; position: fixed; z-index: 50; }
             .chat-area { width: 100%; }
             .nav { padding: 0 12px; }
-            .content-tab { padding: 16px; height: calc(100vh - 56px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+            .nav-links { display: none; }
+            .content-tab { padding: 16px; }
             .services-grid { grid-template-columns: 1fr; }
-            .metrics-grid { grid-template-columns: 1fr 1fr; }
-            .agents-grid { grid-template-columns: 1fr; }
-            .task-table { font-size: 12px; }
-            .task-table th, .task-table td { padding: 8px 10px; }
-            .sidebar-toggle {
-                font-size: 24px;
-                padding: 12px;
-                margin-right: 4px;
-                background: rgba(255,255,255,0.04);
-                border-radius: 10px;
-            }
-            .app-body { overflow-y: auto; }
-            #chatTab, #dashboardTab, #servicesTab, #tasksTab, #activityTab, #docsTab { min-height: 100%; }
-            .activity-item { padding: 10px 12px; }
-            .activity-meta { gap: 6px; }
-            .login-card { padding: 32px 24px; margin: 16px; }
-        }
-
-        @media (max-width: 480px) {
-            .metrics-grid { grid-template-columns: 1fr; }
-            .nav-brand { font-size: 14px; }
-            .nav-avatar { width: 26px; height: 26px; font-size: 11px; }
         }
     </style>
 </head>
 <body>
     <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
-        <!-- STEP 1: Login Form -->
-        <div class="login-card" id="loginStep1">
+        <div class="login-card">
             <h1>🛰️ SAOS Client Portal</h1>
             <p>Access your AI agent fleet and manage automations</p>
             <div class="form-group">
                 <label>Client ID</label>
-                <input type="text" id="clientId" placeholder="Enter your client ID" value="1" autocomplete="off" inputmode="numeric">
+                <input type="text" id="clientId" placeholder="Enter your client ID" value="1">
             </div>
             <div class="form-group">
-                <label>PIN Code</label>
-                <input type="password" id="pinCode" placeholder="Enter your PIN" maxlength="10" autocomplete="off" inputmode="numeric">
+                <label>Access Token (optional)</label>
+                <input type="password" id="accessToken" placeholder="Or paste your token">
             </div>
-            <button type="button" class="btn btn-primary" id="loginBtn" onclick="login()">Access Dashboard</button>
-            <div class="login-links">
-                <a href="#" onclick="showSetup()">First time? Set up your PIN</a>
-                <a href="#" onclick="showForgot()">Forgot PIN?</a>
-            </div>
+            <button class="btn btn-primary" onclick="login()">Access Dashboard</button>
             <div class="error-msg" id="loginError"></div>
-        </div>
-
-        <!-- STEP 2: First-time Setup (needs temp PIN) -->
-        <div class="login-card" id="loginStep2" style="display:none">
-            <h1>🔐 Set Up Your PIN</h1>
-            <p>Enter your temporary PIN and create a permanent one</p>
-            <div class="form-group">
-                <label>Client ID</label>
-                <input type="text" id="setupClientId" placeholder="Enter your client ID" autocomplete="off" inputmode="numeric">
-            </div>
-            <div class="form-group">
-                <label>Temporary PIN</label>
-                <input type="password" id="setupTempPin" placeholder="From your welcome email" maxlength="10" autocomplete="off" inputmode="numeric">
-            </div>
-            <div class="form-group">
-                <label>New PIN (4-10 digits)</label>
-                <input type="password" id="setupNewPin" placeholder="Choose your permanent PIN" maxlength="10" autocomplete="off" inputmode="numeric">
-            </div>
-            <div class="form-group">
-                <label>Confirm New PIN</label>
-                <input type="password" id="setupConfirmPin" placeholder="Confirm your PIN" maxlength="10" autocomplete="off" inputmode="numeric">
-            </div>
-            <button type="button" class="btn btn-primary" onclick="registerClient()">Set PIN & Continue</button>
-            <div class="login-links">
-                <a href="#" onclick="showLogin()">← Back to login</a>
-            </div>
-            <div class="error-msg" id="setupError"></div>
-            <div class="info-msg" id="setupInfo" style="display:none"></div>
-        </div>
-
-        <!-- STEP 3: Forgot PIN -->
-        <div class="login-card" id="loginStep3" style="display:none">
-            <h1>🔑 Reset PIN</h1>
-            <p>Enter your client ID and email to reset</p>
-            <div class="form-group">
-                <label>Client ID</label>
-                <input type="text" id="forgotClientId" placeholder="Enter your client ID" autocomplete="off" inputmode="numeric">
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" id="forgotEmail" placeholder="Your registered email" autocomplete="off">
-            </div>
-            <button type="button" class="btn btn-primary" onclick="resetPin()">Request Reset</button>
-            <div class="login-links">
-                <a href="#" onclick="showLogin()">← Back to login</a>
-            </div>
-            <div class="error-msg" id="forgotError"></div>
-            <div class="success-msg" id="forgotSuccess" style="display:none"></div>
         </div>
     </div>
 
@@ -1074,14 +785,12 @@
         <!-- Navigation -->
         <nav class="nav">
             <a href="#" class="nav-brand">🛰️ SAOS</a>
-            <button class="mobile-menu-btn" id="hamburgerBtn">☰</button>
             <div class="nav-links">
-                <button class="nav-link active" onclick="showTab('chat', this)">💬 Chat</button>
-                <button class="nav-link" onclick="showTab('dashboard', this)">📊 Dashboard</button>
-                <button class="nav-link" onclick="showTab('services', this)">📦 Services</button>
-                <button class="nav-link" onclick="showTab('tasks', this)">✅ Tasks</button>
-                <button class="nav-link" onclick="showTab('activity', this)">📋 Activity</button>
-                <button class="nav-link" onclick="showTab('docs', this)">📄 Docs</button>
+                <button class="nav-link active" onclick="showTab('chat')">💬 Chat</button>
+                <button class="nav-link" onclick="showTab('dashboard')">📊 Dashboard</button>
+                <button class="nav-link" onclick="showTab('services')">📦 Services</button>
+                <button class="nav-link" onclick="showTab('tasks')">✅ Tasks</button>
+                <button class="nav-link" onclick="showTab('docs')">📄 Docs</button>
             </div>
             <div class="nav-right">
                 <span class="badge-unread" id="navUnread" style="display:none">0</span>
@@ -1095,9 +804,8 @@
             <!-- Chat Tab (Default) -->
             <div id="chatTab" style="display:flex; flex:1">
                 <!-- Sidebar -->
-                <div class="sidebar" id="chatSidebar">
+                <div class="sidebar">
                     <div class="sidebar-header">
-                        <button class="sidebar-close-btn" onclick="document.getElementById('chatSidebar').classList.remove('open')">✕</button>
                         <h2>Conversations</h2>
                         <button class="btn btn-primary new-chat-btn" onclick="createConversation()">+ New Chat</button>
                     </div>
@@ -1107,7 +815,6 @@
                 <!-- Chat Area -->
                 <div class="chat-area">
                     <div class="chat-header" id="chatHeader">
-                        <button class="sidebar-toggle" onclick="document.getElementById('chatSidebar').classList.toggle('open')">☰</button>
                         <div class="chat-header-info">
                             <h3 id="chatTitle">Select a conversation</h3>
                             <p id="chatSubtitle">Choose from the sidebar or start a new chat</p>
@@ -1123,9 +830,6 @@
                             <div class="empty-chat-icon">💬</div>
                             <h3>Welcome to SAOS Chat</h3>
                             <p>Start a conversation with your AI agent fleet. Request tasks, ask questions, or get updates on your automations.</p>
-                            <button class="btn btn-primary mobile-new-chat-btn" onclick="document.getElementById('chatSidebar').classList.add('open'); setTimeout(() => document.querySelector('.new-chat-btn').scrollIntoView({behavior:'smooth'}), 100)" style="margin-top:20px; padding:12px 24px; font-size:15px;">
-                                + New Conversation
-                            </button>
                         </div>
                     </div>
 
@@ -1137,7 +841,7 @@
                     </div>
 
                     <div class="input-area" id="inputArea" style="display:none">
-                        <textarea class="message-input" id="messageInput" placeholder="Type your message..." rows="1"></textarea>
+                        <textarea class="message-input" id="messageInput" placeholder="Type your message... (Enter to send, Shift+Enter for new line)" rows="1"></textarea>
                         <button class="send-btn" onclick="sendMessage()">Send</button>
                     </div>
                 </div>
@@ -1159,12 +863,6 @@
             <div class="content-tab" id="tasksTab" style="display:none">
                 <h2>✅ Your Tasks</h2>
                 <div id="tasksContent">Loading...</div>
-            </div>
-
-            <!-- Activity Tab -->
-            <div class="content-tab" id="activityTab" style="display:none">
-                <h2>📋 Activity Log</h2>
-                <div id="activityContent">Loading...</div>
             </div>
 
             <!-- Documents Tab -->
@@ -1191,9 +889,7 @@
         let lastPollTime = new Date().toISOString();
 
         // ── API HELPERS ────────────────────────────────────────
-        // API_BASE must match the Tailscale serve path (e.g. /dashboard)
-        // Use relative path based on current location to support both / and /dashboard/
-        const API_BASE = window.location.pathname.startsWith('/dashboard') ? '/dashboard' : '';
+        const API_BASE = '';
 
         async function api(method, endpoint, body = null) {
             const opts = {
@@ -1214,136 +910,26 @@
         }
 
         // ── AUTH ───────────────────────────────────────────────
-        // ── AUTH: LOGIN & ONBOARDING ─────────────────────
-        
-        function showLogin() {
-            document.getElementById('loginStep1').style.display = 'block';
-            document.getElementById('loginStep2').style.display = 'none';
-            document.getElementById('loginStep3').style.display = 'none';
-            clearErrors();
-        }
-        
-        function showSetup() {
-            const clientId = document.getElementById('clientId').value;
-            document.getElementById('setupClientId').value = clientId || '';
-            document.getElementById('loginStep1').style.display = 'none';
-            document.getElementById('loginStep2').style.display = 'block';
-            document.getElementById('loginStep3').style.display = 'none';
-            clearErrors();
-        }
-        
-        function showForgot() {
-            document.getElementById('loginStep1').style.display = 'none';
-            document.getElementById('loginStep2').style.display = 'none';
-            document.getElementById('loginStep3').style.display = 'block';
-            clearErrors();
-        }
-        
-        function clearErrors() {
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('setupError').textContent = '';
-            document.getElementById('forgotError').textContent = '';
-            document.getElementById('forgotSuccess').style.display = 'none';
-            document.getElementById('setupInfo').style.display = 'none';
-        }
-        
-        async function registerClient() {
-            const clientId = document.getElementById('setupClientId').value.trim();
-            const tempPin = document.getElementById('setupTempPin').value.trim();
-            const newPin = document.getElementById('setupNewPin').value.trim();
-            const confirmPin = document.getElementById('setupConfirmPin').value.trim();
-            const errorEl = document.getElementById('setupError');
-            const infoEl = document.getElementById('setupInfo');
-            
-            errorEl.textContent = '';
-            infoEl.style.display = 'none';
-            
-            if (!clientId) { errorEl.textContent = 'Client ID required'; return; }
-            if (!tempPin) { errorEl.textContent = 'Temporary PIN required'; return; }
-            if (!newPin) { errorEl.textContent = 'New PIN required'; return; }
-            if (newPin.length < 4) { errorEl.textContent = 'PIN must be at least 4 digits'; return; }
-            if (newPin !== confirmPin) { errorEl.textContent = 'PINs do not match'; return; }
-            
-            try {
-                const res = await fetch(`${API_BASE}/api/auth/register`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({client_id: parseInt(clientId, 10), temp_pin: tempPin, new_pin: newPin})
-                });
-                const data = await res.json();
-                if (data.error) throw new Error(data.error);
-                
-                infoEl.textContent = 'PIN set! Logging you in...';
-                infoEl.style.display = 'block';
-                
-                // Auto-login after registration
-                document.getElementById('clientId').value = clientId;
-                document.getElementById('pinCode').value = newPin;
-                setTimeout(() => login(), 1000);
-            } catch (e) {
-                errorEl.textContent = e.message || 'Setup failed. Try again.';
-            }
-        }
-        
-        async function resetPin() {
-            const clientId = document.getElementById('forgotClientId').value.trim();
-            const email = document.getElementById('forgotEmail').value.trim();
-            const errorEl = document.getElementById('forgotError');
-            const successEl = document.getElementById('forgotSuccess');
-            
-            errorEl.textContent = '';
-            successEl.style.display = 'none';
-            
-            if (!clientId || !email) { errorEl.textContent = 'Client ID and email required'; return; }
-            
-            try {
-                const res = await fetch(`${API_BASE}/api/auth/forgot-pin`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({client_id: parseInt(clientId, 10), email: email})
-                });
-                const data = await res.json();
-                if (data.error) throw new Error(data.error);
-                
-                successEl.textContent = data.message;
-                successEl.style.display = 'block';
-            } catch (e) {
-                errorEl.textContent = e.message || 'Reset request failed.';
-            }
-        }
-
         async function login() {
-            const clientId = document.getElementById('clientId').value.trim();
-            const pinCode = document.getElementById('pinCode').value.trim();
-            const errorEl = document.getElementById('loginError');
-            
-            errorEl.textContent = '';
+            const clientId = document.getElementById('clientId').value;
+            const existingToken = document.getElementById('accessToken').value;
 
-            if (!clientId) {
-                errorEl.textContent = 'Client ID required';
-                return;
-            }
-            if (!pinCode) {
-                errorEl.textContent = 'PIN required';
-                return;
-            }
-            
-            try {
-                const loginUrl = `${API_BASE}/api/auth/login`;
-                const requestBody = JSON.stringify({client_id: parseInt(clientId, 10), pin: pinCode});
-                
-                const res = await fetch(loginUrl, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: requestBody
-                });
-                const data = await res.json();
-                if (data.error) throw new Error(data.error);
-                token = data.token;
-            } catch (e) {
-                console.error('Login fetch error:', e);
-                errorEl.textContent = e.message || 'Login failed. Please try again.';
-                return;
+            if (existingToken) {
+                token = existingToken;
+            } else {
+                try {
+                    const res = await fetch(`${API_BASE}/api/auth/login`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({client_id: clientId})
+                    });
+                    const data = await res.json();
+                    if (data.error) throw new Error(data.error);
+                    token = data.token;
+                } catch (e) {
+                    document.getElementById('loginError').textContent = e.message;
+                    return;
+                }
             }
 
             localStorage.setItem('saos_token', token);
@@ -1375,23 +961,6 @@
                 console.error('Init failed:', e);
                 logout();
             }
-        }
-
-        // ── AGENT AVATAR HELPER ────────────────────────────────
-        function getAgentAvatar(agentName) {
-            const map = {
-                'SOL': '🛰️',
-                'CODY': '💻',
-                'ASSEMBLY': '🛠️',
-                'VALI': '✅',
-                'PESSI': '⚠️',
-                'ORACLE': '🔮',
-                'ATLAS': '🗺️',
-                'CHATTY': '💬',
-                'GENI': '🎨',
-                'JURIS': '⚖️'
-            };
-            return map[agentName?.toUpperCase()] || '🤖';
         }
 
         // ── CONVERSATIONS ──────────────────────────────────────
@@ -1478,7 +1047,7 @@
         function renderMessage(msg) {
             const isClient = msg.sender_type === 'client';
             const isSystem = msg.sender_type === 'system';
-            const avatar = isClient ? '👤' : getAgentAvatar(msg.sender_agent);
+            const avatar = isClient ? '👤' : (msg.sender_agent || '🛰️');
             const time = formatTime(msg.created_at);
 
             let taskBadge = '';
@@ -1563,38 +1132,28 @@
         }
 
         // ── TABS ───────────────────────────────────────────────
-        function showTab(tab, btn) {
-            // Close nav dropdown on mobile
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks) navLinks.classList.remove('open');
-            
-            // Close sidebar on mobile
-            const sidebar = document.getElementById('chatSidebar');
-            if (sidebar) sidebar.classList.remove('open');
-
-            // Hide all tabs
-            ['chatTab','dashboardTab','servicesTab','tasksTab','activityTab','docsTab'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.style.display = 'none';
+        function showTab(tab) {
+            // Hide all
+            ['chatTab','dashboardTab','servicesTab','tasksTab','docsTab'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
             });
 
-            // Show selected tab
-            const selectedEl = document.getElementById(tab + 'Tab');
-            if (selectedEl) {
-                selectedEl.style.display = tab === 'chat' ? 'flex' : 'block';
-            }
+            // Show selected
+            const el = document.getElementById(tab + 'Tab');
+            el.style.display = tab === 'chat' ? 'flex' : 'block';
 
             // Update nav
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            if (btn) {
-                btn.classList.add('active');
-            }
+            // Find the button that matches this tab
+            const buttons = document.querySelectorAll('.nav-link');
+            buttons.forEach(b => {
+                if (b.textContent.toLowerCase().includes(tab)) b.classList.add('active');
+            });
 
             // Load content
             if (tab === 'dashboard') loadDashboard();
             if (tab === 'services') loadServices();
             if (tab === 'tasks') loadTasks();
-            if (tab === 'activity') loadActivity();
             if (tab === 'docs') loadDocs();
         }
 
@@ -1636,13 +1195,11 @@
                 <div class="agents-grid">
                     ${(data.agents || []).map(a => `
                         <div class="agent-card">
-                            <div class="agent-icon">${a.avatar_emoji || getAgentAvatar(a.agent_name)}</div>
+                            <div class="agent-icon">${a.avatar || '🛰️'}</div>
                             <div>
                                 <div class="agent-name">${a.agent_name}</div>
                                 <div class="agent-status">${a.status || 'idle'}</div>
                                 <div class="agent-role">${a.role || ''}</div>
-                                ${a.role_description ? `<div class="agent-desc">${a.role_description}</div>
-                                <div class="agent-caps">${(a.capabilities || []).map(c => `<span class="agent-cap">${c}</span>`).join('')}</div>` : ''}
                             </div>
                         </div>
                     `).join('')}
@@ -1708,7 +1265,8 @@
                 <table class="task-table">
                     <thead>
                         <tr>
-                            <th>Task</th>
+                            <th>ID</th>
+                            <th>Type</th>
                             <th>Agent</th>
                             <th>Status</th>
                             <th>Created</th>
@@ -1717,14 +1275,8 @@
                     <tbody>
                         ${tasks.map(t => `
                             <tr>
-                                <td>
-                                    <div style="font-weight:600; color:white">${t.display_name || t.task_type}</div>
-                                    <div class="task-desc">${t.description || ''}</div>
-                                    <div class="task-meta">
-                                        <span style="color:var(--text-dim); font-size:11px">#${t.id}</span>
-                                        ${t.priority ? `<span style="color:var(--amber); font-size:11px">P${t.priority}</span>` : ''}
-                                    </div>
-                                </td>
+                                <td style="color:var(--accent-bright)">#${t.id}</td>
+                                <td>${t.task_type}</td>
                                 <td>${t.assigned_agent || '-'}</td>
                                 <td>
                                     <span class="status-pill status-${t.status.toLowerCase()}">${t.status}</span>
@@ -1745,7 +1297,7 @@
             document.getElementById('docsContent').innerHTML = `
                 <div style="display:grid; gap:12px">
                     ${docs.map(d => `
-                        <a href="${d.url}" class="doc-card" target="_blank" rel="noopener">
+                        <a href="${d.url}" target="_blank" class="doc-card">
                             <div class="doc-icon">${d.icon}</div>
                             <div>
                                 <div class="doc-name">${d.name}</div>
@@ -1755,42 +1307,6 @@
                     `).join('')}
                 </div>
             `;
-        }
-
-        // ── ACTIVITY ────────────────────────────────────────────
-        async function loadActivity() {
-            const tasks = await api('GET', '/api/portal/tasks');
-            const recentTasks = tasks.slice(0, 20); // Show last 20
-
-            document.getElementById('activityContent').innerHTML = `
-                <h3>Recent Activity</h3>
-                <div class="activity-feed">
-                    ${recentTasks.length ? recentTasks.map(t => `
-                        <div class="activity-item">
-                            <div class="activity-icon">${getStatusIcon(t.status)}</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Task #${t.id} — ${t.task_type}</div>
-                                <div class="activity-meta">
-                                    <span class="status-pill status-${t.status.toLowerCase()}">${t.status}</span>
-                                    <span>${t.assigned_agent || 'Unassigned'}</span>
-                                    <span>${formatTime(t.created_at)}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('') : '<div style="color:var(--text-dim); text-align:center; padding:40px">No recent activity.</div>'}
-                </div>
-            `;
-        }
-
-        function getStatusIcon(status) {
-            const icons = {
-                'RUNNING': '🔄',
-                'PENDING': '⏳',
-                'DONE': '✅',
-                'FAILED': '❌',
-                'DEAD': '💀'
-            };
-            return icons[status] || '📋';
         }
 
         // ── TIER DATA ───────────────────────────────────────────
@@ -1958,18 +1474,17 @@
 
         function getDocsForTier(tier) {
             const base = [
-                { icon: '📄', name: 'Quick Start Guide v4.0', desc: 'Get started with your SAOS deployment — includes PIN auth and mobile access', url: '/dashboard/download/quickstart-v4' },
-                { icon: '📘', name: 'Service Manual v4.0', desc: 'Complete reference for your SAOS system — updated for 6-tab dashboard', url: '/dashboard/download/manual-v4' },
-                { icon: '🏗️', name: 'Architecture Overview v3.0', desc: 'Technical architecture and component details — includes mobile and auth', url: '/dashboard/download/architecture-v3' },
-                { icon: '📱', name: 'Dashboard Mobile Access Guide', desc: 'iPhone and Android setup for mobile dashboard access', url: '/dashboard/download/mobile-guide' },
+                { icon: '📄', name: 'Quick Start Guide v3.0', desc: 'Get started with your SAOS deployment', url: '/SAOS-Quick-Start-Guide-v3.0.pdf' },
+                { icon: '📘', name: 'Service Manual v3.0', desc: 'Complete reference for your SAOS system', url: '/SAOS-Service-Manual-v3.0.pdf' },
+                { icon: '🏗️', name: 'Architecture Overview v2.0', desc: 'Technical architecture and component details', url: '/SAOS-Architecture-Overview-v2.0.pdf' },
             ];
 
             const extra = {
                 'enterprise': [
-                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: '/dashboard/download/enterprise-guide' },
+                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: '/SyStack-Enterprise-Deployment-Guide-v1.0.pdf' },
                 ],
                 'private': [
-                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: '/dashboard/download/enterprise-guide' },
+                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: '/SyStack-Enterprise-Deployment-Guide-v1.0.pdf' },
                 ],
             };
 
@@ -2006,15 +1521,6 @@
                 e.preventDefault();
                 sendMessage();
             }
-            // Allow Enter in setup forms
-            if (e.target.id === 'setupNewPin' && e.key === 'Enter') {
-                e.preventDefault();
-                registerClient();
-            }
-            if (e.target.id === 'forgotEmail' && e.key === 'Enter') {
-                e.preventDefault();
-                resetPin();
-            }
         });
 
         // Auto-resize textarea
@@ -2022,42 +1528,6 @@
             if (e.target.id === 'messageInput') {
                 e.target.style.height = '42px';
                 e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
-            }
-        });
-
-        // Mobile menu toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.getElementById('hamburgerBtn');
-            const navLinks = document.querySelector('.nav-links');
-            if (hamburger && navLinks) {
-                hamburger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    navLinks.classList.toggle('open');
-                });
-                // Close menu when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-                        navLinks.classList.remove('open');
-                    }
-                });
-            }
-
-            // Login form button handler (button is type=button now, onclick calls login)
-            const loginBtn = document.getElementById('loginBtn');
-            const loginForm = document.getElementById('loginForm');
-            if (loginForm) {
-                loginForm.setAttribute('novalidate', 'novalidate');
-                loginForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                });
-            }
-            if (loginBtn) {
-                loginBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    login();
-                });
             }
         });
 
