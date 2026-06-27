@@ -8,8 +8,8 @@ This folder is home. Treat it that way.
 |-------|--------|------|-------|---------------|
 | **SOL** | 🛰️ | Strategic oversight, high-leverage decisions | `ollama/kimi-k2.6:cloud` | Default — main operator |
 | **ASSEMBLY** | 🛠 | Architecture, system design | `ollama/deepseek-v4-pro:cloud` | Complex builds, scaffolding |
-| **DOOBY** | 🤖 | Coding, scripting, building | `ollama/qwen2.5-coder:7b` (local) | Pure coding tasks, n8n workflows, scripts |
-| **LOKI** | 🏠 | Background ops, crons, file tasks | `ollama/qwen3.5:9b` (local) | Scheduled jobs, monitoring, file ops, research |
+| **DOOBY** | 🤖 | Coding, scripting, building | `ollama/qwen3.5:9b` (local, verified) | Pure coding tasks, n8n workflows, scripts |
+| **LOKI** | 🏠 | Background ops, crons, file tasks | `ollama/qwen3.5:9b` (local, verified) | Scheduled jobs, monitoring, file ops, research |
 | **CODY** | 💻 | Code review, validation | `ollama/kimi-k2.6:cloud` | Code review, verification |
 | **GENI** | 🎨 | Creative, frontend, assets | `ollama/deepseek-v4-pro:cloud` | Images, design, frontend |
 | **VALI** | ✅ | Testing, QA | `ollama/kimi-k2.6:cloud` | Test plans, validation |
@@ -30,17 +30,24 @@ This folder is home. Treat it that way.
 - **ATLAS** for: market research, competitive analysis, technology scouting
 - **JURIS** for: legal review, compliance checks, risk assessment
 
-### Local vs Cloud
+### Local vs Cloud (Updated 2026-06-27)
 
 | Agent | Local? | When to Use |
 |-------|--------|-------------|
-| DOOBY | ✅ `qwen2.5-coder:7b` | Fast coding, simple scripts, routine builds |
-| LOKI | ✅ `qwen3.5:9b` | Background tasks, monitoring, file ops |
+| DOOBY | ✅ `qwen3.5:9b` (local, verified) | Fast coding, simple scripts, routine builds |
+| LOKI | ✅ `qwen3.5:9b` (local, verified) | Background tasks, monitoring, file ops |
 | SOL | ❌ `kimi-k2.6:cloud` | Complex reasoning, strategy, high-stakes decisions |
 | CODY | ❌ `kimi-k2.6:cloud` | Code review requiring deep analysis |
 | ASSEMBLY | ❌ `deepseek-v4-pro:cloud` | Architecture requiring broad context |
 
-**Rule of thumb:** If the task doesn't need reasoning beyond "write this code" or "check this file" → spawn DOOBY or LOKI. Save cloud compute for strategy and complex analysis.
+**CRITICAL — Compute Conservation Rule:**
+- DOOBY and LOKI share the SAME local model (`qwen3.5:9b`)
+- **Only ONE can run at a time** — 16GB RAM cannot load two instances
+- Check `ollama ps` before spawning — if model already loaded, wait or kill first
+- SOL stays on cloud — no local conflicts
+- **DOOBY timeout note:** Complex tasks may take 2-3 min on local; use `runTimeoutSeconds: 180`+ for reliable completion
+
+**Rule of thumb:** If the task doesn't need reasoning beyond "write this code" or "check this file" → spawn DOOBY or LOKI (one at a time). Save cloud compute for strategy and complex analysis.
 
 ---
 

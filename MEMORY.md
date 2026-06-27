@@ -4,42 +4,99 @@ _This is my curated memory — the distilled essence, not raw logs. For daily lo
 
 ---
 
-## 2026-06-27 — SAOS Compute Pause State Saved
+## 2026-06-27 — Memory Search Config Recurring Drift + SAOS Compute Pause + DOOBY/LOKI Local Model Verified
 
-**Status:** ⏸️ PAUSED — All systems preserved, zero compute waste
-**File:** `SAOS-COMPUTE-PAUSE-STATE.md` (restore guide)
-**Source:** `memory/2026-06-27.md`
+**Status:** ✅ FIXED (memory search) / ⏸️ PAUSED (SAOS) / ✅ VERIFIED (DOOBY + LOKI local) / ✅ MIGRATED (LOKI crons) / ⏸️ DEFERRED (SAOS orchestrator)
+**Files:** `memory/2026-06-27-memory-search-fix.md`, `SAOS-COMPUTE-PAUSE-STATE.md`
 
-### What Happened
-User noticed SAOS was repeatedly spawning SOL with vague "client_request" tasks, burning compute. Same pattern as June 24 orchestrator loop incident.
+### Memory Search Config Drift (Recurring Pattern)
+**Problem:** `memorySearch` config in `~/.openclaw/openclaw.json` stripped to bare minimum again — only `provider` and `model` fields remained. Missing `enabled`, `sources`, `hybrid`.
 
-### Root Causes Found
-1. **Orchestrator daemon** (PID 1076) — running via LaunchAgent, spawned SOL every ~10s for 14 pending test tasks (IDs 325-336)
-2. **n8n Email Dispatcher** (`eylye0Me5zyoXMc2`) — polled every 60s, failed ~1,440x/day (wrong API port 8768 vs 8765)
-
-### Actions Taken
-| Action | Status |
-|--------|--------|
-| Killed orchestrator daemon | ✅ Done |
-| Unloaded LaunchAgent `net.systack.orchestrator` | ✅ Done |
-| Disabled n8n workflow in DB (active=0) | ✅ Done |
-| Marked 12 test tasks DONE (325-336) | ✅ Done |
-| Wrote `SAOS-COMPUTE-PAUSE-STATE.md` | ✅ Done |
-
-### Restore Commands
-```bash
-# Orchestrator daemon
-launchctl load ~/Library/LaunchAgents/net.systack.orchestrator.plist
-
-# Email dispatcher (fix port 8768→8765 first)
-sqlite3 ~/.n8n/database.sqlite "UPDATE workflow_entity SET active=1 WHERE id='eylye0Me5zyoXMc2';"
+**Fix:** Restored full config:
+```json
+{
+  "enabled": true,
+  "sources": ["memory", "sessions"],
+  "provider": "ollama",
+  "model": "nomic-embed-text",
+  "query": {
+    "hybrid": {
+      "enabled": true,
+      "vectorWeight": 0.7,
+      "textWeight": 0.3
+    }
+  }
+}
 ```
 
-### Prevention
-- Verify credential paths before re-enabling daemon
-- Add circuit breaker: >50% task failures = auto-pause
-- Clear test tasks from queue before starting daemon
-- Fix email dispatcher API port before re-enabling
+**Verified:** `memory_search` returns results with hybrid scoring, backend `builtin`, Ollama embedding model running (274MB).
+
+**Root Cause:** Likely `openclaw doctor --fix`, manual edit, or partial config reload stripping nested fields. Same pattern as 2026-06-13 incident.
+
+**Recommendation:** Add config validation cron or pre-flight check to detect stripped `memorySearch` fields.
+
+### SAOS Compute Pause
+Same pattern as June 24 orchestrator loop. Killed daemon, unloaded LaunchAgent, disabled n8n email dispatcher, cleared test tasks.
+
+### DOOBY & LOKI Local Model Verification
+- Both agents now run on `ollama/qwen3.5:9b` (local, no cloud fallback)
+- Config: `agents.defaults.model.primary` = `qwen3.5:9b`, fallbacks = `[]`
+- LOKI: All tools work correctly on local
+- DOOBY: File creation works, but tool response takes ~3 min when model cold; ~30s when warmed
+- **CRITICAL:** Only ONE can run at a time — 16GB RAM cannot load two instances
+
+### LOKI Cron Migration (5 Cloud Jobs → Local)
+| Job | Time | Status |
+|-----|------|--------|
+| RAG Auto-Sync | Daily 2:00 AM | ✅ LOKI |
+| Wiki Bridge Sync | Daily 3:30 AM | ✅ LOKI |
+| Weekly Memory | Tuesdays 8:00 AM | ✅ LOKI |
+| ASSEMBLY Check | Jun 29 8:00 AM | ✅ LOKI |
+| Fleet Review | Jun 29 8:30 AM | ✅ LOKI |
+
+### SAOS Orchestrator Testing
+- All 72 tasks marked as DONE (test)
+- Orchestrator cron job DISABLED
+- **User decision:** Turn back on after full SAOS stack verified
+
+### Compute Rules (Binding)
+1. Sequential execution only — never spawn DOOBY + LOKI simultaneously
+2. Check `ollama ps` before spawning
+3. SOL stays on cloud — no local conflicts
+4. DOOBY timeout: Use `runTimeoutSeconds: 180`+ for complex tasks
+
+**Status:** ⏸️ PAUSED (SAOS) / ✅ VERIFIED (DOOBY + LOKI local) / ✅ MIGRATED (LOKI crons) / ⏸️ DEFERRED (SAOS orchestrator)
+**Files:** `SAOS-COMPUTE-PAUSE-STATE.md`, `memory/2026-06-27-0924-doby-loki-local-model-status.md`, `memory/2026-06-27-loki-cron-migration-complete.md`
+
+### SAOS Compute Pause
+Same pattern as June 24 orchestrator loop. Killed daemon, unloaded LaunchAgent, disabled n8n email dispatcher, cleared test tasks.
+
+### DOOBY & LOKI Local Model Verification
+- Both agents now run on `ollama/qwen3.5:9b` (local, no cloud fallback)
+- Config: `agents.defaults.model.primary` = `qwen3.5:9b`, fallbacks = `[]`
+- LOKI: All tools work correctly on local
+- DOOBY: File creation works, but tool response takes ~3 min when model cold; ~30s when warmed
+- **CRITICAL:** Only ONE can run at a time — 16GB RAM cannot load two instances
+
+### LOKI Cron Migration (5 Cloud Jobs → Local)
+| Job | Time | Status |
+|-----|------|--------|
+| RAG Auto-Sync | Daily 2:00 AM | ✅ LOKI |
+| Wiki Bridge Sync | Daily 3:30 AM | ✅ LOKI |
+| Weekly Memory | Tuesdays 8:00 AM | ✅ LOKI |
+| ASSEMBLY Check | Jun 29 8:00 AM | ✅ LOKI |
+| Fleet Review | Jun 29 8:30 AM | ✅ LOKI |
+
+### SAOS Orchestrator Testing
+- All 72 tasks marked as DONE (test)
+- Orchestrator cron job DISABLED
+- **User decision:** Turn back on after full SAOS stack verified
+
+### Compute Rules (Binding)
+1. Sequential execution only — never spawn DOOBY + LOKI simultaneously
+2. Check `ollama ps` before spawning
+3. SOL stays on cloud — no local conflicts
+4. DOOBY timeout: Use `runTimeoutSeconds: 180`+ for complex tasks
 
 ---
 

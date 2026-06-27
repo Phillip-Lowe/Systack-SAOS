@@ -225,14 +225,14 @@ function updateCart() {
   if (content) {
     content.innerHTML = `
       ${cart.map((item, idx) => {
-        const comboMod = item.modifiers.find(m => m.code && m.code.includes('COMBO'));
-        const otherMods = item.modifiers.filter(m => !m.code || !m.code.includes('COMBO'));
+        const comboMods = item.modifiers.filter(m => m.group === 'combo' || (m.code && m.code.includes('COMBO')));
+        const otherMods = item.modifiers.filter(m => m.group !== 'combo' && !(m.code && m.code.includes('COMBO')));
         return `
         <div class="cart-item">
           <div class="cart-item-info">
             <h4>${item.qty}x ${item.name}</h4>
-            ${comboMod ? `
-              <div class="cart-combo">🍟 COMBO: ${comboMod.label.replace('Add ', '')}</div>
+            ${comboMods.length ? `
+              <div class="cart-combo">🍟 COMBO: ${comboMods.map(m => m.label.replace('Add ', '')).join(' + ')} <span style="color:var(--text-light);font-size:10px;">(included)</span></div>
             ` : ''}
             ${otherMods.length ? `
               <div class="cart-mods">${otherMods.map(m => m.label).join(' • ')}</div>
@@ -458,22 +458,80 @@ function showConfirmation(message, paymentLink) {
   const existing = document.getElementById('confirmationPage');
   if (existing) existing.remove();
 
+  // Get cart data for order summary
+  const subtotal = cart.reduce((s, i) => s + i.totalPrice, 0);
+  const tax = Math.round(subtotal * TAX_RATE);
+  const grand = subtotal + tax;
+  const form = document.getElementById('checkoutForm');
+  const customerName = form?.querySelector('input[name="name"]')?.value || '';
+  const pickupTime = form?.querySelector('select[name="pickupTime"]')?.value || 'ASAP';
+
+  // Build order items HTML
+  const orderItemsHtml = cart.map((item) => {
+    const comboMods = item.modifiers.filter(m => m.group === 'combo' || (m.code && m.code.includes('COMBO')));
+    const otherMods = item.modifiers.filter(m => m.group !== 'combo' && !(m.code && m.code.includes('COMBO')));
+    return `
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;">
+        <div style="text-align:left;">
+          <div style="font-weight:600;font-size:14px;">${item.qty}× ${item.name}</div>
+          ${comboMods.length ? `<div style="color:#AF3D4B;font-size:12px;margin-top:2px;">🍟 COMBO: ${comboMods.map(m => m.label.replace('Add ', '')).join(' + ')} <span style="color:#6B7280;">(included)</span></div>` : ''}
+          ${otherMods.length ? `<div style="color:#6B7280;font-size:12px;margin-top:2px;">${otherMods.map(m => m.label).join(' • ')}</div>` : ''}
+        </div>
+        <span style="font-weight:700;color:#AF3D4B;font-size:14px;white-space:nowrap;">$${formatPrice(item.totalPrice)}</span>
+      </div>
+    `;
+  }).join('');
+
   const confirmation = document.createElement('div');
   confirmation.id = 'confirmationPage';
   confirmation.innerHTML = `
-    <div style="max-width:448px;margin:40px auto;padding:24px;background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(17,24,39,0.08);text-align:center;">
-      <div style="font-size:48px;margin-bottom:16px;">🎉</div>
-      <h2 style="font-size:24px;font-weight:800;color:#590B3F;margin-bottom:12px;">We Got You!</h2>
-      <p style="font-size:16px;color:#6B7280;margin-bottom:24px;line-height:1.5;">
-        We've received your order and emailed you a secure payment link.<br>
-        Your order will be confirmed after payment is completed.
-      </p>
-      <p style="font-size:14px;color:#374151;margin-bottom:24px;">${message}</p>
-      ${paymentLink ? `<a href="${paymentLink}" target="_blank" style="display:inline-block;background:#AF3D4B;color:#fff;padding:14px 32px;border-radius:50px;font-weight:700;font-size:16px;text-decoration:none;margin-bottom:16px;">💳 Pay Now</a>` : ''}
-      <p style="font-size:12px;color:#9CA3AF;">Didn't receive the email? Check your spam folder or call us.</p>
+    <div style="max-width:520px;margin:40px auto;padding:24px;background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(17,24,39,0.08);">
+      <div style="background:linear-gradient(135deg, #590B3F 0%, #7a1a55 50%, #754681 100%);color:white;padding:32px 24px;border-radius:14px 14px 0 0;text-align:center;margin:-24px -24px 24px -24px;">
+        <div style="font-size:56px;margin-bottom:12px;">🎉</div>
+        <h2 style="font-size:28px;font-weight:800;margin:0 0 8px 0;">We Got You!</h2>
+        <p style="font-size:16px;opacity:0.9;margin:0;">We're firing up the kitchen for you.</p>
+      </div>
+      
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="display:inline-block;background:#f5e6d0;color:#590B3F;padding:10px 18px;border-radius:8px;font-weight:700;font-size:14px;">
+          📋 Order for ${customerName || 'You'}
+        </div>
+      </div>
+      
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;">
+        <span style="color:#6B7280;font-size:14px;">Pickup Time</span>
+        <span style="font-weight:600;font-size:14px;">${pickupTime === 'ASAP' ? 'ASAP' : pickupTime}</span>
+      </div>
+      
+      <h3 style="font-size:16px;font-weight:700;color:#590B3F;margin:20px 0 12px 0;">Your Order</h3>
+      ${orderItemsHtml}
+      
+      <div style="margin-top:16px;padding-top:12px;border-top:2px solid #eee;">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:14px;">
+          <span>Subtotal</span>
+          <span>$${formatPrice(subtotal)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:14px;color:#6B7280;">
+          <span>Tax (9.52%)</span>
+          <span>$${formatPrice(tax)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;margin-top:8px;border-top:1px solid #eee;font-weight:800;font-size:18px;color:#590B3F;">
+          <span>Total</span>
+          <span>$${formatPrice(grand)}</span>
+        </div>
+      </div>
+      
+      <div style="text-align:center;margin-top:24px;">
+        ${paymentLink ? `<a href="${paymentLink}" target="_blank" style="display:inline-block;background:#AF3D4B;color:#fff;padding:16px 40px;border-radius:50px;font-weight:700;font-size:16px;text-decoration:none;transition:all 0.2s;">💳 Complete Payment</a>` : ''}
+        <p style="font-size:12px;color:#6B7280;margin-top:16px;line-height:1.5;">
+          ${message || "Payment links expire at 2:00 AM CT. <br>Didn't receive the email? Check spam or call us."}
+        </p>
+        <p style="font-size:12px;color:#9CA3AF;">Questions? Call us at <a href="tel:${BRAND.phone.replace(/[^0-9]/g, '')}" style="color:#590B3F;text-decoration:none;font-weight:600;">${BRAND.phone}</a>.</p>
+      </div>
     </div>
   `;
   document.body.appendChild(confirmation);
+  window.scrollTo(0, 0);
 }
 
 // ===================== ALERTS =====================

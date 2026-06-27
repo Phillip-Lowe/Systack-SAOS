@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-27T13:58:53.447Z",
+  "updatedAt": "2026-06-27T19:08:22.608Z",
   "entries": {
     "memory:memory/2026-06-20-session-post-mortem.md:45:74": {
       "key": "memory:memory/2026-06-20-session-post-mortem.md:45:74",
@@ -226,13 +226,13 @@
       "endLine": 247,
       "source": "memory",
       "snippet": "### Google Sheets: - **Document:** `Utopia_Deli_Menu_System` - **ID:** `1jF85_1dx9WBETfhQyda2nnnKzzvTgzSbQ_uqcgArpm0` - **CART_STATE gid:** `2016519037` - **ONLINE_ORDERS gid:** `1868689747` ### Square API: - **Endpoint:** `POST https://connect.squareup.com/v2/online-checkout/payment-links` - **Location ID:** `J4B6A3X6RYA63` - **Tax:** 9.52% as manual line item - **Redirect:** `https://www.theutopiadeli.com/payment-confirmed` - **Version header:** `2026-01-22` ### Workflow IDs: | Workflow | ID | Status | |----------|-----|--------| | V1 HTML Order | `1WEM4rZxjhhy7ooM` | ACTIVE (broken/frankenstein) | | V2 HTML Order | `29ebdb3c-6dac-4d3a-a119-5cdcc5707e48` | INACTIVE (SQL deployed, empty)",
-      "recallCount": 14,
+      "recallCount": 16,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5.876462560892104,
+      "totalScore": 6.813213431835174,
       "maxScore": 0.5433572709560394,
       "firstRecalledAt": "2026-06-21T07:46:18.896Z",
-      "lastRecalledAt": "2026-06-26T20:53:10.064Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.606Z",
       "queryHashes": [
         "0e713d0a9f3c",
         "49e5bb5feb0a",
@@ -247,13 +247,16 @@
         "4474521a420f",
         "9a48cdf51ff0",
         "b6916e6741eb",
-        "9521a7663662"
+        "9521a7663662",
+        "f40df17b3b0e",
+        "00a7d79510e1"
       ],
       "recallDays": [
         "2026-06-21",
         "2026-06-22",
         "2026-06-23",
-        "2026-06-26"
+        "2026-06-26",
+        "2026-06-27"
       ],
       "conceptTags": [
         "2026-06-05-full-session.md",
@@ -444,13 +447,13 @@
       "endLine": 151,
       "source": "memory",
       "snippet": "Webhook → Validate JSON → NORMALIZE_TO_CART_STATE → Validate Total → Cart Rehydration → Square Line-Item Builder → Build Tax Line → cart_html BUILDER → Required-Fields → Create Payment Link → MERGE (cart_html + payment) → Email Template → FINAL EMAIL COMPOSER → Send Email → Update Sheet → PREP_RESPONSE → Respond to Webhook ``` ### Status: User said \"both\" — wants both: 1. Fix frankenstein V1 2. Build fresh V2 **Current state:** Frankenstein exported and analyzed, ready for user to build fresh. --- ## ALL TEMPLATES RESEARCHED ### From n8n.io template library (9,875 templates): | # | Template | URL | Relevance | |---|----------|-----|-----------| | 1 | Website Downtime Monitor | #11763 |",
-      "recallCount": 9,
+      "recallCount": 10,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3.3611803174018857,
-      "maxScore": 0.38868317008018494,
+      "totalScore": 3.797496816515922,
+      "maxScore": 0.4363164991140365,
       "firstRecalledAt": "2026-06-21T07:46:22.710Z",
-      "lastRecalledAt": "2026-06-22T03:28:43.592Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.606Z",
       "queryHashes": [
         "f9fb0313f7e9",
         "5d47a3f9fc61",
@@ -460,11 +463,13 @@
         "c6e0f1518626",
         "13234de62ddb",
         "938b60351895",
-        "d5e56e43d9ef"
+        "d5e56e43d9ef",
+        "00a7d79510e1"
       ],
       "recallDays": [
         "2026-06-21",
-        "2026-06-22"
+        "2026-06-22",
+        "2026-06-27"
       ],
       "conceptTags": [
         "2026-06-05-full-session.md",
@@ -27763,13 +27768,13 @@
       "endLine": 37,
       "source": "memory",
       "snippet": "# Session Save - 2026-06-13 Utopia Deli Menu Image Updates ## Summary Complete update of all Utopia Deli menu item images to correct photos. ## Changes Made ### Images Updated (All Items) | Item | Old Image | New Image | Status | |------|-----------|-----------|--------| | Buffalo Chik'n Sliders | `IMG_2627.WEBP` (wrong - shared with bourbon) | `buffalo_chikn_slider.jpg` | ✅ Fixed | | Rocktown Bourbon Sliders | `IMG_2627.WEBP` (wrong - shared with buffalo) | `rocktown_bourbon_slider.jpg` | ✅ Fixed | | Chik'n Fried Chik'n Sub | `chicken_fried_chicken_sub.jpg` (wrong - calamari) | `chicken_fried_chikn_sub.png` | ✅ Fixed | | Potato Chip Spirals | `generic_fries.jpg` (wrong - plain fries) | `",
-      "recallCount": 9,
+      "recallCount": 10,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 4.372529608011246,
+      "totalScore": 4.813252791762352,
       "maxScore": 0.5431626424193382,
       "firstRecalledAt": "2026-06-22T11:05:33.026Z",
-      "lastRecalledAt": "2026-06-27T13:46:16.037Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.608Z",
       "queryHashes": [
         "f08937e13a10",
         "fdbdd02478ee",
@@ -27779,7 +27784,8 @@
         "c09be1c4eaf8",
         "2dedb7a82346",
         "8770bb85136f",
-        "cfd7235b45ce"
+        "cfd7235b45ce",
+        "17eb517cf0a3"
       ],
       "recallDays": [
         "2026-06-22",
@@ -27971,13 +27977,13 @@
       "endLine": 99,
       "source": "memory",
       "snippet": "- **task_queue** table: task dispatch to fleet agents - **agent_state** table: fleet status tracking - **execution_log** table: audit trail --- ## ⏳ TODO — Things To Finish ### Critical (Before First Client) | # | Task | Status | Notes | |---|------|--------|-------| | 1 | **Get Vultr API key** | ❌ Not done | my.vultr.com → Account → API → Add Key | | 2 | **Get Tailscale API key** | ❌ Not done | login.tailscale.com → Settings → Keys → Generate | | 3 | **Get n8n API key** | ❌ Not done | n8n UI → Settings → API | | 4 | **Test real VPS creation** | ⏳ Blocked | Needs Vultr API key; use --tier test first | | 5 | **Verify Tailscale URL works** | ⏳ Blocked | Needs real VPS to test HTTPS access",
-      "recallCount": 11,
+      "recallCount": 14,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5.068966713547707,
+      "totalScore": 6.489849117398262,
       "maxScore": 0.4993876606225967,
       "firstRecalledAt": "2026-06-22T11:13:18.300Z",
-      "lastRecalledAt": "2026-06-27T13:53:32.544Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
       "queryHashes": [
         "59f09408f7c3",
         "33f8e3c2b7c3",
@@ -27989,7 +27995,10 @@
         "1ab79236205b",
         "8e89488cd9cd",
         "efff3523a296",
-        "81561b4e6f74"
+        "81561b4e6f74",
+        "e341378a4a47",
+        "0eb2a5b538a1",
+        "6e8241b84cc1"
       ],
       "recallDays": [
         "2026-06-22",
@@ -28142,13 +28151,13 @@
       "endLine": 37,
       "source": "memory",
       "snippet": "# Session End — 2026-06-17 05:56 CDT ## Final Status ### Services Running | Service | PID | Port | LaunchAgent | |---------|-----|------|-------------| | Orchestrator Daemon | 70691 | - | `net.systack.orchestrator` | | SAOS Dashboard | 97098 | 8765 | `net.systack.dashboard` | | Invoice Dashboard | 97487 | 8766 | `net.systack.invoice-dashboard` | | Invoice API | 86824 | 9001 | `com.systack.invoice-api` | ### Repos | Repo | URL | Contents | |------|-----|----------| | systack-saas | github.com/Phillip-Lowe/systack-saas | SAOS orchestrator, dashboard, fleet, provisioning | | systack-site | github.com/Phillip-Lowe/systack-site | Systack website | | utopia-deli-order | github.com/Phillip-Lowe/",
-      "recallCount": 8,
+      "recallCount": 9,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3.8230494916439053,
+      "totalScore": 4.305913054943084,
       "maxScore": 0.5414974153041839,
       "firstRecalledAt": "2026-06-22T11:13:18.300Z",
-      "lastRecalledAt": "2026-06-25T10:03:14.736Z",
+      "lastRecalledAt": "2026-06-27T15:04:54.102Z",
       "queryHashes": [
         "59f09408f7c3",
         "f6815e1b11cd",
@@ -28157,11 +28166,13 @@
         "0bf37512a57c",
         "8b255f3fd553",
         "ff3ce597f2a6",
-        "a000d0e2159e"
+        "a000d0e2159e",
+        "7db5efd3ba57"
       ],
       "recallDays": [
         "2026-06-22",
-        "2026-06-25"
+        "2026-06-25",
+        "2026-06-27"
       ],
       "conceptTags": [
         "2026-06-17-session-end.md",
@@ -28339,23 +28350,26 @@
       "endLine": 38,
       "source": "memory",
       "snippet": "# 2026-06-03 — CODY: HTML Webhook Integration Build ## What I Did (15 min sprint) - Replaced `systack-site/niches/food/index.html` landing page with a working order form - Built `systack-site/niches/food/order-form.js` with: - Menu item selection with +/- quantity controls - Live cart with subtotal, tax (9.5%), total calculation - Customer info fields (name, email, phone) - Pickup time dropdown with business hours validation (10 AM–8 PM, 20 min lead time) - Special instructions textarea - JSON POST to `https://utopia-api.systack.net/webhook/utopia-deli-html-order-v1` - Success/error message handling - Form reset after successful order ## Key Technical Choices - **Integer cen",
-      "recallCount": 5,
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2.19822216629982,
-      "maxScore": 0.4744460642337799,
+      "totalScore": 3.1761713683605195,
+      "maxScore": 0.5171423017978668,
       "firstRecalledAt": "2026-06-22T11:13:23.936Z",
-      "lastRecalledAt": "2026-06-25T08:38:59.474Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.606Z",
       "queryHashes": [
         "f6815e1b11cd",
         "b0e994e649aa",
         "c11b1ba0fa3c",
         "ff3ce597f2a6",
-        "1ab79236205b"
+        "1ab79236205b",
+        "f40df17b3b0e",
+        "00a7d79510e1"
       ],
       "recallDays": [
         "2026-06-22",
-        "2026-06-25"
+        "2026-06-25",
+        "2026-06-27"
       ],
       "conceptTags": [
         "9.5",
@@ -28505,19 +28519,20 @@
       "endLine": 50,
       "source": "memory",
       "snippet": "# Session Close — 2026-06-17 07:11 CDT **Status:** Session paused, all work saved **User directive:** \"Save this and I'll be back later\" --- ## What Was Accomplished Tonight ### SAOS Provisioning Pipeline (COMPLETE) - 7 components built, tested, committed - 16/16 tests passing - Database schema verified (saos_clients, task_queue) - Orchestrator daemon verified (PID 70691) ### JURIS Compliance Framework (COMPLETE) - 4 wiki documents created - JURIS workspace identity files updated - Agent references documented ### ORACLE Architecture Review (SAVED) - Full response saved to memory/ORACLE-RESPONSE-2026-06-17.md - Approved: 16GB baseline, cloud-first, Tailscale tagged devices - Flags: Earl",
-      "recallCount": 5,
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2.618000619084678,
+      "totalScore": 3.067297054798446,
       "maxScore": 0.7411246970008235,
       "firstRecalledAt": "2026-06-22T12:54:55.300Z",
-      "lastRecalledAt": "2026-06-27T11:06:06.631Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
       "queryHashes": [
         "6d544f140602",
         "0bf37512a57c",
         "efff3523a296",
         "c95d42ef59cd",
-        "294f188b9e77"
+        "294f188b9e77",
+        "6e8241b84cc1"
       ],
       "recallDays": [
         "2026-06-22",
@@ -28540,37 +28555,39 @@
       "startLine": 1,
       "endLine": 45,
       "source": "memory",
-      "snippet": "# SAOS Enterprise — Session Wrap-Up + Next Steps **Date:** 2026-06-19 14:19 CDT **Session End:** Complete --- ## What Was Built Today | Component | Status | |-----------|--------| | Enterprise onboarding form | ✅ Deployed to systack.net/saos/onboard.html | | Business tier provisioning | ✅ Verified end-to-end | | Enterprise tier provisioning | ✅ Verified end-to-end | | Plan configuration | ✅ Updated (8 cores both tiers) | | PDF documentation | ✅ Updated with new specs | | Webhook endpoint | ✅ Active (n8n) | | Execution poller | ✅ Running | | Bridge | ✅ Running | --- ## Next Steps / TODO ### 🔴 High Priority (Next Session) | # | Task | Notes | |---|------|-------| | 1 | **Request Vultr spending limit increase** | Currently blocks enterprise provisioning when combined with other instances. Need limit raised for production. | | 2 | **Configure Stripe checkout success redirect** | Point to systack.net/saos/onboard.html after payment | | 3 | **Test full flow with real Stripe payment** | End-to-end: pay → redirect → form → provision | | 4 | **Build customer dashboard** | Login to view agents, VPS status, billing | ### 🟡 Medium Priority | # | Task | Notes | |---|------|-------| | 5 | **Update remaining PDFs** | Service Manual, Client Manual, Deployment Guide need plan specs | | 6 | **Add email notifications** | Send credentials email after VPS is ready | | 7 | **Build multi-region support** | Enterprise tier should deploy to all selected regions | | 8 | **Add cost tracking** | Track Vultr costs per client | ### 🟢 Nice to Have | # | Task | Notes | |---|------|-------|",
-      "recallCount": 6,
+      "snippet": "# SAOS Enterprise — Session Wrap-Up + Next Steps **Date:** 2026-06-19 14:19 CDT **Session End:** Complete --- ## What Was Built Today | Component | Status | |-----------|--------| | Enterprise onboarding form | ✅ Deployed to systack.net/saos/onboard.html | | Business tier provisioning | ✅ Verified end-to-end | | Enterprise tier provisioning | ✅ Verified end-to-end | | Plan configuration | ✅ Updated (8 cores both tiers) | | PDF documentation | ✅ Updated with new specs | | Webhook endpoint | ✅ Active (n8n) | | Execution poller | ✅ Running | | Bridge | ✅ Running | --- ## Next Steps / TODO ### 🔴 High Priority (Next Session) | # | Task | Notes | |---|------|-------| | 1 | **Request Vultr",
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3.2096109706759908,
+      "totalScore": 3.708051221430347,
       "maxScore": 0.726470400750683,
       "firstRecalledAt": "2026-06-22T12:54:55.300Z",
-      "lastRecalledAt": "2026-06-25T11:59:47.618Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
       "queryHashes": [
         "6d544f140602",
         "a9058b82e1f7",
         "0bf37512a57c",
         "52d1860012ac",
         "26beacb4517b",
-        "2f910fecc55b"
+        "2f910fecc55b",
+        "6e8241b84cc1"
       ],
       "recallDays": [
         "2026-06-22",
         "2026-06-23",
         "2026-06-24",
-        "2026-06-25"
+        "2026-06-25",
+        "2026-06-27"
       ],
       "conceptTags": [
         "wrap-up",
         "systack.net/saos/onboard.html",
         "end-to-end",
-        "multi-region",
         "saos",
         "enterprise",
         "wrap",
-        "steps"
+        "steps",
+        "date"
       ],
       "promotedAt": "2026-06-26T08:00:00.413Z"
     },
@@ -28581,20 +28598,22 @@
       "endLine": 40,
       "source": "memory",
       "snippet": "# Session End — 2026-06-17 06:50 CDT ## Summary: Complete SAOS Provisioning Pipeline Built **User directive:** \"Save all of this everywhere and have it on the to do list the things that we need to finish\" --- ## ✅ What Was Built Tonight (Complete) ### 1. SAOS Orchestrator Daemon (Already Running) - **File:** `orchestrator-daemon.py` - **Status:** Running via launchd (PID 70691) - **Function:** Polls task_queue every 10s, dispatches to all 10 fleet agents - **Tables:** `task_queue`, `agent_state`, `execution_log`, `message_bus` ### 2. Client Provisioning Pipeline (n8n) - **Workflow:** \"SAOS Client Provisioning Pipeline\" - **Webhook:** `POST https://n8n.systack.net/webhook/saas-provision",
-      "recallCount": 6,
+      "recallCount": 8,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2.972388416528702,
+      "totalScore": 3.9350524723529814,
       "maxScore": 0.5252551794052124,
       "firstRecalledAt": "2026-06-22T12:54:55.300Z",
-      "lastRecalledAt": "2026-06-27T09:54:19.760Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
       "queryHashes": [
         "6d544f140602",
         "5e49fc029968",
         "ecda8ea0f1c7",
         "26beacb4517b",
         "d14ef44e747d",
-        "d5da4d252fb2"
+        "d5da4d252fb2",
+        "7db5efd3ba57",
+        "6e8241b84cc1"
       ],
       "recallDays": [
         "2026-06-22",
@@ -28652,13 +28671,13 @@
       "endLine": 40,
       "source": "memory",
       "snippet": "# Session — 2026-06-17 05:45 CDT ## SAOS Build Day: Orchestrator + Provisioning + JURIS **User directive:** \"Save this whole session everywhere Wiki and everything\" --- ## What Was Built ### 1. SAOS Orchestrator Daemon (Persistent) - **File:** `orchestrator-daemon.py` - **Status:** Running via launchd (PID 70691) - **Function:** Polls task_queue every 10s, dispatches to all 10 fleet agents - **Tables:** `task_queue`, `agent_state`, `execution_log`, `message_bus` - **LaunchAgent:** `~/Library/LaunchAgents/net.systack.orchestrator.plist` ### 2. Client Provisioning Pipeline - **n8n Workflow:** \"SAOS Client Provisioning Pipeline\" (ID: 8567a376-834f-4794-9b4b-46a7b57cc34e) - **Status:** ACT",
-      "recallCount": 10,
+      "recallCount": 12,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5.050932919887094,
+      "totalScore": 6.010807901528864,
       "maxScore": 0.7434366970334347,
       "firstRecalledAt": "2026-06-22T12:54:55.300Z",
-      "lastRecalledAt": "2026-06-27T10:34:22.819Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
       "queryHashes": [
         "6d544f140602",
         "a9058b82e1f7",
@@ -28669,7 +28688,9 @@
         "a000d0e2159e",
         "d14ef44e747d",
         "7fb5614b6ce6",
-        "2a045a88233b"
+        "2a045a88233b",
+        "7db5efd3ba57",
+        "6e8241b84cc1"
       ],
       "recallDays": [
         "2026-06-22",
@@ -29270,19 +29291,20 @@
       "endLine": 138,
       "source": "memory",
       "snippet": "- Updated SAOS Fleet plans: Starter ($299), Pro ($599), Enterprise (custom) - Added on-premise/air-gapped callout - Risk killers updated: \"Local models only\" + \"Discovery questionnaire before commitment\" - CTA: \"Start Discovery Questionnaire\" instead of email link --- ### 6. Updated Services Page (`/services.html`) **Changes:** - Added Security & Compliance section with 4 trust features - Local models, Tailscale VPN, data tier assessment, on-premise option --- ## Deployment Checklist | Item | Status | Next Action | |------|--------|-------------| | n8n workflow JSON | ✅ Ready | Import into n8n via UI | | Google Sheets setup | ⏳ Needed | Create \"systack-leads\" spreadsheet | | Email crede",
-      "recallCount": 5,
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2.3862230479717255,
+      "totalScore": 2.836503526568413,
       "maxScore": 0.4835497230291366,
       "firstRecalledAt": "2026-06-22T13:07:18.092Z",
-      "lastRecalledAt": "2026-06-27T10:39:04.159Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
       "queryHashes": [
         "33f4ebba80e0",
         "e8384534b191",
         "d14ef44e747d",
         "842e349b574b",
-        "cbd77e3c6b34"
+        "cbd77e3c6b34",
+        "6e8241b84cc1"
       ],
       "recallDays": [
         "2026-06-22",
@@ -29457,20 +29479,22 @@
       "endLine": 42,
       "source": "memory",
       "snippet": "# Session End — 2026-06-22 07:49 CDT ## Status: Complete ### What Was Done #### 1. SAOS VPS Provisioning Pipeline — Tested End-to-End **Test Tier (vc2-1c-1gb):** - Created `saos-test002` at `45.76.29.64` - Cloud-init completed (~7 min) - Tailscale joined: `100.95.242.89`, `saos-test002.tail573d57.ts.net` - All services active: ollama, tailscaled, docker - **Issue found:** Webhook returned 404 - Destroyed after verification **Business Tier (vhp-8c-16gb-amd):** - Created `saos-biz001` at `64.177.117.124` - Specs: 8 vCPU, 16GB RAM, 350GB disk ($96/mo) - Cloud-init completed (~2 min) - Tailscale joined: `100.80.22.78`, `saos-biz001-1.tail573d57.ts.net` - All services active - **Same issue:*",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.947901576757431,
+      "totalScore": 1.4206065088510513,
       "maxScore": 0.4986921340227127,
       "firstRecalledAt": "2026-06-22T15:03:25.399Z",
-      "lastRecalledAt": "2026-06-24T08:28:20.610Z",
+      "lastRecalledAt": "2026-06-27T15:04:54.102Z",
       "queryHashes": [
         "5e49fc029968",
-        "ae41ba03b13c"
+        "ae41ba03b13c",
+        "7db5efd3ba57"
       ],
       "recallDays": [
         "2026-06-22",
-        "2026-06-24"
+        "2026-06-24",
+        "2026-06-27"
       ],
       "conceptTags": [
         "2026-06-22-session-end-0749.md",
@@ -29555,18 +29579,19 @@
       "endLine": 38,
       "source": "memory",
       "snippet": "# Session Log — 2026-06-22 ## VPS Provisioning Pipeline — Test Results ### Test Tier (vc2-1c-1gb) - **Created:** saos-test002 at 45.76.29.64 - **Cloud-init:** Completed successfully (~7 min) - **Tailscale:** Joined — 100.95.242.89, saos-test002.tail573d57.ts.net - **Services:** ollama, tailscaled, docker all active - **Webhook:** ❌ FAILED — 404 on `saas-vps-ready` - **Destroyed:** Yes (after verification) ### Business Tier (vhp-8c-16gb-amd) - **Created:** saos-biz001 at 64.177.117.124 - **Specs:** 8 vCPU, 16GB RAM, 350GB disk ($96/mo) - **Cloud-init:** Completed successfully (~2 min) - **Tailscale:** Joined — 100.80.22.78, saos-biz001-1.tail573d57.ts.net - **Services:** ollama, tailscaled",
-      "recallCount": 4,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.9190778642892834,
-      "maxScore": 0.49588783085346216,
+      "totalScore": 2.4153509467840193,
+      "maxScore": 0.4962730824947357,
       "firstRecalledAt": "2026-06-22T15:03:25.399Z",
-      "lastRecalledAt": "2026-06-27T13:51:46.194Z",
+      "lastRecalledAt": "2026-06-27T15:04:54.102Z",
       "queryHashes": [
         "5e49fc029968",
         "ae41ba03b13c",
         "73ce56076a60",
-        "cdf3e55f9640"
+        "cdf3e55f9640",
+        "7db5efd3ba57"
       ],
       "recallDays": [
         "2026-06-22",
@@ -30515,13 +30540,13 @@
       "endLine": 34,
       "source": "memory",
       "snippet": "# Session — 2026-06-22 09:57 CDT **User directive:** \"Save this everywhere\" --- ## What Was Accomplished ### 1. Rebuilt SAOS Webhook Bridge + Poller (Lost in Workspace Reorg) - **File:** `saos-webhook-bridge.py` — Receives n8n webhook calls, triggers provisioning - **File:** `saos_provision_poller.py` — Polls n8n for webhook execution data - **Status:** Bridge running on port 8767 via launchd - **Tested:** POST to bridge triggers pipeline in test mode ✅ ### 2. Cleaned Up Stripe Payment Links + Pricing - Removed Personal+ tier from pricing page - Fixed Business annual: $3,588 → $2,988 (2 months free) - Fixed Enterprise annual: $9,588 → $7,990 (2 months free) - Personal-agent page now redi",
-      "recallCount": 11,
+      "recallCount": 12,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5.196914693713188,
+      "totalScore": 5.649384224414825,
       "maxScore": 0.49481765031814573,
       "firstRecalledAt": "2026-06-22T16:19:24.028Z",
-      "lastRecalledAt": "2026-06-27T13:58:53.447Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
       "queryHashes": [
         "0bf37512a57c",
         "ff3ce597f2a6",
@@ -30533,7 +30558,8 @@
         "294f188b9e77",
         "efd229b10e29",
         "cdf3e55f9640",
-        "9c58bf980a71"
+        "9c58bf980a71",
+        "6e8241b84cc1"
       ],
       "recallDays": [
         "2026-06-22",
@@ -30936,13 +30962,13 @@
       "endLine": 36,
       "source": "memory",
       "snippet": "# Session — 2026-06-20 03:28 CDT ## Utopia Deli V1 Messaging System — COMPLETE ### What Was Done #### 1. Consent & Privacy (TCPA/CAN-SPAM Compliance) | File | Change | |------|--------| | `pickup-order/index.html` | Consent text under EMAIL field | | `pickup-order/index.html` | Footer links clickable (Maps, Phone, Email) | | `catering/index.html` | Consent text under EMAIL field | | `catering/index.html` | Pickup info moved AFTER notes, before submit | | `privacy.html` | New page with SMS, Email, Data Protection terms | | `pickup-order/privacy.html` | Copy of privacy page for subdirectory | | `privacy.html` | Clickable logo links to homepage | | `privacy.html` | Footer slogan: \"It's just g",
-      "recallCount": 12,
+      "recallCount": 13,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 5.892413616458908,
+      "totalScore": 6.326908874790207,
       "maxScore": 0.7382013040585682,
       "firstRecalledAt": "2026-06-22T16:36:54.034Z",
-      "lastRecalledAt": "2026-06-26T20:45:43.741Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.608Z",
       "queryHashes": [
         "ff3ce597f2a6",
         "08d334a1742d",
@@ -30955,14 +30981,16 @@
         "5d7635f4a3e1",
         "48b5bf13511c",
         "c09be1c4eaf8",
-        "b6916e6741eb"
+        "b6916e6741eb",
+        "17eb517cf0a3"
       ],
       "recallDays": [
         "2026-06-22",
         "2026-06-23",
         "2026-06-24",
         "2026-06-25",
-        "2026-06-26"
+        "2026-06-26",
+        "2026-06-27"
       ],
       "conceptTags": [
         "tcpa/can-spam",
@@ -31064,13 +31092,13 @@
       "endLine": 38,
       "source": "memory",
       "snippet": "# Session — 2026-06-20 02:55 CDT ## Utopia Deli V1 Messaging System — Partial Build ### What Was Done #### 1. Site Updates (All Pushed to GitHub Pages) | File | Change | |------|--------| | `pickup-order/index.html` | Added consent text under EMAIL field | | `catering/index.html` | Added consent text under EMAIL field | | `pickup-order/privacy.html` | New: SMS/email terms, opt-out, data protection | | `privacy.html` | New: root copy for link consistency | | `pickup-order/menu-data.js` | Juice: single option $5.00 10oz | | `catering/catering-form.js` | Juice: desc updated to 10oz | | `privacy.html` + `pickup-order/privacy.html` | Clickable logo, footer slogan \"It's just good food.\", footer",
-      "recallCount": 18,
+      "recallCount": 20,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 9.131841612429398,
+      "totalScore": 10.015965068907517,
       "maxScore": 0.7545521309683509,
       "firstRecalledAt": "2026-06-22T23:15:21.237Z",
-      "lastRecalledAt": "2026-06-26T20:53:10.064Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.608Z",
       "queryHashes": [
         "fdbdd02478ee",
         "fa776939ae18",
@@ -31089,14 +31117,17 @@
         "48b5bf13511c",
         "c09be1c4eaf8",
         "b6916e6741eb",
-        "9521a7663662"
+        "9521a7663662",
+        "00a7d79510e1",
+        "17eb517cf0a3"
       ],
       "recallDays": [
         "2026-06-22",
         "2026-06-23",
         "2026-06-24",
         "2026-06-25",
-        "2026-06-26"
+        "2026-06-26",
+        "2026-06-27"
       ],
       "conceptTags": [
         "pickup-order/index.html",
@@ -31117,19 +31148,21 @@
       "endLine": 77,
       "source": "memory",
       "snippet": "- `workflow_published_version.publishedVersionId` determines which history entry runs - My edits to `workflow_entity` were completely ignored ### Current State (Fixed Before Restart) - `workflow_published_version.publishedVersionId` = `2e82cf8b-00f8-461e-9feb-9f4251a5b357` ✅ - `workflow_history` entry updated with safe Buffer handling ✅ - Build Payment Email node updated to handle missing payment URL gracefully ✅ ## The Restart - `secureCookie` already `false` in `~/.n8n/config` - n8n PID: 54337 (main), 54356 (task-runner) - Kill command: `kill 54337` (should auto-restart via launch agent) - After restart: n8n will load from `workflow_history` via `workflow_published_version` ## Remaining",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.0074401557445525,
+      "totalScore": 1.4744688481092452,
       "maxScore": 0.5144019186496734,
       "firstRecalledAt": "2026-06-22T23:15:21.238Z",
-      "lastRecalledAt": "2026-06-22T23:15:25.458Z",
+      "lastRecalledAt": "2026-06-27T14:58:28.321Z",
       "queryHashes": [
         "fb480c2faf1d",
-        "112a28b2534b"
+        "112a28b2534b",
+        "e341378a4a47"
       ],
       "recallDays": [
-        "2026-06-22"
+        "2026-06-22",
+        "2026-06-27"
       ],
       "conceptTags": [
         "workflow-entity",
@@ -31353,13 +31386,13 @@
       "endLine": 51,
       "source": "memory",
       "snippet": "# Utopia Deli Confirmation Email System — Session Complete **Date:** 2026-06-12 12:23 CDT **Session:** SOL **Status:** ✅ COMPLETE — Added to ordering system --- ## What Was Built ### Frontend Success Pages - **`payment-confirmed/index.html`** — Pickup order confirmation - **`payment-confirmed-meal-prep/index.html`** — Meal prep confirmation Both pages: - Display branded Utopia Deli confirmation with order status - Include pickup info, receipt notice, order policy, contact info - Fire webhook trigger on page load (navigator.sendBeacon) - Have Homepage and Order Again buttons ### Backend n8n Workflow - **`utopia-deli-revamp/utopia-confirmation-email-v3.json`** - Active at: `https://n",
-      "recallCount": 16,
+      "recallCount": 17,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 7.994572506844996,
+      "totalScore": 8.441157890856264,
       "maxScore": 0.540288046002388,
       "firstRecalledAt": "2026-06-22T23:15:33.465Z",
-      "lastRecalledAt": "2026-06-26T20:53:10.064Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.608Z",
       "queryHashes": [
         "fa776939ae18",
         "8e5bb2061521",
@@ -31376,14 +31409,16 @@
         "48b5bf13511c",
         "c09be1c4eaf8",
         "b6916e6741eb",
-        "9521a7663662"
+        "9521a7663662",
+        "17eb517cf0a3"
       ],
       "recallDays": [
         "2026-06-22",
         "2026-06-23",
         "2026-06-24",
         "2026-06-25",
-        "2026-06-26"
+        "2026-06-26",
+        "2026-06-27"
       ],
       "conceptTags": [
         "payment-confirmed/index.html",
@@ -48634,17 +48669,18 @@
       "endLine": 70,
       "source": "memory",
       "snippet": "# Utopia Deli Frontend Fix Complete **Date:** 2026-06-12 12:15 CDT **Status:** ✅ DEPLOYED --- ## Changes Made ### 1. Fixed Webhook URL **From:** `https://utopia-api.systack.net/webhook/utopia-confirmation-email` (404) **To:** `https://n8n.systack.net/webhook/utopia-square-webhook` (200) ### 2. Fixed Payload Format **From (frontend-style):** ```json { \"order_id\": \"UDO-xxx\", \"source\": \"pickup-order\", \"page_url\": \"...\", \"triggered_at\": \"...\" } ``` **To (Square-compatible):** ```json { \"type\": \"payment.updated\", \"data\": { \"object\": { \"payment\": { \"id\": \"frontend_UDO-xxx\", \"status\": \"COMPLETED\", \"reference_id\": \"UDO-xxx\", \"total_money\"",
-      "recallCount": 3,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.4541968762874602,
+      "totalScore": 1.891720762848854,
       "maxScore": 0.49995011091232294,
       "firstRecalledAt": "2026-06-23T09:10:52.605Z",
-      "lastRecalledAt": "2026-06-27T13:46:16.037Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.606Z",
       "queryHashes": [
         "8e5bb2061521",
         "9521a7663662",
-        "cfd7235b45ce"
+        "cfd7235b45ce",
+        "00a7d79510e1"
       ],
       "recallDays": [
         "2026-06-23",
@@ -49457,27 +49493,29 @@
       "startLine": 31,
       "endLine": 84,
       "source": "memory",
-      "snippet": "Order Status Status: Paid & Received Your order has been received by The Utopia Deli system and queued for preparation. No further action is required from you at this time. Pickup Information Thursday {DATE} — 12:30 PM – 7:30 PM The Utopia Deli — 801 S. Chester St., Little Rock, AR Meals are prepared fresh Thursday morning. Have your name ready when approaching the window. If you're early, your order may not be ready yet. If you're late, we'll hold it until close. Your Receipt A payment receipt has been sent to {EMAIL}. If you don't see it, check your spam or promotions folder. Receipts are sent automatically by our payment processor. Order Policy Because all meals are prepared fresh, paid orders cannot be modified or canceled once submitted. If you believe there is an error with your order, contact us immediately. Need Help With Your Order? Email: theutopiadelilittlerock@gmail.com Phone: +1 (501) 551‑5944 ``` ### 5. Catering Success State Text For catering redirect page: ``` Thank you for submitting your catering request to The Utopia Deli. Your event inquiry has been received. Request Status Status: Pending Review Your event details have been received by The Utopia Deli team and queued for review. No further action is required from you at this time. Review Process Our team reviews your event details We check availability for your requested date You'll hear back within 24 hours via email If approved, we'll send a menu proposal and quote 50% deposit holds your date Event Summary Event: {EVENT_NAME} Date: {EVENT_DATE} Guests: {HEADCOUNT} Venue: {VENUE_NAME}",
-      "recallCount": 6,
+      "snippet": "Order Status Status: Paid & Received Your order has been received by The Utopia Deli system and queued for preparation. No further action is required from you at this time. Pickup Information Thursday {DATE} — 12:30 PM – 7:30 PM The Utopia Deli — 801 S. Chester St., Little Rock, AR Meals are prepared fresh Thursday morning. Have your name ready when approaching the window. If you're early, your order may not be ready yet. If you're late, we'll hold it until close. Your Receipt A payment receipt has been sent to {EMAIL}. If you don't see it, check your spam or promotions folder. Receipts are sent automatically by our payment processor. Order Policy Because all meals are prepared fresh, p",
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3.091281230747699,
+      "totalScore": 3.5494408115744585,
       "maxScore": 0.5429527640342712,
       "firstRecalledAt": "2026-06-24T03:24:25.458Z",
-      "lastRecalledAt": "2026-06-26T20:45:43.741Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.608Z",
       "queryHashes": [
         "041911a028f6",
         "46458cd31a04",
         "b001b044184b",
         "a8e1ff7859ad",
         "b78437f5445e",
-        "b6916e6741eb"
+        "b6916e6741eb",
+        "17eb517cf0a3"
       ],
       "recallDays": [
         "2026-06-23",
         "2026-06-24",
         "2026-06-25",
-        "2026-06-26"
+        "2026-06-26",
+        "2026-06-27"
       ],
       "conceptTags": [
         "2026-06-10-meal-prep-updates.md",
@@ -65994,20 +66032,21 @@
       "endLine": 149,
       "source": "memory",
       "snippet": "### With n8n Provisioning Pipeline The cloud-init script calls back to n8n when VPS is ready: ``` POST https://n8n.systack.net/webhook/saas-vps-ready { \"client_id\": \"CLIENT001\", \"vps_ip\": \"123.45.67.89\", \"tailscale_ip\": \"100.x.x.x\", \"status\": \"ready\", \"timestamp\": \"2026-06-17T06:18:00Z\" } ``` ### With Dashboard Provisioning status written to: - `/tmp/saos-deployment-{client_id}.json` (local) - `saos_deployments` table in Postgres (via n8n webhook) --- ## What's Missing / Next Steps | Item | Status | Notes | |------|--------|-------| | Vultr API key | ❌ Needed | Get from Vultr dashboard → API → Add key | | Tailscale auth key | ❌ Needed | Generate in Tailscale admin → Keys | | Op",
-      "recallCount": 6,
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 3.0068868800997732,
+      "totalScore": 3.486944283545017,
       "maxScore": 0.5266477659344673,
       "firstRecalledAt": "2026-06-24T08:28:20.610Z",
-      "lastRecalledAt": "2026-06-27T09:56:19.952Z",
+      "lastRecalledAt": "2026-06-27T15:05:53.062Z",
       "queryHashes": [
         "ae41ba03b13c",
         "0866c0b226f2",
         "a31df1e397a9",
         "a1d09ec5834f",
         "73ce56076a60",
-        "088f89c21f7d"
+        "088f89c21f7d",
+        "0eb2a5b538a1"
       ],
       "recallDays": [
         "2026-06-24",
@@ -66068,16 +66107,17 @@
       "endLine": 51,
       "source": "memory",
       "snippet": "# Session — 2026-06-17 06:18 CDT ## Vultr VPS Provisioning Integration **User directive:** Build Vultr API integration for SAOS provisioning pipeline --- ## What Was Built ### 1. Vultr Provisioning Script - **File:** `scripts/provision_vps.py` - **Status:** ✅ Created, tested, committed - **Location:** `/tmp/systack-saas-init/scripts/provision_vps.py` (systack-saas repo) **Features:** - Full Vultr API v2 integration (create, list, get, destroy instances) - Cloud-init generation for automated client VPS setup - Tier-based plan selection (business/enterprise/test) - Tailscale auto-join with hostname tagging - Ollama installation + model pull - Docker, n8n, OpenClaw base setup - UFW firewa",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.0808082610368728,
+      "totalScore": 1.5500006586313246,
       "maxScore": 0.5555466458201408,
       "firstRecalledAt": "2026-06-24T08:34:44.643Z",
-      "lastRecalledAt": "2026-06-27T09:55:25.833Z",
+      "lastRecalledAt": "2026-06-27T15:04:54.102Z",
       "queryHashes": [
         "3d4fc73b603b",
-        "a1d09ec5834f"
+        "a1d09ec5834f",
+        "7db5efd3ba57"
       ],
       "recallDays": [
         "2026-06-24",
@@ -66132,18 +66172,20 @@
       "endLine": 170,
       "source": "memory",
       "snippet": "3. **DISABLE BROKEN JOBS** — Stop the waste. These jobs have failed 20+ times with zero progress: ```bash # Disable the broken cron jobs until fixed openclaw cron disable 3955e592-a175-4050-8ad6-7ee96bb060b4 # BUILD-VOICE-SKILL openclaw cron disable 8cf77c91-5c37-44a8-b8c8-33a985f5d062 # BUILD-CUSTOM-SKILLS openclaw cron disable 75998c8b-52af-4e92-9955-4f606aa95d0f # MONITOR-BUILD-JOBS openclaw cron disable e40a2803-30cf-4852-a272-9e456f29cb1d # ERROR-WATCHDOG ``` ### Strategic Actions 4. **Run builds manually** during active hours (9 AM - 6 PM CDT) when kimi-k2.6:cloud is responsive 5. **Consider retiring CODY** — If the agent can't build when scheduled, and the in",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.46093699336051935,
-      "maxScore": 0.46093699336051935,
+      "totalScore": 0.9433162748813628,
+      "maxScore": 0.4823792815208435,
       "firstRecalledAt": "2026-06-24T08:49:01.223Z",
-      "lastRecalledAt": "2026-06-24T08:49:01.223Z",
+      "lastRecalledAt": "2026-06-27T14:58:28.583Z",
       "queryHashes": [
-        "614acc790871"
+        "614acc790871",
+        "79b1e4575fb5"
       ],
       "recallDays": [
-        "2026-06-24"
+        "2026-06-24",
+        "2026-06-27"
       ],
       "conceptTags": [
         "build-voice-skill",
@@ -66163,16 +66205,17 @@
       "endLine": 182,
       "source": "memory",
       "snippet": "- Reports are operational noise, not durable memory - CODY dormant since May 31 — no build activity to track ### OpenClaw Release Notes (June 2–9) - Already captured in `memory/2026-06-0X-openclaw-releases.md` files - Dreaming captured some, but thresholds prevented promotion - Key fixes (MCP coercion, QQBot stripping) are in release files ### Multiple Session Saves (Duplicate Content) - `2026-06-08-session-summary.md` — overlaps with pipeline + morning session - `2026-06-08-catering-lead-system.md` — overlaps with v2.1 deployment - `2026-06-06-utopia-deli-modifiers.md` — implementation detail, not architecture ### Pricing Discussions (June 6) - `2026-06-06-final-pricing-decision.md` — $1",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.9162827372550963,
+      "totalScore": 1.3627353370189665,
       "maxScore": 0.46052326560020446,
       "firstRecalledAt": "2026-06-24T08:49:01.223Z",
-      "lastRecalledAt": "2026-06-27T11:19:55.029Z",
+      "lastRecalledAt": "2026-06-27T16:53:47.655Z",
       "queryHashes": [
         "614acc790871",
-        "efd229b10e29"
+        "efd229b10e29",
+        "7c6d977001b0"
       ],
       "recallDays": [
         "2026-06-24",
@@ -66196,19 +66239,23 @@
       "endLine": 196,
       "source": "memory",
       "snippet": "``` --- ## Recommended Next Steps ### Immediate (Do Now) ```bash # 1. Restart gateway to pick up perplexity provider openclaw gateway restart # 2. Archive orphan sessions openclaw doctor --fix # (when prompted about orphan transcripts, confirm archive) # 3. Verify web_search works after restart ``` ### Short Term - Monitor memory usage during model loads - Consider using smaller models (qwen2.5-coder:7b is 4.7GB vs qwen3.5:9b at 14.3GB) - Set up a cron job to clean stale locks periodically ### Long Term - Add perplexity API key for reliable web search - Consider switching to local-only models to avoid cloud dependency - Document the Ollama search limitation in TOOLS.md --- ## Files",
-      "recallCount": 2,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.8965525418519973,
-      "maxScore": 0.45857950448989865,
+      "totalScore": 2.2356244534254075,
+      "maxScore": 0.4642986357212066,
       "firstRecalledAt": "2026-06-24T08:49:01.223Z",
-      "lastRecalledAt": "2026-06-24T14:42:28.491Z",
+      "lastRecalledAt": "2026-06-27T16:55:47.671Z",
       "queryHashes": [
         "614acc790871",
-        "ed8e9533be02"
+        "ed8e9533be02",
+        "d9eda6ff62d2",
+        "7c6d977001b0",
+        "029f0e995c39"
       ],
       "recallDays": [
-        "2026-06-24"
+        "2026-06-24",
+        "2026-06-27"
       ],
       "conceptTags": [
         "gateway",
@@ -66261,18 +66308,21 @@
       "endLine": 36,
       "source": "memory",
       "snippet": "# 2026-06-05 Session Save — Memory System Fix ## What Was Done 1. Dreaming system diagnosed: broken (minScore=0.8 unreachable with nomic-embed-text) 2. OpenClaw Issue #65402 confirmed: thresholds hardcoded, not configurable 3. Web search restored: provider switched from perplexity (no key) back to ollama 4. Bulk manual promotion: 40 days of history (April 26 - June 5) promoted to MEMORY.md 5. Rules established: Search before act, write immediately, verify before assume 6. Weekly cron set: Tuesdays 9 AM for ongoing manual promotion ## Key Decisions - Dreaming disabled as primary promotion path - Manual curation is primary path - Config changes require explicit approval (AGENTS.md Rule 3A) -",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.45627585947513577,
-      "maxScore": 0.45627585947513577,
+      "totalScore": 1.4004805058240888,
+      "maxScore": 0.4789332121610641,
       "firstRecalledAt": "2026-06-24T08:49:01.223Z",
-      "lastRecalledAt": "2026-06-24T08:49:01.223Z",
+      "lastRecalledAt": "2026-06-27T16:55:47.671Z",
       "queryHashes": [
-        "614acc790871"
+        "614acc790871",
+        "92b02585a612",
+        "029f0e995c39"
       ],
       "recallDays": [
-        "2026-06-24"
+        "2026-06-24",
+        "2026-06-27"
       ],
       "conceptTags": [
         "2026-06-05-session-save.md",
@@ -66292,18 +66342,22 @@
       "endLine": 165,
       "source": "memory",
       "snippet": "--- ## 🚨 Recommended Actions 1. **Verify cron schedule** — Check if the 23:00 and 01:00 cron jobs are still active in OpenClaw config 2. **Check gateway health** — Verify OpenClaw scheduler is running and routing to CODY 3. **Review CODY agent config** — Check `~/.openclaw/agents/cody/agent/` for any config changes 4. **Manual trigger test** — Try manually sending a message to CODY to verify responsiveness 5. **Check for job decommissioning** — Verify if builds were intentionally stopped --- **Severity:** 🔴 **HIGH** — Three consecutive nights of missed builds. Custom skill development and voice skill iteration have been stalled for 8+ days. **Next watchdog check:** Not meaningful unti",
-      "recallCount": 1,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.458226066827774,
-      "maxScore": 0.458226066827774,
+      "totalScore": 1.817937260866165,
+      "maxScore": 0.4645991891622543,
       "firstRecalledAt": "2026-06-24T08:51:10.945Z",
-      "lastRecalledAt": "2026-06-24T08:51:10.945Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
       "queryHashes": [
-        "3edcfa5afb1c"
+        "3edcfa5afb1c",
+        "79b1e4575fb5",
+        "d9eda6ff62d2",
+        "f3bd94460392"
       ],
       "recallDays": [
-        "2026-06-24"
+        "2026-06-24",
+        "2026-06-27"
       ],
       "conceptTags": [
         "gateway",
@@ -66670,17 +66724,19 @@
       "endLine": 89,
       "source": "memory",
       "snippet": "- Tailscale API key: ✅ Found - n8n API key: ✅ Found --- ## Prevention 1. **Never deploy daemon with hardcoded paths** — use environment variables or config file 2. **After ANY workspace reorganization** — run credential path validation 3. **Add pre-flight check** — daemon should verify credentials before starting loop 4. **Monitor task failure rate** — if >50% tasks fail, alert and stop --- ## Next Steps - [ ] Decide if daemon should run on VPS or only on-demand - [ ] Add credential path validation to all scripts - [ ] Clean up task files in `tasks/sol/` directory - [ ] Consider re-enabling daemon with proper monitoring --- *Report generated by SOL* *Fixed: credential paths in all sc",
-      "recallCount": 3,
+      "recallCount": 5,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.3761371791362762,
-      "maxScore": 0.5277649372816086,
+      "totalScore": 2.3903309524059293,
+      "maxScore": 0.5321428954601287,
       "firstRecalledAt": "2026-06-24T10:52:53.363Z",
-      "lastRecalledAt": "2026-06-27T09:56:19.952Z",
+      "lastRecalledAt": "2026-06-27T16:05:41.345Z",
       "queryHashes": [
         "080d300861d6",
         "2a9a4785f8eb",
-        "088f89c21f7d"
+        "088f89c21f7d",
+        "0eb2a5b538a1",
+        "e11a7a505a42"
       ],
       "recallDays": [
         "2026-06-24",
@@ -83334,18 +83390,21 @@
       "endLine": 141,
       "source": "memory",
       "snippet": "- **All cron infrastructure is currently non-functional** due to the Ollama rate limit - **Manual intervention is required** — automatic recovery is impossible --- ## Recommendations 1. **Immediate — Fix Ollama rate limit:** - Upgrade Ollama account or add extra usage - OR switch build jobs to use a truly local model (not routed through Ollama cloud) - OR wait for weekly quota reset (likely Monday/Tuesday) 2. **Fix ERROR-WATCHDOG delivery:** - Add explicit `--to` target or change delivery mode - OR switch to file-based reporting (write to memory/ directory) 3. **Fix cron job model dependency:** - Make watchdog jobs check logs/files WITHOUT needing a model call - Use",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.46816177070140835,
-      "maxScore": 0.46816177070140835,
+      "totalScore": 1.393568506836891,
+      "maxScore": 0.48987279832363123,
       "firstRecalledAt": "2026-06-25T11:30:32.589Z",
-      "lastRecalledAt": "2026-06-25T11:30:32.589Z",
+      "lastRecalledAt": "2026-06-27T18:30:50.329Z",
       "queryHashes": [
-        "6730af19168d"
+        "6730af19168d",
+        "79b1e4575fb5",
+        "88c716b242da"
       ],
       "recallDays": [
-        "2026-06-25"
+        "2026-06-25",
+        "2026-06-27"
       ],
       "conceptTags": [
         "non-functional",
@@ -83534,17 +83593,20 @@
       "endLine": 43,
       "source": "memory",
       "snippet": "# 2026-06-25 — DOOBY & LOKI Agents Created **Time:** 06:42 CDT **User Intent:** Create two new local-model agents for compute efficiency ## What Was Built ### DOOBY (🤖) — The Coding Workhorse - **Model:** `ollama/qwen2.5-coder:7b` (local, fast) - **Fallbacks:** `deepseek-v4-pro:cloud` → `qwen3.5:9b` - **Tools:** Full coding suite (browser, canvas, cron, exec, sessions_spawn, subagents, web_fetch, web_search) - **Profile:** `coding` - **Workspace:** `~/.openclaw/workspaces/dooby/` - **Files:** `IDENTITY.md`, `AGENTS.md`, `MEMORY.md` ### LOKI (🏠) — The House Manager - **Model:** `ollama/qwen3.5:9b` (local, balanced) - **Fallbacks:** `deepseek-v4-flash:cloud` → `qwen2.5-coder:7b` - **Tool",
-      "recallCount": 3,
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.506497222185135,
+      "totalScore": 2.9844228416681293,
       "maxScore": 0.5491891384124755,
       "firstRecalledAt": "2026-06-25T12:02:27.458Z",
-      "lastRecalledAt": "2026-06-27T13:32:24.952Z",
+      "lastRecalledAt": "2026-06-27T18:36:44.252Z",
       "queryHashes": [
         "820df27513b7",
         "6ce2e9c7a948",
-        "9c5153d74042"
+        "9c5153d74042",
+        "08ba5f92dae8",
+        "f873c4960130",
+        "442dc0f17cec"
       ],
       "recallDays": [
         "2026-06-25",
@@ -83568,17 +83630,21 @@
       "endLine": 57,
       "source": "memory",
       "snippet": "## Access Control - Both agents: **Green + designated users only** - No BlueBubbles routing bindings added (intentional — they don't need direct chat access) - Both can spawn subagents and talk to full fleet ## Next Steps 1. Restart OpenClaw gateway to load new agents 2. Test spawning DOOBY for a simple coding task 3. Test spawning LOKI for a cron job 4. Consider migrating existing cron jobs from SOL to LOKI for compute savings ## Compute Savings Estimate | Task Type | Before (SOL) | After (DOOBY/LOKI) | Savings | |-----------|-------------|-------------------|---------| | Script writing | kimi-k2.6:cloud | qwen2.5-coder:7b | ~80% faster, 0 API quota | | Health checks | kimi-k2.6:cloud",
-      "recallCount": 3,
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.32893468439579,
-      "maxScore": 0.4767584919929504,
+      "totalScore": 3.2262454658746713,
+      "maxScore": 0.4794520616531372,
       "firstRecalledAt": "2026-06-25T12:02:27.458Z",
-      "lastRecalledAt": "2026-06-27T13:54:58.654Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
       "queryHashes": [
         "820df27513b7",
         "6ce2e9c7a948",
-        "aacb63743097"
+        "aacb63743097",
+        "79b1e4575fb5",
+        "88c716b242da",
+        "442dc0f17cec",
+        "f3bd94460392"
       ],
       "recallDays": [
         "2026-06-25",
@@ -83790,23 +83856,26 @@
       "endLine": 16,
       "source": "memory",
       "snippet": "# Utopia Deli — Complete Modifier System Data ## Raw Data Dump (2026-06-06 12:03 CDT) ### Items Table | item_id | name | base_price | sell_price | description | active | image_url | |---------|------|-----------|-----------|-------------|--------|-----------| | COWBOY | cowboy chikn sandwich | 13.00 | 13.00 | Grilled Cowboy Chik'n, Lettuce, Tomato, Ranch, Bac'n. | TRUE | https://cdn.shopify.com/... | | CLUB | chikn club sub | 15.00 | 15.00 | Grilled Chik'n Bac'n Cheese on a bed of Lettuce and Tomatoes. | TRUE | https://cdn.shopify.com/... | | FRIED | chikn fried chikn sub | 13.00 | 13.00 | Crispy Fried Chik'n on a hoagie with lettuce, tomato, ranch. | TRUE | https://cdn.shopify.com/... | |",
-      "recallCount": 5,
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 2.4240197867155073,
+      "totalScore": 3.3391995698213575,
       "maxScore": 0.5128033548593521,
       "firstRecalledAt": "2026-06-26T01:11:53.213Z",
-      "lastRecalledAt": "2026-06-26T22:19:38.160Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.608Z",
       "queryHashes": [
         "c444abde6ccd",
         "53a94c2d9c15",
         "c09be1c4eaf8",
         "2dedb7a82346",
-        "8770bb85136f"
+        "8770bb85136f",
+        "00a7d79510e1",
+        "17eb517cf0a3"
       ],
       "recallDays": [
         "2026-06-25",
-        "2026-06-26"
+        "2026-06-26",
+        "2026-06-27"
       ],
       "conceptTags": [
         "item-id",
@@ -83986,21 +84055,24 @@
       "endLine": 157,
       "source": "memory",
       "snippet": "| Modifier selection | ✅ | 12:14 CDT | | Multi-select (sauces) | ✅ | 12:14 CDT | | Required validation | ✅ | 12:14 CDT | | Max enforcement | ✅ | 12:14 CDT | | Full order submission | ✅ | 12:21 CDT | | Payment link generation | ✅ | 12:21 CDT | | Square redirect | ✅ | 12:21 CDT | | Sides addable directly | ✅ | 13:46 CDT | | Drinks addable directly | ✅ | 13:46 CDT | | Cart shows modifier tags | ✅ | 13:46 CDT | --- ## Documentation Created ### For This Project - `memory/2026-06-06.md` — Full daily log with all fixes - `memory/2026-06-06-utopia-deli-modifiers.md` — Complete modifier dataset - `CASE-STUDY.md` — Public case study and implementation guide - `REUSABLE-TEMPLATE.md` — Pattern librar",
-      "recallCount": 4,
+      "recallCount": 6,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1.82007317841053,
+      "totalScore": 2.7335334002971647,
       "maxScore": 0.4935008436441421,
       "firstRecalledAt": "2026-06-26T05:48:24.511Z",
-      "lastRecalledAt": "2026-06-26T22:01:09.270Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.608Z",
       "queryHashes": [
         "5d7635f4a3e1",
         "48b5bf13511c",
         "c09be1c4eaf8",
-        "2dedb7a82346"
+        "2dedb7a82346",
+        "f40df17b3b0e",
+        "17eb517cf0a3"
       ],
       "recallDays": [
-        "2026-06-26"
+        "2026-06-26",
+        "2026-06-27"
       ],
       "conceptTags": [
         "2026-06-06-v1-beta-post.md",
@@ -108939,15 +109011,18 @@
       "endLine": 114,
       "source": "memory",
       "snippet": "## 🚨 Recommended Actions 1. **Fix BlueBubbles delivery config** for cron jobs: - Add `--to` parameter to BUILD-VOICE-SKILL-Phase1 cron - Add `--to` parameter to BUILD-CUSTOM-SKILLS-1AM cron - Add `--to` parameter to MONITOR-BUILD-JOBS cron 2. **Verify build scripts** can execute independently of delivery channel 3. **Consider temporary workaround**: Route cron announcements to a different channel (not BlueBubbles) until config is fixed 4. **Manual build trigger**: If urgent, manually trigger BUILD-VOICE-SKILL-Phase1 and BUILD-CUSTOM-SKILLS-1AM to catch up on 3 nights of missed work --- *Report generated by ERROR-WATCHDOG cron job `e40a2803-30cf-4852-a272-9e456f29cb1d`*",
-      "recallCount": 1,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.5759911641478538,
+      "totalScore": 1.9657603099942207,
       "maxScore": 0.5759911641478538,
       "firstRecalledAt": "2026-06-27T10:23:34.410Z",
-      "lastRecalledAt": "2026-06-27T10:23:34.410Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
       "queryHashes": [
-        "e6347b775f40"
+        "e6347b775f40",
+        "79b1e4575fb5",
+        "88c716b242da",
+        "f3bd94460392"
       ],
       "recallDays": [
         "2026-06-27"
@@ -109477,15 +109552,17 @@
       "endLine": 69,
       "source": "memory",
       "snippet": "| test-4 | DOOBY | qwen2.5-coder:14b | ❌ Timeout (6m13s) | ❌ No | | test-4 | LOKI | qwen2.5-coder:14b | ❌ Failed (lost context) | ❌ No | | test-5 | DOOBY | deepseek-v4-pro:cloud (fallback) | ✅ Done (9s) | ✅ YES | ## Key Findings ### 1. Local Models Cannot Reliably Invoke Tools - 7B models: Generate JSON text responses but don't actually execute tools - 14B model: Too large for 16GB RAM — loads but times out - Custom Modelfiles with tool-calling instructions: Still fail to execute ### 2. Cloud Fallback Works - When local model fails, agents fall back to cloud models - DOOBY test-5 on `deepseek-v4-pro:cloud`: Created `~/Downloads/recent_files.py` in 9 seconds - This proves the agent framewo",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.4900738418102264,
+      "totalScore": 1.4237484782934189,
       "maxScore": 0.4900738418102264,
       "firstRecalledAt": "2026-06-27T13:32:24.952Z",
-      "lastRecalledAt": "2026-06-27T13:32:24.952Z",
+      "lastRecalledAt": "2026-06-27T16:53:47.652Z",
       "queryHashes": [
-        "9c5153d74042"
+        "9c5153d74042",
+        "08ba5f92dae8",
+        "f873c4960130"
       ],
       "recallDays": [
         "2026-06-27"
@@ -109508,15 +109585,17 @@
       "endLine": 39,
       "source": "memory",
       "snippet": "# 2026-06-25 — Local Agent Experiment Results **Time:** 08:06 CDT **Status:** ENDED — Documenting findings, ceasing testing ## What Was Attempted Created two local-model agents (DOOBY 🤖 and LOKI 🏠) to reduce cloud compute costs by running background tasks on local Ollama models. ## Config Changes Made **File:** `~/.openclaw/openclaw.json` - Added `dooby` and `loki` to `agents.list` - Added to `subagents.allowAgents` and `agentToAgent.allow` - Created workspaces: `~/.openclaw/workspaces/{dooby,loki}/` - Created custom Modelfiles: `dooby-fast`, `dooby-tool` (both based on qwen2.5-coder:7b) - Configured models: - DOOBY: `ollama/dooby-fast:latest` → fallback `deepseek-v4-pro:cloud` -",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.4744360297918319,
-      "maxScore": 0.4744360297918319,
+      "totalScore": 1.4464820593595504,
+      "maxScore": 0.4901352167129516,
       "firstRecalledAt": "2026-06-27T13:32:24.952Z",
-      "lastRecalledAt": "2026-06-27T13:32:24.952Z",
+      "lastRecalledAt": "2026-06-27T18:36:44.252Z",
       "queryHashes": [
-        "9c5153d74042"
+        "9c5153d74042",
+        "08ba5f92dae8",
+        "442dc0f17cec"
       ],
       "recallDays": [
         "2026-06-27"
@@ -109539,16 +109618,17 @@
       "endLine": 45,
       "source": "memory",
       "snippet": "# Session — 2026-06-26 ## Utopia Deli Order System — COMPLETE FAILURE **Status:** 🔴 BROKEN — Multiple commits made, system worse than when started **Time:** 17:00-18:19 CDT **Source:** User directive to fix cart display and combo pricing ### What Went Wrong User asked for ONE thing: display modifiers correctly in cart and fix combo pricing. Agent did: 1. Searched memory for modifier codes (partial context) 2. Never checked file structure or inline JS overrides 3. Edited `order-form.js` 5+ times 4. Never realized `index.html` had its own inline checkout handler 5. Each \"fix\" broke something else 6. User lost money and trust ### Root Cause: Incomplete Context Verification Agent treated",
-      "recallCount": 2,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.9733951717615127,
-      "maxScore": 0.5040475636720657,
+      "totalScore": 1.7519162669953907,
+      "maxScore": 0.7785210952338779,
       "firstRecalledAt": "2026-06-27T13:46:16.037Z",
-      "lastRecalledAt": "2026-06-27T13:55:02.894Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.604Z",
       "queryHashes": [
         "cfd7235b45ce",
-        "dc25a2c85b41"
+        "dc25a2c85b41",
+        "f40df17b3b0e"
       ],
       "recallDays": [
         "2026-06-27"
@@ -109604,15 +109684,18 @@
       "endLine": 159,
       "source": "memory",
       "snippet": "- Updating the cron job to trigger Phase 2 work - Or disabling the 11 PM Phase 1 cron until Phase 2 is ready --- ## Artifact Verification (Current State) **Voice Skill** (`~/.openclaw/skills/local-voice-streaming/`): - plugin.json ✅ 1.6K — Valid skill manifest - server.py ✅ 11.8K — WebSocket pipeline - models.py ✅ 6.3K — Auto-download + warmup - README.md ✅ 3.6K — Architecture docs - requirements.txt ✅ 182B — Dependencies **Green Skills** (`~/.openclaw/workspaces/sol/skills/`): - green-lead-scraper ✅ 5 files, 364 LOC - green-email-outreach ✅ 7 files, 425 LOC - green-n8n-monitor ✅ 4 files, 275 LOC - green-content-calendar ✅ 5 files, 297 LOC **All artifacts present. All builds compl",
-      "recallCount": 1,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.4821703106164932,
+      "totalScore": 1.8600557774305342,
       "maxScore": 0.4821703106164932,
       "firstRecalledAt": "2026-06-27T13:51:42.480Z",
-      "lastRecalledAt": "2026-06-27T13:51:42.480Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
       "queryHashes": [
-        "524f66e21a26"
+        "524f66e21a26",
+        "79b1e4575fb5",
+        "88c716b242da",
+        "f3bd94460392"
       ],
       "recallDays": [
         "2026-06-27"
@@ -109635,15 +109718,17 @@
       "endLine": 110,
       "source": "memory",
       "snippet": "- The `BUILD-CUSTOM-SKILLS` cron job (`8cf77c91`) has not been checked directly yet --- ## 🔍 Error Log Analysis ### /tmp/ Directory - No build-related error files found - No `*.log` files created in the last 24h - Only stale entries: `AlTest1.err/out` (May 31), Adobe logs, system temp files ### OpenClaw Gateway Log - Voice skill session spawned at 23:00 CDT ✅ - Build job reported at 23:11:46 with delivery error ❌ - Monitor job reported at 23:35:27 with delivery error ❌ ### Cron Run Logs (Key Jobs) | Job ID | File | Size | Last Entry | |--------|------|------|------------| | `3955e592` | BUILD-VOICE-SKILL | 10.9K | Jun 4 23:11 — delivery error | | `75998c8b` | MONITOR-BUILD-JOBS | 19.0K",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.46481811106204984,
-      "maxScore": 0.46481811106204984,
+      "totalScore": 1.4178629547357557,
+      "maxScore": 0.47762306034564966,
       "firstRecalledAt": "2026-06-27T13:51:42.480Z",
-      "lastRecalledAt": "2026-06-27T13:51:42.480Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
       "queryHashes": [
-        "524f66e21a26"
+        "524f66e21a26",
+        "79b1e4575fb5",
+        "f3bd94460392"
       ],
       "recallDays": [
         "2026-06-27"
@@ -109791,16 +109876,18 @@
       "endLine": 39,
       "source": "memory",
       "snippet": "# Incident Report: Orchestrator Daemon Runaway Loop **Date:** 2026-06-24 **Time:** ~03:07 CDT **Severity:** HIGH — Burned compute for ~18 hours **Status:** RESOLVED --- ## What Happened The SAOS Orchestrator Daemon (`orchestrator-daemon.py`) was running continuously since June 17, processing tasks from a Postgres task_queue. It spawned sessions that kept failing because **credential paths were wrong** after a workspace reorganization. ### Timeline - **June 17:** Daemon built and deployed via LaunchAgent (`net.systack.orchestrator.plist`) - **June 22:** Workspace reorganization moved credentials from `credentials/Green/` to `Sol-Knowledge/credentials/Green/` - **June 22:** Vultr VPS tes",
-      "recallCount": 2,
+      "recallCount": 4,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.915902617573738,
-      "maxScore": 0.4618471652269363,
+      "totalScore": 1.875182396173477,
+      "maxScore": 0.4808502912521362,
       "firstRecalledAt": "2026-06-27T13:55:02.894Z",
-      "lastRecalledAt": "2026-06-27T13:58:53.447Z",
+      "lastRecalledAt": "2026-06-27T15:05:53.062Z",
       "queryHashes": [
         "dc25a2c85b41",
-        "9c58bf980a71"
+        "9c58bf980a71",
+        "7db5efd3ba57",
+        "0eb2a5b538a1"
       ],
       "recallDays": [
         "2026-06-27"
@@ -109938,6 +110025,1263 @@
         "save",
         "cdt",
         "status"
+      ]
+    },
+    "memory:memory/2026-06-25-local-agent-experiment-results.md:60:97": {
+      "key": "memory:memory/2026-06-25-local-agent-experiment-results.md:60:97",
+      "path": "memory/2026-06-25-local-agent-experiment-results.md",
+      "startLine": 60,
+      "endLine": 97,
+      "source": "memory",
+      "snippet": "- Agents spawn successfully - Configs load properly - Fleet communication works - Tool execution works — **only when using cloud models** ## Files Modified - `~/.openclaw/openclaw.json` — Agent configs - `~/.openclaw/workspaces/dooby/` — Identity, AGENTS.md, MEMORY.md - `~/.openclaw/workspaces/loki/` — Identity, AGENTS.md, MEMORY.md - `~/.openclaw/workspaces/dooby/Modelfile` — Custom tool-calling model (non-functional) - `~/.openclaw/workspaces/dooby/Modelfile-fast` — Optimized 7B model (non-functional) ## Decision **Stop testing local models.** Current setup: - Agents configured with cloud fallback - Local model experimentation deferred - Monitor OpenClaw updates for improved Ollama int",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9270892053842543,
+      "maxScore": 0.47912386655807493,
+      "firstRecalledAt": "2026-06-27T14:10:31.585Z",
+      "lastRecalledAt": "2026-06-27T18:36:44.252Z",
+      "queryHashes": [
+        "08ba5f92dae8",
+        "442dc0f17cec"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "openclaw/openclaw.json",
+        "openclaw/workspaces/dooby",
+        "agents.md",
+        "memory.md",
+        "openclaw/workspaces/loki",
+        "tool-calling",
+        "non-functional",
+        "local"
+      ]
+    },
+    "memory:memory/2026-06-08-session-summary.md:132:145": {
+      "key": "memory:memory/2026-06-08-session-summary.md:132:145",
+      "path": "memory/2026-06-08-session-summary.md",
+      "startLine": 132,
+      "endLine": 145,
+      "source": "memory",
+      "snippet": "6. ⏳ Clean up unused n8n workflows (69 total, ~10-12 real) ## Recommendation **This week:** Focus on beta tester acquisition, not more building. - Pipeline is ready - LinkedIn post is live - QuickBooks export can come AFTER feedback from paying customers - Every day spent building features is a day not making money --- **Session ended:** 2026-06-08 08:58 CDT **Next action:** Monitor LinkedIn post engagement, respond to DMs, close first beta tester",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4692280292510986,
+      "maxScore": 0.4692280292510986,
+      "firstRecalledAt": "2026-06-27T14:58:28.321Z",
+      "lastRecalledAt": "2026-06-27T14:58:28.321Z",
+      "queryHashes": [
+        "e341378a4a47"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "2026-06-08-session-summary.md",
+        "10-12",
+        "summary.md",
+        "clean",
+        "unused",
+        "n8n",
+        "workflows",
+        "total"
+      ]
+    },
+    "memory:memory/2026-06-09-orchestrator-phase1-complete.md:1:44": {
+      "key": "memory:memory/2026-06-09-orchestrator-phase1-complete.md:1:44",
+      "path": "memory/2026-06-09-orchestrator-phase1-complete.md",
+      "startLine": 1,
+      "endLine": 44,
+      "source": "memory",
+      "snippet": "# 2026-06-09 — Orchestrator Phase 1 Complete + Daily Learning Fix ## Time: 06:44-06:50 CDT ## What Was Done ### 1. Fixed Daily Agent Learning Timeout **Problem:** Cron job `85ec8a79...` was timing out after 10 minutes (default) with kimi-k2.6:cloud. **Fix:** - Updated cron job payload: - **Model:** Switched from default (kimi-k2.6:cloud) to `ollama/qwen2.5-coder:7b` - **Timeout:** Increased from 600s to **900s** (15 minutes) - **Light context:** Enabled to reduce token usage - Ollama status: All models available locally, nomic-embed-text running for RAG **Next run:** Today 10:00 AM CDT — ASSEMBLY will get qwen2.5-coder:7b with 15-min timeout ### 2. Built Orchestrator Phase 1 (ORA",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.46819160282611844,
+      "maxScore": 0.46819160282611844,
+      "firstRecalledAt": "2026-06-27T14:58:28.583Z",
+      "lastRecalledAt": "2026-06-27T14:58:28.583Z",
+      "queryHashes": [
+        "79b1e4575fb5"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "44-06",
+        "kimi-k2.6",
+        "ollama/qwen2.5-coder",
+        "nomic-embed-text",
+        "qwen2.5-coder",
+        "15-min",
+        "orchestrator",
+        "phase1"
+      ]
+    },
+    "memory:memory/2026-06-08-monitor-report-0135.md:130:144": {
+      "key": "memory:memory/2026-06-08-monitor-report-0135.md:130:144",
+      "path": "memory/2026-06-08-monitor-report-0135.md",
+      "startLine": 130,
+      "endLine": 144,
+      "source": "memory",
+      "snippet": "7. **Audit all cron jobs** — 13+ jobs may have the same dependency issue --- ## 📝 ACTION TAKEN **No recovery attempted.** Since no builds started, there's nothing to restart or cache to clear. The issue is upstream (CODY agent availability), not downstream (build failure). **Escalating to Green as CRITICAL.** --- *Report generated: Monday, June 8, 2026 1:35 AM CDT* *Monitor cron: `75998c8b-52af-4e92-9955-4f606aa95d0f`*",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4587238878011703,
+      "maxScore": 0.4587238878011703,
+      "firstRecalledAt": "2026-06-27T14:58:28.583Z",
+      "lastRecalledAt": "2026-06-27T14:58:28.583Z",
+      "queryHashes": [
+        "79b1e4575fb5"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "monitor",
+        "report",
+        "audit",
+        "all",
+        "cron",
+        "jobs",
+        "may",
+        "dependency"
+      ]
+    },
+    "memory:memory/2026-06-08-watchdog-report-0343.md:1:42": {
+      "key": "memory:memory/2026-06-08-watchdog-report-0343.md:1:42",
+      "path": "memory/2026-06-08-watchdog-report-0343.md",
+      "startLine": 1,
+      "endLine": 42,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Monday, June 8, 2026 3:43 AM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 3:43 AM CDT (08:43 UTC) **Checking:** CODY build sessions from 11 PM (Jun 7) and 1 AM (Jun 8) --- ## 🔴 VERDICT: NO BUILDS DETECTED — Third Consecutive Night of Complete Failure **This is now THREE consecutive nights (Jun 5→6, Jun 6→7, and Jun 7→8) with zero build activity from CODY.** --- ## ❌ 11 PM Build: BUILD-VOICE-SKILL-Phase1 — NOT DETECTED | Attribute | Value | |-----------|-------| | **Job ID** | `3955e592-a175-4050-8ad6-7ee96bb060b4` | | **Schedule** | 23:00 CDT daily | | **Expected Run** | Jun 7, 23:00 CDT (04:00 UTC, Jun 8) | | **St",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.524419441819191,
+      "maxScore": 0.524419441819191,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "build-voice-skill-phase1",
+        "watchdog",
+        "report",
+        "error",
+        "monday",
+        "june",
+        "cdt"
+      ]
+    },
+    "memory:memory/2026-06-07-watchdog-report-0921.md:1:44": {
+      "key": "memory:memory/2026-06-07-watchdog-report-0921.md:1:44",
+      "path": "memory/2026-06-07-watchdog-report-0921.md",
+      "startLine": 1,
+      "endLine": 44,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Sunday, June 7, 2026 9:21 AM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 9:21 AM CDT (14:21 UTC) **Checking:** CODY build sessions from 11 PM (Jun 6) and 1 AM (Jun 7) --- ## 🔴 VERDICT: BOTH BUILDS FAILED — Cron Jobs Broken, No Agent Execution This is the **second consecutive night** with **no successful CODY builds**. The root cause has shifted from \"agent/model failures\" to **\"cron job delivery channel is broken\"** — the cron jobs themselves are erroring out before they can even spawn CODY. --- ## ❌ 11 PM Build: BUILD-VOICE-SKILL-Phase1 — CRON JOB FAILED | Attribute | Value | |-----------|-------| | **Job ID*",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5238460391759873,
+      "maxScore": 0.5238460391759873,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "agent/model",
+        "build-voice-skill-phase1",
+        "watchdog",
+        "report",
+        "error",
+        "sunday",
+        "june"
+      ]
+    },
+    "memory:memory/2026-06-06-watchdog-report-0632.md:1:37": {
+      "key": "memory:memory/2026-06-06-watchdog-report-0632.md:1:37",
+      "path": "memory/2026-06-06-watchdog-report-0632.md",
+      "startLine": 1,
+      "endLine": 37,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Saturday, June 6, 2026 6:32 AM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 6:32 AM CDT (11:32 UTC) **Checking:** CODY build sessions from 11 PM (Jun 5) and 1 AM (Jun 6) --- ## 🔴 CRITICAL: LAST NIGHT'S BUILDS DID NOT RUN **Neither build session triggered last night.** The cron jobs are in error backoff from prior failures and have not recovered. --- ## ❌ 11 PM Build: BUILD-VOICE-SKILL-Phase1 — DID NOT RUN | Attribute | Value | |-----------|-------| | **Job ID** | `3955e592-a175-4050-8ad6-7ee96bb060b4` | | **Schedule** | 23:00 CDT daily | | **Expected Run** | Jun 5, 23:00 CDT (04:00 UTC Jun 6) ❌ | | **Actual Sta",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5195380508899688,
+      "maxScore": 0.5195380508899688,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "build-voice-skill-phase1",
+        "watchdog",
+        "report",
+        "error",
+        "saturday",
+        "june",
+        "cdt"
+      ]
+    },
+    "memory:memory/2026-06-08-watchdog-report-0855.md:1:41": {
+      "key": "memory:memory/2026-06-08-watchdog-report-0855.md:1:41",
+      "path": "memory/2026-06-08-watchdog-report-0855.md",
+      "startLine": 1,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Monday, June 8, 2026 8:55 AM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 8:55 AM CDT (13:55 UTC) **Checking:** CODY build sessions from 11 PM (Jun 7) and 1 AM (Jun 8) --- ## 🔴 VERDICT: NO BUILDS DETECTED — Fourth Consecutive Night of Complete Failure **This is now FOUR consecutive nights (Jun 5→6, Jun 6→7, Jun 7→8, and confirmed Jun 8 morning) with zero build activity from CODY.** --- ## ❌ 11 PM Build: BUILD-VOICE-SKILL-Phase1 — NOT DETECTED | Attribute | Value | |-----------|-------| | **Job ID** | `3955e592-a175-4050-8ad6-7ee96bb060b4` | | **Schedule** | 23:00 CDT daily | | **Expected Run** | Jun 7, 23:00",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5187646478414535,
+      "maxScore": 0.5187646478414535,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "build-voice-skill-phase1",
+        "watchdog",
+        "report",
+        "error",
+        "monday",
+        "june",
+        "cdt"
+      ]
+    },
+    "memory:memory/2026-06-04-watchdog-report-1026.md:94:147": {
+      "key": "memory:memory/2026-06-04-watchdog-report-1026.md:94:147",
+      "path": "memory/2026-06-04-watchdog-report-1026.md",
+      "startLine": 94,
+      "endLine": 147,
+      "source": "memory",
+      "snippet": "- **The watchdog is silently failing** every 5 minutes - **Cron jobs are burning compute/time** with zero output --- ## Evidence from Cron Run Logs ### BUILD-VOICE-SKILL-Phase1 (last run): ```json { \"status\": \"error\", \"error\": \"LLM request timed out.\", \"sessionId\": \"e23dfd50-e731-439a-9bbe-ba077b1e7971\", \"durationMs\": 546759, \"model\": \"qwen3.5:9b\" } ``` ### BUILD-CUSTOM-SKILLS-1AM (last run): ```json { \"status\": \"error\", \"error\": \"LLM request timed out.\", \"sessionId\": \"2f65d166-a23d-400c-9e53-bf6d5864c4a0\", \"durationMs\": 547309, \"model\": \"qwen3.5:9b\" } ``` ### MONITOR-BUILD-JOBS (last run): ```json { \"status\": \"error\", \"error\": \"cron: job execution timed out (las",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5152965068817138,
+      "maxScore": 0.5152965068817138,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "compute/time",
+        "build-voice-skill-phase1",
+        "qwen3.5",
+        "build-custom-skills-1am",
+        "monitor-build-jobs",
+        "watchdog",
+        "report",
+        "silently"
+      ]
+    },
+    "memory:memory/2026-06-06-watchdog-report-1242.md:1:39": {
+      "key": "memory:memory/2026-06-06-watchdog-report-1242.md:1:39",
+      "path": "memory/2026-06-06-watchdog-report-1242.md",
+      "startLine": 1,
+      "endLine": 39,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Saturday, June 6, 2026 12:42 PM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 12:42 PM CDT (17:42 UTC) **Checking:** CODY build sessions from 11 PM (Jun 5) and 1 AM (Jun 6) --- ## 🟢 VERDICT: BOTH BUILDS COMPLETED SUCCESSFULLY — No Failures Consistent with all prior watchdog reports (2:22 AM, 3:26 AM, 5:30 AM, 6:32 AM, 7:34 AM, 8:34 AM, 10:39 AM). **No failures in 36+ hours. Both build sessions ran and closed normally.** --- ## ✅ 11 PM Build: BUILD-VOICE-SKILL-Phase1 — SUCCEEDED | Attribute | Value | |-----------|-------| | **Job ID** | `3955e592-a175-4050-8ad6-7ee96bb060b4` | | **Schedule** | 23:00 CDT daily | | **T",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.512113356590271,
+      "maxScore": 0.512113356590271,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "build-voice-skill-phase1",
+        "watchdog",
+        "report",
+        "error",
+        "saturday",
+        "june",
+        "cdt"
+      ]
+    },
+    "memory:memory/2026-06-08-watchdog-report-0753.md:1:42": {
+      "key": "memory:memory/2026-06-08-watchdog-report-0753.md:1:42",
+      "path": "memory/2026-06-08-watchdog-report-0753.md",
+      "startLine": 1,
+      "endLine": 42,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Monday, June 8, 2026 7:53 AM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 7:53 AM CDT (12:53 UTC) **Checking:** CODY build sessions from 11 PM (Jun 7) and 1 AM (Jun 8) --- ## 🔴 VERDICT: NO BUILDS DETECTED — Fourth Consecutive Night of Complete Failure **This is now FOUR consecutive nights (Jun 4→5 was last success, then Jun 5→6, Jun 6→7, Jun 7→8, and Jun 8→9) with zero build activity from CODY.** The last successful build session was **June 4→5**. Every night since has failed. --- ## ❌ 11 PM Build: BUILD-VOICE-SKILL-Phase1 — NOT DETECTED | Attribute | Value | |-----------|-------| | **Job ID** | `3955e592-a175-405",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5110893428325652,
+      "maxScore": 0.5110893428325652,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "build-voice-skill-phase1",
+        "3955e592-a175-405",
+        "watchdog",
+        "report",
+        "error",
+        "monday",
+        "june"
+      ]
+    },
+    "memory:memory/2026-06-05-watchdog-report-0140.md:1:36": {
+      "key": "memory:memory/2026-06-05-watchdog-report-0140.md:1:36",
+      "path": "memory/2026-06-05-watchdog-report-0140.md",
+      "startLine": 1,
+      "endLine": 36,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Friday, June 5, 2026 1:40 AM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 1:39 AM CDT (06:39 UTC) --- ## 🟡 FINDINGS: Mixed Results — One Build Partially Succeeded, One Failed | Build | Schedule | Last Run (CDT) | Duration | Status | Consecutive Errors | |-------|----------|---------------|----------|--------|-------------------| | **BUILD-VOICE-SKILL-Phase1** (`3955e592`) | 23:00 | Jun 4, 23:11 | 11 min 47 sec | ⚠️ **BUILD WORKED, DELIVERY FAILED** | 6 | | **BUILD-CUSTOM-SKILLS** (`8cf77c91`) | 01:00 | Jun 5, 01:05 | 5 min 09 sec | ❌ **FAILED** (LLM timeout + delivery error) | 6 | | **ERROR-WATCHDOG** (me) | Every 5",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5107389092445374,
+      "maxScore": 0.5107389092445374,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "build-voice-skill-phase1",
+        "build-custom-skills",
+        "watchdog",
+        "report",
+        "error",
+        "friday",
+        "june"
+      ]
+    },
+    "memory:memory/2026-06-07-watchdog-report-0409.md:1:45": {
+      "key": "memory:memory/2026-06-07-watchdog-report-0409.md:1:45",
+      "path": "memory/2026-06-07-watchdog-report-0409.md",
+      "startLine": 1,
+      "endLine": 45,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Sunday, June 7, 2026 4:09 AM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 4:09 AM CDT (09:09 UTC) **Checking:** CODY build sessions from 11 PM (Jun 6) and 1 AM (Jun 7) --- ## 🟢 VERDICT: BOTH BUILDS SUCCEEDED — No Issues Detected This is the **third consecutive dual-success night** (Jun 5→6, Jun 6→7, and now confirmed). Builds are healthy. --- ## ✅ 11 PM Build: BUILD-VOICE-SKILL-Phase1 — SUCCEEDED | Attribute | Value | |-----------|-------| | **Job ID** | `3955e592-a175-4050-8ad6-7ee96bb060b4` | | **Schedule** | 23:00 CDT daily | | **Triggered** | Jun 6, 23:01 CDT (04:01 UTC Jun 7) ✅ | | **Duration** | ~106 sec",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5082970768213272,
+      "maxScore": 0.5082970768213272,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "dual-success",
+        "build-voice-skill-phase1",
+        "watchdog",
+        "report",
+        "error",
+        "sunday",
+        "june"
+      ]
+    },
+    "memory:memory/2026-06-08-watchdog-report-0651.md:1:40": {
+      "key": "memory:memory/2026-06-08-watchdog-report-0651.md:1:40",
+      "path": "memory/2026-06-08-watchdog-report-0651.md",
+      "startLine": 1,
+      "endLine": 40,
+      "source": "memory",
+      "snippet": "# ERROR-WATCHDOG Report — Monday, June 8, 2026 6:51 AM CDT **Cron Job:** `e40a2803-30cf-4852-a272-9e456f29cb1d` (ERROR-WATCHDOG) **Triggered:** 6:51 AM CDT (11:51 UTC) **Checking:** CODY build sessions from 11 PM (Jun 7) and 1 AM (Jun 8) --- ## 🟢 VERDICT: BOTH BUILDS SUCCEEDED — Artifacts Confirmed **This breaks the two-night failure streak.** Both scheduled builds ran successfully last night. --- ## ✅ 11 PM Build: BUILD-VOICE-SKILL-Phase1 — SUCCEEDED | Attribute | Value | |-----------|-------| | **Job ID** | `3955e592-a175-4050-8ad6-7ee96bb060b4` | | **Schedule** | 23:00 CDT daily | | **Triggered** | Jun 7, 23:00 CDT (04:00 UTC, Jun 8) ✅ | | **Session** | `95ef9381-0aee-44a7-b0fd-e0",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.507351878285408,
+      "maxScore": 0.507351878285408,
+      "firstRecalledAt": "2026-06-27T14:58:32.039Z",
+      "lastRecalledAt": "2026-06-27T14:58:32.039Z",
+      "queryHashes": [
+        "424450564de2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "error-watchdog",
+        "two-night",
+        "build-voice-skill-phase1",
+        "95ef9381-0aee-44a7-b0fd-e0",
+        "watchdog",
+        "report",
+        "error",
+        "monday"
+      ]
+    },
+    "memory:memory/2026-06-19-saos-vps-provisioning-pipeline-complete.md:1:32": {
+      "key": "memory:memory/2026-06-19-saos-vps-provisioning-pipeline-complete.md:1:32",
+      "path": "memory/2026-06-19-saos-vps-provisioning-pipeline-complete.md",
+      "startLine": 1,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "# SAOS VPS Provisioning Pipeline — Build Night Complete **Date:** 2026-06-19 (Friday Build Night) **Session:** SOL + Phillip Lowe **Status:** ✅ PRODUCTION READY **Classification:** SYSTACK INTERNAL --- ## What Was Built ### Complete Infrastructure-as-Code Pipeline | Component | File | Purpose | |-----------|------|---------| | **VPS Provisioner** | `scripts/provision_vps.py` | Vultr API client + cloud-init generator | | **Provision Bridge** | `scripts/saos_provision_bridge.py` | Polls task_queue, auto-provisions VPS | | **LaunchAgent** | `launchd/net.systack.saos-provision-bridge.plist` | Auto-starts bridge on boot | | **Cloud-init** | Embedded in provision_vps.py | Two-stage boot",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.48111775815486907,
+      "maxScore": 0.48111775815486907,
+      "firstRecalledAt": "2026-06-27T15:04:54.102Z",
+      "lastRecalledAt": "2026-06-27T15:04:54.102Z",
+      "queryHashes": [
+        "7db5efd3ba57"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "infrastructure-as-code",
+        "scripts/provision-vps.py",
+        "cloud-init",
+        "scripts/saos-provision-bridge.py",
+        "task-queue",
+        "auto-provisions",
+        "auto-starts",
+        "provision-vps.py"
+      ]
+    },
+    "memory:memory/2026-06-09-copilot-orchestration-architecture.md:51:136": {
+      "key": "memory:memory/2026-06-09-copilot-orchestration-architecture.md:51:136",
+      "path": "memory/2026-06-09-copilot-orchestration-architecture.md",
+      "startLine": 51,
+      "endLine": 136,
+      "source": "memory",
+      "snippet": "┌───▼───────┐ ┌───────▼────────┐ ┌──────▼────────┐ │ Postgres │ │ Python Worker │ │ n8n Automator│ │ Core │ │ (Dispatcher) │ │ (External IO)│ │(STATE + │ │ │ │ │ │ QUEUE) │ └───────┬────────┘ └──────┬────────┘ └───────┬───┘ │ │ │ │ │ └───────────────┼────────────────────┘ │ ┌───────────▼──────────┐ │ Agent Runtime │ │ (OpenClaw + Ollama) │ └──────────┬───────────┘ │ ┌──────────▼────────┐ │ pgvector RAG │ └─────",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4842978000640869,
+      "maxScore": 0.4842978000640869,
+      "firstRecalledAt": "2026-06-27T15:05:53.062Z",
+      "lastRecalledAt": "2026-06-27T15:05:53.062Z",
+      "queryHashes": [
+        "0eb2a5b538a1"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "copilot",
+        "orchestration",
+        "architecture.md",
+        "postgres",
+        "python",
+        "worker",
+        "n8n",
+        "automator"
+      ]
+    },
+    "memory:memory/2026-06-27.md:113:130": {
+      "key": "memory:memory/2026-06-27.md:113:130",
+      "path": "memory/2026-06-27.md",
+      "startLine": 113,
+      "endLine": 130,
+      "source": "memory",
+      "snippet": "| 3:00 AM | Memory Dreaming | System | — | | 3:30 AM | LOKI: Wiki Bridge Sync | LOKI | Local | | 8:00 AM (Tue) | LOKI: Weekly Memory | LOKI | Local | | 8:00 AM (Jun 29) | LOKI: ASSEMBLY Check | LOKI | Local | | 8:30 AM (Jun 29) | LOKI: Fleet Review | LOKI | Local | | 10:00 AM | Daily Agent Learning | SOL | Cloud | ## Next Steps (Deferred) 1. ⏸️ SAOS Orchestrator — Final test after full SAOS stack verified 2. ⏸️ n8n Email Dispatcher — Fix port 8768→8765, then re-enable 3. ⏸️ VPS Provisioning — Needs real Vultr/Tailscale/n8n API keys 4. ⏸️ Dashboard Authentication — Already working (PIN + session tokens) 5. ⏸️ iOS Safari cert trust — Use direct IP workaround --- *Session saved per \"Save thi",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.45598753094673156,
+      "maxScore": 0.45598753094673156,
+      "firstRecalledAt": "2026-06-27T16:04:27.613Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
+      "queryHashes": [
+        "6e8241b84cc1"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "re-enable",
+        "vultr/tailscale/n8n",
+        "dreaming",
+        "loki",
+        "wiki",
+        "bridge",
+        "sync",
+        "local"
+      ]
+    },
+    "memory:memory/2026-06-27-saos-orchestrator-dobby-plan.md:1:56": {
+      "key": "memory:memory/2026-06-27-saos-orchestrator-dobby-plan.md:1:56",
+      "path": "memory/2026-06-27-saos-orchestrator-dobby-plan.md",
+      "startLine": 1,
+      "endLine": 56,
+      "source": "memory",
+      "snippet": "# SAOS Orchestrator → DOOBY Migration Plan **Date:** 2026-06-27 **Status:** TESTED — DOOBY verified capable ## DOOBY Test Results | Test | Runtime | Timeout | Result | File Created? | |------|---------|---------|--------|---------------| | Solo file creation | 3m | 180s | Timeout (but file created) | ✅ | | SAOS task (TEST002) | 32s | 300s | Completed | ✅ | **Key finding:** With 300s timeout and warmed model, DOOBY completes SAOS tasks reliably in ~30s. ## Changes Required ### 1. Orchestrator Daemon Config - **Poll interval:** 10s → 300s (5 minutes) - **Agent target:** SOL → DOOBY - **Timeout per task:** 300s - **Session model:** Kill per task, spawn fresh each time ### 2. OpenClaw Con",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4482212901115417,
+      "maxScore": 0.4482212901115417,
+      "firstRecalledAt": "2026-06-27T16:04:27.613Z",
+      "lastRecalledAt": "2026-06-27T16:04:27.613Z",
+      "queryHashes": [
+        "6e8241b84cc1"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "saos",
+        "orchestrator",
+        "dobby",
+        "plan.md",
+        "dooby",
+        "migration",
+        "plan",
+        "date"
+      ]
+    },
+    "memory:memory/2026-06-27-0909-doby-loki-qwen3.5-verified.md:1:33": {
+      "key": "memory:memory/2026-06-27-0909-doby-loki-qwen3.5-verified.md:1:33",
+      "path": "memory/2026-06-27-0909-doby-loki-qwen3.5-verified.md",
+      "startLine": 1,
+      "endLine": 33,
+      "source": "memory",
+      "snippet": "# 2026-06-27 — DOOBY & LOKI Verified on qwen3.5:9b **Time:** 09:09 CDT **Status:** VERIFIED — Both agents produce good responses on local model ## What Green Said > \"DOOBY and LOKI work with the Qwen 9b. I verified responses from them.\" ## Updated Configuration Both agents now run on: - **Model:** `ollama/qwen3.5:9b` (local) - **Verified by:** Green (human-in-the-loop confirmation) ## Context Change Previous experiment (2026-06-25) concluded local models couldn't reliably invoke tools. - That was based on 6 automated test attempts - **Now superseded** by Green's manual verification that qwen3.5:9b produces good responses ## Compute Conservation Rule **CRITICAL:** DOOBY and LOKI MUST",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.0150078773498534,
+      "maxScore": 0.5517463356256485,
+      "firstRecalledAt": "2026-06-27T16:53:47.652Z",
+      "lastRecalledAt": "2026-06-27T18:36:44.252Z",
+      "queryHashes": [
+        "f873c4960130",
+        "442dc0f17cec"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "qwen3.5",
+        "ollama/qwen3.5",
+        "human-in-the-loop",
+        "doby",
+        "loki",
+        "verified.md",
+        "dooby",
+        "verified"
+      ]
+    },
+    "memory:memory/2026-06-27-0924-doby-loki-local-model-status.md:1:39": {
+      "key": "memory:memory/2026-06-27-0924-doby-loki-local-model-status.md:1:39",
+      "path": "memory/2026-06-27-0924-doby-loki-local-model-status.md",
+      "startLine": 1,
+      "endLine": 39,
+      "source": "memory",
+      "snippet": "# 2026-06-27 — DOOBY & LOKI Local Model Status **Time:** 09:24 CDT **Models:** `ollama/qwen3.5:9b` (6.6 GB, runs on CPU/GPU split) ## Key Discovery **Only ONE local model can run at a time on 16GB RAM.** - qwen3.5:9b loads ~10GB when active (model + context) - Running two simultaneously causes OOM / timeout - LOKI correctly identified this as the cause of DOOBY's timeout ## Verified Capabilities (qwen3.5:9b) ### LOKI Test Results (ALL PASSED) | # | Task | Status | Notes | |---|------|--------|-------| | 1 | Read file (`IDENTITY.md`) | ✅ SUCCESS | Correctly summarized identity | | 2 | List cron jobs | ✅ SUCCESS | Found no jobs, reported cleanly | | 3 | Directory listing (`/tmp/`) | ✅ SUC",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.01913815587759,
+      "maxScore": 0.5438920274376868,
+      "firstRecalledAt": "2026-06-27T16:53:47.652Z",
+      "lastRecalledAt": "2026-06-27T18:36:44.252Z",
+      "queryHashes": [
+        "f873c4960130",
+        "442dc0f17cec"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "ollama/qwen3.5",
+        "6.6",
+        "cpu/gpu",
+        "qwen3.5",
+        "identity.md",
+        "doby",
+        "loki",
+        "local"
+      ]
+    },
+    "memory:memory/2026-06-27.md:28:62": {
+      "key": "memory:memory/2026-06-27.md:28:62",
+      "path": "memory/2026-06-27.md",
+      "startLine": 28,
+      "endLine": 62,
+      "source": "memory",
+      "snippet": "| DOOBY | File creation + read | ✅ FILE CREATED | `qwen3.5:9b` | 3m (timeout but file written) | | DOOBY | SAOS task (TEST002) | ✅ COMPLETED | `qwen3.5:9b` | 32s | | DOOBY | SAOS task (TEST002, 300s) | ✅ COMPLETED | `qwen3.5:9b` | 32s | ### Key Finding - DOOBY creates files successfully on local but tool response takes ~3 minutes when model cold - With 300s timeout and warmed model, DOOBY completes in ~30s - **CRITICAL:** Only ONE local model can run at a time on 16GB RAM ### Compute Rules (Binding) 1. Sequential execution only — never spawn DOOBY + LOKI simultaneously 2. Check `ollama ps` before spawning 3. SOL stays on cloud — no local conflicts 4. DOOBY timeout: Complex tasks need 180s+",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5153449684381485,
+      "maxScore": 0.5153449684381485,
+      "firstRecalledAt": "2026-06-27T16:53:47.652Z",
+      "lastRecalledAt": "2026-06-27T16:53:47.652Z",
+      "queryHashes": [
+        "f873c4960130"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "qwen3.5",
+        "dooby",
+        "creation",
+        "read",
+        "created",
+        "timeout",
+        "but",
+        "written"
+      ]
+    },
+    "memory:memory/2026-06-27-0924-doby-loki-local-model-status.md:63:81": {
+      "key": "memory:memory/2026-06-27-0924-doby-loki-local-model-status.md:63:81",
+      "path": "memory/2026-06-27-0924-doby-loki-local-model-status.md",
+      "startLine": 63,
+      "endLine": 81,
+      "source": "memory",
+      "snippet": "- **Contents:** `Current date and time: Sat 2026-06-27 09:28 CDT` - **Issue:** Tool response took ~3 minutes, exceeded OpenClaw timeout (task marked \"failed\" but file WAS created) - **Status:** VERIFIED — local execution works, slower than cloud ### LOKI Test - **Task:** All 5 capability tests - **Result:** ✅ ALL PASSED on local `qwen3.5:9b` (user confirmed) - **Status:** FULLY VERIFIED ## Conclusion Both DOOBY and LOKI successfully execute tools on local `qwen3.5:9b`: - LOKI: Fast enough for interactive tasks - DOOBY: Functional but ~3 min response time (timeout risk for complex tasks) **Recommendation:** Use sequential spawning with extended timeouts (180s+) for DOOBY complex tasks. Si",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9680546790361404,
+      "maxScore": 0.5102254211902618,
+      "firstRecalledAt": "2026-06-27T16:53:47.652Z",
+      "lastRecalledAt": "2026-06-27T18:36:44.252Z",
+      "queryHashes": [
+        "f873c4960130",
+        "442dc0f17cec"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "qwen3.5",
+        "doby",
+        "loki",
+        "local",
+        "model",
+        "status.md",
+        "contents",
+        "current"
+      ]
+    },
+    "memory:memory/2026-06-27-0924-doby-loki-local-model-status.md:33:69": {
+      "key": "memory:memory/2026-06-27-0924-doby-loki-local-model-status.md:33:69",
+      "path": "memory/2026-06-27-0924-doby-loki-local-model-status.md",
+      "startLine": 33,
+      "endLine": 69,
+      "source": "memory",
+      "snippet": "**Not a model failure — resource conflict.** When run solo, qwen3.5:9b works. ## Compute Rules (Binding) 1. **Sequential execution only** — never spawn DOOBY + LOKI simultaneously 2. **Check `ollama ps` before spawning** — if qwen3.5:9b already loaded, wait or kill first 3. **SOLO stays on cloud** — no local model conflicts 4. **DOOBY = coding tasks** — scripts, n8n workflows, file generation 5. **LOKI = ops tasks** — cron, monitoring, logs, research, memory maintenance ## Model Config (Updated) - `agents.defaults.model.primary` = `ollama/qwen3.5:9b` - `agents.defaults.model.fallbacks` = `[]` (no cloud fallback) - DOOBY: primary=`qwen3.5:9b`, fallbacks=`[]` - LOKI: primary=`qwen3.5:9b`,",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5089699059724807,
+      "maxScore": 0.5089699059724807,
+      "firstRecalledAt": "2026-06-27T16:53:47.652Z",
+      "lastRecalledAt": "2026-06-27T16:53:47.652Z",
+      "queryHashes": [
+        "f873c4960130"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "qwen3.5",
+        "agents.defaults.model.primary",
+        "ollama/qwen3.5",
+        "agents.defaults.model.fallbacks",
+        "doby",
+        "loki",
+        "local",
+        "model"
+      ]
+    },
+    "memory:memory/2026-06-05-context-window-assembly.md:1:43": {
+      "key": "memory:memory/2026-06-05-context-window-assembly.md:1:43",
+      "path": "memory/2026-06-05-context-window-assembly.md",
+      "startLine": 1,
+      "endLine": 43,
+      "source": "memory",
+      "snippet": "# Nate's Context Window Assembly Method — Key Insights **Source:** Nate's weekly AI update video (transcript provided by user) **Date:** 2026-06-05 **Relevance:** HIGH — directly applicable to OpenClaw agent workflows, especially Aider + local file operations --- ## Core Method: Context Window Assembly via Natural Language File Discovery ### The Workflow 1. **Ask agent to scan file system** — \"Look at my file system overall\" 2. **Describe files in natural language** — NOT by filename or path - \"This is about when I made it\" - \"This is about [topic], can you find it?\" 3. **Agent finds and copies files** to a clean working folder 4. **Open new chat** pointing at that working folder",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4494951844215393,
+      "maxScore": 0.4494951844215393,
+      "firstRecalledAt": "2026-06-27T16:53:47.654Z",
+      "lastRecalledAt": "2026-06-27T16:53:47.654Z",
+      "queryHashes": [
+        "d9eda6ff62d2"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "context",
+        "window",
+        "assembly.md",
+        "nate's",
+        "assembly",
+        "method",
+        "key",
+        "insights"
+      ]
+    },
+    "memory:memory/2026-06-04-tool-failures-diagnostic.md:102:167": {
+      "key": "memory:memory/2026-06-04-tool-failures-diagnostic.md:102:167",
+      "path": "memory/2026-06-04-tool-failures-diagnostic.md",
+      "startLine": 102,
+      "endLine": 167,
+      "source": "memory",
+      "snippet": "- Memory pressure may cause tool calls to timeout - System instability when multiple models are loaded **Mitigation applied:** ```bash killall -9 \"ollama runner\" ``` --- ### 4. Config Validation Issue (Pre-existing) **Error:** ``` agents.defaults: Invalid input ``` **Investigation:** - `openclaw config validate` initially failed - `openclaw doctor --fix` was run - Config is now valid - No material impact on tool failures, but indicates config drift --- ## Actions Taken 1. ✅ Cleared stale file lock 2. ✅ Changed `web_search` provider from `ollama` to `perplexity` 3. ✅ Killed hung Ollama runners to free memory 4. ✅ Ran `openclaw doctor --fix` to repair config validation 5. ❌ **FAILED:**",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.44246333539485927,
+      "maxScore": 0.44246333539485927,
+      "firstRecalledAt": "2026-06-27T16:53:47.655Z",
+      "lastRecalledAt": "2026-06-27T16:53:47.655Z",
+      "queryHashes": [
+        "7c6d977001b0"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "pre-existing",
+        "agents.defaults",
+        "web-search",
+        "tool",
+        "failures",
+        "diagnostic.md",
+        "pressure",
+        "may"
+      ]
+    },
+    "memory:memory/2026-06-16-session-failure-log.md:61:68": {
+      "key": "memory:memory/2026-06-16-session-failure-log.md:61:68",
+      "path": "memory/2026-06-16-session-failure-log.md",
+      "startLine": 61,
+      "endLine": 68,
+      "source": "memory",
+      "snippet": "## Lesson The rules don't work if I don't follow them. The memory doesn't help if I read the search results but then keep exploring anyway. This is a behavior failure, not a system failure. ## Fix Needed - [ ] Actually read memory files completely before acting - [ ] Stop treating every request as a fresh discovery problem - [ ] When user says \"check memory\", READ THE FILE, don't just search and then ignore it",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.962250119447708,
+      "maxScore": 0.4992436110973358,
+      "firstRecalledAt": "2026-06-27T16:55:47.667Z",
+      "lastRecalledAt": "2026-06-27T16:56:01.474Z",
+      "queryHashes": [
+        "92b02585a612",
+        "32c927a9aeb1"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "failure",
+        "log.md",
+        "lesson",
+        "rules",
+        "don't",
+        "follow",
+        "them",
+        "doesn't"
+      ]
+    },
+    "memory:memory/2026-06-13-memory-search-down-critical.md:1:43": {
+      "key": "memory:memory/2026-06-13-memory-search-down-critical.md:1:43",
+      "path": "memory/2026-06-13-memory-search-down-critical.md",
+      "startLine": 1,
+      "endLine": 43,
+      "source": "memory",
+      "snippet": "# CRITICAL: Memory Search Down - 2026-06-13 **Time:** 04:29 CDT **Status:** 🔴 BLOCKING - Memory search completely non-functional **Impact:** High - Agent cannot search MEMORY.md or wiki during sessions ## Error ``` Ollama embed HTTP 404: {\"error\":\"model \\\"nomic-embed-text\\\" not found, try pulling it first\"} ``` ## Root Cause The `nomic-embed-text` embedding model is not installed in Ollama. This is required for memory_search and wiki_search to function. ## Fix Required Run: ```bash ollama pull nomic-embed-text ``` Then verify: ```bash ollama list | grep nomic-embed-text ``` ## Impact During This Session - Could not search memory before acting (violated AGENTS.md RULE 1) - Had to fall",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.8743619710206982,
+      "maxScore": 0.4983122855424881,
+      "firstRecalledAt": "2026-06-27T16:55:47.667Z",
+      "lastRecalledAt": "2026-06-27T16:56:17.669Z",
+      "queryHashes": [
+        "92b02585a612",
+        "32c927a9aeb1",
+        "af0a01460b88",
+        "c79f6439791f"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "embedding",
+        "non-functional",
+        "memory.md",
+        "nomic-embed-text",
+        "memory-search",
+        "wiki-search",
+        "agents.md",
+        "down"
+      ]
+    },
+    "memory:memory/2026-06-04-tool-failures-diagnostic.md:1:37": {
+      "key": "memory:memory/2026-06-04-tool-failures-diagnostic.md:1:37",
+      "path": "memory/2026-06-04-tool-failures-diagnostic.md",
+      "startLine": 1,
+      "endLine": 37,
+      "source": "memory",
+      "snippet": "# OpenClaw Tool Failures — Diagnostic Report **Date:** 2026-06-04 **Agent:** SOL **Issue:** Intermittent failures in `memory_search`, `web_search`, and other tools --- ## Summary Three distinct failure modes were identified during live debugging: | Tool | Failure Mode | Root Cause | Status | |------|-------------|-----------|--------| | `memory_search` | \"file lock stale for ...jsonl\" | Stale session file lock from previous crashed session | **Mitigated** (lock cleared, but recurs) | | `web_search` | \"Ollama web search returned malformed JSON\" | Ollama `/api/search` endpoint returns 404; no web search capability | **Pending restart** (switched to perplexity) | | `write` | Occasional",
+      "recallCount": 5,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2.2962505906820296,
+      "maxScore": 0.48388133943080897,
+      "firstRecalledAt": "2026-06-27T16:55:47.667Z",
+      "lastRecalledAt": "2026-06-27T16:56:33.645Z",
+      "queryHashes": [
+        "92b02585a612",
+        "029f0e995c39",
+        "af0a01460b88",
+        "c79f6439791f",
+        "9e8b1a934d08"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "memory-search",
+        "web-search",
+        "api/search",
+        "tool",
+        "failures",
+        "diagnostic.md",
+        "openclaw",
+        "diagnostic"
+      ]
+    },
+    "memory:memory/2026-05-19.md:1:7": {
+      "key": "memory:memory/2026-05-19.md:1:7",
+      "path": "memory/2026-05-19.md",
+      "startLine": 1,
+      "endLine": 7,
+      "source": "memory",
+      "snippet": "### May 19 — Session Recovery Patches - **Root cause:** Gateway restart wipes in-memory session registry - **Files exist, registry empty** — 265 SOL jsonl files, 9 Cody, 8 Atlas - Patched session store: auto-restore from .bak, validate before processing - **Morning briefing sent** via iMessage",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9528580904006957,
+      "maxScore": 0.48818384110927576,
+      "firstRecalledAt": "2026-06-27T16:55:47.671Z",
+      "lastRecalledAt": "2026-06-27T16:56:33.645Z",
+      "queryHashes": [
+        "029f0e995c39",
+        "9e8b1a934d08"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "gateway",
+        "in-memory",
+        "auto-restore",
+        "may",
+        "recovery",
+        "patches",
+        "root",
+        "cause"
+      ]
+    },
+    "memory:memory/2026-06-22.md:1:35": {
+      "key": "memory:memory/2026-06-22.md:1:35",
+      "path": "memory/2026-06-22.md",
+      "startLine": 1,
+      "endLine": 35,
+      "source": "memory",
+      "snippet": "# 2026-06-22 — Workspace Recovery + Memory Restoration ## What Happened User did a workspace cleanup and discovered I had lost my identity (blank AGENTS.md, IDENTITY.md, USER.md). Root files were stale while Sol-Knowledge/ had current versions. ## Actions Taken ### Identity Restoration - Copied current AGENTS.md, IDENTITY.md, USER.md from Sol-Knowledge/ → root - Copied current MEMORY.md from root → Sol-Knowledge/ (root was newer) - **Result:** Agent now loads correct identity (Phillip/Green, SOL, revenue mission, etc.) ### Orphaned File Cleanup - Archived 4 Utopia Deli JS files to `email-campaign/legacy-root-versions/` - Moved MEMORY-RECOVERED backups to `memory/recovered/` - Archived r",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4633706897497177,
+      "maxScore": 0.4633706897497177,
+      "firstRecalledAt": "2026-06-27T16:55:47.671Z",
+      "lastRecalledAt": "2026-06-27T16:55:47.671Z",
+      "queryHashes": [
+        "029f0e995c39"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "backup",
+        "backups",
+        "agents.md",
+        "identity.md",
+        "user.md",
+        "sol-knowledge",
+        "memory.md",
+        "phillip/green"
+      ]
+    },
+    "memory:memory/2026-06-04-memory-system.md:46:96": {
+      "key": "memory:memory/2026-06-04-memory-system.md:46:96",
+      "path": "memory/2026-06-04-memory-system.md",
+      "startLine": 46,
+      "endLine": 96,
+      "source": "memory",
+      "snippet": "\"prompt\": \"Distill decisions, rules, lessons learned...\", \"systemPrompt\": \"Only store important long-term knowledge...\" }, \"contextPruning\": { \"mode\": \"cache-ttl\", \"ttl\": \"6h\", \"keepLastAssistants\": 3 } } } } ``` ### Technical Changes 1. **Installed nomic-embed-text** via Ollama (274MB) - Purpose: Local embedding model for memory search - No cloud dependency for memory retrieval 2. **Configured hybrid search** - Vector weight: 0.7 (semantic similarity) - Text weight: 0.3 (exact match) - Sources: memory files + session transcripts 3. **Set memory flush rules** - Soft threshold: 40k tokens - Distill only i",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.3849871814250945,
+      "maxScore": 0.47305920422077175,
+      "firstRecalledAt": "2026-06-27T16:56:01.474Z",
+      "lastRecalledAt": "2026-06-27T16:56:33.645Z",
+      "queryHashes": [
+        "32c927a9aeb1",
+        "af0a01460b88",
+        "9e8b1a934d08"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "embedding",
+        "2026-06-04-memory-system.md",
+        "long-term",
+        "cache-ttl",
+        "nomic-embed-text",
+        "0.7",
+        "0.3",
+        "system.md"
+      ]
+    },
+    "memory:memory/2026-06-02.md:94:140": {
+      "key": "memory:memory/2026-06-02.md:94:140",
+      "path": "memory/2026-06-02.md",
+      "startLine": 94,
+      "endLine": 140,
+      "source": "memory",
+      "snippet": "**Symptom:** ALL menu items disappeared. Console showed `renderCategory is not defined`. **Root Cause:** Duplicate `const frontend_total_cents` declaration caused syntax error, preventing ALL inline functions from loading. ```javascript const frontend_total_cents = subtotal + Math.round(tax); const frontend_total_cents = subtotal + tax; // ← DUPLICATE ``` **Fix:** Removed duplicate declaration. --- ### Bug 5: City/County Fields in Checkout **Symptom:** User didn't want city/county fields — deli is stationary in Little Rock, AR. **Fix:** Removed city/county inputs from checkout form and payload. --- ### Tunnel Infrastructure Setup **Created:** - `~/.n8n/restart-tunnel.sh` — auto-res",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4102927058935165,
+      "maxScore": 0.4102927058935165,
+      "firstRecalledAt": "2026-06-27T16:56:05.508Z",
+      "lastRecalledAt": "2026-06-27T16:56:05.508Z",
+      "queryHashes": [
+        "af0a01460b88"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "frontend-total-cents",
+        "math.round",
+        "city/county",
+        "n8n/restart-tunnel.sh",
+        "auto-res",
+        "symptom",
+        "all",
+        "menu"
+      ]
+    },
+    "memory:memory/2026-06-08-hybrid-memory-system-complete.md:1:54": {
+      "key": "memory:memory/2026-06-08-hybrid-memory-system-complete.md:1:54",
+      "path": "memory/2026-06-08-hybrid-memory-system-complete.md",
+      "startLine": 1,
+      "endLine": 54,
+      "source": "memory",
+      "snippet": "# 2026-06-08 — Hybrid Memory System Deployed & Verified ## Time: 17:37 CDT (Resumed Session) ## Status: ✅ FULLY OPERATIONAL ## What Was Built (Earlier Today ~10:00 CDT) ### 1. PostgreSQL Database: `systack_memory` - **Host:** localhost:5432 - **Database:** systack_memory - **Tables:** 8 core tables for knowledge management - **Views:** 4 analytical views - **Functions:** 2 sync functions - **Data:** 538 sources imported, 8 entities, 1 claim ### 2. Python Sync Script: `memory_sync.py` - Bidirectional sync: Obsidian ↔ Postgres - Imports markdown files to database - Exports reports back to Obsidian - Generates AI insights ### 3. Query Tool: `memory_query.py` - Full-text search across all",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4681015223264694,
+      "maxScore": 0.4681015223264694,
+      "firstRecalledAt": "2026-06-27T16:59:11.187Z",
+      "lastRecalledAt": "2026-06-27T16:59:11.187Z",
+      "queryHashes": [
+        "d4eef7977635"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "systack-memory",
+        "memory-sync.py",
+        "memory-query.py",
+        "full-text",
+        "hybrid",
+        "complete.md",
+        "deployed",
+        "verified"
+      ]
+    },
+    "memory:memory/2026-06-27-loki-cron-migration-complete.md:1:34": {
+      "key": "memory:memory/2026-06-27-loki-cron-migration-complete.md:1:34",
+      "path": "memory/2026-06-27-loki-cron-migration-complete.md",
+      "startLine": 1,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "# LOKI Cron Job Migration — COMPLETE (2026-06-27) ## New LOKI Jobs (Local-Only, qwen3.5:9b) | Job | Time (CDT) | Task | Timeout | |-----|-----------|------|---------| | **LOKI: RAG Auto-Sync** | Daily 2:00 AM | Run `rag_ingest_v2.py --incremental` | 120s | | **LOKI: Wiki Bridge Sync** | Daily **3:30 AM** | Run `wiki_bridge_sync.py` | 120s | | **LOKI: Weekly Memory** | Tuesdays 8:00 AM | Promote daily logs → MEMORY.md | 300s | | **LOKI: ASSEMBLY Check** | Jun 29 8:00 AM | Count ASSEMBLY tasks, report | 180s | | **LOKI: Fleet Review** | Jun 29 8:30 AM | Count all agent usage, report | 180s | ## Staggered Schedule (No Overlaps) ``` 2:00 AM → LOKI: RAG Auto-Sync (120s max = done by 2:02 AM)",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.9839550346136092,
+      "maxScore": 0.5145268380641937,
+      "firstRecalledAt": "2026-06-27T18:30:50.329Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
+      "queryHashes": [
+        "88c716b242da",
+        "f3bd94460392"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "local-only",
+        "qwen3.5",
+        "auto-sync",
+        "rag-ingest-v2.py",
+        "wiki-bridge-sync.py",
+        "memory.md",
+        "loki",
+        "cron"
+      ]
+    },
+    "memory:memory/2026-06-27-loki-cron-migration-complete.md:27:55": {
+      "key": "memory:memory/2026-06-27-loki-cron-migration-complete.md:27:55",
+      "path": "memory/2026-06-27-loki-cron-migration-complete.md",
+      "startLine": 27,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "**All LOKI jobs complete by 8:33 AM. Daily Agent Learning starts at 10:00 AM. No overlaps. Wiki Bridge Sync runs at 3:30 AM (before 4 AM memory wipe).** ## Disabled Cloud Jobs | Job | Was | Now | |-----|-----|-----| | RAG Auto-Sync — Incremental Index | SOL, hourly | ❌ Disabled | | Wiki Bridge Auto-Sync | SOL, 3:58 AM | ❌ Disabled | | ASSEMBLY Utilization Review | SOL, Jun 29 9AM | ❌ Disabled | | Fleet-Wide Agent Usage Review | SOL, Jun 29 10AM | ❌ Disabled | | WEEKLY-MANUAL-MEMORY-PROMOTION | SOL, Tuesdays 9AM | ❌ Disabled | ## Compute Savings Before: 5 jobs × daily cloud runs = ~$X/day After: 5 jobs × daily local runs = $0/day (Ollama local) Jobs staying cloud (justified): - Daily Age",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4436365723609924,
+      "maxScore": 0.4436365723609924,
+      "firstRecalledAt": "2026-06-27T18:30:50.329Z",
+      "lastRecalledAt": "2026-06-27T18:30:50.329Z",
+      "queryHashes": [
+        "88c716b242da"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "auto-sync",
+        "fleet-wide",
+        "weekly-manual-memory-promotion",
+        "x/day",
+        "0/day",
+        "loki",
+        "cron",
+        "migration"
+      ]
+    },
+    "memory:memory/2026-06-27-1345-loki-handoff.md:1:39": {
+      "key": "memory:memory/2026-06-27-1345-loki-handoff.md:1:39",
+      "path": "memory/2026-06-27-1345-loki-handoff.md",
+      "startLine": 1,
+      "endLine": 39,
+      "source": "memory",
+      "snippet": "# 2026-06-27 — SAOS Local Backlog Handed Off to LOKI **Time:** ~13:45 CDT **Status:** LOKI has the handoff document, will execute autonomously **Action:** User confirmed handoff complete **Next:** Green will direct LOKI as needed ## What Was Created 1. **Handoff Document:** `~/.openclaw/workspaces/sol/handoffs/SAOS-LOKI-BACKLOG.md` - 5 detailed SAOS tasks - SQL queries, curl commands, expected outputs - Verification checklist 2. **5 Cron Jobs** (simplified, staggered 6:00-8:00 AM daily): - Task Queue Health (6:00 AM) - Orphaned Task Check (6:30 AM) - n8n Error Count (7:00 AM) - Client Count (7:30 AM) - API Health Check (8:00 AM) 3. **First LOKI Spawn:** Task 1 at",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5064168810844422,
+      "maxScore": 0.5064168810844422,
+      "firstRecalledAt": "2026-06-27T19:06:10.093Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
+      "queryHashes": [
+        "f3bd94460392"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "2026-06-27-1345-loki-handoff.md",
+        "00-8",
+        "loki",
+        "handoff.md",
+        "saos",
+        "local",
+        "backlog",
+        "handed"
+      ]
+    },
+    "memory:memory/2026-06-08-watchdog-report-0855.md:118:131": {
+      "key": "memory:memory/2026-06-08-watchdog-report-0855.md:118:131",
+      "path": "memory/2026-06-08-watchdog-report-0855.md",
+      "startLine": 118,
+      "endLine": 131,
+      "source": "memory",
+      "snippet": "2. **Verify build scripts** can execute independently of delivery channel ### Short-term 3. **Consider temporary workaround**: Route cron announcements to a different channel (not BlueBubbles) until config is fixed 4. **Manual build trigger**: If urgent, manually trigger BUILD-VOICE-SKILL-Phase1 and BUILD-CUSTOM-SKILLS-1AM to catch up on 4 nights of missed work ### Long-term 5. **Review cron health**: Consider a health check dashboard or alternate alerting mechanism since ERROR-WATCHDOG itself is failing silently 6. **Evaluate whether builds are still needed**: Per memory, these builds are now \"idempotent verification passes\" — they check existing work and exit. If the work is done, consid",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.470306783914566,
+      "maxScore": 0.470306783914566,
+      "firstRecalledAt": "2026-06-27T19:06:10.093Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
+      "queryHashes": [
+        "f3bd94460392"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "short-term",
+        "build-voice-skill-phase1",
+        "build-custom-skills-1am",
+        "long-term",
+        "error-watchdog",
+        "watchdog",
+        "report",
+        "verify"
+      ]
+    },
+    "memory:memory/2026-06-05-watchdog-report-0241.md:77:110": {
+      "key": "memory:memory/2026-06-05-watchdog-report-0241.md:77:110",
+      "path": "memory/2026-06-05-watchdog-report-0241.md",
+      "startLine": 77,
+      "endLine": 110,
+      "source": "memory",
+      "snippet": "This affects ALL 4 cron jobs. The builds are working — the notifications are not. | Job | Consecutive Errors | Actual Build Status | |-----|-------------------|---------------------| | BUILD-VOICE-SKILL | 1 | ✅ **SUCCEEDED** | | BUILD-CUSTOM-SKILLS | 2 | ✅ **SUCCEEDED** | | MONITOR-BUILD-JOBS | 3 | N/A (monitor) | | ERROR-WATCHDOG | 19 | N/A (this job) | --- ## 📊 7-Night History | Night | Voice Skill | Custom Skills | Notes | |-------|-------------|---------------|-------| | May 31 | ❌ Not scheduled | ❌ Not scheduled | Jobs didn't exist | | Jun 1 | ❌ Timeout | ❌ Timeout | Rate limit | | Jun 2 | ❌ Timeout | ❌ Timeout | Rate limit | | Jun 3 | ❌ Timeout | ❌ Timeout | Rate limit | | Jun 4 |",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.46466600894927973,
+      "maxScore": 0.46466600894927973,
+      "firstRecalledAt": "2026-06-27T19:06:10.093Z",
+      "lastRecalledAt": "2026-06-27T19:06:10.093Z",
+      "queryHashes": [
+        "f3bd94460392"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "build-voice-skill",
+        "build-custom-skills",
+        "monitor-build-jobs",
+        "n/a",
+        "error-watchdog",
+        "7-night",
+        "watchdog",
+        "report"
+      ]
+    },
+    "memory:memory/2026-06-07-cody-webhook-fix.md:37:59": {
+      "key": "memory:memory/2026-06-07-cody-webhook-fix.md:37:59",
+      "path": "memory/2026-06-07-cody-webhook-fix.md",
+      "startLine": 37,
+      "endLine": 59,
+      "source": "memory",
+      "snippet": "- Prices converted cents → dollars with `toFixed(2)` before POST - Pickup time read directly from DOM - \"ASAP\" added as first option in pickup time dropdown - Non-JSON response fallback (check Content-Type, fall back to text) - Debug console.log added for payload inspection ## New Pitfalls - **CODY-016**: HTML form field name mismatch (notes vs special_instructions) - **CODY-017**: Undefined variable in payload (finalPickupTime) - **CODY-018**: Nested vs flat payload structure mismatch - **CODY-019**: Price unit confusion (cents internally, dollars in payload) ## Files Modified - `utopia-deli-revamp/index.html` - `utopia-deli-revamp/order-form.js` - `memory/agent-learnings/CODY-PITFALLS.md",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.948961368203163,
+      "maxScore": 0.49166881740093227,
+      "firstRecalledAt": "2026-06-27T19:08:22.604Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.606Z",
+      "queryHashes": [
+        "f40df17b3b0e",
+        "00a7d79510e1"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "2026-06-07-cody-webhook-fix.md",
+        "non-json",
+        "content-type",
+        "console.log",
+        "cody-016",
+        "special-instructions",
+        "cody-017",
+        "cody-018"
+      ]
+    },
+    "memory:memory/2026-06-07-cody-webhook-fix.md:1:44": {
+      "key": "memory:memory/2026-06-07-cody-webhook-fix.md:1:44",
+      "path": "memory/2026-06-07-cody-webhook-fix.md",
+      "startLine": 1,
+      "endLine": 44,
+      "source": "memory",
+      "snippet": "# 2026-06-07 — CODY Daily Learning: HTML Webhook Integration ## Session Summary Built and fixed the HTML order form + JavaScript webhook integration for Utopia Deli. The existing code had critical schema mismatches that would cause every order to fail. ## Fixes Applied ### 1. HTML Field Names (index.html) - Changed `name=\"notes\"` → `name=\"special_instructions\"` to match webhook expected field - Updated hours display: \"Mon–Sat · 12:30 PM – 7:30 PM CT\" (was showing wrong hours) ### 2. JavaScript Payload Rebuild (order-form.js) **Before (broken):** - Sent nested structure: `{body: {customer: {name: ...}, items: [...]}}` - Prices in cents sent to webhook - `finalPickupTime` variable undefine",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4730873882770538,
+      "maxScore": 0.4730873882770538,
+      "firstRecalledAt": "2026-06-27T19:08:22.604Z",
+      "lastRecalledAt": "2026-06-27T19:08:22.604Z",
+      "queryHashes": [
+        "f40df17b3b0e"
+      ],
+      "recallDays": [
+        "2026-06-27"
+      ],
+      "conceptTags": [
+        "2026-06-07-cody-webhook-fix.md",
+        "index.html",
+        "special-instructions",
+        "order-form.js",
+        "cody",
+        "webhook",
+        "fix.md",
+        "learning"
       ]
     }
   }

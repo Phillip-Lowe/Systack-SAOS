@@ -1079,3 +1079,26 @@ Port 8765 is in use by another program. Either identify and stop that program, o
  * Running on http://127.0.0.1:8765
  * Running on http://192.168.1.248:8765
 [33mPress CTRL+C to quit[0m
+[2026-06-27 13:32:55,219] ERROR in app: Exception on /api/tasks [GET]
+Traceback (most recent call last):
+  File "/Users/philliplowe/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/philliplowe/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/philliplowe/Library/Python/3.9/lib/python/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+  File "/Users/philliplowe/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/philliplowe/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/philliplowe/.openclaw/workspaces/sol/Systack/content/saos/saos-data/dashboard/api.py", line 89, in task_history
+    cur.execute("""
+  File "/Users/philliplowe/Library/Python/3.9/lib/python/site-packages/psycopg2/extras.py", line 236, in execute
+    return super().execute(query, vars)
+psycopg2.errors.UndefinedFunction: operator does not exist: jsonb ~~ text
+LINE 6: ...       LEFT JOIN saos_clients c ON t.payload_json LIKE '%' |...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+
+127.0.0.1 - - [27/Jun/2026 13:32:55] "[35m[1mGET /api/tasks HTTP/1.1[0m" 500 -
+127.0.0.1 - - [27/Jun/2026 13:33:10] "GET /api/health HTTP/1.1" 200 -
