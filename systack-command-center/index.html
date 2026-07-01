@@ -315,13 +315,31 @@
         </div>
     </div>
 
-    <div class="nav">
+    <div class="nav" id="main-nav">
         <button class="active" onclick="showTab('overview', this)">🗺️ Overview</button>
         <button onclick="showTab('infrastructure', this)">🖥️ Infrastructure</button>
         <button onclick="showTab('clients', this)">👥 Clients</button>
         <button onclick="showTab('services', this)">⚡ Services</button>
         <button onclick="showTab('revenue', this)">💰 Revenue</button>
         <button onclick="showTab('alerts', this)">🔔 Alerts</button>
+    </div>
+
+    <!-- PIN Modal -->
+    <div id="pin-modal" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;">
+        <div style="background:#001d3d;border:1px solid rgba(0,212,170,0.3);border-radius:16px;padding:40px;text-align:center;max-width:360px;width:90%;">
+            <div style="font-size:48px;margin-bottom:16px;">🔐</div>
+            <h2 style="color:white;margin-bottom:8px;">Systack Command Center</h2>
+            <p style="color:#94a3b8;font-size:14px;margin-bottom:24px;">Enter your admin PIN to access fleet data</p>
+            <input type="password" id="pin-input" placeholder="••••" maxlength="8" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:white;padding:12px 16px;border-radius:8px;font-size:18px;text-align:center;letter-spacing:4px;width:100%;margin-bottom:16px;outline:none;"
+                onkeydown="if(event.key==='Enter')submitPIN()">
+            <div id="pin-error" style="color:#ef4444;font-size:13px;margin-bottom:12px;display:none;">Incorrect PIN. Try again.</div>
+            <button onclick="submitPIN()" style="background:#00d4aa;color:#000814;border:none;padding:12px 32px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%;">Unlock</button>
+        </div>
+    </div>
+
+    <!-- Auth Error Banner -->
+    <div id="auth-banner" style="display:none;background:rgba(239,68,68,0.1);border-bottom:1px solid rgba(239,68,68,0.3);padding:12px 40px;color:#ef4444;font-size:13px;">
+        ⚠️ Session expired. Please re-enter your PIN.
     </div>
 
     <div class="container">
@@ -341,12 +359,12 @@
                 <div class="metric-card">
                     <div class="label">Monthly Revenue</div>
                     <div class="value" id="metric-revenue">$0</div>
-                    <div class="change up">↑ 12% vs last month</div>
+                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
                 </div>
                 <div class="metric-card">
                     <div class="label">Active Alerts</div>
                     <div class="value" id="metric-alerts">0</div>
-                    <div class="change down" id="alert-status">→ all clear</div>
+                    <div class="change up" id="alert-status">→ all clear</div>
                 </div>
             </div>
 
@@ -457,28 +475,28 @@
             <div class="metrics-row">
                 <div class="metric-card">
                     <div class="label">MRR</div>
-                    <div class="value">$3,847</div>
-                    <div class="change up">↑ $299 new</div>
+                    <div class="value">$0</div>
+                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
                 </div>
                 <div class="metric-card">
                     <div class="label">Setup Fees</div>
-                    <div class="value">$4,500</div>
-                    <div class="change up">↑ this quarter</div>
+                    <div class="value">$0</div>
+                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
                 </div>
                 <div class="metric-card">
                     <div class="label">ARR</div>
-                    <div class="value">$46,164</div>
-                    <div class="change up">↑ 18% YoY</div>
+                    <div class="value">$0</div>
+                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
                 </div>
                 <div class="metric-card">
                     <div class="label">Outstanding</div>
                     <div class="value">$0</div>
-                    <div class="change up">→ all paid</div>
+                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
                 </div>
             </div>
             <div class="chart-placeholder">
                 Revenue chart will render here<br>
-                <span style="font-size:12px">(Connect to Stripe API for live data)</span>
+                <span style="font-size:12px;color:#64748b;">Connect Stripe API in Settings for live data</span>
             </div>
         </div>
 
@@ -508,13 +526,73 @@
             if (tabName === 'alerts') loadAlerts();
         }
 
-        // Data endpoints
+        // Auth
+        let ADMIN_PIN = localStorage.getItem('systack_admin_pin') || '';
+
+        function showPINModal() {
+            document.getElementById('pin-modal').style.display = 'flex';
+            document.getElementById('main-nav').style.pointerEvents = 'none';
+            document.querySelector('.container').style.opacity = '0.3';
+            setTimeout(() => document.getElementById('pin-input').focus(), 100);
+        }
+
+        function hidePINModal() {
+            document.getElementById('pin-modal').style.display = 'none';
+            document.getElementById('main-nav').style.pointerEvents = '';
+            document.querySelector('.container').style.opacity = '1';
+            document.getElementById('pin-error').style.display = 'none';
+        }
+
+        async function submitPIN() {
+            const pin = document.getElementById('pin-input').value.trim();
+            if (!pin) return;
+
+            // Test PIN against API
+            try {
+                const res = await fetch(API_BASE + '/api/fleet/status', {
+                    headers: { 'X-Admin-PIN': pin }
+                });
+                if (res.status === 200) {
+                    ADMIN_PIN = pin;
+                    localStorage.setItem('systack_admin_pin', pin);
+                    hidePINModal();
+                    loadOverview();
+                } else {
+                    document.getElementById('pin-error').style.display = 'block';
+                    document.getElementById('pin-input').value = '';
+                    document.getElementById('pin-input').focus();
+                }
+            } catch (e) {
+                document.getElementById('pin-error').textContent = 'API unreachable. Check backend.';
+                document.getElementById('pin-error').style.display = 'block';
+            }
+        }
+
+        function checkAuth() {
+            if (!ADMIN_PIN) {
+                showPINModal();
+                return false;
+            }
+            return true;
+        }
+
+        function handleAuthError() {
+            ADMIN_PIN = '';
+            localStorage.removeItem('systack_admin_pin');
+            document.getElementById('auth-banner').style.display = 'block';
+            showPINModal();
+        }
         const API_BASE = window.location.origin;
 
         // Load overview data
         async function loadOverview() {
+            if (!checkAuth()) return;
             try {
-                const res = await fetch(API_BASE + '/api/fleet/status');
+                const res = await fetch(API_BASE + '/api/fleet/status', {
+                    headers: { 'X-Admin-PIN': ADMIN_PIN }
+                });
+                if (res.status === 401) { handleAuthError(); return; }
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
 
                 document.getElementById('metric-clients').textContent = data.clients_count || 0;
@@ -626,10 +704,34 @@
 
         // Load clients
         async function loadClients() {
-            // Will fetch from /api/fleet/clients
-            document.getElementById('clients-body').innerHTML =
-                '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">Connect API to see clients</td></tr>';
-            document.getElementById('clients-count').textContent = '0 total';
+            if (!checkAuth()) return;
+            try {
+                const res = await fetch(API_BASE + '/api/fleet/clients', {
+                    headers: { 'X-Admin-PIN': ADMIN_PIN }
+                });
+                if (res.status === 401) { handleAuthError(); return; }
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                const tbody = document.getElementById('clients-body');
+                if (data.clients.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">No clients yet. Deployments will appear here.</td></tr>';
+                } else {
+                    tbody.innerHTML = data.clients.map(c => `
+                        <tr>
+                            <td><strong>${c.customer_name}</strong><br><span style="color:#64748b;font-size:12px;">${c.customer_email}</span></td>
+                            <td><span class="status-badge status-${c.tier === 'enterprise' ? 'warning' : 'healthy'}">${c.tier}</span></td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td><span class="status-badge status-${c.vps_status === 'active' ? 'healthy' : 'warning'}">${c.vps_status}</span></td>
+                            <td>${new Date(c.created_at).toLocaleDateString()}</td>
+                        </tr>
+                    `).join('');
+                }
+                document.getElementById('clients-count').textContent = data.count + ' total';
+            } catch (e) {
+                document.getElementById('clients-body').innerHTML = '<tr><td colspan="7" style="text-align:center;color:#ef4444;padding:40px;">Failed to load clients: ' + e.message + '</td></tr>';
+            }
         }
 
         // Load services
@@ -664,7 +766,12 @@
         }
 
         // Initial load
-        loadOverview();
+        if (ADMIN_PIN) {
+            hidePINModal();
+            loadOverview();
+        } else {
+            showPINModal();
+        }
         loadServices();
 
         // Auto-refresh every 30s
