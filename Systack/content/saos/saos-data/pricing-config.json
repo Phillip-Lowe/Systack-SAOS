@@ -1,0 +1,148 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-06-30",
+  "tiers": {
+    "business": {
+      "name": "Business Fleet",
+      "icon": "🤖",
+      "description": "7-agent fleet · 16GB VPS · Team workflows",
+      "pricing": {
+        "monthly": 299,
+        "annual": 2988,
+        "currency": "USD",
+        "billing_period": "monthly"
+      },
+      "stripe": {
+        "monthly_url": "https://buy.stripe.com/6oUdR2eVHfAH5gA9UO87K01",
+        "annual_url": "https://buy.stripe.com/eVqbIUcNz607eRa8QK87K00",
+        "product_id": "SAOS-BIZ-M"
+      },
+      "features": [
+        "7 AI agents (SOL, ASSEMBLY, CHATTY, ATLAS, GENI, JURIS, PESSI)",
+        "16GB RAM cloud VPS",
+        "Tailscale VPN + PostgreSQL",
+        "n8n workflow hosting (10K runs/month)",
+        "Invoice processing pipeline",
+        "Lead qualification system",
+        "Customer support drafting",
+        "Document classification",
+        "Scheduled report generator"
+      ],
+      "limits": {
+        "agents": 7,
+        "ram_gb": 16,
+        "n8n_runs": 10000,
+        "team_members": 5
+      }
+    },
+    "enterprise": {
+      "name": "Enterprise Fleet",
+      "icon": "🏢",
+      "description": "10-agent fleet · On-premise · Unlimited workflows",
+      "pricing": {
+        "monthly": 799,
+        "annual": 7990,
+        "currency": "USD",
+        "billing_period": "monthly"
+      },
+      "stripe": {
+        "monthly_url": "https://buy.stripe.com/14A7sE9Bn2NVaAU2sm87K02",
+        "annual_url": "https://buy.stripe.com/dRm14gcNz74beRa7MG87K0f",
+        "product_id": "SAOS-ENT-M"
+      },
+      "features": [
+        "10 AI agents (Business + CODY, VALI)",
+        "32GB RAM infrastructure",
+        "Unlimited n8n workflows",
+        "Dedicated support line (4-hour SLA)",
+        "Quarterly business reviews",
+        "Priority feature requests",
+        "All Business features included"
+      ],
+      "limits": {
+        "agents": 10,
+        "ram_gb": 32,
+        "n8n_runs": -1,
+        "team_members": -1
+      }
+    },
+    "private": {
+      "name": "Private Deployment",
+      "icon": "🔒",
+      "description": "Air-gapped · On-premise · Zero cloud exposure",
+      "pricing": {
+        "monthly": 799,
+        "currency": "USD",
+        "billing_period": "monthly"
+      },
+      "stripe": {
+        "monthly_url": "https://buy.stripe.com/6oUdR2eVHfAH5gA9UO87K01",
+        "product_id": "SYST-PRV-M"
+      },
+      "features": [
+        "Fully air-gapped deployment",
+        "On-premise server",
+        "Zero cloud data exposure",
+        "Local models only",
+        "HIPAA compliance ready",
+        "Custom security policies"
+      ],
+      "limits": {
+        "agents": 10,
+        "ram_gb": 64,
+        "n8n_runs": -1,
+        "team_members": -1
+      }
+    },
+    "accelerate": {
+      "name": "Systack Accelerate",
+      "icon": "🚀",
+      "description": "8-agent fleet · Cloud · Managed",
+      "pricing": {
+        "monthly": 249,
+        "currency": "USD",
+        "billing_period": "monthly"
+      },
+      "stripe": {
+        "monthly_url": "https://buy.stripe.com/6oUdR2eVHfAH5gA9UO87K01",
+        "product_id": "SYST-ACC-M"
+      },
+      "features": [
+        "8 AI agents",
+        "Cloud VPS (16GB RAM)",
+        "Tailscale VPN",
+        "n8n workflow hosting",
+        "Invoice automation",
+        "Lead qualification",
+        "Report generation"
+      ],
+      "limits": {
+        "agents": 8,
+        "ram_gb": 16,
+        "n8n_runs": 10000,
+        "team_members": 3
+      }
+    }
+  },
+  "billing_actions": {
+    "upgrade": {
+      "available": true,
+      "description": "Upgrade to a higher tier anytime. Prorated billing applied.",
+      "process": "Customer selects new tier → Stripe creates new subscription → Old subscription canceled → Prorated credit applied"
+    },
+    "downgrade": {
+      "available": true,
+      "description": "Downgrade at end of billing period. No prorated refunds.",
+      "process": "Customer selects lower tier → Effective at next billing date → Features limited to new tier"
+    },
+    "cancel": {
+      "available": true,
+      "description": "Cancel anytime. Access continues until end of billing period.",
+      "process": "Customer confirms cancellation → Stripe schedules end → Data retained for 30 days → Full export available"
+    },
+    "payment_methods": {
+      "accepted": ["credit_card", "debit_card"],
+      "currency": "USD"
+    }
+  }
+}

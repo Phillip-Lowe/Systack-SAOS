@@ -41,3 +41,16 @@ __pycache__/
 # --- Logs ---
 *.log
 logs/
+
+# --- Runtime / Generated ---
+*.backup*
+*.backup.*
+index.html.backup*
+amp
+n8n-postgres-start.sh
+
+# --- Memory runtime (source is tracked, generated is not) ---
+memory/.dreams/
+memory/session_state.db
+memory/session_state.db-journal
+memory/dreaming/

@@ -405,6 +405,42 @@ Source: memory/2026-06-23-0600-cdt-user-directive.md
 
 ---
 
+## RULE 10: SAOS Filesystem Path Verification (Added 2026-06-29 00:13 CDT)
+
+### The Problem
+During SAOS production work, filesystem access was blocked due to persistent path construction errors:
+- Correct: `saos-data` (s-a-o-s)
+- Tool produced: `saas-data` (s-a-a-s)
+- Result: 20+ failed attempts, wasted session time, blocked progress
+
+### The Rule (BINDING)
+
+**Before ANY file operation on SAOS components:**
+
+1. **Verify path with shell** — Use `pwd && ls -la` to confirm
+2. **Use absolute paths** — Never construct relative paths for SAOS files
+3. **Working directory confirmed:**
+   ```
+   ~/.openclaw/workspaces/sol/Systack/content/saos/saos-data/customer-dashboard/
+   ```
+4. **If path fails** — STOP immediately, do not retry blindly
+5. **If stuck after 3 attempts** — Escalate to Green, do not loop
+
+### Prohibited
+- ❌ Constructing SAOS paths from memory without verification
+- ❌ Repeated retries of the same failed path
+- ❌ Guessing path variations (saas/saos, data/datas, etc.)
+
+### Files Affected
+- `~/.openclaw/workspaces/sol/Systack/content/saos/saos-data/customer-dashboard/api.py`
+- `~/.openclaw/workspaces/sol/Systack/content/saos/saos-data/customer-dashboard/index.html`
+- `~/.openclaw/workspaces/sol/Systack/content/saos/saas-data/customer-dashboard/` ← WRONG
+
+### Why This Exists
+Session 2026-06-28 was completely blocked by a path typo. 20+ minutes of tool calls failed because the agent could not construct the correct filesystem path. This rule prevents recurrence.
+
+---
+
 ## RULE 9: Complete Context Verification Before Action (Added 2026-06-26 18:19 CDT)
 
 ### The Problem
@@ -545,7 +581,7 @@ Source: memory/2026-06-27-0511-cdt-memory-hygiene-rule.md
   - ✅ ~~Fix mobile chat layout and auth~~ DONE 2026-06-25
   - ✅ ~~Test end-to-end provisioning with real Vultr/Tailscale/n8n credentials~~ DONE 2026-06-22 (see memory/2026-06-22-vps-provisioning-results.md)
   - ⏳ Fix Tailscale `.ts.net` URL on iOS Safari (cert trust issue)
-  - ⏳ **Update PDF documentation** — Dashboard User Guide needs v2.0 with 6 tabs, Activity tab, mobile features, honest status. Architecture Overview needs mobile section. Create new "Dashboard Mobile Access Guide" PDF.
+  - ✅ **Update PDF documentation** — COMPLETE 2026-06-30. All 5 docs refreshed to v7.0/v5.0/v3.0 with Live Ops, Activity trail, deliverable storage, error handling. Bug fix: removed duplicate JS functions in index.html. See `memory/2026-06-30-saos-pdf-refresh.md`
 
 ### Real-Time Voice Chat — Custom Provider Adapter (Added 2026-06-24)
 

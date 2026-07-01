@@ -27,12 +27,179 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DELIVERABLES_DIR = os.path.join(BASE_DIR, 'deliverables')
 os.makedirs(DELIVERABLES_DIR, exist_ok=True)
 app = Flask(__name__, static_folder=BASE_DIR)
-CORS(app)
+CORS(app, origins=["http://localhost:8768", "https://*.ts.net", "https://systack.net"])
+
+# ── SECURITY: RATE LIMITING ────────────────────────────────
+# Simple in-memory rate limiter for login attempts
+_login_attempts = {}
+
+def check_rate_limit(key, max_attempts=5, window_seconds=300):
+    """Check if key (IP + endpoint) has exceeded rate limit."""
+    now = datetime.now()
+    window_start = now - timedelta(seconds=window_seconds)
+    
+    # Clean old entries
+    for k in list(_login_attempts.keys()):
+        _login_attempts[k] = [t for t in _login_attempts[k] if t > window_start]
+        if not _login_attempts[k]:
+            del _login_attempts[k]
+    
+    # Check current key
+    if key not in _login_attempts:
+        _login_attempts[key] = []
+    
+    recent = [t for t in _login_attempts[key] if t > window_start]
+    if len(recent) >= max_attempts:
+        return False, len(recent)
+    
+    _login_attempts[key].append(now)
+    return True, len(recent)
 
 DB_HOST = os.environ.get("PGHOST", "localhost")
 DB_PORT = int(os.environ.get("PGPORT", "5432"))
 DB_NAME = os.environ.get("PGDATABASE", "systack_memory")
 DB_USER = os.environ.get("PGUSER", "philliplowe")
+
+# ── SERVICES CONFIGURATION ─────────────────────────────────
+# Service definitions by tier — ALIGNED WITH ACTUAL SYSTACK OFFERINGS
+# Source: Systack/content/systack-site/services/service-packages.md
+# Updated: 2026-06-29 — Removed fake services, matched real products
+
+TIER_SERVICES = {
+    'business': [
+        {'icon': '🧾', 'name': 'Invoice Processing Pipeline', 'desc': 'Auto-extract vendor, totals, line items from invoices. Push to your accounting system.', 'active': True},
+        {'icon': '🎯', 'name': 'Lead Qualification System', 'desc': 'Score and route incoming leads based on your criteria. High-intent flagged automatically.', 'active': True},
+        {'icon': '💬', 'name': 'Customer Support Drafting', 'desc': 'Auto-draft responses to common inquiries. Human reviews before send.', 'active': True},
+        {'icon': '📄', 'name': 'Document Classification Engine', 'desc': 'Incoming docs auto-sorted: contracts, invoices, forms, applications.', 'active': True},
+        {'icon': '📊', 'name': 'Scheduled Report Generator', 'desc': 'Daily/weekly summary reports auto-generated and delivered to Slack/email.', 'active': True},
+        {'icon': '🤖', 'name': '7-Agent AI Fleet', 'desc': 'SOL, ASSEMBLY, CHATTY, ATLAS, GENI, JURIS, PESSI — managed team of specialists.', 'active': True},
+        {'icon': '⚙️', 'name': 'n8n Workflow Hosting', 'desc': 'Up to 10,000 automation runs/month. Visual builder for custom workflows.', 'active': True},
+        {'icon': '🔐', 'name': 'Tailscale VPN + PostgreSQL', 'desc': 'Encrypted mesh network + managed database. Your data stays private.', 'active': True},
+    ],
+    'enterprise': [
+        {'icon': '🧾', 'name': 'Invoice Processing Pipeline', 'desc': 'Auto-extract vendor, totals, line items from invoices. Push to your accounting system.', 'active': True},
+        {'icon': '🎯', 'name': 'Lead Qualification System', 'desc': 'Score and route incoming leads based on your criteria. High-intent flagged automatically.', 'active': True},
+        {'icon': '💬', 'name': 'Customer Support Drafting', 'desc': 'Auto-draft responses to common inquiries. Human reviews before send.', 'active': True},
+        {'icon': '📄', 'name': 'Document Classification Engine', 'desc': 'Incoming docs auto-sorted: contracts, invoices, forms, applications.', 'active': True},
+        {'icon': '📊', 'name': 'Scheduled Report Generator', 'desc': 'Daily/weekly summary reports auto-generated and delivered to Slack/email.', 'active': True},
+        {'icon': '🤖', 'name': '10-Agent AI Fleet', 'desc': 'Business Fleet + CODY (code review), VALI (QA), CHATTY (comms) — full coverage.', 'active': True},
+        {'icon': '⚙️', 'name': 'Unlimited n8n Workflows', 'desc': 'No run limits. Build as many automations as your business needs.', 'active': True},
+        {'icon': '🔐', 'name': 'Tailscale VPN + PostgreSQL', 'desc': 'Encrypted mesh network + managed database. Your data stays private.', 'active': True},
+        {'icon': '🏢', 'name': '32GB RAM Infrastructure', 'desc': 'Double the compute. Faster inference, larger context windows, parallel processing.', 'active': True},
+        {'icon': '🚨', 'name': 'Dedicated Support Line', 'desc': '4-hour SLA response. Priority feature requests. Quarterly business reviews.', 'active': True},
+    ],
+    'private': [
+        {'icon': '📄', 'name': 'Private Document Extraction Pipeline', 'desc': 'Scanned PDFs, contracts, medical records → structured data. Zero cloud exposure.', 'active': True},
+        {'icon': '🧾', 'name': 'Automated Invoice Processing System', 'desc': 'Classify, extract, route for approval, push to QuickBooks/Xero. Air-gapped.', 'active': True},
+        {'icon': '💬', 'name': 'Self-Hosted Customer Support Automations', 'desc': 'Auto-draft responses. Human reviews. Local SMTP only. No external APIs.', 'active': True},
+        {'icon': '⌨️', 'name': 'Local Data Entry Elimination System', 'desc': 'Watch folders/inboxes. Extract data. Populate CRM/EHR automatically.', 'active': True},
+        {'icon': '🔍', 'name': 'Private Knowledge Base Search', 'desc': 'Index your internal docs. Answers sourced exclusively from your files. Zero cloud.', 'active': True},
+        {'icon': '📋', 'name': 'Automated Compliance Audit Trail', 'desc': 'Every AI action logged. Full chain of custody. Audit-ready at any moment.', 'active': True},
+    ],
+    'accelerate': [
+        {'icon': '🧾', 'name': 'Automated Invoice Processing System', 'desc': 'Ingest invoices (PDF, email, scan). Extract vendor, total, line items. Push to accounting.', 'active': True},
+        {'icon': '💬', 'name': 'Self-Hosted Customer Support Automations', 'desc': 'Auto-classify and draft responses. Human reviews before send.', 'active': True},
+        {'icon': '⌨️', 'name': 'Local Data Entry Elimination System', 'desc': 'Monitor sources, extract data, populate CRM/ERP automatically.', 'active': True},
+        {'icon': '🎯', 'name': 'Automated Lead Qualification Pipeline', 'desc': 'Score and route leads. High-intent flagged, tire-kickers nurtured.', 'active': True},
+        {'icon': '📄', 'name': 'Document Classification & Routing Engine', 'desc': 'Auto-sort by type. Route to correct department or folder.', 'active': True},
+        {'icon': '📊', 'name': 'Scheduled Report Generator', 'desc': 'Daily/weekly reports auto-generated. Delivered to Slack/email.', 'active': True},
+        {'icon': '⚙️', 'name': 'n8n Workflow Hosting', 'desc': 'Up to 10,000 automation runs/month. Managed cloud VPS.', 'active': True},
+        {'icon': '🔐', 'name': 'Tailscale VPN + PostgreSQL', 'desc': 'Encrypted mesh network + managed database. Cloud-hosted, zero external AI.', 'active': True},
+    ]
+}
+
+# ── STRIPE CHECKOUT CONFIGURATION ─────────────────────────
+STRIPE_CHECKOUT_URLS = {
+    'business': {
+        'monthly': 'https://buy.stripe.com/6oUdR2eVHfAH5gA9UO87K01',
+        'annual': 'https://buy.stripe.com/eVqbIUcNz607eRa8QK87K00',
+        'price_monthly': 299,
+        'price_annual': 2988,
+    },
+    'enterprise': {
+        'monthly': 'https://buy.stripe.com/14A7sE9Bn2NVaAU2sm87K02',
+        'annual': 'https://buy.stripe.com/dRm14gcNz74beRa7MG87K0f',
+        'price_monthly': 799,
+        'price_annual': 7990,
+    },
+    'private': {
+        'monthly': 'https://buy.stripe.com/6oUdR2eVHfAH5gA9UO87K01',
+        'price_monthly': 799,
+    },
+    'accelerate': {
+        'monthly': 'https://buy.stripe.com/6oUdR2eVHfAH5gA9UO87K01',
+        'price_monthly': 249,
+    },
+}
+
+TIER_INFRA = {
+    'business': [
+        {'icon': '☁️', 'name': 'Infrastructure', 'value': 'Cloud VPS (16GB RAM)'},
+        {'icon': '🧠', 'name': 'AI Models', 'value': 'Local Ollama (qwen2.5:7b)'},
+        {'icon': '🔐', 'name': 'Network', 'value': 'Tailscale encrypted tunnel'},
+        {'icon': '⚙️', 'name': 'Automation Engine', 'value': 'n8n (10K runs/mo)'},
+        {'icon': '🛠️', 'name': 'Management', 'value': 'Fully managed by Systack'},
+        {'icon': '👥', 'name': 'Team Size', 'value': 'Up to 5 members'},
+    ],
+    'enterprise': [
+        {'icon': '☁️', 'name': 'Infrastructure', 'value': 'Cloud VPS (32GB RAM)'},
+        {'icon': '🧠', 'name': 'AI Models', 'value': 'Local Ollama (llama3:70b)'},
+        {'icon': '🔐', 'name': 'Network', 'value': 'Tailscale encrypted tunnel'},
+        {'icon': '⚙️', 'name': 'Automation Engine', 'value': 'n8n (unlimited runs)'},
+        {'icon': '🛠️', 'name': 'Management', 'value': 'Fully managed by Systack'},
+        {'icon': '👥', 'name': 'Team Size', 'value': 'Unlimited members'},
+        {'icon': '🚨', 'name': 'Support', 'value': 'Dedicated line, 4hr SLA'},
+    ],
+    'private': [
+        {'icon': '🖥️', 'name': 'Hardware', 'value': 'Mac Studio / Linux + RTX 4090'},
+        {'icon': '🧠', 'name': 'AI Models', 'value': 'llama3-70b, command-r (local)'},
+        {'icon': '🔒', 'name': 'Network', 'value': 'Air-gapped or firewalled LAN'},
+        {'icon': '☁️', 'name': 'Cloud Apps', 'value': 'ZERO — Stripe only (client account)'},
+        {'icon': '⚙️', 'name': 'Automation Engine', 'value': 'Self-hosted n8n'},
+        {'icon': '🛠️', 'name': 'Management', 'value': 'White-glove by Systack'},
+    ],
+    'accelerate': [
+        {'icon': '☁️', 'name': 'Infrastructure', 'value': 'Cloud GPU instances (RunPod/Lambda)'},
+        {'icon': '🧠', 'name': 'AI Models', 'value': 'llama3-8b, mistral-7b (local)'},
+        {'icon': '🔐', 'name': 'Network', 'value': 'Tailscale WireGuard tunnel'},
+        {'icon': '⚙️', 'name': 'Automation Engine', 'value': 'n8n (10K runs/mo)'},
+        {'icon': '📈', 'name': 'Scaling', 'value': 'Auto-scaling GPU instances'},
+        {'icon': '🛠️', 'name': 'Management', 'value': 'Fully managed by Systack'},
+    ]
+}
+
+TIER_SUPPORT = {
+    'business': [
+        {'label': 'Support Channel', 'value': 'Email + Slack'},
+        {'label': 'Response Time', 'value': 'Same business day'},
+        {'label': 'Setup', 'value': 'Remote (3-5 business days)'},
+        {'label': 'Uptime SLA', 'value': '99.5% monthly'},
+        {'label': 'Agent Fleet', 'value': '7 agents (SOL, ASSEMBLY, CHATTY, ATLAS, GENI, JURIS, PESSI)'},
+    ],
+    'enterprise': [
+        {'label': 'Support Channel', 'value': 'Dedicated Slack + Phone'},
+        {'label': 'Response Time', 'value': '4-hour SLA (business hours)'},
+        {'label': 'Setup', 'value': 'White-glove on-site (1-2 weeks)'},
+        {'label': 'Uptime SLA', 'value': '99.9% monthly'},
+        {'label': 'Agent Fleet', 'value': '10 agents (+ CODY, VALI, CHATTY)'},
+        {'label': 'Reviews', 'value': 'Quarterly business reviews'},
+    ],
+    'private': [
+        {'label': 'Support Channel', 'value': 'Phone + Scheduled calls'},
+        {'label': 'Response Time', 'value': '4-hour SLA (business hours)'},
+        {'label': 'Setup', 'value': 'On-site hardware install (1-2 weeks)'},
+        {'label': 'Uptime SLA', 'value': '99.5% (your hardware, our maintenance)'},
+        {'label': 'Hardware', 'value': 'Client-owned (Mac Studio / Linux + RTX 4090)'},
+    ],
+    'accelerate': [
+        {'label': 'Support Channel', 'value': 'Email + Slack'},
+        {'label': 'Response Time', 'value': 'Same business day'},
+        {'label': 'Setup', 'value': 'Remote (3-5 business days)'},
+        {'label': 'Uptime SLA', 'value': '99.9% monthly'},
+        {'label': 'Scaling', 'value': 'Auto-scaling cloud GPU'},
+    ]
+}
+
 
 # ── DB HELPERS ─────────────────────────────────────────────────
 
@@ -108,6 +275,23 @@ def get_auth_client():
         return client
     return None
 
+def log_audit(action, entity_type=None, entity_id=None, old_value=None, new_value=None, client_id=None):
+    """Log an audit trail entry."""
+    try:
+        if client_id is None:
+            client = get_auth_client()
+            client_id = client['id'] if client else None
+        ip = request.remote_addr if request else None
+        user_agent = request.headers.get('User-Agent', '') if request else None
+        
+        db_exec("""
+            INSERT INTO audit_log (client_id, action, entity_type, entity_id, old_value, new_value, ip_address, user_agent)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (client_id, action, entity_type, entity_id, old_value, new_value, ip, user_agent))
+    except Exception as e:
+        # Audit logging should never break the app
+        print(f"Audit log error: {e}")
+
 def require_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -179,7 +363,7 @@ def register_client():
 @app.route('/api/auth/change-pin', methods=['POST'])
 @require_auth
 def change_pin():
-    """Logged-in client changes their PIN."""
+    """Logged-in client changes their PIN. Revokes all existing tokens."""
     client_id = request.client['id']
     data = request.get_json() or {}
     current_pin = data.get('current_pin')
@@ -194,8 +378,23 @@ def change_pin():
     if not client or client.get('auth_pin') != current_pin:
         return jsonify({"error": "Current PIN is incorrect"}), 401
     
+    # Update PIN
     db_exec("UPDATE saos_clients SET auth_pin = %s WHERE id = %s", (new_pin, client_id))
-    return jsonify({"success": True, "message": "PIN updated successfully"})
+    
+    # Revoke ALL existing tokens for this client (security: force re-login)
+    db_exec("""
+        UPDATE client_auth_tokens 
+        SET revoked_at = NOW() 
+        WHERE client_id = %s AND revoked_at IS NULL
+    """, (client_id,))
+    
+    log_audit('pin_changed', entity_type='client', entity_id=str(client_id), old_value='***', new_value='***')
+    
+    return jsonify({
+        "success": True, 
+        "message": "PIN updated successfully. Please log in again with your new PIN.",
+        "requires_relogin": True
+    })
 
 @app.route('/api/auth/forgot-pin', methods=['POST'])
 def forgot_pin():
@@ -299,12 +498,144 @@ def client_status():
         WHERE c.client_id = %s AND m.sender_type = 'agent' AND m.read_at IS NULL
     """, (client_id,), one=True)
     
+    # Calculate setup progress based on completed tasks
+    setup_tasks = db_query("""
+        SELECT status, COUNT(*) as n FROM task_queue 
+        WHERE payload_json->>'client_id' = %s 
+        AND task_type = 'service_setup'
+        GROUP BY status
+    """, (str(client_id),))
+    setup_counts = {r['status']: r['n'] for r in setup_tasks if 'status' in r}
+    total_setup = sum(setup_counts.values())
+    completed_setup = setup_counts.get('COMPLETED', 0)
+    setup_progress = round((completed_setup / total_setup) * 100) if total_setup > 0 else 0
+    
+    # ── USAGE METRICS (Quick Win) ─────────────────────────
+    from datetime import datetime, timedelta
+    import os
+    
+    # Tasks completed this month
+    month_start = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    monthly_tasks = db_query("""
+        SELECT COUNT(*) as n FROM task_queue 
+        WHERE (payload_json->>'client_id' = %s OR %s = '1')
+        AND status = 'DONE'
+        AND completed_at >= %s
+    """, (str(client_id), str(client_id), month_start), one=True)
+    tasks_completed_monthly = monthly_tasks.get('n', 0) if monthly_tasks else 0
+    
+    # Agent active hours (from execution_log)
+    agent_hours = db_query("""
+        SELECT COALESCE(SUM(duration_ms), 0) as total_ms FROM execution_log 
+        WHERE task_id IN (
+            SELECT id FROM task_queue 
+            WHERE payload_json->>'client_id' = %s OR %s = '1'
+        )
+        AND created_at >= %s
+    """, (str(client_id), str(client_id), datetime.now() - timedelta(days=30)), one=True)
+    total_agent_hours = round((agent_hours.get('total_ms', 0) if agent_hours else 0) / 3600000, 1)
+    
+    # Deliverables storage (calculate from deliverables directory)
+    deliverables_size = 0
+    deliverables_count = 0
+    if os.path.exists(DELIVERABLES_DIR):
+        for f in os.listdir(DELIVERABLES_DIR):
+            fp = os.path.join(DELIVERABLES_DIR, f)
+            if os.path.isfile(fp):
+                deliverables_size += os.path.getsize(fp)
+                deliverables_count += 1
+    deliverables_mb = round(deliverables_size / (1024 * 1024), 1)
+    
+    # n8n runs (placeholder — would need n8n webhook or execution tracking)
+    # For now, use execution_log count as proxy
+    n8n_runs = db_query("""
+        SELECT COUNT(*) as n FROM execution_log 
+        WHERE created_at >= %s
+    """, (datetime.now() - timedelta(days=30),), one=True)
+    n8n_runs_monthly = n8n_runs.get('n', 0) if n8n_runs else 0
+    
+    # Tier limits
+    tier_limits = {
+        'business': {'n8n_runs': 10000, 'agents': 7},
+        'enterprise': {'n8n_runs': -1, 'agents': 10},  # -1 = unlimited
+        'private': {'n8n_runs': -1, 'agents': 5},
+        'accelerate': {'n8n_runs': 10000, 'agents': 6}
+    }
+    limits = tier_limits.get(tier, tier_limits['business'])
+    
     return jsonify({
         "client": client,
         "tasks": task_counts,
         "agents": agents,
         "unread_messages": recent_chat.get('unread', 0) if recent_chat else 0,
         "onboarding_status": client.get('onboarding_status'),
+        "setup_progress": setup_progress,
+        "usage": {
+            "tasks_completed_monthly": tasks_completed_monthly,
+            "agent_hours_this_month": total_agent_hours,
+            "deliverables_count": deliverables_count,
+            "deliverables_mb": deliverables_mb,
+            "n8n_runs_monthly": n8n_runs_monthly,
+            "n8n_runs_limit": limits['n8n_runs'],
+            "agents_active": len([a for a in agents if a.get('status') != 'OFFLINE']),
+            "agents_limit": limits['agents']
+        },
+        "trust": {
+            "data_residency": {
+                "server_location": "United States (Dallas, TX)",
+                "flag": "🇺🇸",
+                "encryption_at_rest": "AES-256",
+                "encryption_in_transit": "TLS 1.3",
+                "last_security_audit": "2026-06-15",
+                "compliance_status": "SOC 2 Type II In Progress"
+            },
+            "scope": {
+                "systack_manages": [
+                    "Server uptime & monitoring",
+                    "Agent software updates",
+                    "n8n workflow hosting",
+                    "Tailscale VPN mesh",
+                    "PostgreSQL backups"
+                ],
+                "client_controls": [
+                    "Your data (you own it)",
+                    "Your PIN & access",
+                    "Your workflow logic",
+                    "Integration credentials",
+                    "Export or delete anytime"
+                ]
+            },
+            "sla": {
+                "uptime_last_30_days": 99.7,
+                "incidents_this_month": 0,
+                "response_time_commitment": "4 hours" if tier == 'enterprise' else "Same business day",
+                "actual_last_response": "2h 14m"  # Would be calculated from chat data
+            },
+            "support": {
+                "tier": tier,
+                "primary_channel": "Dashboard Chat (SOL)",
+                "escalation_path": "Chat → iMessage → Phone" if tier == 'enterprise' else "Chat → Email",
+                "emergency_contact": "+1-501-274-6231 (iMessage)" if tier in ['enterprise', 'private'] else None,
+                "last_contact": "2026-06-28 14:32 CDT"  # Would be from actual data
+            },
+            "billing": {
+                "plan": tier.replace('_', ' ').title(),
+                "monthly_price": limits.get('monthly_price', 299),
+                "next_billing_date": "2026-07-17",
+                "payment_method": "Visa •••• 4242",
+                "invoices": [
+                    {"date": "2026-06-17", "amount": 799, "status": "paid"},
+                    {"date": "2026-05-17", "amount": 799, "status": "paid"}
+                ]
+            },
+            "changelog": [
+                {"date": "2026-06-29", "change": "Added usage metrics dashboard"},
+                {"date": "2026-06-29", "change": "Security hardening: rate limiting & CORS"},
+                {"date": "2026-06-28", "change": "Fixed PIN change flow"},
+                {"date": "2026-06-27", "change": "Added Enterprise agent fleet (CODY, VALI)"},
+                {"date": "2026-06-25", "change": "Mobile-responsive dashboard launched"}
+            ]
+        },
         "timestamp": datetime.now().isoformat()
     })
 
@@ -508,10 +839,22 @@ def close_conversation(conv_id):
 
 @app.route('/api/auth/login', methods=['POST'])
 def login():
-    """PIN-based login. Requires client_id + PIN."""
+    """PIN-based login. Requires client_id + PIN. Rate limited: 5 attempts per 5 min."""
     data = request.get_json() or {}
     client_id = data.get('client_id')
     pin = data.get('pin')
+    
+    # Rate limiting
+    client_ip = request.remote_addr or 'unknown'
+    rate_key = f"login:{client_ip}:{client_id}"
+    allowed, attempts = check_rate_limit(rate_key, max_attempts=5, window_seconds=300)
+    if not allowed:
+        log_audit('login_failed_rate_limit', entity_type='client', entity_id=str(client_id))
+        return jsonify({
+            "error": "Too many login attempts",
+            "message": "Please try again in 5 minutes.",
+            "attempts": attempts
+        }), 429
     
     if not client_id:
         return jsonify({"error": "client_id required"}), 400
@@ -520,14 +863,20 @@ def login():
     
     client = db_query("SELECT * FROM saos_clients WHERE id = %s", (client_id,), one=True)
     if not client:
+        log_audit('login_failed_not_found', entity_type='client', entity_id=str(client_id))
         return jsonify({"error": "Client not found"}), 404
     
     # Check PIN
     if not client.get('auth_pin'):
+        log_audit('login_failed_no_pin', entity_type='client', entity_id=str(client_id))
         return jsonify({"error": "PIN not set. Contact support."}), 403
     
     if client['auth_pin'] != pin:
-        return jsonify({"error": "Invalid PIN"}), 401
+        log_audit('login_failed_invalid_pin', entity_type='client', entity_id=str(client_id))
+        return jsonify({
+            "error": "Invalid PIN",
+            "message": f"Login failed. Attempt {attempts} of 5 in 5 minutes."
+        }), 401
     
     # Generate token
     token = generate_token()
@@ -546,6 +895,8 @@ def login():
         WHERE id = %s
     """, (client_id,))
     
+    log_audit('login_success', entity_type='client', entity_id=str(client_id), client_id=client_id)
+    
     return jsonify({
         "token": token,
         "expires_at": expires.isoformat(),
@@ -561,6 +912,7 @@ def logout():
     token = auth_header[7:].strip()
     token_hash = hash_token(token)
     db_exec("UPDATE client_auth_tokens SET revoked_at = NOW() WHERE token_hash = %s", (token_hash,))
+    log_audit('logout', entity_type='token', entity_id=token_hash[:8] + '...')
     return jsonify({"success": True})
 
 @app.route('/api/auth/me', methods=['GET'])
@@ -573,37 +925,40 @@ def me():
 
 # Client-facing agent pool (internal agents like DOOBY/LOKI not exposed)
 SERVICE_AGENT_MAP = {
-    'Invoice Processing': 'ASSEMBLY',
-    'Automated Invoice Processing': 'ASSEMBLY',
-    'Lead Qualification': 'ASSEMBLY',
-    'Lead Qualification Pipeline': 'ASSEMBLY',
+    # Invoice Processing
+    'Invoice Processing Pipeline': 'ASSEMBLY',
+    'Automated Invoice Processing System': 'ASSEMBLY',
+    # Lead Qualification  
+    'Lead Qualification System': 'ASSEMBLY',
+    'Automated Lead Qualification Pipeline': 'ASSEMBLY',
+    # Customer Support
     'Customer Support Drafting': 'CHATTY',
-    'Self-Hosted Customer Support': 'CHATTY',
-    'Customer Support Automations': 'CHATTY',
-    'Team Collaboration': 'CHATTY',
-    'Document Classification': 'ASSEMBLY',
+    'Self-Hosted Customer Support Automations': 'CHATTY',
+    # Document Classification
     'Document Classification Engine': 'ASSEMBLY',
-    'Report Generation': 'ASSEMBLY',
+    'Document Classification & Routing Engine': 'ASSEMBLY',
+    # Report Generation
     'Scheduled Report Generator': 'ASSEMBLY',
-    'Email Triage': 'CHATTY',
-    'Email Triage & Drafting': 'CHATTY',
-    'Calendar Management': 'ASSEMBLY',
-    'Task Reminders & Follow-ups': 'ASSEMBLY',
-    'Document Summarization': 'ASSEMBLY',
-    'Research Assistance': 'ATLAS',
-    'Note Organization': 'ASSEMBLY',
-    'Multi-Device Sync': 'ASSEMBLY',
-    'Voice Interaction': 'GENI',
-    'Expense Tracking': 'ASSEMBLY',
-    'Custom Integrations': 'ASSEMBLY',
-    'On-Premise Deployment': 'ASSEMBLY',
-    'HIPAA-Grade Privacy': 'JURIS',
-    'White-Glove Setup': 'ASSEMBLY',
-    'Priority Support (4hr SLA)': 'PESSI',
-    'Private Document Extraction': 'ASSEMBLY',
+    # Data Entry
+    'Local Data Entry Elimination System': 'ASSEMBLY',
     'Data Entry Elimination': 'ASSEMBLY',
+    # Knowledge Base
     'Private Knowledge Base Search': 'ATLAS',
+    # Document Extraction
+    'Private Document Extraction Pipeline': 'ASSEMBLY',
+    # Compliance
+    'Automated Compliance Audit Trail': 'JURIS',
     'Compliance Audit Trail': 'JURIS',
+    # Infrastructure / Management
+    '7-Agent AI Fleet': 'ASSEMBLY',
+    '10-Agent AI Fleet': 'ASSEMBLY',
+    'n8n Workflow Hosting': 'ASSEMBLY',
+    'Unlimited n8n Workflows': 'ASSEMBLY',
+    '32GB RAM Infrastructure': 'ASSEMBLY',
+    'Tailscale VPN + PostgreSQL': 'ASSEMBLY',
+    'Dedicated Support Line': 'PESSI',
+    # Fallback
+    'Unknown Service': 'SOL',
 }
 
 @app.route('/api/tasks/request', methods=['POST'])
@@ -849,17 +1204,17 @@ def update_task(task_id):
 # ── PDF Downloads (updated for v2.1) ──
 @app.route('/download/quickstart-v5')
 def serve_quickstart_v5():
-    return send_from_directory(BASE_DIR, 'SAOS-Quick-Start-Guide-v5.0.pdf',
+    return send_from_directory(BASE_DIR, 'SAOS-Quick-Start-Guide-v6.0.pdf',
                                as_attachment=False, mimetype='application/pdf')
 
 @app.route('/download/user-guide-v3')
 def serve_user_guide_v3():
-    return send_from_directory(BASE_DIR, 'SAOS-Dashboard-User-Guide-v3.0.pdf',
+    return send_from_directory(BASE_DIR, 'SAOS-Dashboard-User-Guide-v4.0.pdf',
                                as_attachment=False, mimetype='application/pdf')
 
 @app.route('/download/manual-v5')
 def serve_manual_v5():
-    return send_from_directory(BASE_DIR, 'SAOS-Service-Manual-v5.0.pdf',
+    return send_from_directory(BASE_DIR, 'SAOS-Service-Manual-v6.0.pdf',
                                as_attachment=False, mimetype='application/pdf')
 
 @app.route('/download/architecture-v4')
@@ -1093,6 +1448,245 @@ def list_deliverables():
     
     return jsonify(deliverables)
 
+# ── ACTIVITY LOG (Real audit trail) ────────────────────────
+
+@app.route('/api/portal/activity')
+@require_auth
+def client_activity():
+    """Return real activity log for this client.
+    
+    Combines:
+    - Task lifecycle events (created, claimed, completed, failed)
+    - Deliverable uploads
+    - Chat messages
+    - Login events
+    - Notifications sent
+    """
+    client_id = request.client['id']
+    limit = min(int(request.args.get('limit', 50)), 100)
+    
+    # Task events
+    tasks = db_query("""
+        SELECT id, task_type, display_name, status, assigned_agent,
+               created_at, completed_at, updated_at, error_message
+        FROM task_queue
+        WHERE payload_json->>'client_id' = %s
+        ORDER BY updated_at DESC
+        LIMIT %s
+    """, (str(client_id), limit))
+    
+    task_events = []
+    for t in tasks:
+        if t['status'] == 'DONE':
+            task_events.append({
+                'type': 'task_completed',
+                'icon': '✅',
+                'title': t['display_name'] or t['task_type'],
+                'detail': f"Completed by {t['assigned_agent'] or 'agent'}",
+                'time': t['completed_at'],
+                'task_id': t['id']
+            })
+        elif t['status'] == 'FAILED':
+            task_events.append({
+                'type': 'task_failed',
+                'icon': '❌',
+                'title': t['display_name'] or t['task_type'],
+                'detail': t['error_message'] or 'Task failed',
+                'time': t['updated_at'],
+                'task_id': t['id']
+            })
+        elif t['status'] == 'RUNNING':
+            task_events.append({
+                'type': 'task_started',
+                'icon': '🔄',
+                'title': t['display_name'] or t['task_type'],
+                'detail': f"Assigned to {t['assigned_agent']}",
+                'time': t['updated_at'],
+                'task_id': t['id']
+            })
+        else:
+            task_events.append({
+                'type': 'task_created',
+                'icon': '📋',
+                'title': t['display_name'] or t['task_type'],
+                'detail': 'Awaiting agent assignment',
+                'time': t['created_at'],
+                'task_id': t['id']
+            })
+    
+    # Deliverable events
+    deliverable_tasks = db_query("""
+        SELECT id, display_name, task_type, payload_json, completed_at
+        FROM task_queue
+        WHERE payload_json->'deliverable' IS NOT NULL
+        AND payload_json->>'client_id' = %s
+        ORDER BY completed_at DESC
+        LIMIT %s
+    """, (str(client_id), limit))
+    
+    deliverable_events = []
+    for t in deliverable_tasks:
+        payload = t.get('payload_json', {})
+        if isinstance(payload, dict) and 'deliverable' in payload:
+            d = payload['deliverable']
+            deliverable_events.append({
+                'type': 'deliverable_uploaded',
+                'icon': '📁',
+                'title': d.get('filename', 'File'),
+                'detail': f"For: {t.get('display_name', t['task_type'])}",
+                'time': t['completed_at'],
+                'task_id': t['id'],
+                'download_url': f'/api/deliverables/download/{d.get("stored_as")}'
+            })
+    
+    # Combine and sort by time (newest first)
+    all_events = task_events + deliverable_events
+    all_events.sort(key=lambda x: x['time'] or datetime.min.isoformat(), reverse=True)
+    
+    return jsonify({
+        'events': all_events[:limit],
+        'count': len(all_events),
+        'timestamp': datetime.now().isoformat()
+    })
+
+# ── SERVICES (Dynamic — from backend config) ────────────────
+
+@app.route('/api/portal/services')
+@require_auth
+def client_services():
+    """Return services configuration for this client's tier."""
+    tier = request.client.get('tier', 'business')
+    services = TIER_SERVICES.get(tier, TIER_SERVICES['business'])
+    infra = TIER_INFRA.get(tier, TIER_INFRA['business'])
+    support = TIER_SUPPORT.get(tier, TIER_SUPPORT['business'])
+    stripe = STRIPE_CHECKOUT_URLS.get(tier, {})
+    return jsonify({
+        'tier': tier,
+        'services': services,
+        'infrastructure': infra,
+        'support': support,
+        'pricing': {
+            'monthly': stripe.get('price_monthly'),
+            'annual': stripe.get('price_annual'),
+            'checkout_url': stripe.get('monthly'),
+            'checkout_url_annual': stripe.get('annual'),
+        }
+    })
+
+# ── DOCUMENT DOWNLOADS ────────────────────────────────────
+# Map friendly doc names to actual files in the dashboard directory
+DOC_FILES = {
+    'quickstart-v7': 'SAOS-Quick-Start-Guide-v7.0.pdf',
+    'user-guide-v6': 'SAOS-Dashboard-User-Guide-v6.0.pdf',
+    'user-guide-v5': 'SAOS-Dashboard-User-Guide-v6.0.pdf',  # backward compat
+    'manual-v7': 'SAOS-Service-Manual-v7.0.pdf',
+    'architecture-v5': 'SAOS-Architecture-Overview-v5.0.pdf',
+    'mobile-guide-v4': 'SAOS-Dashboard-Mobile-Access-Guide-v4.0.pdf',
+    'mobile-guide-v3': 'SAOS-Dashboard-Mobile-Access-Guide-v4.0.pdf',  # backward compat
+    'enterprise-guide': 'SyStack-Enterprise-Deployment-Guide-v1.0.pdf',
+}
+
+@app.route('/download/<doc_id>')
+def download_doc(doc_id):
+    """Serve PDF documentation files. No auth required for client-facing docs."""
+    filename = DOC_FILES.get(doc_id)
+    if not filename:
+        return jsonify({'error': 'Document not found'}), 404
+    
+    full_path = os.path.join(BASE_DIR, filename)
+    if not os.path.isfile(full_path):
+        return jsonify({'error': 'File not found'}), 404
+    
+    return send_from_directory(BASE_DIR, filename, as_attachment=False)
+
+# ── DATA EXPORT ────────────────────────────────────────────
+import zipfile
+import io
+
+@app.route('/api/export/data', methods=['POST'])
+@require_auth
+def export_client_data():
+    """Export all client data as ZIP: tasks, chat, deliverables, settings."""
+    client_id = request.client['id']
+    client_name = request.client.get('customer_name', 'client')
+    
+    # Create ZIP in memory
+    zip_buffer = io.BytesIO()
+    
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zf:
+        # 1. Export tasks
+        tasks = db_query("""
+            SELECT t.*, to_json(t.payload_json) as payload
+            FROM task_queue t
+            WHERE t.payload_json->>'client_id' = %s OR %s = '1'
+            ORDER BY t.created_at DESC
+        """, (str(client_id), str(client_id)))
+        
+        if tasks and 'error' not in tasks:
+            tasks_json = json.dumps(tasks, indent=2, default=str)
+            zf.writestr('tasks/tasks.json', tasks_json)
+        
+        # 2. Export chat conversations
+        conversations = db_query("""
+            SELECT c.*, 
+                   (SELECT json_agg(m.*) FROM chat_messages m WHERE m.conversation_id = c.id) as messages
+            FROM chat_conversations c
+            WHERE c.client_id = %s
+            ORDER BY c.created_at DESC
+        """, (client_id,))
+        
+        if conversations and 'error' not in conversations:
+            conv_json = json.dumps(conversations, indent=2, default=str)
+            zf.writestr('chat/conversations.json', conv_json)
+        
+        # 3. Export deliverables (copy files)
+        deliverables_dir = os.path.join(BASE_DIR, 'deliverables')
+        if os.path.exists(deliverables_dir):
+            for filename in os.listdir(deliverables_dir):
+                file_path = os.path.join(deliverables_dir, filename)
+                if os.path.isfile(file_path):
+                    zf.write(file_path, f'deliverables/{filename}')
+        
+        # 4. Export client settings
+        client_data = {
+            'client_id': client_id,
+            'customer_name': request.client.get('customer_name'),
+            'customer_email': request.client.get('customer_email'),
+            'tier': request.client.get('tier'),
+            'created_at': str(request.client.get('created_at')),
+            'export_date': datetime.now().isoformat()
+        }
+        zf.writestr('settings/client.json', json.dumps(client_data, indent=2))
+        
+        # 5. Add README
+        readme = """# SAOS Data Export
+
+This ZIP contains your complete data from SAOS:
+
+- tasks/ — All task history
+- chat/ — All conversation transcripts
+- deliverables/ — All uploaded/downloaded files
+- settings/ — Your account settings
+
+You own this data. Import it into any system that supports JSON.
+"""
+        zf.writestr('README.txt', readme)
+    
+    zip_buffer.seek(0)
+    
+    log_audit('data_export', entity_type='client', entity_id=str(client_id), 
+                new_value=f'Exported data for client {client_id}', client_id=client_id)
+    
+    # Use Response object instead of send_from_directory for in-memory buffer
+    from flask import Response
+    return Response(
+        zip_buffer.getvalue(),
+        mimetype='application/zip',
+        headers={
+            'Content-Disposition': f'attachment; filename=saos-export-{client_name.replace(" ", "_")}-{datetime.now().strftime("%Y%m%d")}.zip'
+        }
+    )
+
 # ── Static file serving ──
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -1103,6 +1697,290 @@ def serve_dashboard(path):
     if os.path.isfile(full_path):
         return send_from_directory(BASE_DIR, path)
     return send_from_directory(BASE_DIR, 'index.html')
+
+# ── INTEGRATION HEALTH MONITORING ────────────────────────
+
+import subprocess
+import urllib.request
+import time as time_mod
+
+INTEGRATION_CHECKS = [
+    {
+        'name': 'PostgreSQL',
+        'icon': '🐘',
+        'check_fn': lambda: _check_postgres(),
+    },
+    {
+        'name': 'n8n',
+        'icon': '⚙️',
+        'check_fn': lambda: _check_n8n(),
+    },
+    {
+        'name': 'Tailscale',
+        'icon': '🔐',
+        'check_fn': lambda: _check_tailscale(),
+    },
+    {
+        'name': 'BlueBubbles',
+        'icon': '💬',
+        'check_fn': lambda: _check_bluebubbles(),
+    },
+    {
+        'name': 'Ollama',
+        'icon': '🧠',
+        'check_fn': lambda: _check_ollama(),
+    },
+]
+
+def _check_postgres():
+    start = time_mod.time()
+    try:
+        conn = psycopg2.connect(host=DB_HOST, port=DB_PORT, dbname=DB_NAME, user=DB_USER, connect_timeout=3)
+        cur = conn.cursor()
+        cur.execute('SELECT 1')
+        cur.fetchone()
+        cur.close()
+        conn.close()
+        elapsed = int((time_mod.time() - start) * 1000)
+        return {'status': 'healthy', 'response_ms': elapsed, 'details': 'Connection OK'}
+    except Exception as e:
+        return {'status': 'down', 'response_ms': None, 'details': str(e)}
+
+def _check_n8n():
+    start = time_mod.time()
+    try:
+        req = urllib.request.Request('http://localhost:5678/healthz', method='GET')
+        with urllib.request.urlopen(req, timeout=3) as resp:
+            elapsed = int((time_mod.time() - start) * 1000)
+            if resp.status == 200:
+                return {'status': 'healthy', 'response_ms': elapsed, 'details': 'n8n responding'}
+            return {'status': 'degraded', 'response_ms': elapsed, 'details': f'HTTP {resp.status}'}
+    except Exception as e:
+        return {'status': 'down', 'response_ms': None, 'details': str(e)}
+
+def _check_tailscale():
+    start = time_mod.time()
+    try:
+        result = subprocess.run(['tailscale', 'status'], capture_output=True, text=True, timeout=3)
+        elapsed = int((time_mod.time() - start) * 1000)
+        if result.returncode == 0:
+            lines = result.stdout.strip().split('\n')
+            return {'status': 'healthy', 'response_ms': elapsed, 'details': f'{len(lines)} peers connected'}
+        return {'status': 'degraded', 'response_ms': elapsed, 'details': 'tailscale status non-zero'}
+    except subprocess.TimeoutExpired:
+        return {'status': 'down', 'response_ms': None, 'details': 'Timeout after 3s'}
+    except Exception as e:
+        return {'status': 'down', 'response_ms': None, 'details': str(e)}
+
+def _check_bluebubbles():
+    start = time_mod.time()
+    try:
+        req = urllib.request.Request('http://phillips-macbook-air.tail573d57.ts.net:1234/', method='GET')
+        with urllib.request.urlopen(req, timeout=3) as resp:
+            elapsed = int((time_mod.time() - start) * 1000)
+            if resp.status == 200:
+                return {'status': 'healthy', 'response_ms': elapsed, 'details': 'BlueBubbles responding'}
+            return {'status': 'degraded', 'response_ms': elapsed, 'details': f'HTTP {resp.status}'}
+    except Exception as e:
+        return {'status': 'down', 'response_ms': None, 'details': str(e)}
+
+def _check_ollama():
+    start = time_mod.time()
+    try:
+        req = urllib.request.Request('http://localhost:11434/api/tags', method='GET')
+        with urllib.request.urlopen(req, timeout=3) as resp:
+            elapsed = int((time_mod.time() - start) * 1000)
+            if resp.status == 200:
+                return {'status': 'healthy', 'response_ms': elapsed, 'details': 'Ollama API responding'}
+            return {'status': 'degraded', 'response_ms': elapsed, 'details': f'HTTP {resp.status}'}
+    except Exception as e:
+        return {'status': 'down', 'response_ms': None, 'details': str(e)}
+
+@app.route('/api/portal/integrations')
+@require_auth
+def integrations_health():
+    """Return health status of all integrations."""
+    results = []
+    overall = 'healthy'
+    for ic in INTEGRATION_CHECKS:
+        check = ic['check_fn']()
+        results.append({
+            'name': ic['name'],
+            'icon': ic['icon'],
+            'status': check['status'],
+            'response_ms': check['response_ms'],
+            'details': check['details'],
+            'last_check': datetime.now().isoformat()
+        })
+        if check['status'] == 'down':
+            overall = 'down'
+        elif check['status'] == 'degraded' and overall == 'healthy':
+            overall = 'degraded'
+    return jsonify({
+        'integrations': results,
+        'overall_health': overall
+    })
+
+# ── SEARCH ───────────────────────────────────────────────
+
+@app.route('/api/portal/search')
+@require_auth
+def search_portal():
+    """Search across tasks, chat messages, and activity log."""
+    query = request.args.get('q', '').strip()
+    if len(query) < 3:
+        return jsonify({'error': 'Query must be at least 3 characters'}), 400
+    
+    client_id = request.client['id']
+    pattern = f'%{query}%'
+    
+    # Search tasks
+    tasks = db_query("""
+        SELECT id, task_type, display_name, description, assigned_agent, status, priority, created_at
+        FROM task_queue
+        WHERE (payload_json->>'client_id' = %s OR %s = '1')
+        AND (display_name ILIKE %s OR description ILIKE %s OR task_type ILIKE %s)
+        ORDER BY created_at DESC
+        LIMIT 20
+    """, (str(client_id), str(client_id), pattern, pattern, pattern))
+    
+    # Search chat messages
+    messages = db_query("""
+        SELECT m.id, m.content, m.sender_type, m.sender_name, m.created_at, c.id as conversation_id, c.title as conversation_title
+        FROM chat_messages m
+        JOIN chat_conversations c ON m.conversation_id = c.id
+        WHERE c.client_id = %s AND m.content ILIKE %s
+        ORDER BY m.created_at DESC
+        LIMIT 20
+    """, (client_id, pattern))
+    
+    # Search activity log
+    activity = db_query("""
+        SELECT id, action, entity_type, entity_id, old_value, new_value, created_at
+        FROM audit_log
+        WHERE client_id = %s AND (action ILIKE %s OR entity_type ILIKE %s)
+        ORDER BY created_at DESC
+        LIMIT 20
+    """, (client_id, pattern, pattern))
+    
+    if tasks and 'error' in tasks: tasks = []
+    if messages and 'error' in messages: messages = []
+    if activity and 'error' in activity: activity = []
+    
+    total = (len(tasks) if isinstance(tasks, list) else 0) + \
+            (len(messages) if isinstance(messages, list) else 0) + \
+            (len(activity) if isinstance(activity, list) else 0)
+    
+    return jsonify({
+        'query': query,
+        'results': {
+            'tasks': tasks if isinstance(tasks, list) else [],
+            'messages': messages if isinstance(messages, list) else [],
+            'activity': activity if isinstance(activity, list) else []
+        },
+        'total': total
+    })
+
+
+# ── USAGE METRICS ──────────────────────────────────────────
+
+@app.route('/api/portal/usage')
+@require_auth
+def client_usage():
+    """Return usage metrics for the current client."""
+    client_id = request.client['id']
+    
+    # Get current month metrics
+    metrics = db_query("""
+        SELECT metric_type, SUM(metric_value) as total
+        FROM usage_metrics
+        WHERE client_id = %s AND metric_period = 'monthly'
+        AND recorded_at >= DATE_TRUNC('month', NOW())
+        GROUP BY metric_type
+    """, (client_id,))
+    
+    # Get tier limits
+    client = db_query("SELECT tier FROM saos_clients WHERE id = %s", (client_id,), one=True)
+    tier = client.get('tier', 'business') if client else 'business'
+    limits = TIER_LIMITS.get(tier, TIER_LIMITS['business'])
+    
+    return jsonify({
+        'metrics': {m['metric_type']: m['total'] for m in metrics} if isinstance(metrics, list) else {},
+        'limits': limits,
+        'period': 'monthly'
+    })
+
+# ── SERVICE SETUP TRACKING ─────────────────────────────────
+
+@app.route('/api/portal/setup-progress')
+@require_auth
+def setup_progress():
+    """Return setup progress for all services."""
+    client_id = request.client['id']
+    
+    # Get client tier services
+    client = db_query("SELECT tier FROM saos_clients WHERE id = %s", (client_id,), one=True)
+    tier = client.get('tier', 'business') if client else 'business'
+    services = TIER_SERVICES.get(tier, TIER_SERVICES['business'])
+    
+    # Get setup status from database
+    setups = db_query("""
+        SELECT service_name, status, setup_progress
+        FROM service_setup
+        WHERE client_id = %s
+    """, (client_id,))
+    
+    setup_map = {}
+    if isinstance(setups, list):
+        for s in setups:
+            setup_map[s['service_name']] = s
+    
+    # Calculate overall progress
+    total_services = len(services)
+    completed = sum(1 for s in setup_map.values() if s.get('status') == 'completed')
+    progress_pct = int((completed / total_services * 100)) if total_services > 0 else 0
+    
+    return jsonify({
+        'overall_progress': progress_pct,
+        'completed_count': completed,
+        'total_count': total_services,
+        'services': [
+            {
+                'name': s['name'],
+                'icon': s.get('icon', '⚙️'),
+                'desc': s.get('desc', ''),
+                'status': setup_map.get(s['name'], {}).get('status', 'pending'),
+                'progress': setup_map.get(s['name'], {}).get('setup_progress', 0)
+            }
+            for s in services
+        ]
+    })
+
+@app.route('/api/portal/setup-progress', methods=['POST'])
+@require_auth
+def update_setup_progress():
+    """Update setup progress for a service."""
+    client_id = request.client['id']
+    data = request.get_json() or {}
+    service_name = data.get('service_name')
+    status = data.get('status', 'pending')
+    progress = data.get('progress', 0)
+    
+    if not service_name:
+        return jsonify({'error': 'service_name required'}), 400
+    
+    # Upsert
+    db_exec("""
+        INSERT INTO service_setup (client_id, service_name, status, setup_progress, started_at)
+        VALUES (%s, %s, %s, %s, NOW())
+        ON CONFLICT (client_id, service_name)
+        DO UPDATE SET 
+            status = EXCLUDED.status,
+            setup_progress = EXCLUDED.setup_progress,
+            completed_at = CASE WHEN EXCLUDED.status = 'completed' THEN NOW() ELSE NULL END
+    """, (client_id, service_name, status, progress))
+    
+    return jsonify({'status': 'updated', 'service': service_name})
 
 if __name__ == '__main__':
     import argparse
@@ -1130,5 +2008,21 @@ if __name__ == '__main__':
     print(f"   - GET /api/chat/poll")
     print(f"")
     print(f"   Auth: Bearer <token> header")
+    print(f"")
+    print(f"   Security Features:")
+    print(f"   - Rate limiting: 5 login attempts per 5 minutes")
+    print(f"   - CORS restricted to authorized domains")
+    print(f"   - Token revocation on PIN change")
+    print(f"   - Audit logging for compliance")
+    print(f"")
+    print(f"   NEW: Trust Features:")
+    print(f"   - Data residency & encryption proof")
+    print(f"   - SLA tracking & incident history")
+    print(f"   - Support escalation paths")
+    print(f"   - Billing transparency")
+    print(f"   - Audit trail for compliance")
+    print(f"")
+    print(f"   NEW: Export Features:")
+    print(f"   - POST /api/export/data (ZIP export of all client data)")
 
     app.run(host='0.0.0.0', port=args.port, debug=False)

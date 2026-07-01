@@ -4,58 +4,126 @@ const baseURL = "https://order.theutopiadeli.com";
 
 const images = {
   logo: 'https://order.theutopiadeli.com/images/logo.png',
-  monday: [
-    'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/Deli%20Meal%20Prep%20Plate%201.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-mediterranean-harvest.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-thai-peanut-crunch.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-eggplant-parm.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-cajun-northern-beans.jpg',
-    'https://order.theutopiadeli.com/catering/images/cold_pressed_juice_v2.jpg',
-    'https://order.theutopiadeli.com/catering/images/dessert-raspberry-mousse.jpg',
-  ],
-  tuesday: [
+
+  // Meal prep photos (existing rotation — photos we actually have)
+  mealprep: {
+    mediterranean: 'https://order.theutopiadeli.com/catering/images/meal-mediterranean-harvest.jpg',
+    thaiPeanut: 'https://order.theutopiadeli.com/catering/images/meal-thai-peanut-crunch.jpg',
+    eggplantParm: 'https://order.theutopiadeli.com/catering/images/meal-eggplant-parm.jpg',
+    cajunBeans: 'https://order.theutopiadeli.com/catering/images/meal-cajun-northern-beans.jpg',
+    juice: 'https://order.theutopiadeli.com/catering/images/cold_pressed_juice_v2.jpg',
+    mousse: 'https://order.theutopiadeli.com/catering/images/dessert-raspberry-mousse.jpg',
+    plateHero: 'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/Deli%20Meal%20Prep%20Plate%201.jpg',
+  },
+
+  // Order page item photos (spotlight items)
+  orderPage: {
+    buffaloSliders: 'https://order.theutopiadeli.com/images/buffalo_chikn_slider.jpg',
+    rocktownSliders: 'https://order.theutopiadeli.com/images/rocktown_bourbon_slider.jpg',
+    poppers: 'https://order.theutopiadeli.com/images/chicken_poppers_v3.jpg',
+    stekPhilly: 'https://order.theutopiadeli.com/images/stek%20Philly.jpg',
+    loadedBaconFry: 'https://order.theutopiadeli.com/images/loaded_bacon_fry.jpg',
+    chiknFriedSub: 'https://order.theutopiadeli.com/images/chicken_fried_chikn_sub.png',
+    cowboySandwich: 'https://order.theutopiadeli.com/images/cowboy_chicken.webp',
+    clubSub: 'https://order.theutopiadeli.com/images/chicken_club.webp',
+  },
+
+  // Catering photos
+  catering: [
     'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/email-campaign/catering-3.jpg',
     'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/email-campaign/catering-1.jpg',
     'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/email-campaign/catering-4.jpg',
     'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/email-campaign/catering-2.jpg',
   ],
-  wednesday: [
-    'https://order.theutopiadeli.com/catering/images/meal-mediterranean-harvest.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-thai-peanut-crunch.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-eggplant-parm.jpg',
-  ],
-  thursday: [
-    'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/Deli%20Meal%20Prep%20Plate%201.jpg',
-    'https://order.theutopiadeli.com/images/stek%20Philly.jpg',
-    'https://order.theutopiadeli.com/images/loaded_bacon_fry.jpg',
-    'https://order.theutopiadeli.com/images/chicken_poppers_v3.jpg',
-  ],
-  friday: [
-    'https://raw.githubusercontent.com/Phillip-Lowe/utopia-deli/refs/heads/main/Deli%20Meal%20Prep%20Plate%201.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-mediterranean-harvest.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-thai-peanut-crunch.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-eggplant-parm.jpg',
-    'https://order.theutopiadeli.com/catering/images/meal-cajun-northern-beans.jpg',
-    'https://order.theutopiadeli.com/catering/images/cold_pressed_juice_v2.jpg',
-    'https://order.theutopiadeli.com/catering/images/dessert-raspberry-mousse.jpg',
-  ]
 };
+
+// ── Meal prep item catalog (all meals we offer, mixed per day) ──
+const meals = [
+  { name: 'Mediterranean Harvest Bowl', desc: 'Lemon herb quinoa, crispy oregano chickpeas, cucumber tomato salad, hummus, tahini drizzle, pickled red onion — 500 cal', img: images.mealprep.mediterranean },
+  { name: 'Thai Peanut Crunch Bowl', desc: 'Jasmine rice, crispy peanut tofu, sesame cabbage slaw, sweet chili peanut drizzle — 490 cal', img: images.mealprep.thaiPeanut },
+  { name: 'Eggplant Parmesan', desc: 'Parmesan crusted eggplant layered with homemade marinara, topped with fresh basil — 530 cal', img: images.mealprep.eggplantParm },
+  { name: 'Cajun Red Beans & Dirty Rice', desc: 'Dirty rice, Cajun beans, peppers & onions, green onion garnish — 460 cal', img: images.mealprep.cajunBeans },
+  { name: 'Lemon Chickpea Orzo', desc: 'Tender orzo tossed with roasted chickpeas, wilted spinach, garlic, fresh lemon, herbs, and a light lemon buttery sauce — 480 cal', img: images.mealprep.plateHero },
+  { name: 'Creamy Mushroom Wild Rice', desc: 'Wild rice, sautéed mushrooms, caramelized onions, garlic, and spinach folded into a silky herb cream sauce — 510 cal', img: images.mealprep.plateHero },
+  { name: 'Mediterranean Pasta Salad', desc: 'Rotini pasta tossed with crisp cucumbers, juicy tomatoes, red onion, chickpeas, fresh herbs, and a vibrant lemon vinaigrette — 450 cal', img: images.mealprep.mediterranean },
+  { name: 'Buffalo Chickpea Caesar Wrap', desc: 'Crispy buffalo chickpeas layered with crisp romaine, shaved parmesan-style cheeze, crunchy onions, and creamy Caesar dressing — 530 cal', img: images.mealprep.plateHero },
+  { name: 'Baked Vegetable Lasagna Roll-Ups', desc: 'Lasagna noodles rolled around a creamy tofu ricotta with spinach, roasted vegetables, herbs, and marinara — 550 cal', img: images.mealprep.eggplantParm },
+  { name: 'Bourbon BBQ Lentil Meatloaf', desc: 'Smoky lentil meatloaf glazed with sweet bourbon-style BBQ sauce, creamy garlic mashed potatoes, roasted green beans — 520 cal', img: images.mealprep.plateHero },
+  { name: 'Sweet & Sticky Orange Tofu', desc: 'Crispy tofu tossed in a house-made orange garlic glaze with fresh ginger, citrus zest, and chili, served with jasmine rice and charred vegetables — 490 cal', img: images.mealprep.thaiPeanut },
+];
+
+const desserts = [
+  { name: 'Apple Pie', desc: 'Classic spiced apple pie — sugar free', img: 'https://order.theutopiadeli.com/catering/images/apple-pie.jpg' },
+  { name: 'Cold-Pressed Juice', desc: 'Fresh 10oz juice — Pineapple, Honeycrisp Apple, Lemon', img: images.mealprep.juice },
+];
+
+// Helper: build a dish card
+const dishCard = (img, name, desc) => `
+<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
+<img src="${img}" style="width:100%;height:140px;object-fit:cover;display:block;">
+<div style="padding:12px;">
+<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">${name}</p>
+<p style="margin:0;color:#888;font-size:12px;">${desc}</p>
+</div>
+</div>`;
+
+// Helper: build the "How Meal Prep Works" block
+const howMealPrepWorks = () => `
+<tr>
+<td style="padding:0 28px 24px;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f4;border-radius:12px;padding:20px;">
+<tr><td>
+<h3 style="margin:0 0 12px;color:#590B3F;font-size:16px;">How Meal Prep Works</h3>
+<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.5;">① Order online by Wednesday noon</p>
+<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.5;">② We prepare fresh Thursday morning</p>
+<p style="margin:0;color:#333;font-size:14px;line-height:1.5;">③ Pick up Thursday 12:30PM–7:30PM at 801 S Chester St</p>
+</td></tr>
+</table>
+</td>
+</tr>`;
+
+// Helper: build the "We're Open" info bar
+const openTodayBar = () => `
+<tr>
+<td style="padding:0 28px 24px;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#590B3F;border-radius:12px;padding:20px;">
+<tr><td style="text-align:center;">
+<p style="margin:0 0 4px;color:#fff;font-size:16px;font-weight:bold;">We're Open Today 🍽️</p>
+<p style="margin:0;color:#fff;font-size:14px;">Order online for pickup 12:30PM–7:30PM · 801 S Chester St</p>
+</td></tr>
+</table>
+</td>
+</tr>`;
+
+// Helper: catering CTA block
+const cateringCTA = (campaign) => `
+<tr>
+<td style="padding:0 28px 24px;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f4;border-radius:12px;padding:20px;">
+<tr><td>
+<h3 style="margin:0 0 12px;color:#590B3F;font-size:16px;">Planning an Event?</h3>
+<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.5;">We cater parties, meetings, weddings — 10 to 500 guests. Drop-off, staffed buffet, or full-service.</p>
+<p style="margin:0;color:#333;font-size:14px;line-height:1.5;"><a href="${baseURL}/catering/?utm_source=email&utm_medium=campaign&utm_campaign=${campaign}" style="color:#AF3D4B;font-weight:bold;">Request a catering quote →</a></p>
+</td></tr>
+</table>
+</td>
+</tr>`;
 
 const buildHeader = () => `
 <tr>
 <td style="background:#590B3F;padding:20px 24px;">
- <table width="100%" cellpadding="0" cellspacing="0" border="0">
- <tr>
- <td style="vertical-align:middle;">
- <img src="${images.logo}" alt="The Utopia Deli" style="height:56px;display:block;">
- </td>
- <td style="vertical-align:middle;padding-left:16px;">
- <p style="margin:0;color:#fff;font-family:'Georgia','Times New Roman',serif;font-size:24px;font-weight:bold;letter-spacing:0.5px;">
- The Utopia Deli
- </p>
- </td>
- </tr>
- </table>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td style="vertical-align:middle;">
+        <img src="${images.logo}" alt="The Utopia Deli" style="height:56px;display:block;">
+      </td>
+      <td style="vertical-align:middle;padding-left:16px;">
+        <p style="margin:0;color:#fff;font-family:'Georgia','Times New Roman',serif;font-size:24px;font-weight:bold;letter-spacing:0.5px;">
+          The Utopia Deli
+        </p>
+      </td>
+    </tr>
+  </table>
 </td>
 </tr>
 `;
@@ -81,10 +149,10 @@ const wrapEmail = (content) => `
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 @media only screen and (max-width: 600px) {
- .container { width: 100% !important; }
- .hero-img { height: 200px !important; }
- .dish-grid { display: block !important; }
- .dish-card { width: 100% !important; margin-bottom: 16px !important; }
+  .container { width: 100% !important; }
+  .hero-img { height: 200px !important; }
+  .dish-grid { display: block !important; }
+  .dish-card { width: 100% !important; margin-bottom: 16px !important; }
 }
 </style>
 </head>
@@ -105,14 +173,14 @@ ${buildFooter()}
 const templates = {
 
   // ═══════════════════════════════════════════
-  // MONDAY — We're Open + Meal Prep Closes Wed
+  // MONDAY — We're Open + Meal Prep (variety showcase) + Order Page Spotlight
   // ═══════════════════════════════════════════
   monday: {
-    email_subject: "🍽️ We're Open Today — Meal Prep Closes Wednesday",
+    email_subject: "🍽️ We're Open — Meal Prep + Fresh Picks Today",
     email_body: wrapEmail(`
 <tr>
 <td>
-<img src="${images.monday[0]}" alt="Utopia Deli Meal Prep Bowl" class="hero-img" style="width:100%;height:320px;object-fit:cover;display:block;">
+<img src="${images.mealprep.plateHero}" alt="Utopia Deli Meal Prep" class="hero-img" style="width:100%;height:320px;object-fit:cover;display:block;">
 </td>
 </tr>
 
@@ -120,7 +188,7 @@ const templates = {
 <td style="padding:32px 28px 20px;">
 <h1 style="margin:0 0 16px;color:#590B3F;font-size:28px;line-height:1.2;">We're Open Today 🍽️</h1>
 <p style="margin:0 0 20px;color:#333;font-size:16px;line-height:1.6;">
-Order online for pickup — we're serving fresh from 12:30 to 7:30. And don't forget: meal prep orders close Wednesday at noon.
+Order online for pickup — we're serving fresh from 12:30 to 7:30. Meal prep orders close Wednesday at noon.
 </p>
 <p style="margin:0 0 24px;color:#AF3D4B;font-size:15px;font-weight:bold;">
 🕐 Open today 12:30PM–7:30PM · ⏰ Meal prep closes Wednesday 12:00 PM
@@ -140,73 +208,29 @@ Order Meal Prep
 
 <tr>
 <td style="padding:0 28px 24px;">
-<h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">Meal Prep — Order Before Wednesday Noon</h2>
+<h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">Meal Prep — What We Offer</h2>
+<p style="margin:0 0 16px;color:#333;font-size:14px;line-height:1.5;">Our bowls rotate weekly — here's a taste of what's on the menu. Order by Wednesday noon for Thursday pickup.</p>
 <div class="dish-grid" style="display:flex;gap:16px;flex-wrap:wrap;">
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.monday[1]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Mediterranean Harvest Bowl</p>
-<p style="margin:0;color:#888;font-size:12px;">Lemon herb quinoa, crispy oregano chickpeas, cucumber tomato salad, hummus, tahini drizzle, pickled red onion — 500 cal</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.monday[2]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Thai Peanut Crunch Bowl</p>
-<p style="margin:0;color:#888;font-size:12px;">Jasmine rice, crispy peanut tofu, sesame cabbage slaw, sweet chili peanut drizzle — 490 cal</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.monday[3]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Eggplant Parmesan</p>
-<p style="margin:0;color:#888;font-size:12px;">Parmesan crusted eggplant layered with homemade marinara, topped with fresh basil — 530 cal</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.monday[4]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Cajun Red Beans & Dirty Rice</p>
-<p style="margin:0;color:#888;font-size:12px;">Dirty rice, Cajun beans, peppers & onions, green onion garnish — 460 cal</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.monday[6]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Raspberry Dark Chocolate Mousse</p>
-<p style="margin:0;color:#888;font-size:12px;">Rich dark chocolate mousse topped with fresh raspberries — sugar free</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.monday[5]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Cold-Pressed Juice</p>
-<p style="margin:0;color:#888;font-size:12px;">Fresh 10oz juice</p>
-</div>
-</div>
-
+${dishCard(meals[0].img, meals[0].name, meals[0].desc)}
+${dishCard(meals[1].img, meals[1].name, meals[1].desc)}
+${dishCard(meals[5].img, meals[5].name, meals[5].desc)}
+${dishCard(meals[9].img, meals[9].name, meals[9].desc)}
+${dishCard(desserts[1].img, desserts[1].name, desserts[1].desc)}
 </div>
 </td>
 </tr>
 
 <tr>
 <td style="padding:0 28px 24px;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f4;border-radius:12px;padding:20px;">
-<tr><td>
-<h3 style="margin:0 0 12px;color:#590B3F;font-size:16px;">How Meal Prep Works</h3>
-<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.5;">① Order online by Wednesday noon</p>
-<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.5;">② We prepare fresh Thursday morning</p>
-<p style="margin:0;color:#333;font-size:14px;line-height:1.5;">③ Pick up Thursday 12:30PM–7:30PM at 801 S Chester St</p>
-</td></tr>
-</table>
+<h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">Today's Spotlight from the Menu 🥪</h2>
+<div class="dish-grid" style="display:flex;gap:16px;flex-wrap:wrap;">
+${dishCard(images.orderPage.buffaloSliders, 'Buffalo Chik\'n Sliders', 'Buffalo chik\'n sliders with fresh slaw and ranch on a garlic butter slider bun — $12')}
+${dishCard(images.orderPage.poppers, 'Chik\'n Poppers', 'Crispy chik\'n dippers — BBQ, Garlic Parm, Jerk, Buffalo, Lemon Pepper Wet — $10')}
+</div>
 </td>
 </tr>
+
+${howMealPrepWorks()}
 
 <tr>
 <td style="padding:0 28px 32px;text-align:center;">
@@ -228,7 +252,7 @@ Order Meal Prep — Closes Wednesday 12:00 PM
     email_body: wrapEmail(`
 <tr>
 <td>
-<img src="${images.tuesday[0]}" alt="Utopia Deli Catering Spread" class="hero-img" style="width:100%;height:320px;object-fit:cover;display:block;">
+<img src="${images.catering[0]}" alt="Utopia Deli Catering Spread" class="hero-img" style="width:100%;height:320px;object-fit:cover;display:block;">
 </td>
 </tr>
 
@@ -252,39 +276,10 @@ Get a Catering Quote
 <td style="padding:0 28px 24px;">
 <h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">What We Bring to the Table</h2>
 <div class="dish-grid" style="display:flex;gap:16px;flex-wrap:wrap;">
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.tuesday[0]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Full-Service Catering</p>
-<p style="margin:0;color:#888;font-size:12px;">Pasta, garlic bread, fresh salad, sweet tea — complete buffet spread for any occasion</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.tuesday[1]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Baked Ziti & Lasagna</p>
-<p style="margin:0;color:#888;font-size:12px;">Cheesy baked pasta casseroles with Italian herbs — crowd favorites</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.tuesday[2]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Fresh Fruit Platters</p>
-<p style="margin:0;color:#888;font-size:12px;">Watermelon, cantaloupe, mango, pineapple — beautifully arranged on wooden boards</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.tuesday[3]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Fresh Glazed Donuts</p>
-<p style="margin:0;color:#888;font-size:12px;">Old-fashioned cake donuts with crackly sugar glaze — perfect for morning meetings</p>
-</div>
-</div>
-
+${dishCard(images.catering[0], 'Full-Service Catering', 'Pasta, garlic bread, fresh salad, sweet tea — complete buffet spread for any occasion')}
+${dishCard(images.catering[1], 'Baked Ziti & Lasagna', 'Cheesy baked pasta casseroles with Italian herbs — crowd favorites')}
+${dishCard(images.catering[2], 'Fresh Fruit Platters', 'Watermelon, cantaloupe, mango, pineapple — beautifully arranged on wooden boards')}
+${dishCard(images.catering[3], 'Fresh Glazed Donuts', 'Old-fashioned cake donuts with crackly sugar glaze — perfect for morning meetings')}
 </div>
 </td>
 </tr>
@@ -315,14 +310,14 @@ Start Your Catering Order
   },
 
   // ═══════════════════════════════════════════
-  // WEDNESDAY — Last Call Meal Prep + We're Open
+  // WEDNESDAY — Last Call Meal Prep + Order Page Spotlight
   // ═══════════════════════════════════════════
   wednesday: {
     email_subject: "⏰ Meal Prep Closes at Noon — Last Call",
     email_body: wrapEmail(`
 <tr>
 <td>
-<img src="${images.wednesday[0]}" alt="Mediterranean Harvest Bowl" class="hero-img" style="width:100%;height:280px;object-fit:cover;display:block;">
+<img src="${images.mealprep.thaiPeanut}" alt="Thai Peanut Crunch Bowl" class="hero-img" style="width:100%;height:280px;object-fit:cover;display:block;">
 </td>
 </tr>
 
@@ -330,7 +325,7 @@ Start Your Catering Order
 <td style="padding:32px 28px 20px;text-align:center;">
 <h1 style="margin:0 0 16px;color:#AF3D4B;font-size:28px;line-height:1.2;">Meal Prep Closes Today at Noon ⏰</h1>
 <p style="margin:0 0 20px;color:#333;font-size:16px;line-height:1.6;">
-This is your last chance to grab this week's bowls. Fresh, chef-crafted meals ready for pickup Thursday.
+Last chance to grab your bowls this week. Fresh, chef-crafted meals ready for pickup Thursday.
 </p>
 <p style="margin:0 0 24px;color:#333;font-size:14px;">
 <strong>Order before noon today</strong> — pickup Thursday 12:30 PM–7:30 PM
@@ -346,19 +341,23 @@ Secure My Bowls
 <td style="padding:0 28px 24px;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f4;border-radius:12px;padding:20px;">
 <tr><td style="text-align:center;">
-<p style="margin:0 0 12px;color:#590B3F;font-size:18px;font-weight:bold;">This Week's Bowls</p>
+<p style="margin:0 0 12px;color:#590B3F;font-size:18px;font-weight:bold;">Bowls We Offer</p>
 <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
 <div style="text-align:center;">
-<img src="${images.wednesday[0]}" style="width:120px;height:100px;object-fit:cover;border-radius:8px;display:block;margin:0 auto 8px;">
-<p style="margin:0;color:#333;font-size:12px;">Mediterranean Harvest</p>
-</div>
-<div style="text-align:center;">
-<img src="${images.wednesday[1]}" style="width:120px;height:100px;object-fit:cover;border-radius:8px;display:block;margin:0 auto 8px;">
-<p style="margin:0;color:#333;font-size:12px;">Thai Peanut Crunch</p>
-</div>
-<div style="text-align:center;">
-<img src="${images.wednesday[2]}" style="width:120px;height:100px;object-fit:cover;border-radius:8px;display:block;margin:0 auto 8px;">
+<img src="${meals[2].img}" style="width:120px;height:100px;object-fit:cover;border-radius:8px;display:block;margin:0 auto 8px;">
 <p style="margin:0;color:#333;font-size:12px;">Eggplant Parmesan</p>
+</div>
+<div style="text-align:center;">
+<img src="${meals[3].img}" style="width:120px;height:100px;object-fit:cover;border-radius:8px;display:block;margin:0 auto 8px;">
+<p style="margin:0;color:#333;font-size:12px;">Cajun Red Beans</p>
+</div>
+<div style="text-align:center;">
+<img src="${meals[6].img}" style="width:120px;height:100px;object-fit:cover;border-radius:8px;display:block;margin:0 auto 8px;">
+<p style="margin:0;color:#333;font-size:12px;">Mediterranean Pasta Salad</p>
+</div>
+<div style="text-align:center;">
+<img src="${meals[7].img}" style="width:120px;height:100px;object-fit:cover;border-radius:8px;display:block;margin:0 auto 8px;">
+<p style="margin:0;color:#333;font-size:12px;">Buffalo Chickpea Wrap</p>
 </div>
 </div>
 </td></tr>
@@ -368,14 +367,15 @@ Secure My Bowls
 
 <tr>
 <td style="padding:0 28px 24px;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#590B3F;border-radius:12px;padding:20px;">
-<tr><td style="text-align:center;">
-<p style="margin:0 0 4px;color:#fff;font-size:16px;font-weight:bold;">We're Open Today 🍽️</p>
-<p style="margin:0;color:#fff;font-size:14px;">Order online for pickup 12:30PM–7:30PM · 801 S Chester St</p>
-</td></tr>
-</table>
+<h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">Today's Spotlight from the Menu 🥪</h2>
+<div class="dish-grid" style="display:flex;gap:16px;flex-wrap:wrap;">
+${dishCard(images.orderPage.stekPhilly, 'Philly Sub', 'Stek OR Chik\'n with sautéed onions & bell peppers — $13')}
+${dishCard(images.orderPage.chiknFriedSub, 'Chik\'n Fried Chik\'n Sub', 'Crispy Fried Chik\'n on a hoagie with lettuce, tomato, ranch — $13')}
+</div>
 </td>
 </tr>
+
+${openTodayBar()}
 
 <tr>
 <td style="padding:0 28px 32px;text-align:center;">
@@ -390,14 +390,14 @@ Order Online for Pickup
   },
 
   // ═══════════════════════════════════════════
-  // THURSDAY — Pick Up Your Bowls + We're Open
+  // THURSDAY — Pick Up Your Bowls + Order Page Spotlight
   // ═══════════════════════════════════════════
   thursday: {
     email_subject: "📦 Pick Up Your Bowls Today + We're Open",
     email_body: wrapEmail(`
 <tr>
 <td>
-<img src="${images.thursday[0]}" alt="Utopia Deli Meal Prep Pickup" class="hero-img" style="width:100%;height:300px;object-fit:cover;display:block;">
+<img src="${images.mealprep.plateHero}" alt="Utopia Deli Meal Prep Pickup" class="hero-img" style="width:100%;height:300px;object-fit:cover;display:block;">
 </td>
 </tr>
 
@@ -417,46 +417,14 @@ Your meal prep is ready! Swing by 801 S Chester St between 12:30 and 7:30 PM. Ha
 <td style="padding:0 28px 24px;">
 <h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">Order Online for Pickup — We're Open 🍽️</h2>
 <div class="dish-grid" style="display:flex;gap:16px;flex-wrap:wrap;">
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.thursday[1]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Stek Philly</p>
-<p style="margin:0;color:#888;font-size:12px;">Thin-cut steak, peppers, onions, hoagie roll</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.thursday[2]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Loaded Bac'n Fry</p>
-<p style="margin:0;color:#888;font-size:12px;">Crinkle-cut fries loaded with bac'n, cheeze sauce</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.thursday[3]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Chick'n Poppers</p>
-<p style="margin:0;color:#888;font-size:12px;">Crispy dippers — BBQ, Garlic Parm, Jerk, Buffalo, Lemon Pepper</p>
-</div>
-</div>
-
+${dishCard(images.orderPage.stekPhilly, 'Philly Sub', 'Stek OR Chik\'n with sautéed onions & bell peppers — $13')}
+${dishCard(images.orderPage.loadedBaconFry, 'Loaded Bac\'n Fry', 'Crinkle-cut fries loaded with bac\'n, cheeze sauce — $13')}
+${dishCard(images.orderPage.poppers, 'Chik\'n Poppers', 'Crispy dippers — BBQ, Garlic Parm, Jerk, Buffalo, Lemon Pepper — $10')}
 </div>
 </td>
 </tr>
 
-<tr>
-<td style="padding:0 28px 24px;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f4;border-radius:12px;padding:20px;">
-<tr><td>
-<h3 style="margin:0 0 12px;color:#590B3F;font-size:16px;">Catering This Week?</h3>
-<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.5;">Got an event coming up? We cater parties, meetings, weddings — 10 to 500 guests.</p>
-<p style="margin:0;color:#333;font-size:14px;line-height:1.5;"><a href="${baseURL}/catering/?utm_source=email&utm_medium=campaign&utm_campaign=thursday" style="color:#AF3D4B;font-weight:bold;">Request a catering quote →</a></p>
-</td></tr>
-</table>
-</td>
-</tr>
+${cateringCTA('thursday')}
 
 <tr>
 <td style="padding:0 28px 24px;">
@@ -483,22 +451,22 @@ Order Online
   },
 
   // ═══════════════════════════════════════════
-  // FRIDAY — New Week Fresh Bowls + Weekend
+  // FRIDAY — Meal Prep Is Live + Order Page Spotlight
   // ═══════════════════════════════════════════
   friday: {
-    email_subject: "🍱 New Week, Fresh Bowls — Meal Prep Is Live",
+    email_subject: "🍱 Meal Prep Is Live — Fresh Bowls Every Week",
     email_body: wrapEmail(`
 <tr>
 <td>
-<img src="${images.friday[0]}" alt="Utopia Deli Fresh Meal Prep" class="hero-img" style="width:100%;height:320px;object-fit:cover;display:block;">
+<img src="${images.mealprep.mediterranean}" alt="Utopia Deli Fresh Meal Prep" class="hero-img" style="width:100%;height:320px;object-fit:cover;display:block;">
 </td>
 </tr>
 
 <tr>
 <td style="padding:32px 28px 20px;">
-<h1 style="margin:0 0 16px;color:#590B3F;font-size:28px;line-height:1.2;">New Week, Fresh Bowls 🍱</h1>
+<h1 style="margin:0 0 16px;color:#590B3F;font-size:28px;line-height:1.2;">Meal Prep Is Live — Fresh Bowls Every Week 🍱</h1>
 <p style="margin:0 0 20px;color:#333;font-size:16px;line-height:1.6;">
-This week's meal prep is live. Chef-crafted bowls, fresh ingredients, zero cooking on your end. Order now — closes Wednesday at noon.
+Our bowls rotate weekly — always something different, always fresh. Chef-crafted, plant-forward, zero cooking on your end. Order now — closes Wednesday at noon.
 </p>
 <p style="margin:0 0 24px;color:#AF3D4B;font-size:15px;font-weight:bold;">
 🟢 Orders open now · 🔴 Closes Wednesday 12:00 PM · 📦 Pickup Thursday
@@ -512,73 +480,30 @@ Order Meal Prep
 
 <tr>
 <td style="padding:0 28px 24px;">
-<h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">This Week's Bowls</h2>
+<h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">Bowls We Offer</h2>
+<p style="margin:0 0 16px;color:#333;font-size:14px;line-height:1.5;">Our menu rotates — here's a peek at what you might see this week.</p>
 <div class="dish-grid" style="display:flex;gap:16px;flex-wrap:wrap;">
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.friday[1]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Mediterranean Harvest Bowl</p>
-<p style="margin:0;color:#888;font-size:12px;">Lemon herb quinoa, crispy oregano chickpeas, cucumber tomato salad, hummus, tahini drizzle, pickled red onion — 500 cal</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.friday[2]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Thai Peanut Crunch Bowl</p>
-<p style="margin:0;color:#888;font-size:12px;">Jasmine rice, crispy peanut tofu, sesame cabbage slaw, sweet chili peanut drizzle — 490 cal</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.friday[3]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Eggplant Parmesan</p>
-<p style="margin:0;color:#888;font-size:12px;">Parmesan crusted eggplant layered with homemade marinara, topped with fresh basil — 530 cal</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.friday[4]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Cajun Red Beans & Dirty Rice</p>
-<p style="margin:0;color:#888;font-size:12px;">Dirty rice, Cajun beans, peppers & onions, green onion garnish — 460 cal</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.friday[6]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Raspberry Dark Chocolate Mousse</p>
-<p style="margin:0;color:#888;font-size:12px;">Rich dark chocolate mousse topped with fresh raspberries — sugar free</p>
-</div>
-</div>
-
-<div class="dish-card" style="flex:1;min-width:160px;background:#f8f6f4;border-radius:12px;overflow:hidden;">
-<img src="${images.friday[5]}" style="width:100%;height:140px;object-fit:cover;display:block;">
-<div style="padding:12px;">
-<p style="margin:0 0 4px;color:#590B3F;font-weight:bold;font-size:14px;">Cold-Pressed Juice</p>
-<p style="margin:0;color:#888;font-size:12px;">Fresh 10oz juice</p>
-</div>
-</div>
-
+${dishCard(meals[2].img, meals[2].name, meals[2].desc)}
+${dishCard(meals[7].img, meals[7].name, meals[7].desc)}
+${dishCard(meals[8].img, meals[8].name, meals[8].desc)}
+${dishCard(meals[10].img, meals[10].name, meals[10].desc)}
+${dishCard(desserts[0].img, desserts[0].name, desserts[0].desc)}
+${dishCard(desserts[1].img, desserts[1].name, desserts[1].desc)}
 </div>
 </td>
 </tr>
 
 <tr>
 <td style="padding:0 28px 24px;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f8f6f4;border-radius:12px;padding:20px;">
-<tr><td>
-<h3 style="margin:0 0 12px;color:#590B3F;font-size:16px;">How Meal Prep Works</h3>
-<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.5;">① Order online by Wednesday noon</p>
-<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.5;">② We prepare fresh Thursday morning</p>
-<p style="margin:0;color:#333;font-size:14px;line-height:1.5;">③ Pick up Thursday 12:30PM–7:30PM at 801 S Chester St</p>
-</td></tr>
-</table>
+<h2 style="margin:0 0 16px;color:#590B3F;font-size:20px;">Today's Spotlight from the Menu 🥪</h2>
+<div class="dish-grid" style="display:flex;gap:16px;flex-wrap:wrap;">
+${dishCard(images.orderPage.loadedBaconFry, 'Loaded Bac\'n Fry', 'Crinkle-cut fries loaded with bac\'n, cheeze sauce — $13')}
+${dishCard(images.orderPage.clubSub, 'Chik\'n Club Sub', 'Grilled Chik\'n Bac\'n Cheese on a bed of Lettuce and Tomatoes — $15')}
+</div>
 </td>
 </tr>
+
+${howMealPrepWorks()}
 
 <tr>
 <td style="padding:0 28px 24px;">
@@ -601,7 +526,7 @@ Order Meal Prep Now
 </td>
 </tr>
 `),
-    sms_body: "🍱 New week meal prep is live! Order by Wed noon. order.theutopiadeli.com/catering/"
+    sms_body: "🍱 Meal prep is live! Order by Wed noon. order.theutopiadeli.com/catering/"
   }
 };
 

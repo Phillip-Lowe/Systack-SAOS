@@ -384,6 +384,111 @@
             background: rgba(255,255,255,0.06);
             color: white;
         }
+
+        /* ── Onboarding Tour ── */
+        .tour-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,26,45,0.92);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .tour-overlay.active { display: flex; }
+        .tour-card {
+            background: #0d2137;
+            border: 1px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            max-width: 420px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,161,219,0.15), 0 20px 60px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .tour-step {
+            display: none;
+        }
+        .tour-step.active { display: block; }
+        .tour-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .tour-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .tour-text {
+            font-size: 16px;
+            color: #c8d4e0;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+        .tour-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .tour-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        .tour-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: background 0.2s;
+        }
+        .tour-dot.active { background: var(--accent); }
+        .tour-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            min-height: 44px;
+            min-width: 80px;
+        }
+        .tour-btn-secondary {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+        .tour-btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .tour-btn-primary:hover { background: var(--accent-bright); }
+        .tour-skip-top {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 13px;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .tour-skip-top:hover { color: white; }
+        @media (max-width: 480px) {
+            .tour-card { padding: 28px 20px; }
+            .tour-icon { font-size: 48px; }
+            .tour-title { font-size: 20px; }
+            .tour-text { font-size: 14px; }
+            .tour-btn { padding: 12px 18px; font-size: 15px; }
+        }
         .chat-status {
             display: flex;
             align-items: center;
@@ -1205,7 +1310,6 @@
             min-width: 44px;
         }
         .mobile-menu-btn:hover { color: white; }
-        .mobile-menu-btn:hover { color: white; }
 
         /* ── Login Mobile Fixes ── */
         .login-card input {
@@ -1216,7 +1320,204 @@
             font-size: 16px; /* Prevents iOS zoom on focus */
         }
 
-        /* ── Responsive ── */
+        /* ── Search Bar ── */
+        .search-bar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-left: 12px;
+            flex: 1;
+            max-width: 280px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 6px 12px;
+            padding-right: 32px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-bar input:focus {
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.08);
+        }
+        .search-bar input::placeholder {
+            color: var(--text-dim);
+        }
+        .search-clear {
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 14px;
+            cursor: pointer;
+            display: none;
+        }
+        .search-clear.visible { display: block; }
+        
+        /* ── Search Results Panel ── */
+        .search-panel {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            z-index: 300;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .search-panel.active { display: block; }
+        .search-section {
+            margin-bottom: 12px;
+        }
+        .search-section:last-child { margin-bottom: 0; }
+        .search-section-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            padding: 0 4px;
+        }
+        .search-result-item {
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text);
+            transition: background 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .search-result-item:hover {
+            background: var(--bg-hover);
+        }
+        .search-result-icon {
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .search-result-meta {
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+        .search-empty {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+        
+        /* ── Integration Cards ── */
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .integration-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            transition: border-color 0.2s;
+        }
+        .integration-card:hover {
+            border-color: var(--border-hover);
+        }
+        .integration-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .integration-icon {
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .integration-name {
+            font-weight: 700;
+            color: white;
+            font-size: 14px;
+        }
+        .integration-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .status-dot-green {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 6px rgba(34,197,94,0.5);
+        }
+        .status-dot-yellow {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--amber);
+            box-shadow: 0 0 6px rgba(245,158,11,0.5);
+        }
+        .status-dot-red {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--red);
+            box-shadow: 0 0 6px rgba(239,68,68,0.5);
+        }
+        .integration-response {
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+        .integration-details {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        .integration-last-check {
+            font-size: 10px;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+        .overall-health {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .overall-healthy {
+            background: rgba(34,197,94,0.12);
+            color: var(--green);
+        }
+        .overall-degraded {
+            background: rgba(245,158,11,0.12);
+            color: var(--amber);
+        }
+        .overall-down {
+            background: rgba(239,68,68,0.12);
+            color: var(--red);
+        }
         @media (max-width: 768px) {
             .mobile-menu-btn { display: flex; align-items: center; justify-content: center; margin-top: env(safe-area-inset-top, 0); }
             .nav-links { 
@@ -1288,10 +1589,32 @@
                 background: rgba(255,255,255,0.04);
                 border-radius: 10px;
             }
+            .sidebar-toggle::before {
+                content: "📁";
+            }
+            .sidebar-toggle {
+                font-size: 0;
+            }
+            .sidebar-toggle::after {
+                content: "Chats";
+                font-size: 13px;
+                color: var(--text-muted);
+                margin-left: 6px;
+            }
             .app-body { overflow-y: auto; }
             #chatTab, #dashboardTab, #servicesTab, #tasksTab, #activityTab, #docsTab, #settingsTab { min-height: 100%; }
             .activity-item { padding: 10px 12px; }
             .activity-meta { gap: 6px; }
+            .search-bar { 
+                display: flex; 
+                max-width: 200px;
+                margin-left: 8px;
+            }
+            .search-bar input {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+            .integrations-grid { grid-template-columns: 1fr; }
             .login-card { padding: 32px 24px; margin: 16px; }
         }
 
@@ -1383,6 +1706,14 @@
         <nav class="nav">
             <a href="#" class="nav-brand">🛰️ SAOS</a>
             <button class="mobile-menu-btn" id="hamburgerBtn">☰</button>
+            
+            <!-- Search Bar (works on both desktop and mobile) -->
+            <div class="search-bar" id="searchBar">
+                <input type="text" id="searchInput" placeholder="Search..." autocomplete="off">
+                <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+                <div class="search-panel" id="searchPanel"></div>
+            </div>
+            
             <div class="nav-links">
                 <button class="nav-link active" onclick="showTab('chat', this)">💬 Chat</button>
                 <button class="nav-link" onclick="showTab('liveOps', this)">🔴 Live</button>
@@ -1417,7 +1748,7 @@
                 <!-- Chat Area -->
                 <div class="chat-area">
                     <div class="chat-header" id="chatHeader">
-                        <button class="sidebar-toggle" onclick="document.getElementById('chatSidebar').classList.toggle('open')">☰</button>
+                        <button class="sidebar-toggle" onclick="document.getElementById('chatSidebar').classList.toggle('open')">📁</button>
                         <div class="chat-header-info">
                             <h3 id="chatTitle">Select a conversation</h3>
                             <p id="chatSubtitle">Choose from the sidebar or start a new chat</p>
@@ -1535,12 +1866,21 @@
             };
             if (body) opts.body = JSON.stringify(body);
 
-            const res = await fetch(`${API_BASE}${endpoint}`, opts);
-            if (res.status === 401) {
-                logout();
-                throw new Error('Session expired');
+            try {
+                const res = await fetch(`${API_BASE}${endpoint}`, opts);
+                if (res.status === 401) {
+                    logout();
+                    throw new Error('Session expired');
+                }
+                if (!res.ok) {
+                    throw new Error(`API error ${res.status}`);
+                }
+                return res.json();
+            } catch (e) {
+                console.error(`API ${method} ${endpoint} failed:`, e);
+                // Return error object so callers can handle gracefully
+                return { error: true, message: e.message, _apiError: true };
             }
-            return res.json();
         }
 
         // ── AUTH ───────────────────────────────────────────────
@@ -1680,10 +2020,205 @@
             await initApp();
         }
 
-        function logout() {
-            localStorage.removeItem('saos_token');
-            token = null;
-            location.reload();
+        async function logout() {
+    // Tell server to revoke token first
+    if (token) {
+        try {
+            await api('POST', '/api/auth/logout');
+        } catch (e) {
+            console.error('Server logout failed:', e);
+        }
+    }
+    localStorage.removeItem('saos_token');
+    localStorage.removeItem('saos_client_id');
+    token = null;
+    client = null;
+    location.reload();
+}
+
+        // ── SEARCH ─────────────────────────────────────────────
+        let searchDebounce = null;
+        
+        function initSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchPanel = document.getElementById('searchPanel');
+            const searchClear = document.getElementById('searchClear');
+            
+            if (!searchInput) return;
+            
+            // Desktop search
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+                searchClear.classList.toggle('visible', query.length > 0);
+                
+                if (searchDebounce) clearTimeout(searchDebounce);
+                if (query.length < 3) {
+                    searchPanel.classList.remove('active');
+                    return;
+                }
+                
+                searchDebounce = setTimeout(() => performSearch(query), 300);
+            });
+            
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.trim().length >= 3) {
+                    performSearch(searchInput.value.trim());
+                }
+            });
+            
+            // Close search panel when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search-bar')) {
+                    searchPanel.classList.remove('active');
+                }
+            });
+        }
+        
+        async function performSearch(query) {
+            const searchPanel = document.getElementById('searchPanel');
+            searchPanel.innerHTML = '<div class="search-empty">Searching...🔍</div>';
+            searchPanel.classList.add('active');
+            
+            try {
+                const data = await api('GET', `/api/portal/search?q=${encodeURIComponent(query)}`);
+                if (data.error) throw new Error(data.error);
+                
+                renderSearchResults(data, query);
+            } catch (e) {
+                searchPanel.innerHTML = `<div class="search-empty">❌ Search failed: ${escapeHtml(e.message)}</div>`;
+            }
+        }
+        
+        function renderSearchResults(data, query) {
+            const searchPanel = document.getElementById('searchPanel');
+            const results = data.results || {};
+            const tasks = results.tasks || [];
+            const messages = results.messages || [];
+            const activity = results.activity || [];
+            
+            let html = '';
+            
+            if (tasks.length) {
+                html += `<div class="search-section"><div class="search-section-title">📋 Tasks (${tasks.length})</div>`;
+                html += tasks.slice(0, 5).map(t => `
+                    <div class="search-result-item" onclick="navigateToTask(${t.id})">
+                        <span class="search-result-icon">${getStatusIcon(t.status)}</span>
+                        <div>
+                            <div>${escapeHtml(t.display_name || t.task_type)}</div>
+                            <div class="search-result-meta">#${t.id} • ${t.assigned_agent || 'Unassigned'} • ${formatTime(t.created_at)}</div>
+                        </div>
+                    </div>
+                `).join('');
+                html += '</div>';
+            }
+            
+            if (messages.length) {
+                html += `<div class="search-section"><div class="search-section-title">💬 Messages (${messages.length})</div>`;
+                html += messages.slice(0, 5).map(m => `
+                    <div class="search-result-item" onclick="navigateToConversation(${m.conversation_id})">
+                        <span class="search-result-icon">💬</span>
+                        <div>
+                            <div>${escapeHtml(m.content.substring(0, 80))}${m.content.length > 80 ? '...' : ''}</div>
+                            <div class="search-result-meta">${m.sender_name} • ${formatTime(m.created_at)}</div>
+                        </div>
+                    </div>
+                `).join('');
+                html += '</div>';
+            }
+            
+            if (activity.length) {
+                html += `<div class="search-section"><div class="search-section-title">📋 Activity (${activity.length})</div>`;
+                html += activity.slice(0, 5).map(a => `
+                    <div class="search-result-item">
+                        <span class="search-result-icon">📋</span>
+                        <div>
+                            <div>${escapeHtml(a.action)} — ${escapeHtml(a.entity_type || '')}</div>
+                            <div class="search-result-meta">${formatTime(a.created_at)}</div>
+                        </div>
+                    </div>
+                `).join('');
+                html += '</div>';
+            }
+            
+            if (!tasks.length && !messages.length && !activity.length) {
+                html = `<div class="search-empty">No results for "${escapeHtml(query)}"</div>`;
+            }
+            
+            searchPanel.innerHTML = html;
+        }
+        
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchPanel = document.getElementById('searchPanel');
+            const searchClear = document.getElementById('searchClear');
+            searchInput.value = '';
+            searchPanel.classList.remove('active');
+            searchClear.classList.remove('visible');
+        }
+        
+        function navigateToTask(taskId) {
+            showTab('tasks', [...document.querySelectorAll('.nav-link')].find(b => b.textContent.includes('Tasks')));
+            setTimeout(() => {
+                const rows = document.querySelectorAll('#taskTableBody tr');
+                rows.forEach(row => {
+                    if (row.textContent.includes(`#${taskId}`)) {
+                        row.style.background = 'rgba(0,161,219,0.15)';
+                        row.scrollIntoView({behavior: 'smooth', block: 'center'});
+                        setTimeout(() => { row.style.background = ''; }, 2000);
+                    }
+                });
+            }, 300);
+        }
+        
+        function navigateToConversation(convId) {
+            showTab('chat', [...document.querySelectorAll('.nav-link')].find(b => b.textContent.includes('Chat')));
+            setTimeout(() => selectConversation(convId), 300);
+        }
+        
+        async function loadIntegrations() {
+            const data = await api('GET', '/api/portal/integrations');
+            
+            if (data._apiError) {
+                document.getElementById('integrationsContent').innerHTML = errorFallback(data.message, 'loadIntegrations');
+                return;
+            }
+            
+            const integrations = data.integrations || [];
+            const overall = data.overall_health || 'unknown';
+            
+            const overallClass = overall === 'healthy' ? 'overall-healthy' : overall === 'degraded' ? 'overall-degraded' : 'overall-down';
+            const overallIcon = overall === 'healthy' ? '✅' : overall === 'degraded' ? '⚠️' : '❌';
+            
+            document.getElementById('integrationsContent').innerHTML = `
+                <div class="overall-health ${overallClass}">
+                    ${overallIcon} Overall Health: ${overall.toUpperCase()}
+                </div>
+                <div class="integrations-grid">
+                    ${integrations.map(i => {
+                        const dotClass = i.status === 'healthy' ? 'status-dot-green' : i.status === 'degraded' ? 'status-dot-yellow' : 'status-dot-red';
+                        const statusColor = i.status === 'healthy' ? 'var(--green)' : i.status === 'degraded' ? 'var(--amber)' : 'var(--red)';
+                        return `
+                            <div class="integration-card">
+                                <div class="integration-header">
+                                    <span class="integration-icon">${i.icon}</span>
+                                    <span class="integration-name">${i.name}</span>
+                                </div>
+                                <div class="integration-status" style="color:${statusColor}">
+                                    <span class="${dotClass}"></span>
+                                    <span>${i.status.toUpperCase()}</span>
+                                </div>
+                                ${i.response_ms !== null ? `<div class="integration-response">⏱️ ${i.response_ms}ms</div>` : ''}
+                                <div class="integration-details">${escapeHtml(i.details)}</div>
+                                <div class="integration-last-check">Last checked: ${formatTime(i.last_check)}</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                <div class="refresh-bar">
+                    <span>Auto-refresh on dashboard load</span>
+                    <button class="btn btn-secondary btn-sm" onclick="loadIntegrations()">🔄 Refresh Now</button>
+                </div>
+            `;
         }
 
         // ── INIT ───────────────────────────────────────────────
@@ -1921,7 +2456,10 @@
             }
 
             // Load content
-            if (tab === 'dashboard') loadDashboard();
+            if (tab === 'dashboard') {
+                loadDashboard();
+                loadIntegrations();
+            }
             if (tab === 'liveOps') loadLiveOps();
             if (tab === 'services') loadServices();
             if (tab === 'tasks') loadTasks();
@@ -1932,7 +2470,25 @@
 
         // ── DASHBOARD ──────────────────────────────────────────
         async function loadDashboard() {
-            const data = await api('GET', '/api/portal/status');
+            // Fetch all dashboard data in parallel
+            const [data, setupData, usageData] = await Promise.all([
+                api('GET', '/api/portal/status'),
+                api('GET', '/api/portal/setup-progress'),
+                api('GET', '/api/portal/usage')
+            ]);
+            
+            if (data._apiError) {
+                document.getElementById('dashboardContent').innerHTML = `
+                    <div style="text-align:center; padding:60px 20px">
+                        <div style="font-size:48px; margin-bottom:16px">⚠️</div>
+                        <div style="color:var(--red); font-weight:600; margin-bottom:8px">Service Temporarily Unavailable</div>
+                        <div style="color:var(--text-muted); font-size:13px; max-width:300px; margin:0 auto">${data.message || 'Could not connect to dashboard API. Please try again in a moment.'}</div>
+                        <button class="btn btn-primary" style="margin-top:24px" onclick="loadDashboard()">🔄 Retry</button>
+                    </div>
+                `;
+                return;
+            }
+            
             const tier = client?.tier || 'business';
 
             document.getElementById('dashboardContent').innerHTML = `
@@ -1940,6 +2496,17 @@
                     <span class="tier-badge tier-${tier.toLowerCase().replace('+','-plus')}">${getTierLabel(tier)}</span>
                     <span style="font-size:13px; color:var(--text-muted)">Current plan</span>
                 </div>
+
+                ${data.setup_progress !== undefined ? `
+                <div class="metric-card" style="margin-bottom:20px">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px">
+                        <span style="font-size:13px; color:var(--text-muted)">Setup Progress</span>
+                        <span style="font-size:14px; font-weight:700; color:${data.setup_progress >= 80 ? 'var(--green)' : data.setup_progress >= 40 ? 'var(--amber)' : 'var(--text)'}"\u003e${data.setup_progress}%</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.05); border-radius:4px; height:8px; overflow:hidden">
+                        <div style="background:${data.setup_progress >= 80 ? 'var(--green)' : data.setup_progress >= 40 ? 'var(--amber)' : 'var(--accent)'}; height:100%; width:${data.setup_progress}%; border-radius:4px; transition:width 0.5s"></div>
+                    </div>
+                </div>` : ''}
 
                 <div class="metrics-grid">
                     <div class="metric-card">
@@ -1964,9 +2531,217 @@
                     </div>
                 </div>
 
+                ${data.usage ? `
+                <h3>Usage This Month</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Tasks Completed</div>
+                        <div class="metric-value" style="color:var(--green)">${data.usage.tasks_completed_monthly || 0}</div>
+                        <div class="metric-sub">Successful completions</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Agent Hours</div>
+                        <div class="metric-value">${data.usage.agent_hours_this_month || 0}</div>
+                        <div class="metric-sub">Hours of AI processing</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">n8n Runs</div>
+                        <div class="metric-value" style="color:${data.usage.n8n_runs_limit > 0 && data.usage.n8n_runs_monthly > data.usage.n8n_runs_limit * 0.9 ? 'var(--red)' : 'var(--accent-bright)'}">
+                            ${data.usage.n8n_runs_monthly || 0}${data.usage.n8n_runs_limit > 0 ? ` / ${data.usage.n8n_runs_limit.toLocaleString()}` : ''}
+                        </div>
+                        <div class="metric-sub">${data.usage.n8n_runs_limit > 0 ? Math.round((data.usage.n8n_runs_monthly / data.usage.n8n_runs_limit) * 100) + '% used' : 'Unlimited'}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Deliverables</div>
+                        <div class="metric-value">${data.usage.deliverables_count || 0}</div>
+                        <div class="metric-sub">${data.usage.deliverables_mb || 0} MB stored</div>
+                    </div>
+                </div>` : ''}
+
+                ${setupData && setupData.services && setupData.services.length > 0 ? `
+                <h3>📋 Service Setup Progress</h3>
+                <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:24px">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+                        <span style="font-size:13px; color:var(--text-muted)">${setupData.completed_count || 0} of ${setupData.total_count || 0} services configured</span>
+                        <span style="font-size:14px; font-weight:700; color:${(setupData.overall_progress || 0) >= 80 ? 'var(--green)' : (setupData.overall_progress || 0) >= 40 ? 'var(--amber)' : 'var(--text)'}">${setupData.overall_progress || 0}%</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.05); border-radius:4px; height:8px; overflow:hidden; margin-bottom:16px">
+                        <div style="background:${(setupData.overall_progress || 0) >= 80 ? 'var(--green)' : (setupData.overall_progress || 0) >= 40 ? 'var(--amber)' : 'var(--accent)'}; height:100%; width:${setupData.overall_progress || 0}%; border-radius:4px; transition:width 0.5s"></div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:8px">
+                        ${setupData.services.map(s => `
+                            <div style="display:flex; align-items:center; gap:10px; padding:10px 12px; background:rgba(255,255,255,0.03); border-radius:8px; border:1px solid var(--border)">
+                                <span style="font-size:18px">${s.icon || '⚙️'}</span>
+                                <div style="flex:1; min-width:0">
+                                    <div style="font-size:13px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis">${s.name}</div>
+                                    <div style="font-size:11px; color:var(--text-dim); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">${s.desc || ''}</div>
+                                </div>
+                                <span style="font-size:12px; font-weight:600; padding:4px 10px; border-radius:6px; flex-shrink:0;
+                                    ${s.status === 'completed' ? 'background:rgba(34,197,94,0.12); color:var(--green)' : 
+                                     s.status === 'in_progress' ? 'background:rgba(0,161,219,0.12); color:var(--accent)' :
+                                     'background:rgba(255,255,255,0.05); color:var(--text-dim)'}">
+                                    ${s.status === 'completed' ? '✅ Done' : s.status === 'in_progress' ? '🔄 Active' : '⏳ Pending'}
+                                </span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>` : ''}
+
+                ${usageData && usageData.metrics ? `
+                <h3>📊 Detailed Usage</h3>
+                <div class="metrics-grid">
+                    ${Object.entries(usageData.metrics).map(([key, val]) => {
+                        const limit = usageData.limits?.[key];
+                        const pct = limit && limit > 0 ? Math.round((val / limit) * 100) : 0;
+                        return `
+                            <div class="metric-card">
+                                <div class="metric-label" style="text-transform:capitalize">${key.replace(/_/g, ' ')}</div>
+                                <div class="metric-value" style="color:${limit && val > limit * 0.9 ? 'var(--red)' : 'var(--accent-bright)'}">${val.toLocaleString()}</div>
+                                ${limit && limit > 0 ? `
+                                    <div class="metric-sub">${pct}% of ${limit.toLocaleString()}</div>
+                                    <div style="background:rgba(255,255,255,0.05); border-radius:4px; height:4px; overflow:hidden; margin-top:6px">
+                                        <div style="background:${pct >= 90 ? 'var(--red)' : 'var(--accent)'}; height:100%; width:${pct}%; border-radius:4px"></div>
+                                    </div>
+                                ` : `<div class="metric-sub">Unlimited</div>`}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>` : ''}
+
+                ${data.trust ? `
+                <h3>🔐 Privacy & Security</h3>
+                <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px">
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px">
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px">Server Location</div>
+                            <div style="font-size:15px; color:white; font-weight:600; margin-top:4px">${data.trust.data_residency.flag} ${data.trust.data_residency.server_location}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px">Encryption</div>
+                            <div style="font-size:15px; color:white; font-weight:600; margin-top:4px">🔐 ${data.trust.data_residency.encryption_at_rest}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px">Last Audit</div>
+                            <div style="font-size:15px; color:white; font-weight:600; margin-top:4px">📋 ${data.trust.data_residency.last_security_audit}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px">Compliance</div>
+                            <div style="font-size:15px; color:var(--green); font-weight:600; margin-top:4px">✅ ${data.trust.data_residency.compliance_status}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🛡️ Scope & Ownership</h3>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:24px">
+                    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:16px">
+                        <div style="font-size:13px; font-weight:700; color:var(--accent-bright); margin-bottom:12px">✅ Systack Manages</div>
+                        ${data.trust.scope.systack_manages.map(item => `
+                            <div style="font-size:13px; color:var(--text); margin-bottom:8px; display:flex; align-items:center; gap:8px">
+                                <span style="color:var(--green)">✓</span> ${item}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:16px">
+                        <div style="font-size:13px; font-weight:700; color:var(--accent-bright); margin-bottom:12px">👤 You Control</div>
+                        ${data.trust.scope.client_controls.map(item => `
+                            <div style="font-size:13px; color:var(--text); margin-bottom:8px; display:flex; align-items:center; gap:8px">
+                                <span style="color:var(--accent)">●</span> ${item}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <h3>📊 SLA & Reliability</h3>
+                <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px">
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:16px">
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Uptime (30 days)</div>
+                            <div style="font-size:22px; color:var(--green); font-weight:800; margin-top:4px">${data.trust.sla.uptime_last_30_days}%</div>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Incidents</div>
+                            <div style="font-size:22px; color:var(--green); font-weight:800; margin-top:4px">${data.trust.sla.incidents_this_month}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Response Commitment</div>
+                            <div style="font-size:22px; color:white; font-weight:800; margin-top:4px">${data.trust.sla.response_time_commitment}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Actual Last Response</div>
+                            <div style="font-size:22px; color:var(--accent-bright); font-weight:800; margin-top:4px">${data.trust.sla.actual_last_response}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🆘 Support & Escalation</h3>
+                <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px">
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px">
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Primary Channel</div>
+                            <div style="font-size:14px; color:white; font-weight:600; margin-top:4px">${data.trust.support.primary_channel}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Escalation Path</div>
+                            <div style="font-size:14px; color:white; font-weight:600; margin-top:4px">${data.trust.support.escalation_path}</div>
+                        </div>
+                        ${data.trust.support.emergency_contact ? `
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Emergency</div>
+                            <div style="font-size:14px; color:var(--red); font-weight:600; margin-top:4px">${data.trust.support.emergency_contact}</div>
+                        </div>` : ''}
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Last Contact</div>
+                            <div style="font-size:14px; color:var(--text); margin-top:4px">${data.trust.support.last_contact}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>💳 Billing</h3>
+                <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+                        <div>
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Current Plan</div>
+                            <div style="font-size:18px; color:white; font-weight:700">${data.trust.billing.plan}</div>
+                            <div style="font-size:13px; color:var(--accent-bright); margin-top:2px">$${data.trust.billing.monthly_price}/mo</div>
+                        </div>
+                        <div style="text-align:right">
+                            <div style="font-size:11px; color:var(--text-dim); text-transform:uppercase">Next Billing</div>
+                            <div style="font-size:14px; color:white; margin-top:4px">${data.trust.billing.next_billing_date}</div>
+                            <div style="font-size:12px; color:var(--text-muted); margin-top:4px">${data.trust.billing.payment_method}</div>
+                        </div>
+                    </div>
+                    <div style="border-top:1px solid var(--border); padding-top:16px">
+                        <div style="font-size:11px; color:var(--text-dim); margin-bottom:8px">RECENT INVOICES</div>
+                        ${data.trust.billing.invoices.map(inv => `
+                            <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border)">
+                                <span style="font-size:13px; color:var(--text)">${inv.date}</span>
+                                <span style="font-size:13px; color:white; font-weight:600">$${inv.amount}</span>
+                                <span style="font-size:12px; color:var(--green)">${inv.status}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <h3>📝 Recent Updates</h3>
+                <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:24px">
+                    ${data.trust.changelog.map(entry => `
+                        <div style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--border)">
+                            <span style="font-size:12px; color:var(--text-dim); white-space:nowrap">${entry.date}</span>
+                            <span style="font-size:13px; color:var(--text)">${entry.change}</span>
+                        </div>
+                    `).join('')}
+                </div>` : ''}
+
+            <!-- Integrations Section -->
+                <h3>🔗 Integration Health</h3>
+                <div id="integrationsContent">Loading...</div>
+
                 <h3>Agent Fleet</h3>
                 <div class="agents-grid">
-                    ${(data.agents || []).map(a => `
+                    ${(data.agents || []).map(a => {
+                        const heartbeat = a.last_heartbeat ? formatTime(a.last_heartbeat) : 'never';
+                        const isStale = !a.last_heartbeat || (new Date() - new Date(a.last_heartbeat)) > 300000; // 5 min
+                        return `
                         <div class="agent-card" onclick="showAgentDetail('${a.agent_name}')">
                             <div class="agent-icon">${a.avatar_emoji || getAgentAvatar(a.agent_name)}</div>
                             <div class="agent-info">
@@ -1975,22 +2750,42 @@
                                 <div class="agent-role">${a.role || ''}</div>
                                 ${a.role_description ? `<div class="agent-desc">${a.role_description}</div>
                                 <div class="agent-caps">${(a.capabilities || []).map(c => `<span class="agent-cap">${c}</span>`).join('')}</div>` : ''}
+                                <div style="font-size:11px; color:${isStale ? 'var(--red)' : 'var(--text-dim)'}; margin-top:6px" title="${isStale ? 'Agent is idle or restarting. Tasks will resume automatically.' : 'Agent is active and processing tasks.'}">
+                                    💓 ${isStale ? '⚠️ Stale' : 'Active'} • ${heartbeat}
+                                </div>
                             </div>
-                        </div>
-                    `).join('')}
+                        </div>`;
+                    }).join('')}
                 </div>
             `;
         }
 
         // ── SERVICES (NEW — tier-specific content) ─────────────
-        function loadServices() {
+        async function loadServices() {
             const tier = client?.tier || 'business';
-            const services = getServicesForTier(tier);
+            const data = await api('GET', '/api/portal/services');
+            
+            if (data._apiError) {
+                document.getElementById('servicesContent').innerHTML = errorFallback(data.message, 'loadServices');
+                return;
+            }
+            
+            const services = data.services || [];
+            const infra = data.infrastructure || [];
+            const support = data.support || [];
+            const pricing = data.pricing || {};
+            
+            const monthlyPrice = pricing.monthly ? `$${pricing.monthly}/mo` : '';
+            const annualPrice = pricing.annual ? `$${pricing.annual}/yr` : '';
+            const checkoutUrl = pricing.checkout_url;
 
             document.getElementById('servicesContent').innerHTML = `
-                <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap">
                     <span class="tier-badge tier-${tier.toLowerCase().replace('+','-plus')}">${getTierLabel(tier)}</span>
                     <span style="font-size:13px; color:var(--text-muted)">Your included services</span>
+                    ${monthlyPrice ? `<span style="margin-left:auto; font-size:14px; color:var(--accent-bright); font-weight:700">${monthlyPrice}</span>` : ''}
+                    ${annualPrice ? `<span style="font-size:12px; color:var(--text-dim)">(${annualPrice})</span>` : ''}
+                    ${checkoutUrl ? `<a href="${checkoutUrl}" target="_blank" class="btn btn-primary btn-sm" style="margin-left:auto">⚡ Upgrade</a>` : ''}
                 </div>
 
                 <div class="services-grid">
@@ -2011,7 +2806,7 @@
 
                 <h3>Infrastructure</h3>
                 <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:10px">
-                    ${getInfraForTier(tier).map(i => `
+                    ${infra.map(i => `
                         <div class="agent-card">
                             <div class="agent-icon">${i.icon}</div>
                             <div>
@@ -2025,7 +2820,7 @@
                 <h3>Support</h3>
                 <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px">
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; font-size:13px">
-                        ${getSupportForTier(tier).map(s => `
+                        ${support.map(s => `
                             <div>
                                 <div style="color:var(--text-dim); font-size:11px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px">${s.label}</div>
                                 <div style="color:white; font-weight:600">${s.value}</div>
@@ -2039,6 +2834,12 @@
         // ── TASKS ──────────────────────────────────────────────
         async function loadTasks() {
             const tasks = await api('GET', '/api/portal/tasks');
+            
+            if (tasks._apiError) {
+                document.getElementById('tasksContent').innerHTML = errorFallback(tasks.message, 'loadTasks');
+                return;
+            }
+            
             window._allTasks = tasks; // cache for modal
             document.getElementById('tasksContent').innerHTML = tasks.length ? `
                 <div style="margin-bottom:12px; display:flex; gap:8px; flex-wrap:wrap">
@@ -2166,22 +2967,128 @@
             });
         }
 
+        // ── ACTIVITY ────────────────────────────────────────────
+        async function loadActivity() {
+            const data = await api('GET', '/api/portal/activity');
+            
+            if (data._apiError) {
+                document.getElementById('activityContent').innerHTML = errorFallback(data.message, 'loadActivity');
+                return;
+            }
+            
+            const events = data.events || [];
+
+            document.getElementById('activityContent').innerHTML = `
+                <h3>Activity Log <span style="font-size:12px; color:var(--text-dim); font-weight:normal">(${events.length} events)</span></h3>
+                <div class="activity-feed">
+                    ${events.length ? events.map(e => `
+                        <div class="activity-item" ${e.task_id ? `onclick="showTaskDetail(${e.task_id})" style="cursor:pointer"` : ''}>
+                            <div class="activity-icon">${e.icon || '📋'}</div>
+                            <div class="activity-content">
+                                <div class="activity-title">${e.title} <span style="color:var(--text-dim); font-size:12px">${e.type.replace(/_/g, ' ')}</span></div>
+                                ${e.detail ? `<div style="font-size:12px; color:var(--text-muted); margin-top:2px; line-height:1.4">${escapeHtml(e.detail)}</div>` : ''}
+                                <div class="activity-meta">
+                                    <span>${formatTime(e.time)}</span>
+                                    ${e.download_url ? `<a href="${e.download_url}" class="btn btn-sm btn-secondary" style="margin-left:auto" download>📥 Download</a>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('') : '<div style="color:var(--text-dim); text-align:center; padding:40px">No activity yet. Create a task to get started.</div>'}
+                </div>
+            `;
+        }
+
+        function getStatusIcon(status) {
+            const icons = {
+                'RUNNING': '🔄',
+                'PENDING': '⏳',
+                'DONE': '✅',
+                'FAILED': '❌',
+                'DEAD': '💀'
+            };
+            return icons[status] || '📋';
+        }
+
+        // getServicesForTier, getInfraForTier, getSupportForTier — REMOVED
+        // Now served dynamically from /api/portal/services
+        // (see TIER_SERVICES, TIER_INFRA, TIER_SUPPORT in api.py)
+
+        // ── TIER LABELS ────────────────────────────────────────
+        function getTierLabel(tier) {
+            const labels = {
+                'business': 'Business Fleet ($299/mo)',
+                'enterprise': 'Enterprise Fleet ($799/mo)',
+                'private': 'Systack Private ($799/mo)',
+                'accelerate': 'Systack Accelerate ($249/mo)'
+            };
+            return labels[tier] || tier;
+        }
+
+        // getServicesForTier, getInfraForTier, getSupportForTier — REMOVED
+        // Now served dynamically from /api/portal/services
+        // (see TIER_SERVICES, TIER_INFRA, TIER_SUPPORT in api.py)
+
+        const DOC_VERSIONS = {
+            'Quick Start Guide v7.0': { version: 'v7.0', updated: 'Jun 30, 2026', pages: '7' },
+            'Dashboard User Guide v6.0': { version: 'v6.0', updated: 'Jun 30, 2026', pages: '10' },
+            'Service Manual v7.0': { version: 'v7.0', updated: 'Jun 30, 2026', pages: '10' },
+            'Architecture Overview v5.0': { version: 'v5.0', updated: 'Jun 30, 2026', pages: '10' },
+            'Dashboard Mobile Access Guide v4.0': { version: 'v4.0', updated: 'Jun 30, 2026', pages: '7' },
+            'Enterprise Deployment Guide': { version: 'v1.0', updated: 'Jun 22, 2026', pages: '4' },
+        };
+
+        function getDocsForTier(tier) {
+            // Use relative paths so they work both at / and /dashboard/
+            const prefix = window.location.pathname.startsWith('/dashboard') ? '/dashboard' : '';
+            const base = [
+                { icon: '📄', name: 'Quick Start Guide v7.0', desc: 'Get started — PIN auth, mobile access, Live Ops, file upload, troubleshooting', url: `${prefix}/download/quickstart-v7` },
+                { icon: '📘', name: 'Dashboard User Guide v6.0', desc: 'Complete guide to all 8 tabs, onboarding tour, usage metrics, service setup, deliverable storage', url: `${prefix}/download/user-guide-v6` },
+                { icon: '📘', name: 'Service Manual v7.0', desc: 'Complete reference for v2.1+ — auth, APIs, endpoints, schema, Stripe integration', url: `${prefix}/download/manual-v7` },
+                { icon: '🏗️', name: 'Architecture Overview v5.0', desc: 'Technical architecture, API endpoints, database schema, deliverable endpoints', url: `${prefix}/download/architecture-v5` },
+                { icon: '📱', name: 'Dashboard Mobile Access Guide v4.0', desc: 'iPhone and Android setup with Tailscale, file upload/download on mobile, 📁 Chats button', url: `${prefix}/download/mobile-guide-v4` },
+            ];
+
+            const extra = {
+                'enterprise': [
+                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: `${prefix}/download/enterprise-guide` },
+                ],
+                'private': [
+                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: `${prefix}/download/enterprise-guide` },
+                ],
+            };
+
+            return [...base, ...(extra[tier] || [])];
+        }
+
         // ── DOCS ────────────────────────────────────────────────
         function loadDocs() {
             const tier = client?.tier || 'business';
             const docs = getDocsForTier(tier);
 
             document.getElementById('docsContent').innerHTML = `
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px">
+                    <span class="tier-badge tier-${tier.toLowerCase().replace('+','-plus')}">${getTierLabel(tier)}</span>
+                    <span style="font-size:13px; color:var(--text-muted)">${docs.length} document${docs.length !== 1 ? 's' : ''} available</span>
+                </div>
                 <div style="display:grid; gap:12px">
-                    ${docs.map((d, i) => `
-                        <div class="doc-card" onclick="downloadDoc('${d.url}', '${d.name}')" style="cursor:pointer">
+                    ${docs.map((d, i) => {
+                        const meta = DOC_VERSIONS[d.name] || { version: 'v?', updated: 'Unknown', pages: '?' };
+                        return `
+                        <div class="doc-card" onclick="downloadDoc('${d.url}', '${d.name}')" style="cursor:pointer; align-items:flex-start;">
                             <div class="doc-icon">${d.icon}</div>
-                            <div>
+                            <div style="flex:1">
                                 <div class="doc-name">${d.name}</div>
                                 <div class="doc-desc">${d.desc}</div>
+                                <div style="display:flex; gap:12px; margin-top:8px; flex-wrap:wrap">
+                                    <span style="font-size:11px; color:var(--accent-bright); background:rgba(0,161,219,0.08); padding:2px 8px; border-radius:4px;">${meta.version}</span>
+                                    <span style="font-size:11px; color:var(--text-dim)">📄 ${meta.pages} pages</span>
+                                    <span style="font-size:11px; color:var(--text-dim)">🕐 Updated ${meta.updated}</span>
+                                    <span style="font-size:11px; color:var(--green); margin-left:auto">📥 Click to view</span>
+                                </div>
                             </div>
                         </div>
-                    `).join('')}
+                        `;
+                    }).join('')}
                 </div>
             `;
         }
@@ -2214,230 +3121,6 @@
                 // Fallback: direct navigation
                 window.location.href = url;
             }
-        }
-
-        // ── ACTIVITY ────────────────────────────────────────────
-        async function loadActivity() {
-            const tasks = await api('GET', '/api/portal/tasks');
-            window._allTasks = tasks;
-            const recentTasks = tasks.slice(0, 20);
-
-            document.getElementById('activityContent').innerHTML = `
-                <h3>Recent Activity</h3>
-                <div class="activity-feed">
-                    ${recentTasks.length ? recentTasks.map(t => `
-                        <div class="activity-item" onclick="showTaskDetail(${t.id})" style="cursor:pointer">
-                            <div class="activity-icon">${getStatusIcon(t.status)}</div>
-                            <div class="activity-content">
-                                <div class="activity-title">${t.display_name || t.task_type} <span style="color:var(--text-dim); font-size:12px">#${t.id}</span></div>
-                                ${t.description ? `<div style="font-size:12px; color:var(--text-muted); margin-top:2px; line-height:1.4">${escapeHtml(t.description).substring(0, 100)}${t.description.length > 100 ? '...' : ''}</div>` : ''}
-                                <div class="activity-meta">
-                                    <span class="status-pill status-${t.status.toLowerCase()}">${t.status}</span>
-                                    <span>${getAgentAvatar(t.assigned_agent)} ${t.assigned_agent || 'Unassigned'}</span>
-                                    <span>${formatTime(t.created_at)}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('') : '<div style="color:var(--text-dim); text-align:center; padding:40px">No recent activity.</div>'}
-                </div>
-            `;
-        }
-
-        function getStatusIcon(status) {
-            const icons = {
-                'RUNNING': '🔄',
-                'PENDING': '⏳',
-                'DONE': '✅',
-                'FAILED': '❌',
-                'DEAD': '💀'
-            };
-            return icons[status] || '📋';
-        }
-
-        // ── TIER DATA ───────────────────────────────────────────
-        function getTierLabel(tier) {
-            const labels = {
-                'personal': 'Personal ($49/mo)',
-                'personal+': 'Personal+ ($99/mo)',
-                'business': 'Business Fleet ($299/mo)',
-                'enterprise': 'Enterprise Fleet ($799/mo)',
-                'private': 'Systack Private ($799/mo)',
-                'accelerate': 'Systack Accelerate ($249/mo)'
-            };
-            return labels[tier] || tier;
-        }
-
-        function getServicesForTier(tier) {
-            const all = {
-                'personal': [
-                    { icon: '📧', name: 'Email Triage & Drafting', desc: 'Auto-sort, summarize, and draft replies for your inbox.', active: true },
-                    { icon: '📅', name: 'Calendar Management', desc: 'Schedule, reschedule, and send reminders for appointments.', active: true },
-                    { icon: '✅', name: 'Task Reminders & Follow-ups', desc: 'Never miss a deadline. Automated follow-ups on pending items.', active: true },
-                    { icon: '📝', name: 'Document Summarization', desc: 'Upload a PDF, get a concise summary in seconds.', active: true },
-                    { icon: '🔍', name: 'Research Assistance', desc: 'Ask questions, get researched answers from your agent.', active: true },
-                    { icon: '🗂️', name: 'Note Organization', desc: 'Notes auto-tagged, categorized, and searchable.', active: true },
-                ],
-                'personal+': [
-                    { icon: '📧', name: 'Email Triage & Drafting', desc: 'Auto-sort, summarize, and draft replies for your inbox.', active: true },
-                    { icon: '📅', name: 'Calendar Management', desc: 'Schedule, reschedule, and send reminders for appointments.', active: true },
-                    { icon: '✅', name: 'Task Reminders & Follow-ups', desc: 'Never miss a deadline. Automated follow-ups on pending items.', active: true },
-                    { icon: '📝', name: 'Document Summarization', desc: 'Upload a PDF, get a concise summary in seconds.', active: true },
-                    { icon: '🔍', name: 'Research Assistance', desc: 'Ask questions, get researched answers from your agent.', active: true },
-                    { icon: '🗂️', name: 'Note Organization', desc: 'Notes auto-tagged, categorized, and searchable.', active: true },
-                    { icon: '📱', name: 'Multi-Device Sync', desc: 'Access your agent from phone, laptop, or tablet.', active: true },
-                    { icon: '🎙️', name: 'Voice Interaction', desc: 'Speak to your agent. Local Whisper speech-to-text.', active: true },
-                    { icon: '💰', name: 'Expense Tracking', desc: 'Auto-categorize expenses from receipts and emails.', active: true },
-                    { icon: '🔗', name: 'Custom Integrations', desc: 'Connect to your local apps and tools.', active: false },
-                ],
-                'business': [
-                    { icon: '🧾', name: 'Invoice Processing', desc: 'Auto-extract vendor, totals, line items. Push to accounting.', active: true },
-                    { icon: '🎯', name: 'Lead Qualification', desc: 'Score and route incoming leads based on your criteria.', active: true },
-                    { icon: '💬', name: 'Customer Support Drafting', desc: 'Auto-draft responses to common inquiries. Human reviews before send.', active: true },
-                    { icon: '👥', name: 'Team Collaboration', desc: 'Shared Slack workspace. Agents post updates, alerts, and reports.', active: true },
-                    { icon: '📄', name: 'Document Classification', desc: 'Incoming docs auto-sorted: contracts, invoices, forms, applications.', active: true },
-                    { icon: '📊', name: 'Report Generation', desc: 'Daily/weekly summary reports auto-generated and delivered.', active: true },
-                    { icon: '📧', name: 'Email Triage', desc: 'Inbox management for team inboxes.', active: false },
-                    { icon: '📅', name: 'Calendar Management', desc: 'Team scheduling and appointment management.', active: false },
-                ],
-                'enterprise': [
-                    { icon: '🧾', name: 'Invoice Processing', desc: 'Auto-extract vendor, totals, line items. Push to accounting.', active: true },
-                    { icon: '🎯', name: 'Lead Qualification', desc: 'Score and route incoming leads based on your criteria.', active: true },
-                    { icon: '💬', name: 'Customer Support Drafting', desc: 'Auto-draft responses to common inquiries. Human reviews before send.', active: true },
-                    { icon: '👥', name: 'Team Collaboration', desc: 'Shared Slack workspace. Agents post updates, alerts, and reports.', active: true },
-                    { icon: '📄', name: 'Document Classification', desc: 'Incoming docs auto-sorted: contracts, invoices, forms, applications.', active: true },
-                    { icon: '📊', name: 'Report Generation', desc: 'Daily/weekly summary reports auto-generated and delivered.', active: true },
-                    { icon: '🏢', name: 'On-Premise Deployment', desc: 'Dedicated hardware in your building. Zero cloud exposure.', active: true },
-                    { icon: '🔒', name: 'HIPAA-Grade Privacy', desc: 'Full compliance for regulated industries.', active: true },
-                    { icon: '🎓', name: 'White-Glove Setup', desc: 'We install, configure, and train your team on-site.', active: true },
-                    { icon: '🚨', name: 'Priority Support (4hr SLA)', desc: 'Critical issues resolved within 4 business hours.', active: true },
-                ],
-                'private': [
-                    { icon: '📄', name: 'Private Document Extraction', desc: 'Scanned PDFs, contracts, medical records → structured data. Zero cloud.', active: true },
-                    { icon: '🧾', name: 'Automated Invoice Processing', desc: 'Classify, extract, route for approval, push to QuickBooks/Xero.', active: true },
-                    { icon: '💬', name: 'Self-Hosted Customer Support', desc: 'Auto-draft responses. Human reviews. Local SMTP only.', active: true },
-                    { icon: '⌨️', name: 'Data Entry Elimination', desc: 'Watch folders/inboxes. Extract data. Populate CRM/EHR automatically.', active: true },
-                    { icon: '🔍', name: 'Private Knowledge Base Search', desc: 'Search your internal docs. Answers sourced only from your files.', active: true },
-                    { icon: '📋', name: 'Compliance Audit Trail', desc: 'Every AI action logged. Full chain of custody. Audit-ready.', active: true },
-                ],
-                'accelerate': [
-                    { icon: '🧾', name: 'Automated Invoice Processing', desc: 'Extract vendor, total, line items. Push to accounting system.', active: true },
-                    { icon: '💬', name: 'Customer Support Automations', desc: 'Auto-classify and draft responses. Human reviews before send.', active: true },
-                    { icon: '⌨️', name: 'Data Entry Elimination', desc: 'Monitor sources, extract data, populate CRM/ERP automatically.', active: true },
-                    { icon: '🎯', name: 'Lead Qualification Pipeline', desc: 'Score and route leads. High-intent flagged, tire-kickers nurtured.', active: true },
-                    { icon: '📄', name: 'Document Classification Engine', desc: 'Auto-sort by type. Route to correct department or folder.', active: true },
-                    { icon: '📊', name: 'Scheduled Report Generator', desc: 'Daily/weekly reports auto-generated. Delivered to Slack/email.', active: true },
-                ]
-            };
-            return all[tier] || all['business'];
-        }
-
-        function getInfraForTier(tier) {
-            const all = {
-                'personal': [
-                    { icon: '💻', name: 'Your Device', value: 'Self-hosted on your hardware' },
-                    { icon: '🧠', name: 'AI Models', value: 'Local Ollama (qwen2.5:7b)' },
-                    { icon: '🔒', name: 'Data Location', value: 'Your machine only' },
-                    { icon: '🛠️', name: 'Management', value: 'Self-managed' },
-                ],
-                'personal+': [
-                    { icon: '💻', name: 'Your Device', value: 'Self-hosted on your hardware' },
-                    { icon: '🧠', name: 'AI Models', value: 'Local Ollama (qwen2.5:7b)' },
-                    { icon: '📱', name: 'Devices', value: 'Unlimited (phone, laptop, tablet)' },
-                    { icon: '🔒', name: 'Data Location', value: 'Your machine only' },
-                ],
-                'business': [
-                    { icon: '☁️', name: 'Infrastructure', value: 'Cloud VPS (16GB RAM)' },
-                    { icon: '🧠', name: 'AI Models', value: 'Local Ollama (qwen2.5:7b)' },
-                    { icon: '🔐', name: 'Network', value: 'Tailscale encrypted tunnel' },
-                    { icon: '🛠️', name: 'Management', value: 'Fully managed by Systack' },
-                    { icon: '👥', name: 'Team Size', value: 'Up to 5 members' },
-                ],
-                'enterprise': [
-                    { icon: '🖥️', name: 'Infrastructure', value: 'Dedicated hardware (on-premise)' },
-                    { icon: '🧠', name: 'AI Models', value: 'llama3:70b or command-r-plus' },
-                    { icon: '🔒', name: 'Privacy', value: 'HIPAA-grade, air-gapped option' },
-                    { icon: '🛠️', name: 'Management', value: 'White-glove by Systack' },
-                    { icon: '👥', name: 'Team Size', value: '10+ members' },
-                ],
-                'private': [
-                    { icon: '🖥️', name: 'Hardware', value: 'Mac Studio / Linux + RTX 4090' },
-                    { icon: '🧠', name: 'AI Models', value: 'llama3-70b, command-r (local)' },
-                    { icon: '🔒', name: 'Network', value: 'Air-gapped or firewalled LAN' },
-                    { icon: '☁️', name: 'Cloud Apps', value: 'ZERO — Stripe only (client account)' },
-                ],
-                'accelerate': [
-                    { icon: '☁️', name: 'Infrastructure', value: 'Cloud GPU instances (RunPod/Lambda)' },
-                    { icon: '🧠', name: 'AI Models', value: 'llama3-8b, mistral-7b (local)' },
-                    { icon: '🔐', name: 'Network', value: 'Tailscale WireGuard tunnel' },
-                    { icon: '📈', name: 'Scaling', value: 'Auto-scaling GPU instances' },
-                ]
-            };
-            return all[tier] || all['business'];
-        }
-
-        function getSupportForTier(tier) {
-            const all = {
-                'personal': [
-                    { label: 'Support Channel', value: 'Community forum' },
-                    { label: 'Response Time', value: 'Best effort' },
-                    { label: 'Setup', value: 'Self-install' },
-                    { label: 'Uptime SLA', value: 'None (self-managed)' },
-                ],
-                'personal+': [
-                    { label: 'Support Channel', value: 'Email' },
-                    { label: 'Response Time', value: 'Same business day' },
-                    { label: 'Setup', value: 'Self-install with guide' },
-                    { label: 'Uptime SLA', value: 'None (self-managed)' },
-                ],
-                'business': [
-                    { label: 'Support Channel', value: 'Email + Slack' },
-                    { label: 'Response Time', value: 'Same business day' },
-                    { label: 'Setup', value: 'Remote (3-5 business days)' },
-                    { label: 'Uptime SLA', value: '99.9%' },
-                ],
-                'enterprise': [
-                    { label: 'Support Channel', value: 'Phone + Slack priority' },
-                    { label: 'Response Time', value: '4-hour SLA (business hours)' },
-                    { label: 'Setup', value: 'White-glove on-site (1-2 weeks)' },
-                    { label: 'Uptime SLA', value: '99.5%' },
-                ],
-                'private': [
-                    { label: 'Support Channel', value: 'Phone + Slack priority' },
-                    { label: 'Response Time', value: '4-hour SLA (business hours)' },
-                    { label: 'Setup', value: 'White-glove hardware install (1-2 weeks)' },
-                    { label: 'Uptime SLA', value: '99.5%' },
-                ],
-                'accelerate': [
-                    { label: 'Support Channel', value: 'Email + Slack' },
-                    { label: 'Response Time', value: 'Same business day' },
-                    { label: 'Setup', value: 'Remote (3-5 business days)' },
-                    { label: 'Uptime SLA', value: '99.9%' },
-                ]
-            };
-            return all[tier] || all['business'];
-        }
-
-        function getDocsForTier(tier) {
-            // Use relative paths so they work both at / and /dashboard/
-            const prefix = window.location.pathname.startsWith('/dashboard') ? '/dashboard' : '';
-            const base = [
-                { icon: '📄', name: 'Quick Start Guide v5.0', desc: 'Get started with PIN auth, onboarding, and mobile access', url: `${prefix}/download/quickstart-v5` },
-                { icon: '📘', name: 'Dashboard User Guide v3.0', desc: 'Complete guide to all 7 tabs, PIN management, and mobile access', url: `${prefix}/download/user-guide-v3` },
-                { icon: '📘', name: 'Service Manual v5.0', desc: 'Complete reference for dashboard v2.1 — auth, APIs, troubleshooting', url: `${prefix}/download/manual-v5` },
-                { icon: '🏗️', name: 'Architecture Overview v4.0', desc: 'Technical architecture, API endpoints, and database schema', url: `${prefix}/download/architecture-v4` },
-                { icon: '📱', name: 'Dashboard Mobile Access Guide v2.0', desc: 'iPhone and Android setup with Tailscale and home screen shortcuts', url: `${prefix}/download/mobile-guide-v2` },
-            ];
-
-            const extra = {
-                'enterprise': [
-                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: `${prefix}/download/enterprise-guide` },
-                ],
-                'private': [
-                    { icon: '📋', name: 'Enterprise Deployment Guide', desc: 'On-premise setup and compliance configuration', url: `${prefix}/download/enterprise-guide` },
-                ],
-            };
-
-            return [...base, ...(extra[tier] || [])];
         }
 
         // ── SETTINGS ─────────────────────────────────────────────
@@ -2530,7 +3213,72 @@
                         <span class="settings-value" style="font-size:12px">${client.tailscale_url}</span>
                     </div>` : ''}
                 </div>
+                
+                <div class="settings-card">
+                    <h3>📦 Data Export</h3>
+                    <p style="color:var(--text-muted); font-size:13px; margin-bottom:16px">
+                        Export all your data: tasks, chat history, deliverables, and settings. 
+                        You own your data.
+                    </p>
+                    <button class="btn btn-secondary" onclick="exportData()" id="exportBtn">
+                        📥 Export My Data
+                    </button>
+                    <div id="exportStatus" style="margin-top:12px; font-size:13px; display:none"></div>
+                </div>
+                <div class="settings-card">
+                    <h3>🎯 Onboarding</h3>
+                    <p style="color:var(--text-muted); font-size:13px; margin-bottom:16px">
+                        New to SAOS? Restart the guided tour to learn your dashboard.
+                    </p>
+                    <button class="btn btn-secondary" onclick="restartTour()">
+                        🔄 Restart Tour
+                    </button>
+                </div>
             `;
+        }
+        
+        async function exportData() {
+            const btn = document.getElementById('exportBtn');
+            const status = document.getElementById('exportStatus');
+            
+            btn.disabled = true;
+            btn.textContent = '📥 Exporting...';
+            status.style.display = 'block';
+            status.textContent = 'Preparing your data export...';
+            status.style.color = 'var(--text-muted)';
+            
+            try {
+                const response = await fetch('/api/export/data', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Export failed: ${response.status}`);
+                }
+                
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `saos-export-${client.customer_name || 'data'}.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                status.textContent = '✅ Export complete! Check your downloads.';
+                status.style.color = 'var(--green)';
+            } catch (e) {
+                console.error('Export failed:', e);
+                status.textContent = '❌ Export failed: ' + e.message;
+                status.style.color = 'var(--red)';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '📥 Export My Data';
+            }
         }
 
         function showChangePinForm() {
@@ -2552,11 +3300,19 @@
             try {
                 const data = await api('POST', '/api/auth/change-pin', {current_pin: current, new_pin: newPin});
                 if (data.error) throw new Error(data.error);
-                successEl.textContent = data.message || 'PIN updated successfully';
+                successEl.textContent = 'PIN updated! Logging you out... Please log in with your new PIN.';
                 successEl.style.display = 'block';
-                document.getElementById('changePinCurrent').value = '';
-                document.getElementById('changePinNew').value = '';
-                setTimeout(() => document.getElementById('changePinForm').style.display = 'none', 2000);
+                
+                // Force logout after PIN change
+                setTimeout(() => {
+                    localStorage.removeItem('saos_token');
+                    localStorage.removeItem('saos_client_id');
+                    token = null;
+                    client = null;
+                    document.getElementById('appContainer').classList.remove('active');
+                    document.getElementById('loginScreen').style.display = 'flex';
+                    document.getElementById('loginError').textContent = 'PIN updated. Please log in with your new PIN.';
+                }, 2000);
             } catch (e) {
                 errEl.textContent = e.message;
                 errEl.style.display = 'block';
@@ -2574,25 +3330,40 @@ async function requestSetup(serviceName, serviceDesc) {
                 
                 if (data.error) throw new Error(data.error);
                 
-                alert(`✅ Setup requested!\n\nTask #${data.task_id} created and assigned to ${data.assigned_agent}.\n\nYou'll be notified when work begins.`);
+                // Auto-switch to Tasks tab and show the new task
+                showTab('tasks', [...document.querySelectorAll('.nav-link')].find(b => b.textContent.includes('Tasks')));
                 
-                // Refresh tasks tab if visible
-                const tasksTab = document.getElementById('tasksTab');
-                if (tasksTab && tasksTab.style.display !== 'none') {
-                    loadTasks();
-                }
+                // Highlight the new task after a short delay for tab to load
+                setTimeout(() => {
+                    const taskElements = document.querySelectorAll('.task-row');
+                    taskElements.forEach(el => {
+                        if (el.textContent.includes(`#${data.task_id}`)) {
+                            el.style.background = 'rgba(0,161,219,0.15)';
+                            el.style.borderLeft = '3px solid var(--accent)';
+                            el.scrollIntoView({behavior: 'smooth', block: 'center'});
+                        }
+                    });
+                }, 500);
                 
-                // Switch to chat to show the notification
-                showTab('chat', document.querySelector('[data-tab="chat"]'));
             } catch (e) {
                 alert('Failed to request setup: ' + e.message);
             }
         }
 
         // ── LIVE OPS (Real-time Agent Command Center) ────────
+
+        // ── LIVE OPS (Real-time Agent Command Center) ────────
         async function loadLiveOps() {
             const data = await api('GET', '/api/portal/status');
             const tasks = await api('GET', '/api/portal/tasks');
+            
+            if (data._apiError || tasks._apiError) {
+                document.getElementById('liveOpsContent').innerHTML = errorFallback(
+                    data.message || tasks.message, 'loadLiveOps'
+                );
+                return;
+            }
+            
             const tier = client?.tier || 'business';
 
             // Running tasks
@@ -2684,22 +3455,68 @@ async function requestSetup(serviceName, serviceDesc) {
         }
 
         // ── UTILS ────────────────────────────────────────────────
+        // Timezone support — store client preference in localStorage
+        function getClientTimezone() {
+            return localStorage.getItem('saos_timezone') || Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Chicago';
+        }
+        
+        function setClientTimezone(tz) {
+            localStorage.setItem('saos_timezone', tz);
+        }
+        
         function formatTime(iso) {
             if (!iso) return '';
             const d = new Date(iso);
+            const tz = getClientTimezone();
+            
+            // Use timezone-aware formatting
+            const options = { 
+                timeZone: tz,
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            
             const now = new Date();
             const diff = (now - d) / 1000;
 
             if (diff < 60) return 'just now';
             if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
             if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
-            return d.toLocaleDateString();
+            return d.toLocaleDateString('en-US', options);
+        }
+        
+        function formatDateTime(iso) {
+            if (!iso) return '';
+            const d = new Date(iso);
+            const tz = getClientTimezone();
+            return d.toLocaleString('en-US', {
+                timeZone: tz,
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
         }
 
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        function errorFallback(message, retryFn) {
+            return `
+                <div style="text-align:center; padding:60px 20px">
+                    <div style="font-size:48px; margin-bottom:16px">⚠️</div>
+                    <div style="color:var(--red); font-weight:600; margin-bottom:8px">Service Temporarily Unavailable</div>
+                    <div style="color:var(--text-muted); font-size:13px; max-width:300px; margin:0 auto">${message || 'Could not connect to dashboard API. Please try again in a moment.'}</div>
+                    <button class="btn btn-primary" style="margin-top:24px" onclick="${retryFn}()">🔄 Retry</button>
+                </div>
+            `;
         }
 
         function scrollToBottom() {
@@ -2753,6 +3570,110 @@ async function requestSetup(serviceName, serviceDesc) {
         // ── BOOT ─────────────────────────────────────────────────
         if (token) {
             initApp();
+            initSearch();
+            // Start onboarding tour if first visit
+            setTimeout(() => {
+                if (!localStorage.getItem('saos_tour_completed')) {
+                    startTour();
+                }
+            }, 800);
+        }
+
+        // ── ONBOARDING TOUR ────────────────────────────────────
+        const TOUR_STEPS = [
+            {
+                icon: '🛰️',
+                title: 'Welcome to SAOS',
+                text: 'Your AI fleet is ready. Let\'s take a quick tour of your dashboard.'
+            },
+            {
+                icon: '💬',
+                title: 'Chat with Your Fleet',
+                text: 'Start conversations with SOL and your AI agents. Request tasks, ask questions, or get updates.'
+            },
+            {
+                icon: '🔴',
+                title: 'Live Operations',
+                text: 'See agent status and task pipeline in real-time. Watch your automations work.'
+            },
+            {
+                icon: '📦',
+                title: 'Manage Services',
+                text: 'Your tier-specific services. Click Setup to request agent configuration.'
+            },
+            {
+                icon: '✅',
+                title: 'Tasks & Deliverables',
+                text: 'Track all tasks, view deliverables, and download files your agents create.'
+            }
+        ];
+        let tourStep = 0;
+        let tourOverlay = null;
+
+        function startTour() {
+            // Create overlay
+            tourOverlay = document.createElement('div');
+            tourOverlay.className = 'tour-overlay active';
+            tourOverlay.innerHTML = `
+                <div class="tour-card" id="tourCard">
+                    <button class="tour-skip-top" onclick="skipTour()">Skip ✕</button>
+                    ${TOUR_STEPS.map((step, i) => `
+                        <div class="tour-step ${i === 0 ? 'active' : ''}" data-step="${i}">
+                            <span class="tour-icon">${step.icon}</span>
+                            <div class="tour-title">${step.title}</div>
+                            <div class="tour-text">${step.text}</div>
+                            <div class="tour-dots" style="margin-bottom:20px">
+                                ${TOUR_STEPS.map((_, j) => `<div class="tour-dot ${j === i ? 'active' : ''}"></div>`).join('')}
+                            </div>
+                            <div class="tour-actions" style="justify-content:center">
+                                ${i > 0 ? `<button class="tour-btn tour-btn-secondary" onclick="prevTourStep()">← Back</button>` : '<div></div>'}
+                                <button class="tour-btn tour-btn-primary" onclick="nextTourStep()">${i === TOUR_STEPS.length - 1 ? 'Get Started' : 'Next'} →</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.body.appendChild(tourOverlay);
+        }
+
+        function prevTourStep() {
+            const steps = document.querySelectorAll('.tour-step');
+            const dots = document.querySelectorAll('.tour-dot');
+            steps[tourStep].classList.remove('active');
+            tourStep--;
+            steps[tourStep].classList.add('active');
+            dots.forEach((d, i) => d.classList.toggle('active', i === tourStep));
+        }
+
+        function nextTourStep() {
+            const steps = document.querySelectorAll('.tour-step');
+            const dots = document.querySelectorAll('.tour-dot');
+            steps[tourStep].classList.remove('active');
+            tourStep++;
+            if (tourStep >= TOUR_STEPS.length) {
+                completeTour();
+                return;
+            }
+            steps[tourStep].classList.add('active');
+            dots.forEach((d, i) => d.classList.toggle('active', i === tourStep));
+        }
+
+        function skipTour() {
+            localStorage.setItem('saos_tour_completed', 'true');
+            if (tourOverlay) tourOverlay.remove();
+            tourOverlay = null;
+        }
+
+        function completeTour() {
+            localStorage.setItem('saos_tour_completed', 'true');
+            if (tourOverlay) tourOverlay.remove();
+            tourOverlay = null;
+        }
+
+        function restartTour() {
+            tourStep = 0;
+            localStorage.removeItem('saos_tour_completed');
+            startTour();
         }
     </script>
 </body>
