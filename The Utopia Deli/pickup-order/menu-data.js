@@ -6,7 +6,7 @@
 const MENU = {
   sandwiches: [
     {
-      id: 'cowboy-chicken',
+      id: 'COWBOY',
       name: "Cowboy Chik'n Sandwich",
       price: 1300,
       desc: "Grilled Cowboy Chik'n, Lettuce, Tomato, Ranch, Bac'n",
@@ -44,7 +44,7 @@ const MENU = {
       }
     },
     {
-      id: 'chicken-club',
+      id: 'CLUB',
       name: "Chik'n Club Sub",
       price: 1500,
       desc: "Grilled Chik'n, Bac'n, Cheese on a bed of Lettuce and Tomatoes",
@@ -82,7 +82,7 @@ const MENU = {
       }
     },
     {
-      id: 'chicken-fried',
+      id: 'FRIED',
       name: "Chik'n Fried Chik'n Sub",
       price: 1300,
       desc: "Crispy Fried Chik'n on a hoagie with lettuce, tomato, ranch",
@@ -121,7 +121,7 @@ const MENU = {
       }
     },
     {
-      id: 'philly-sub',
+      id: 'PHILLY',
       name: "Philly Sub",
       price: 1300,
       desc: "Stek OR Chik'n with sautéed onions & bell peppers",
@@ -158,7 +158,7 @@ const MENU = {
   ],
   specialties: [
     {
-      id: 'chicken-poppers',
+      id: 'POPPERS',
       name: "Chik'n Poppers",
       price: 1000,
       desc: "Crispy chik'n dippers — choice of sauce: BBQ, Garlic Parm, Jerk, Buffalo, Lemon Pepper Wet",
@@ -178,7 +178,7 @@ const MENU = {
       }
     },
     {
-      id: 'korean-tacos',
+      id: 'DUMPLING_TACOS',
       name: 'Korean Pork Dumpling Tacos',
       price: 1000,
       desc: '"Pork", pickled slaw, aioli, and sauce on a dumpling shell. Set of 4 tacos',
@@ -207,7 +207,7 @@ const MENU = {
       }
     },
     {
-      id: 'bourbon-sliders',
+      id: 'ROCKTOWN_SLIDERS',
       name: "Rocktown Bourbon Chik'n Sliders",
       price: 1200,
       desc: "Rocktown distillery bourbon-infused chik'n with fresh slaw and aioli on a garlic butter slider bun",
@@ -224,7 +224,7 @@ const MENU = {
       }
     },
     {
-      id: 'buffalo-sliders',
+      id: 'BUFFALO_SLIDERS',
       name: "Buffalo Chik'n Sliders",
       price: 1200,
       desc: "Buffalo chik'n sliders with fresh slaw and ranch on a garlic butter slider bun",
@@ -243,7 +243,7 @@ const MENU = {
   ],
   sides: [
     {
-      id: 'fries-plain',
+      id: 'FRIES',
       name: "Plain Fries",
       price: 500,
       desc: "Crinkle-cut fries with a golden, crispy exterior",
@@ -295,7 +295,7 @@ const MENU = {
       modifiers: {}
     },
     {
-      id: 'cookies',
+      id: 'COOKIES_2',
       name: "Two Chocolate Chip Cookies",
       price: 400,
       desc: "Two fresh-baked chocolate chip cookies",
@@ -303,7 +303,7 @@ const MENU = {
       modifiers: {}
     },
     {
-      id: 'cold-pressed-juice',
+      id: 'JUICE_CP',
       name: "Fresh Cold-Pressed Juice",
       price: 500,
       desc: "Fresh cold-pressed juice — 10 oz",
@@ -315,7 +315,7 @@ const MENU = {
       }
     },
     {
-      id: 'water',
+      id: 'WATER_16OZ',
       name: "Bottled Water",
       price: 200,
       desc: "16 oz bottled water — crisp and refreshing",
@@ -323,7 +323,7 @@ const MENU = {
       modifiers: {}
     },
     {
-      id: 'side-salad',
+      id: 'SIDE_SALAD',
       name: "Side Salad",
       price: 500,
       desc: "Fresh mixed greens with house vegetables, served with your choice of dressing",
@@ -331,7 +331,7 @@ const MENU = {
       modifiers: {}
     },
     {
-      id: 'potato-chip-spirals',
+      id: 'CHIPS_SPIRALS',
       name: "Potato Chip Spirals",
       price: 500,
       desc: "Crispy potato chip spirals — seasoned and fried to perfection",
