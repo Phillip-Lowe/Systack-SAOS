@@ -327,11 +327,16 @@
     const total = subtotal + labor + tax;
 
     const payload = {
-      source: 'meal-prep',
-      timestamp: new Date().toISOString(),
-      customer: { name: name, phone: phoneDigits, email: email, pickup_time: pickup, notes: notes },
-      items: lineItems,
-      pricing: { subtotal: subtotal, labor: labor, tax: tax, total: total }
+      body: {
+        source: 'meal-prep',
+        timestamp: new Date().toISOString(),
+        customer: { name: name, phone: phoneDigits, email: email, pickup_time: pickup, notes: notes },
+        items: lineItems,
+        pricing: { subtotal: subtotal, labor: labor, tax: tax, total: total },
+        subtotal_cents: subtotal,
+        tax_cents: tax,
+        frontend_total_cents: total
+      }
     };
 
     fetch(CHECKOUT_WEBHOOK, {
