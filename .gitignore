@@ -54,3 +54,23 @@ memory/.dreams/
 memory/session_state.db
 memory/session_state.db-journal
 memory/dreaming/
+
+# --- Large Media Files ---
+*.mp4
+*.mp3
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.flv
+*.webm
+
+# --- Large Images / Archives ---
+*.zip
+*.tar.gz
+*.tar.bz2
+*.rar
+*.7z
+
+# --- Temporary / Development ---
+utopia-deli-temp/
