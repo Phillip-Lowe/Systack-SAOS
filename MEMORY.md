@@ -21,6 +21,25 @@ _This is my curated memory — the distilled essence, not raw logs. For daily lo
 7. **Workspace cleanup** — Removed stale `dashboard/` and `dashboards/` prototypes
 8. **Git push** — All changes pushed to `Phillip-Lowe/Systack-SAOS`
 
+### Fleet Sales-Validation Sprint (Oracle Directive) — 01:00-01:30 CDT
+
+**Mission:** Deploy SAOS fleet on highest-leverage sales-validation activities.
+
+| Agent | Task | File | Size |
+|-------|------|------|------|
+| ATLAS 🗺️ | Prospect Research (5 niches) | `Systack/sales/prospect-research-packets.md` | 27KB |
+| CHATTY 💬 | Outreach Asset Library | `Systack/sales/outreach-asset-library.md` | 409 lines |
+| JURIS ⚖️ | Business Infrastructure Pack | `Systack/legal/business-infrastructure-pack.md` | 16.9KB |
+| PESSI ⚠️ | SAOS Pre-Mortem | `Systack/risk/saos-premortem.md` | 14.5KB |
+| VALI ✅ | Acceptance Standards | `Systack/qa/acceptance-standards.md` | 382 lines |
+| CODY 💻 | Internal Standards | `Systack/operations/internal-standards.md` | 11.9KB |
+| ASSEMBLY 🛠️ | Standard Launch Kit | `Systack/delivery/standard-launch-kit.md` | 18.9KB |
+| SOL 🛰️ | Operating System | `Systack/operations/operating-system.md` | 21.5KB |
+
+**Key learning:** Cloud subagents fail to persist files on complex multi-section prompts. Fix: parent agent writes files manually. ATLAS/CHATTY/VALI (simpler prompts) worked; JURIS/PESSI/CODY/ASSEMBLY/SOL needed manual write.
+
+**Git:** 3 commits pushed to `Phillip-Lowe/Systack-SAOS` (`ac2e5f2..ef9bbd5`)
+
 ### Current SAOS State
 
 | Component | Status | Details |
