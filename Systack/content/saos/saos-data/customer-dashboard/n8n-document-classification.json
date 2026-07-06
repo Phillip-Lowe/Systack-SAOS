@@ -1,0 +1,222 @@
+{
+  "name": "SAOS Document Classification Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "saos-doc-uploaded",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-doc",
+      "name": "Document Upload Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "saos-doc-uploaded"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse uploaded document metadata\nconst body = $input.first().json.body || $input.first().json;\n\n// Extract file extension and determine likely type\nconst filename = body.filename || body.file_name || 'unknown';\nconst ext = filename.split('.').pop().toLowerCase();\n\n// Classification logic based on filename patterns\nlet docType = 'other';\nconst lowerName = filename.toLowerCase();\n\nif (lowerName.includes('invoice') || lowerName.includes('bill') || lowerName.includes('receipt') || ['pdf','jpg','png'].includes(ext) \u0026\u0026 lowerName.includes('inv')) {\n  docType = 'invoice';\n} else if (lowerName.includes('contract') || lowerName.includes('agreement') || lowerName.includes('terms') || lowerName.includes('nda')) {\n  docType = 'contract';\n} else if (lowerName.includes('form') || lowerName.includes('application') || lowerName.includes('registration')) {\n  docType = 'form';\n} else if (lowerName.includes('report') || lowerName.includes('summary') || lowerName.includes('analysis')) {\n  docType = 'report';\n}\n\nreturn [{\n  json: {\n    client_id: body.client_id,\n    deliverable_id: body.deliverable_id,\n    filename: filename,\n    file_type: ext,\n    doc_type: docType,\n    file_path: body.file_path || body.path,\n    file_size: body.file_size || 0,\n    uploaded_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "classify-doc",
+      "name": "Classify Document",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "type-invoice",
+              "leftValue": "={{ $json.doc_type }}",
+              "rightValue": "invoice",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      },
+      "id": "route-type",
+      "name": "Route by Type",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8768/api/tasks/request",
+        "body": {
+          "client_id": "={{ $json.client_id }}",
+          "service_name": "Invoice Processing Pipeline",
+          "title": "Process Classified Invoice",
+          "description": "Auto-classified invoice: {{ $json.filename }}",
+          "urgency": "normal"
+        },
+        "options": {}
+      },
+      "id": "route-invoice",
+      "name": "Route to Invoice Queue",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8768/api/tasks/request",
+        "body": {
+          "client_id": "={{ $json.client_id }}",
+          "service_name": "Document Classification Engine",
+          "title": "Review {{ $json.doc_type }}",
+          "description": "Classified document: {{ $json.filename }} (type: {{ $json.doc_type }})",
+          "urgency": "normal"
+        },
+        "options": {}
+      },
+      "id": "route-generic",
+      "name": "Route to General Queue",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8768/api/internal/notify-client",
+        "body": {
+          "client_id": "={{ $json.client_id }}",
+          "message": "Document '{{ $json.filename }}' classified as {{ $json.doc_type }} and routed to appropriate queue.",
+          "urgency": "normal",
+          "channel": "dashboard"
+        },
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "X-Internal-Api-Key",
+              "value": "saos-internal-dev-key"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "notify-client",
+      "name": "Send Classification Notice",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "options": {},
+        "responseBody": "={{ JSON.stringify({ success: true, classified_as: $json.doc_type, filename: $json.filename, routed: true }) }}",
+        "statusCode": "200"
+      },
+      "id": "respond-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1250, 300]
+    }
+  ],
+  "connections": {
+    "Document Upload Webhook": {
+      "main": [
+        [
+          {
+            "node": "Classify Document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify Document": {
+      "main": [
+        [
+          {
+            "node": "Route by Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Type": {
+      "main": [
+        [
+          {
+            "node": "Route to Invoice Queue",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Classification Notice",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route to General Queue",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Classification Notice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route to Invoice Queue": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route to General Queue": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Classification Notice": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [{"id":"saos","name":"SAOS"}],
+  "active": true
+}

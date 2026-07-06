@@ -1,0 +1,137 @@
+{
+  "name": "SAOS Customer Support Drafting",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "saos-support-request",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-support",
+      "name": "Support Request Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "saos-support-request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse incoming support request\nconst body = $input.first().json.body || $input.first().json;\n\nreturn [{\n  json: {\n    conversation_id: body.conversation_id,\n    client_id: body.client_id,\n    customer_name: body.customer_name || 'Customer',\n    content: body.content,\n    urgency: body.urgency || 'normal',\n    category: body.category || 'general'\n  }\n}];"
+      },
+      "id": "parse-request",
+      "name": "Parse Support Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Auto-draft response based on category\nconst data = $input.first().json;\nlet draft = '';\n\nconst templates = {\n  'billing': `Hi ${data.customer_name},\\n\\nThanks for reaching out about your billing inquiry. I've reviewed your account and here's what I found:\\n\\n[Draft response - review before sending]\\n\\nIf you have any other questions, just reply here.\\n— SAOS Support`,\n  'technical': `Hi ${data.customer_name},\\n\\nI received your technical support request. Let me look into this for you:\\n\\n[Investigating - draft response pending agent review]\\n\\nI'll update you shortly with next steps.\\n— SAOS Support`,\n  'general': `Hi ${data.customer_name},\\n\\nThank you for contacting SAOS support. I've received your message about:\\n\\n\"${data.content.substring(0, 200)}${data.content.length > 200 ? '...' : ''}\"\\n\\n[Draft response queued for human review]\\n\\nWe'll get back to you shortly.\\n— SAOS Support`\n};\n\ndraft = templates[data.category] || templates['general'];\n\nreturn [{\n  json: {\n    ...data,\n    draft_response: draft,\n    status: 'drafted',\n    requires_review: true\n  }\n}];"
+      },
+      "id": "draft-response",
+      "name": "Draft AI Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8768/api/tasks/request",
+        "body": {
+          "client_id": "={{ $json.client_id }}",
+          "service_name": "Customer Support Drafting",
+          "title": "Review Support Response",
+          "description": "Draft response for customer inquiry",
+          "urgency": "={{ $json.urgency }}"
+        },
+        "options": {}
+      },
+      "id": "create-task",
+      "name": "Queue for Human Review",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8768/api/chat/webhook/agent-response",
+        "body": {
+          "conversation_id": "={{ $json.conversation_id }}",
+          "agent_name": "CHATTY",
+          "content": "I've drafted a response to your inquiry. Our team is reviewing it now — you'll receive a finalized reply shortly."
+        },
+        "options": {}
+      },
+      "id": "notify-customer",
+      "name": "Notify Customer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 400]
+    },
+    {
+      "parameters": {
+        "options": {},
+        "responseBody": "={{ JSON.stringify({ success: true, status: 'drafted', message: 'Support request received and queued for review', draft_preview: $json.draft_response.substring(0, 100) }) }}",
+        "statusCode": "200"
+      },
+      "id": "respond-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1050, 300]
+    }
+  ],
+  "connections": {
+    "Support Request Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Support Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Support Request": {
+      "main": [
+        [
+          {
+            "node": "Draft AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft AI Response": {
+      "main": [
+        [
+          {
+            "node": "Queue for Human Review",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notify Customer",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [{"id":"saos","name":"SAOS"}],
+  "active": true
+}
