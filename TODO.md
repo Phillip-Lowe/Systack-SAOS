@@ -34,9 +34,10 @@ All 8 fleet agents delivered:
 **Impact:** First real leads in the pipeline
 
 ### 2. iOS Safari Cert Trust
-**Status:** Plan ready (Cloudflare Tunnel)
-**Needs:** Green's decision to proceed
-**Impact:** Mobile access for clients on iOS
+**Status:** ✅ RESOLVED — Cloudflare Tunnel deployed
+**Domains:** `portal.systack.net` + `command.systack.net` (live and verified)
+**Note:** `saos.systack.net` CNAME needs manual update in Cloudflare DNS (points to deli tunnel)
+**Impact:** Clients can now access SAOS from any device, any browser on iOS
 
 ### 3. Production Deployment
 **Status:** Deployment checklist PDF ready

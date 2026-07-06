@@ -16,6 +16,17 @@
 | BlueBubbles Bridge | 1234 | `bluebubbles-server` | ✅ Running | ✅ brew services |
 | Ollama (Local AI) | 11434 | `ollama serve` | ✅ Running | ✅ brew services |
 | PostgreSQL | 5432 | `postgres` | ✅ Running | ✅ brew services |
+| Cloudflare Tunnel (SAOS) | — | `cloudflared` | ✅ Running | ✅ launchd |
+
+## Public URLs (via Cloudflare Tunnel)
+
+| Domain | Service | Status |
+|-------|---------|--------|
+| `portal.systack.net` | Customer Portal (8768) | ✅ Live |
+| `command.systack.net` | Command Center (8770) | ✅ Live |
+| `saos.systack.net` | Customer Portal alias | ⚠️ CNAME needs update in Cloudflare DNS |
+| `n8n.systack.net` | n8n Automation (5678) | ✅ Live (deli tunnel) |
+| `invoices.systack.net` | Invoice API (9001) | ✅ Live (deli tunnel) |
 
 ## Removed Services
 

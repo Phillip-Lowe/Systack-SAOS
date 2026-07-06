@@ -1,15 +1,35 @@
-# SAOS iOS Safari `.ts.net` Certificate Trust — Resolution Plan
+# SAOS iOS Safari `.ts.net` Certificate Trust — RESOLVED
 **Date:** 2026-06-30
-**Status:** ⏳ IN PROGRESS — Plan created, awaiting implementation
+**Status:** ✅ RESOLVED — Cloudflare Tunnel deployed 2026-07-06
 
----
+## Problem (SOLVED)
 
-## Problem
+iOS Safari blocked access to `*.ts.net` Tailscale URLs with certificate error.
 
-iOS Safari blocks access to `*.ts.net` Tailscale URLs with certificate error:
-- **Error:** "This Connection Is Not Private" / "Certificate Invalid"
-- **Root cause:** Tailscale's `.ts.net` certificates are trusted on macOS but NOT automatically trusted on iOS
-- **Impact:** Customers cannot access SAOS dashboard on iPhone/iPad via Tailscale
+## Solution Implemented: Cloudflare Tunnel
+
+**Tunnel ID:** `a077cb5c-41fe-4557-90cf-11d8386900d5`
+**Name:** `saos-dashboard`
+**Config:** `~/.cloudflared/config-saos-dashboard.yml`
+**LaunchAgent:** `net.systack.saos-cloudflare-tunnel.plist`
+
+### Routes
+| Domain | Service | Port |
+|--------|---------|------|
+| `portal.systack.net` | Customer Portal | 8768 |
+| `command.systack.net` | Command Center | 8770 |
+| `saos.systack.net` | Customer Portal (alias) | 8768 |
+
+### Verification
+- `https://portal.systack.net/api/portal/health` → 200 ✅
+- `https://command.systack.net/api/health` → 200 ✅
+- Real SSL certs via Cloudflare (no iOS trust issues)
+- launchd auto-restart (KeepAlive=true)
+
+### Note
+`saos.systack.net` CNAME needs to be updated in Cloudflare DNS to point to `a077cb5c-41fe-4557-90cf-11d8386900d5.cfargotunnel.com` (currently points to the n8n-utopia-clean tunnel — Green needs to update this in Cloudflare dashboard).
+
+`portal.systack.net` and `command.systack.net` are already correct and working.
 
 ---
 
