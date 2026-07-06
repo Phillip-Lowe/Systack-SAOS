@@ -404,6 +404,222 @@ Hi [First Name], I help small businesses automate invoice processing, document c
 
 ---
 
+## PART 4: FOLLOW-UP SEQUENCES
+
+### Post-Discovery-Call Sequence (3 touches over 7 days)
+
+**Day 1 — Recap Email:**
+> Subject: Great chatting — here's what I heard
+>
+> Hi [Name],
+>
+> Thanks for the time today. Quick recap of what I heard:
+> - [Pain point 1 from call]
+> - [Pain point 2 from call]
+> - You're currently using [current tool] and it's [specific frustration]
+>
+> I'm putting together a proposal based on our conversation. You'll have it by [day].
+>
+> — Green
+
+**Day 4 — Value Add Email:**
+> Subject: [Industry] automation — what others are doing
+>
+> Hi [Name],
+>
+> I was thinking about what you mentioned re: [specific pain point]. Here's how another [industry] company handled it with SAOS:
+> - [Specific result/case study]
+> - [Specific feature that solved it]
+>
+> Proposal coming tomorrow. Let me know if you want to adjust anything.
+>
+> — Green
+
+**Day 7 — Proposal Delivery:**
+> Subject: Your SAOS proposal is ready
+>
+> Hi [Name],
+>
+> Attached: your custom proposal. [Tier recommendation] tier, [monthly price]/mo.
+>
+> Key highlights:
+> - [Service 1] — solves [pain point 1]
+> - [Service 2] — solves [pain point 2]
+> - 30-day money-back guarantee
+> - 15-day implementation
+>
+> Happy to walk through it on a call. Otherwise, take your time and let me know if you have questions.
+>
+> — Green
+
+### Post-Proposal Sequence (3 touches over 14 days)
+
+**Day 3 — Q&A Offer:**
+> Subject: Any questions on the proposal?
+>
+> Hi [Name],
+>
+> Just checking in — did you have any questions about the proposal? Happy to jump on a quick call if anything's unclear.
+>
+> — Green
+
+**Day 7 — Case Study:**
+> Subject: How [similar company] uses SAOS
+>
+> Hi [Name],
+>
+> Thought you might like to see how [similar company/industry] is using SAOS. They went live [X] weeks ago and have already [specific result].
+>
+> — Green
+
+**Day 14 — Breakup:**
+> Subject: I'll stop reaching out after this
+>
+> Hi [Name],
+>
+> I don't want to keep filling your inbox. If the timing's not right, I understand. If anything changes, you know where to find me.
+>
+> — Green
+
+### Re-Engagement Campaign (Cold leads, 90+ days)
+
+**Month 3 — Check-in:**
+> Subject: How's [specific pain point] going?
+>
+> Hi [Name],
+>
+> It's been a few months since we last talked. Is [pain point they mentioned] still an issue? We've added [new feature] since we last spoke — might be relevant.
+>
+> No pressure. Just wanted to check in.
+>
+> — Green
+
+**Month 6 — Update:**
+> Subject: SAOS update — what's new
+>
+> Hi [Name],
+>
+> Big updates since we last connected:
+> - [New feature 1]
+> - [New feature 2]
+> - [New tier or pricing]
+>
+> Still solving [their original pain point]? Let's talk.
+>
+> — Green
+
+**Month 12 — Anniversary:**
+> Subject: A year ago we talked about [pain point]
+>
+> Hi [Name],
+>
+> A year ago we chatted about automating [their process]. Curious if you ended up solving it — or if it's still on the list.
+>
+> If it's still relevant, I'd love to show you what's changed.
+>
+> — Green
+
+---
+
+## PART 5: PROPOSAL TEMPLATES
+
+### Business Tier Proposal Template ($299/mo)
+
+```
+SYSTACK PROPOSAL — [Company Name]
+Date: [Date]
+Prepared by: Green (Phillip Lowe, Founder)
+
+---
+
+EXECUTIVE SUMMARY
+
+Based on our conversation on [date], [Company Name] is spending [X hours/week] on
+[pain point 1] and [pain point 2]. SAOS can automate both, saving approximately
+[X hours/week] = $[X * hourly rate]/month in labor costs.
+
+---
+
+RECOMMENDED TIER: BUSINESS — $299/month
+
+What's included:
+✅ Customer Portal (secure login, real-time dashboard)
+✅ Invoice Processing Pipeline (email → PDF → extraction → database)
+✅ Lead Qualification Bot (form → scoring → alerts)
+✅ Support Drafting (AI-generated response drafts)
+✅ Standard Support (24-hour response, email)
+✅ Weekly automated reports
+
+Implementation: 15 days
+Guarantee: 30-day money-back
+
+---
+
+PRICING
+
+Monthly: $299/month (billed via Stripe)
+Annual: $2,990/year (save 17% — 2 months free)
+
+Not included: VPS hosting (~$40-80/mo via Vultr), domain registration
+
+---
+
+NEXT STEPS
+
+1. Sign MSA + ASA (attached)
+2. First month charged via Stripe
+3. Onboarding begins within 5 business days
+4. Go-live within 15 days
+
+---
+
+Green Phillips
+Founder, Systack
++1-501-274-6231
+support@systack.net
+```
+
+### Enterprise Tier Proposal Template ($799/mo)
+
+Same structure, but includes:
+- Document Classification (OCR, auto-categorization, search)
+- Scheduled Report Generator (custom reports, scheduled delivery)
+- Command Center access (admin dashboard, health monitoring)
+- Priority Support (4-hour critical, 24-hour standard)
+- After-hours emergency support (24/7)
+- Up to 2 custom workflows per quarter
+- Unlimited users
+
+---
+
+## PART 6: OBJECTION HANDLING — EXPANDED
+
+### "It's too expensive"
+**Response:** "I understand. Let's break down the math. You're currently spending [X hours/week × $Y/hour = $Z/month] on manual work. SAOS is $299/month. You're saving $[Z-299] every month. If SAOS saves you more than it costs, it's not expensive — it's profitable."
+
+### "We already have tools for that"
+**Response:** "That's great — what are you using? [Listen] SAOS doesn't replace your existing tools. It connects them and automates the manual work between them. You keep QuickBooks/your CRM/your email — SAOS just makes them talk to each other."
+
+### "We're too small for this"
+**Response:** "Actually, small teams benefit the most. You don't have spare capacity for manual data entry, lead chasing, and support tickets. SAOS handles those so your team focuses on revenue-generating work. That's why we offer Business tier at $299 — designed for teams under 50."
+
+### "I need to think about it"
+**Response:** "Totally fair. What specifically do you need to think about? [Listen] If it's pricing, we can look at annual and save 17%. If it's features, I can show you a demo. If it's trust, we offer a 30-day money-back guarantee — zero risk."
+
+### "I don't have time to set this up"
+**Response:** "You don't. We handle everything. You provide email addresses and form URLs, and we do the rest. The entire setup takes 15 days, and your involvement is maybe 2 hours total — a kickoff call and a training session."
+
+### "We've been burned by software before"
+**Response:** "I get it. Most of our clients felt the same way. Here's why SAOS is different: it runs on YOUR server, not ours. Your data stays with you. And if it doesn't work, you get your money back within 30 days. No long-term contracts. We earn your business every month."
+
+### "Can you do it cheaper?"
+**Response:** "We can look at annual billing — that saves 17%. But I won't undersell what SAOS does. If you're spending $3,000/month on manual labor and SAOS costs $299, the ROI is clear. I'd rather show you the value than discount the price."
+
+### "Let me talk to my partner/team"
+**Response:** "Absolutely. I'm happy to join a call with your team. What would help them decide? I can prepare a one-page summary, or do a group demo. When works?"
+
+---
+
 *Asset Library Version: 1.0*
 *Created: 2026-07-06*
 *For: SAOS Sales & Outreach Team*
