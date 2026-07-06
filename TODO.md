@@ -1,97 +1,106 @@
-# TODO — What's Next (Updated 2026-06-27 11:04 CDT)
+# TODO — Current State (Updated 2026-07-06 02:11 CDT)
 
-## ✅ DONE Today (Session 2026-06-27)
+## ✅ COMPLETED — SAOS Enterprise Readiness
 
-1. **SAOS Compute Pause** — Killed orchestrator, disabled email dispatcher, marked 72 tasks as test
-2. **DOOBY + LOKI Verified** — Both run on local `qwen3.5:9b`, no cloud fallback
-3. **LOKI Cron Migration** — 5 cloud jobs moved to local (RAG, Wiki, Memory, ASSEMBLY, Fleet)
-4. **SAOS Orchestrator Tested** — Verified functional, deferred until full stack ready
+All Oracle priorities P1-P5 complete. Command Center v2.0 live. 65/65 tests passing. 16 PDFs generated. Full endpoint test suite. Client onboarding script verified. Daily backup cron active.
+
+## ✅ COMPLETED — Fleet Sales-Validation Sprint
+
+All 8 fleet agents delivered:
+- ATLAS: Prospect research (5 niches, 27KB)
+- CHATTY: Outreach assets (emails, SMS, LinkedIn, scripts, 409 lines)
+- JURIS: Business infrastructure pack (6 legal docs, 16.9KB)
+- PESSI: Pre-mortem (12 risks, 10 mitigations, 14.5KB)
+- VALI: Acceptance standards (PASS/FAIL for 6 services, 382 lines)
+- CODY: Internal standards (onboarding, deployment, DB, credentials, backup, docs, 11.9KB)
+- ASSEMBLY: Standard launch kit (welcome, implementation, FAQ, support, training, pricing, 18.9KB)
+- SOL: Operating system (lead→renewal, 10 sections, 21.5KB)
+
+## ✅ COMPLETED — Sales Pipeline Tracker
+
+`Systack/sales/pipeline-tracker.md` — operational CRM for tracking leads through the pipeline.
+
+## ✅ COMPLETED — Fleet Health Monitor
+
+`Systack/operations/fleet-health-check.py` — 15-minute cron, iMessage alerts on critical service failure.
 
 ---
 
-## 🔴 HIGH PRIORITY — Next Session
+## 🔴 HIGH PRIORITY — Next Actions
 
-### 1. SAOS Final Verification (Turn Orchestrator Back On)
-**Trigger:** When you say "SAOS is ready"
-**What:**
-- Re-enable orchestrator daemon
-- Final end-to-end test (client request → task → agent → completion)
-- Verify all 10 fleet agents spawn correctly
+### 1. First Outreach Batch
+**Status:** Ready to execute
+**Needs:** Green's approval on 10 targets, email sending address, Calendly link
+**Impact:** First real leads in the pipeline
 
-### 2. n8n Email Dispatcher Fix
-**Status:** Disabled (wrong port)
-**Fix:** Change API port from 8768 → 8765 in n8n workflow
-**File:** n8n workflow `eylye0Me5zyoXMc2`
+### 2. iOS Safari Cert Trust
+**Status:** Plan ready (Cloudflare Tunnel)
+**Needs:** Green's decision to proceed
+**Impact:** Mobile access for clients on iOS
 
-### 3. VPS Provisioning — Real API Keys
-**Status:** ✅ KEYS OBTAINED — Pipeline proven working 2026-06-22
-**Verified:** Business + Enterprise tiers tested end-to-end
-**Ready for:** Production client provisioning
+### 3. Production Deployment
+**Status:** Deployment checklist PDF ready
+**Needs:** Green's decision to move from dev to prod credentials
+**Impact:** Real clients can be onboarded
+
+### 4. Stripe Billing Integration
+**Status:** Revenue tab is placeholder
+**Needs:** Stripe account setup, connect to SAOS_CUSTOMER_PORTAL_STRIPE_* env vars
+**Impact:** Automated subscription billing
 
 ---
 
 ## 🟡 MEDIUM PRIORITY — Backlog
 
-### 4. iOS Safari `.ts.net` Cert Trust
-**Issue:** iOS blocks Tailscale `.ts.net` URLs
-**Workaround:** Use direct IP + Tailscale IP
-**Proper fix:** Deploy custom cert or use Tailscale HTTPS
+### 5. Monitoring Dashboard Enhancement
+- Agent health metrics in Command Center
+- Task queue depth visualization
+- Error rate tracking over time
+- Response time percentiles
 
-### 5. Dashboard Documentation Update
-**Files needed:**
-- User Guide v2.0 (Activity tab features)
-- Mobile Access Guide (iOS Safari workaround)
-- Admin Guide (PIN auth, session management)
-
-### 6. Utopia Deli Order System
-**Status:** Working (meal prep + catering)
-**Next:**
-- Weekly menu rotation automation
-- Square payment retry logic (SQLite-backed)
-- Customer notification system
+### 6. Client Onboarding Flow Testing
+- Script works (verified 2026-07-06)
+- Needs real-world test with actual client
+- Email delivery of credentials
+- 15-day implementation timeline validation
 
 ### 7. Systack Website Updates
-**Pending:**
 - Service portfolio alignment with SAOS tiers
 - Case studies / testimonials section
 - Blog / content section
+- SEO optimization
+
+### 8. Training Video Production
+- 6 video outlines ready (in Standard Launch Kit)
+- Needs screen recording, editing, upload
+- YouTube unlisted or Loom
 
 ---
 
 ## 🟢 LOW PRIORITY — Nice to Have
 
-### 8. AI Video Ad Service
-**Idea:** "There's a [Business] for that" campaign series
-**Price:** $500-1500/video, $2-5K/month retainer
-**Status:** Concept validated, needs first client
+### 9. AI Video Ad Service
+- "There's a [Business] for that" campaign series
+- $500-1500/video, $2-5K/month retainer
+- Concept validated, needs first client
 
-### 9. Voice Agent (SOL Talk Mode)
-**Status:** Research complete, architecture defined
-**Blocked by:** Custom OpenClaw provider adapter
-**Alternative:** Voicebox MCP integration (lower effort)
+### 10. Voice Agent (SOL Talk Mode)
+- Research complete, architecture defined
+- Blocked by: Custom OpenClaw provider adapter
+- Alternative: Voicebox MCP integration
 
-### 10. FLOS (Fleet Loop Orchestration System)
-**Status:** Deferred indefinitely
-**Reason:** 90% of pieces already exist, adding abstraction without fixing fundamentals = more failures
-
----
-
-## ⏸️ DEFERRED — Waiting on External/User
-
-| Item | Blocked By | When |
-|------|-----------|------|
-| SAOS Orchestrator | User decision | "After everything else verified" |
-| VPS real provisioning | ✅ KEYS OBTAINED | Proven 2026-06-22 |
-| Stripe production | Business registration | User decides |
-| AI Video Service | First client | Marketing/outreach |
+### 11. Utopia Deli Enhancements
+- Weekly menu rotation automation
+- Customer notification system
+- **Note:** Do not touch deli repo without explicit permission
 
 ---
 
-## 🎯 What Should We Do Right Now?
+## ⏸️ BLOCKED — Waiting on Green
 
-**Option A:** Fix n8n email dispatcher (quick win, 5 min)
-**Option B:** Update dashboard docs (medium effort, 30 min)
-**Option C:** Work on Utopia Deli weekly menu automation (revenue impact)
-**Option D:** Something else you want
-
-What's next?
+| Item | Blocked By | Impact |
+|------|-----------|--------|
+| First outreach batch | Target approval + email setup | Revenue |
+| iOS Safari cert trust | Decision to proceed | Mobile access |
+| Production deployment | Decision to move to prod | Real clients |
+| Stripe billing | Stripe account setup | Automated revenue |
