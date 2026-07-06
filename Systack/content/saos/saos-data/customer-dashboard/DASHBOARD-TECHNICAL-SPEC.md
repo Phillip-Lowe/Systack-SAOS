@@ -32,9 +32,9 @@ The SAOS Customer Dashboard is a **Flask-based web application** serving a singl
                         │ HTTPS
                         ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              TAILSCALE SERVE PROXY                           │
-│     https://phillips-macbook-air.tail573d57.ts.net           │
-│                    /dashboard/*  ─────►                      │
+│              CLOUDFLARE TUNNEL                                │
+│     https://portal.systack.net → localhost:8768              │
+│                    /api/*  ─────►                            │
 └───────────────────────┬─────────────────────────────────────┘
                         │
                         ▼
@@ -323,13 +323,14 @@ CREATE TABLE messages (
 
 ## Network & Deployment
 
-### Tailscale Configuration
+### Cloudflare Tunnel (Public Access)
 ```bash
-# Tailscale serve config
-tailscale serve https /dashboard/ http://localhost:8768
+# Tunnel config: ~/.cloudflared/config-saos-dashboard.yml
+# Routes: portal.systack.net → localhost:8768
+#          command.systack.net → localhost:8770
 ```
 
-**URL:** `https://phillips-macbook-air.tail573d57.ts.net/dashboard/`
+**URL:** `https://portal.systack.net`
 
 ### LaunchAgent (Auto-Start)
 **File:** `~/Library/LaunchAgents/net.systack.customer-dashboard.plist`
@@ -393,9 +394,9 @@ The dashboard adapts content based on client's `tier` field:
 ## Known Issues & Gotchas
 
 ### 1. iOS Safari `.ts.net` Certificate Trust
-**Issue:** iOS Safari doesn't trust Tailscale `.ts.net` certificates by default
-**Status:** OPEN — needs investigation
-**Workaround:** Use Tailscale app + "Use Tailscale DNS" setting
+**Issue:** iOS Safari didn't trust Tailscale `.ts.net` certificates
+**Status:** ✅ RESOLVED — Cloudflare Tunnel deployed (portal.systack.net, command.systack.net)
+**Fix:** Cloudflare handles SSL certs automatically — no iOS trust issues
 
 ### 2. Reverse Proxy Path Prefix
 **Issue:** When serving behind `/dashboard/` proxy, `fetch('/api/...')` resolves to root origin

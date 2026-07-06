@@ -116,15 +116,12 @@ Use this tab to confirm your fleet is healthy before important requests.
 
 ### iPhone / iPad
 
-1. Install **Tailscale** from the App Store
-2. Sign in with your Tailscale account
-3. Connect to the tailnet
-4. Open Safari → visit your dashboard URL
-5. Bookmark for quick access
+1. Open Safari → visit `https://portal.systack.net`
+2. Bookmark for quick access
 
 ### Android
 
-1. Install **Tailscale** from Google Play
+1. Open Chrome → visit `https://portal.systack.net`
 2. Sign in and connect
 3. Open Chrome → visit your dashboard URL
 

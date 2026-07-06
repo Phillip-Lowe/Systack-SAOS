@@ -94,7 +94,7 @@ The dashboard adapts content based on the client's `tier` field:
 ## External Access
 
 - **Local**: http://localhost:8768/
-- **Tailnet**: `https://phillips-macbook-air.tail573d57.ts.net/dashboard/`
+- **Public**: `https://portal.systack.net`
 - **Security**: Tailscale VPN required for external access
 
 ## Related
