@@ -665,7 +665,7 @@ Source: memory/2026-06-27-0511-cdt-memory-hygiene-rule.md
 8. ✅ Mobile Responsive Layout (hamburger menu, sidebar toggle, iOS fixes)
 9. ✅ End-to-End Provisioning (VPS creation, Tailscale join, webhook callback)
 10. ✅ **3 Missing Service Workflows** — Customer Support Drafting, Document Classification, Scheduled Report Generator (JSON built 2026-06-30, imported + activated in n8n 2026-07-05)
-11. ✅ **PDF Documentation Complete** — 12 PDFs total (7 original + 4 new + 1 Security Architecture v1.0, generated 2026-07-05)
+11. ✅ **PDF Documentation Complete** — 16 PDFs total (7 original + 4 new + Security Arch v2.0 + Trust Center + Backup Recovery + Changelog Jul5 + Deployment Checklist, generated 2026-07-05/06)
 12. ✅ **MFA (Multi-Factor Authentication)** — TOTP RFC 6238, QR setup, recovery codes, login flow updated (built 2026-07-05)
 13. ✅ **RBAC (Role-Based Access Control)** — 5 roles (customer/support/billing/ops/admin), require_role + require_permission decorators (built 2026-07-05)
 14. ✅ **Advanced Rate Limiting** — 8 per-endpoint configs with HTTP headers (built 2026-07-05)
@@ -678,6 +678,13 @@ Source: memory/2026-06-27-0511-cdt-memory-hygiene-rule.md
 21. ✅ **Security Architecture v2.0 PDF** — Comprehensive doc covering ALL P1-P5 (2026-07-05)
 22. ✅ **Compliance Trust Center PDF** — Public-facing compliance summary (2026-07-05)
 23. ✅ **Backup & Recovery Guide PDF** — Backup strategy, restore procedures, DR scenarios (2026-07-05)
+24. ✅ **Command Center v2.0** — 8 tabs, 7 new API endpoints, live health checks, client detail with enterprise readiness (2026-07-05)
+25. ✅ **API Endpoint Test Suite** — `tests/test_endpoints.py`, 65/65 tests passing (2026-07-06)
+26. ✅ **Client Onboarding Script** — `scripts/onboard_client.py`, automated client setup (2026-07-06)
+27. ✅ **Production Deployment Checklist** — PDF with pre-deploy/deploy/post-deploy/rollback (2026-07-06)
+28. ✅ **Daily Backup Cron** — 3 AM CDT, iMessage alert on failure (2026-07-06)
+29. ✅ **July 5 Changelog PDF** — Documents all P1-P5 + Command Center work (2026-07-06)
+30. ✅ **Invoice Dashboard Health Fix** — Fixed false alarm in Command Center (2026-07-06)
 
 **Oracle Priorities: ✅ ALL P1-P5 COMPLETE**
 
