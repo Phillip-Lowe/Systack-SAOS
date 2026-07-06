@@ -1951,6 +1951,7 @@ DOC_FILES = {
     'technical-spec': 'SAOS-Dashboard-Technical-Spec.pdf',
     'ios-cert-plan': 'SAOS-iOS-Cert-Trust-Plan.pdf',
     'changelog': 'SAOS-Changes-2026-06-29.pdf',
+    'changelog-jul5': 'SAOS-Changes-2026-07-05.pdf',
     'readme': 'SAOS-Customer-Portal-README-v2.pdf',
     'security-arch': 'SAOS-Security-Architecture-v2.0.pdf',
     'security-arch-v1': 'SAOS-Security-Architecture-v1.0.pdf',  # backward compat
