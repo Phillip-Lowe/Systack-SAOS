@@ -4,6 +4,114 @@ _This is my curated memory — the distilled essence, not raw logs. For daily lo
 
 ---
 
+## 2026-07-05 — SAOS Enterprise Hardening — ALL PRIORITIES P1-P5 COMPLETE
+
+**Status:** ✅ ALL ORACLE PRIORITIES COMPLETE (P1-P5)
+**Files changed:** `api.py`, `index.html`, `generate_pdf.py`, PostgreSQL schema, `scripts/backup_verify.py`
+**Reference:** `memory/2026-07-05-enterprise-hardening-priority1.md`, `memory/2026-07-05-p2-p5-complete.md`
+**Total PDFs:** 14 | **Total new DB tables:** 11 | **Total new API endpoints:** 26+
+
+### What Was Done
+
+**1. PDF Generator Fix:** Reordered browser paths in `generate_pdf.py` — Brave Browser now first (Chromium was broken on macOS).
+
+**2. Missing PDFs Generated (4 new):**
+- SAOS-Dashboard-Technical-Spec.pdf (394KB)
+- SAOS-iOS-Cert-Trust-Plan.pdf (312KB)
+- SAOS-Changes-2026-06-29.pdf (251KB)
+- SAOS-Customer-Portal-README-v2.pdf (254KB)
+- Total PDFs: 12 (7 original + 4 new + 1 Security Architecture)
+
+**3. n8n Workflow Activation:** All 3 SAOS service workflows imported, added to `shared_workflow` table, and activated:
+- SAOS Customer Support Drafting (ID: 61be935f...)
+- SAOS Document Classification Engine (ID: 7814e383...)
+- SAOS Scheduled Report Generator (ID: f3b106b0...)
+
+**4. MFA (Multi-Factor Authentication):**
+- TOTP RFC 6238 compliant (HMAC-SHA1, 6 digits, 30s period)
+- 4 endpoints: setup, verify, disable, status
+- Recovery codes (8 one-time hex codes)
+- Login flow updated to require MFA if enabled
+- Compatible with Google Authenticator, Authy, 1Password, etc.
+- DB columns: `mfa_secret`, `mfa_enabled`, `mfa_recovery_codes`
+
+**5. RBAC (Role-Based Access Control):**
+- 5 roles: customer, support, billing, ops, admin
+- `saos_roles` table with JSONB permission maps
+- `require_role()` and `require_permission()` decorators
+- 3 endpoints: list roles (admin), set client role (admin), get permissions (any auth)
+- All access denied events logged to audit_log
+
+**6. Advanced Rate Limiting:**
+- 8 per-endpoint configs (login, mfa_verify, pin_reset, register, api_general, api_write, webhook, file_upload)
+- HTTP headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After
+- Applied to login, register, forgot-pin, mfa_verify endpoints
+
+**7. Security Architecture Documentation:**
+- `SAOS-Security-Architecture-v1.0.md` → PDF generated
+- Added to API download routes (`/download/security-arch`)
+- Added to dashboard enterprise/private docs sections
+
+### Oracle Priority Status — ALL COMPLETE
+| Priority | Item | Status |
+|----------|------|--------|
+| P1 | MFA | ✅ COMPLETE |
+| P1 | RBAC | ✅ COMPLETE |
+| P1 | Advanced Rate Limiting | ✅ COMPLETE |
+| P2 | Backup verification + restore drills | ✅ COMPLETE |
+| P3 | Security events dashboard | ✅ COMPLETE |
+| P4 | Admin console hardening + audit export | ✅ COMPLETE |
+| P5 | Compliance package + trust center | ✅ COMPLETE |
+
+### P2-P5 Details (Completed 23:05-23:15 CDT)
+
+**P2 — Backup & Recovery:**
+- `scripts/backup_verify.py` — automated pg_dump + restore verification
+- First verified backup: 166MB, 3s, RPO=24h, RTO=6min
+- `backup_log` table, 3 API endpoints
+- `SAOS-Backup-Recovery-Guide-v1.0.pdf`
+
+**P3 — Security Events:**
+- `security_events` table — failed logins, MFA failures, rate limit hits, access denials
+- Auto-logging on auth failures (extended log_audit)
+- 3 API endpoints (list, stats, resolve)
+
+**P4 — Admin Audit:**
+- `audit_exports` table — chain of custody
+- 3 API endpoints (audit-log, audit/export ZIP, client audit report)
+- SHA-256 checksums on exports
+
+**P5 — Compliance:**
+- `compliance_policies` table — 5 default policies (security, data retention, incident response, privacy, access control)
+- `incident_log` table — P1-P4 severity, full lifecycle
+- 6 API endpoints including PUBLIC trust center
+- `SAOS-Compliance-Trust-Center-v1.0.pdf`
+- `SAOS-Security-Architecture-v2.0.pdf` (replaces v1.0, covers ALL P1-P5)
+
+### Command Center v2.0 Upgrade (23:30-23:55 CDT)
+
+**Systack Command Center (port 8770) fully upgraded:**
+- 8 tabs: Overview, Infrastructure, Clients, Security, Backup, Compliance, Audit, Alerts
+- **New API endpoints (7):** security-events, backup-status, compliance, audit-trail, clients/<id> detail, services-health (live), alerts (real data)
+- **Live service health checks** — no more hardcoded statuses, actual HTTP health probes
+- **Client detail panel** — enterprise readiness score (MFA, role, onboarding, VPS, Tailscale), tasks, security events, usage metrics
+- **Security tab** — unresolved events, critical alerts, failed logins, MFA adoption rate, events by type
+- **Backup tab** — RPO/RTO display, backup history with checksums and verification results
+- **Compliance tab** — active policies table, incident log with severity and resolution
+- **Audit tab** — full audit trail with client names, actions, IPs
+- **Alerts tab** — now pulls real data from security_events + incident_log
+- **Clients tab** — shows MFA status, role, onboarding status per client
+- **CORS updated** — added `*.ts.net` for Tailscale MagicDNS
+
+### Remaining (Non-Oracle, Lower Priority)
+1. ⏳ iOS Safari cert trust — awaiting Green's decision (Cloudflare Tunnel)
+2. ⏳ Production deployment — dev → prod credentials
+3. ⏳ Monitoring dashboard — agent health, queue depth, error rates
+4. ⏳ Client onboarding flow automation
+5. ⏳ Billing integration — Stripe subscription management
+
+---
+
 ## 2026-06-30 — Systack Command Center Built + Security Hardened
 
 **Status:** ✅ DEPLOYED — Port 8770, Tailscale-only
@@ -28,6 +136,89 @@ Green's internal master dashboard — monitors all deployments, clients, agents,
 | 10 | Stack trace leaks | Generic error handlers |
 
 ### Dashboards Now Running
+## 2026-07-03 — n8n Workflow List Empty: Malformed Timestamp Fix
+
+**Status:** ✅ FIXED
+
+### Problem
+n8n Workflows page showed empty list despite API returning 55 workflows, editor working, executions working.
+
+### Root Cause
+Workflow `eylye0Me5zyoXMc2` (SAOS Email Notification Dispatcher) had malformed `updatedAt`: `2026-06-30 05:13:813522` (6-digit ms). API returned `updatedAt: null`, Vue crashed on `e.updatedAt.toString` at `WorkflowsView.vue:372`.
+
+### Fix
+```sql
+UPDATE workflow_entity SET updatedAt = '2026-06-30 05:13:08.135' WHERE id = 'eylye0Me5zyoXMc2';
+```
+
+### Lesson
+A single malformed timestamp in one workflow crashes the entire list. Check full stack trace, not just first error line.
+
+### Remaining (Deferred)
+1. Add 5 orphaned workflows to `shared_workflow`
+2. Clean up 6 orphaned `shared_workflow` records
+3. Fix 5 failing workflow activations
+
+---
+
+## 2026-07-03 — DELI SYSTEM LOCKDOWN RULE
+
+**Status:** ✅ ACTIVE — Permanent Rule  
+**Code Phrase:** "ORACLE OVERRIDE"
+
+### Rule
+- **Never touch Utopia Deli frontend, backend, n8n workflows, or any code unless EXPLICITLY prompted by Green**
+- **Core deli architecture is OFF LIMITS without the code phrase: "KUDU-7"**
+- **This includes:** `order.theutopiadeli.com`, `utopia-deli` repo, n8n deli workflows, Square integration, menu data, pricing
+
+### Reason
+Week of 2026-06-30 to 2026-07-03 spent fixing broken deli deployments. Multiple production days lost. Autonomous changes to deli system caused cascading failures including broken payload structures, missing HTML elements causing JS crashes, GitHub Pages deployment failures, and customers unable to place orders.
+
+### Enforcement
+If asked to work on deli system without code phrase:
+1. Refuse politely
+2. Remind user of lockdown rule
+3. Ask them to say "ORACLE OVERRIDE" if they want to proceed
+
+### Reference
+`memory/2026-07-03-deli-system-lockdown.md`
+
+---
+
+**Status:** ✅ ALL SERVICES CONNECTED AND RUNNING
+
+### Current Service Registry
+| Service | Port | Purpose | Auth | Status |
+|---------|------|---------|------|--------|
+| Invoice Dashboard | 8766 | Invoice pipeline | None | ✅ Running |
+| SAOS Webhook Bridge | 8767 | Stripe/n8n webhooks | None | ✅ Running |
+| SAOS Customer Portal | 8768 | Client-facing | PIN | ✅ Running |
+| **Systack Command Center** | **8770** | **Green's master view (v2.0)** | **PIN** | ✅ Running v2.0 |
+| Booking Dashboard | 8772 | Appointments | PIN | ✅ Running |
+| Invoice API | 9001 | PDF extraction | None | ✅ Running |
+| n8n Automation | 5678 | Workflows | None | ✅ Running |
+| BlueBubbles | 1234 | iMessage bridge | None | ✅ Running |
+
+### Removed Services
+| Service | Port | Status | Reason |
+|---------|------|--------|--------|
+| ~~SOL Orchestrator Dashboard~~ | ~~8765~~ | ❌ STOPPED & REMOVED | Replaced by Command Center (8770) |
+| ~~Old `net.systack.dashboard.plist`~~ | — | ❌ DELETED | Pointed to wrong path, restarted old dashboard |
+| ~~Old `net.systack.fleet-dashboard.plist`~~ | — | ❌ DELETED | Was restarting obsolete orchestrator |
+
+**Note:** `com.sol.command-center.plist` in `~/Library/LaunchAgents/` is a SEPARATE personal SOL system (points to `Documents/SOL-System/`) — NOT managed by Systack.
+
+### Key Fixes Applied
+1. PostgreSQL locale issue fixed (`LC_ALL=en_US.UTF-8`)
+2. All launchd plists updated with correct env vars (PIN=1234, PG credentials)
+3. Old orchestrator dashboard (port 8765) properly stopped and removed
+4. Invoice dashboard restarted (was hanging on broken pipes)
+5. Command Center confirmed as single master dashboard
+6. **WARNING:** Removed `net.systack.dashboard.plist` which had wrong path to `saos-data/dashboard/api.py`
+
+---
+
+### Previous Dashboard Registry
 | Dashboard | Port | Purpose | Auth |
 |-----------|------|---------|------|
 | Customer Fleet Dashboard | 8765 | Demos/testing | None |
@@ -212,12 +403,12 @@ Chat, Live Ops, Dashboard, Services, Tasks, Activity, Docs, Settings — all fun
 ### API Endpoints (All 14 Verified)
 Health, login, logout, change-pin, status, integrations, search, tasks, services, activity, conversations, deliverables, export, PDF downloads — all returning 200.
 
-### Critical Gaps Found
+### Critical Gaps Found (Updated 2026-07-05)
 | # | Gap | Impact |
 |---|-----|--------|
-| 1 | **Tailscale auth key = "PLACEHOLDER"** in provision_vps.py:411 | New client provisioning WILL FAIL |
-| 2 | **No RBAC / Multi-user support** | Single PIN per account, no team access |
-| 3 | **3 services have no automation workflows** | Customer Support Drafting, Document Classification, Scheduled Reports |
+| 1 | ~~**Tailscale auth key = "PLACEHOLDER"**~~ | ✅ FIXED — Real key in credentials |
+| 2 | ~~**No RBAC / Multi-user support**~~ | ✅ FIXED 2026-07-05 — 5 roles, require_role/require_permission decorators |
+| 3 | ~~**3 services have no automation workflows**~~ | ✅ FIXED — Built 2026-06-30, imported + activated 2026-07-05 |
 | 4 | **Orchestrator daemon disabled** | No automatic task dispatching to agents |
 | 5 | **No real usage metrics / billing tracking** | Can't bill based on actual usage |
 
@@ -979,15 +1170,19 @@ Fleet Loop Orchestration System (FLOS): persistent autonomous operations layer w
 - **Status:** 🟢 Active, polls every 60 seconds
 - **Credentials:** SOL Systack SMTP account
 
-### Next Priority
-1. End-to-end provisioning test with real Vultr/Tailscale/n8n credentials
-2. iOS Safari `.ts.net` cert trust fix
-3. PDF documentation update (User Guide v2.0, Mobile Access Guide)
-4. Production deployment
-5. Monitoring dashboard (agent health, queue depth, error rates)
-6. Client onboarding flow automation
-7. Billing integration (Stripe subscriptions)
-8. Security audit
+### Next Priority (Updated 2026-07-05)
+1. ✅ ~~End-to-end provisioning test~~ — DONE 2026-06-22
+2. ✅ ~~iOS Safari cert trust plan~~ — Plan created, awaiting Green's decision
+3. ✅ ~~PDF documentation update~~ — COMPLETE 2026-07-05 (12 PDFs total)
+4. ⏳ Production deployment — Move from dev to production credentials
+5. ⏳ Monitoring dashboard — Agent health, task queue depth, error rates
+6. ⏳ Client onboarding flow automation
+7. ⏳ Billing integration (Stripe subscriptions)
+8. ✅ ~~Security audit~~ — Priority 1 COMPLETE 2026-07-05 (MFA + RBAC + Rate Limiting)
+9. ⏳ Backup verification + restore drills (Oracle P2)
+10. ⏳ Security events dashboard (Oracle P3)
+11. ⏳ Compliance package — Security policy, data retention, incident response (Oracle P5)
+12. ✅ ~~Import 3 workflows to n8n~~ — DONE 2026-07-05 (imported, shared, activated)
 
 ---
 
@@ -1416,7 +1611,7 @@ SMTP rate limiting is real. For 300+ contact lists, use **20+ second delays** be
 
 #### Credentials Obtained (2026-06-24)
 - **Vultr API:** `TST4IQSC56YHJJIJEG6ZGKLLU5PKIVKYNQGA`
-- **Tailscale Auth Key:** `tskey-auth-kGnP9yUWLV11CNTRL-p2ragwhnSS9uM24h7Ug2S9PsS8u6skRjA`
+- **Tailscale Auth Key:** `REDACTED`
 - **Tailscale API Key:** `tskey-api-kZZ9TKmAs821CNTRL-dhcfqwo4regLz9hLCNkaegkC`
 - **n8n API:** Present and verified
 - **Location:** `~/.openclaw/workspaces/sol/Sol-Knowledge/credentials/Green/`
@@ -1456,14 +1651,23 @@ SMTP rate limiting is real. For 300+ contact lists, use **20+ second delays** be
 
 | Priority     | Task                              | Status | Notes                                   |
 | ------------ | --------------------------------- | ------ | --------------------------------------- |
-| 🔴 Critical  | iOS Safari `.ts.net` cert trust    | ⏳     | Use direct IP workaround for now        |
+| 🔴 Critical  | iOS Safari `.ts.net` cert trust    | ⏳     | Plan created, awaiting Green's decision |
 | 🟡 Important | Monitoring dashboard               | ⏳     | Agent health, queue depth, error rates  |
-| 🟡 Important | PDF documentation update           | ⏳     | User Guide v2.1, Mobile Access Guide    |
+| ✅ Done      | PDF documentation update           | ✅     | 12 PDFs total, refreshed 2026-07-05     |
 | ✅ Done      | End-to-end provisioning tested     | ✅     | Business + Enterprise tiers, June 19-22 |
 | ✅ Done      | Stripe integration                 | ✅     | Products, prices, webhooks, June 19     |
 | ✅ Done      | Dashboard auth (PIN + tokens)      | ✅     | Complete June 25                        |
 | ✅ Done      | VPS provisioning                   | ✅     | Tested June 22, both tiers work         |
 | ✅ Done      | Credentials obtained               | ✅     | All keys verified June 24               |
+| ✅ Done      | MFA (TOTP)                         | ✅     | Built 2026-07-05, RFC 6238 compliant     |
+| ✅ Done      | RBAC (5 roles)                     | ✅     | Built 2026-07-05, customer→admin         |
+| ✅ Done      | Advanced rate limiting             | ✅     | Built 2026-07-05, 8 endpoint configs     |
+| ✅ Done      | n8n workflow import + activation   | ✅     | 3 SAOS workflows activated 2026-07-05   |
+| ✅ Done      | Security architecture doc          | ✅     | SAOS-Security-Architecture-v1.0.pdf      |
+| ⏳ Remaining | Backup verification + restore      | ⏳     | Oracle P2 — test backups, document RPO   |
+| ⏳ Remaining | Security events dashboard          | ⏳     | Oracle P3 — failed login tracking        |
+| ⏳ Remaining | Admin console hardening            | ⏳     | Oracle P4 — audit export system          |
+| ⏳ Remaining | Compliance package                 | ⏳     | Oracle P5 — policies, incident response  |
 | 🟢 Nice      | Client onboarding form             | ⏳     | Post-launch                             |
 | 🟢 Nice      | Cost tracking dashboard            | ⏳     | Post-launch                             |
 
@@ -4298,10 +4502,10 @@ Created comprehensive 14-part handoff document covering ALL Systack services:
 
 ### Priority Stack Locked
 1. ✅ ~~End-to-end SAOS provisioning test~~ — DONE 2026-06-22 (Business + Enterprise tiers)
-2. ⏳ iOS Safari `.ts.net` cert trust fix
-3. ⏳ Dashboard User Guide v2.0 (Activity tab)
-4. ⏳ Mobile Access Guide PDF
-5. ⏳ Service portfolio alignment
+2. ⏳ iOS Safari `.ts.net` cert trust fix — Plan created, awaiting Green's decision
+3. ✅ ~~Dashboard User Guide~~ — DONE (v6.0, refreshed 2026-06-30)
+4. ✅ ~~Mobile Access Guide PDF~~ — DONE (v4.0, refreshed 2026-06-30)
+5. ✅ ~~Service portfolio alignment~~ — DONE 2026-06-29
 
 ### Key Constraints Acknowledged
 - SAOS (not SaaS) in external language
@@ -4648,7 +4852,7 @@ Health, login, logout, change-pin, status, integrations, search, tasks, services
 **Verdict:** Production-ready for early adopters (1-3 customers). Not ready for scale (10+) without fixes.
 
 ### Customer-Facing View ✅
-- Landing page, onboarding form, dashboard (8 tabs), documentation (6 PDFs) — all complete
+: Landing page, onboarding form, dashboard (8 tabs), documentation (12 PDFs) — all complete
 - Mobile responsive, PIN auth, real-time chat, data export
 
 ### 🔴 CRITICAL GAPS Found
@@ -4656,22 +4860,24 @@ Health, login, logout, change-pin, status, integrations, search, tasks, services
 | # | Gap | Impact |
 |---|-----|--------|
 | 1 | ~~**Tailscale auth key = "PLACEHOLDER"** in provision_vps.py:411~~ | ✅ FIXED — Real key in credentials, provisioning works end-to-end |
-| 2 | **No RBAC / Multi-user support** | Single PIN per account, no team access |
-| 3 | ~~**3 services have no automation workflows**~~ | ✅ FIXED — Workflow JSON files built 2026-06-30 (need import to n8n) |
+| 2 | ~~**No RBAC / Multi-user support**~~ | ✅ FIXED 2026-07-05 — 5 roles (customer/support/billing/ops/admin), require_role + require_permission decorators |
+| 3 | ~~**3 services have no automation workflows**~~ | ✅ FIXED — Workflows built 2026-06-30, imported + activated in n8n 2026-07-05 |
 | 4 | **Orchestrator daemon disabled** | No automatic task dispatching to agents |
 | 5 | **No real usage metrics / billing tracking** | Can't bill based on actual usage |
 | 6 | **iOS Safari `.ts.net` cert trust** | Plan created (Cloudflare Tunnel recommended), awaiting implementation
 
 ### 🟡 MEDIUM GAPS
-- No onboarding tour / guided setup
+- ~~No onboarding tour / guided setup~~ ✅ Fixed (onboarding tour added 2026-06-29)
 - Setup progress always shows 0%
-- Chat bridge not imported to n8n
+- ~~Chat bridge not imported to n8n~~ ✅ Fixed 2026-06-30
 - No automated testing
 - Documentation slightly outdated
 - Invoice pipeline had wrong binary field references (fixed 2026-06-30)
 
 ### 🟢 LOW GAPS
-- No light mode, keyboard shortcuts, notification preferences UI, API rate limiting, webhook management
+- No light mode, keyboard shortcuts, notification preferences UI
+- ~~API rate limiting~~ ✅ Fixed 2026-07-05 (8 per-endpoint configs)
+- Webhook management
 
 ### Ultimate Customer Journey — What's Missing
 - Onboarding wizard (thrown into dashboard cold)
@@ -4700,25 +4906,9 @@ Full analysis: `memory/2026-06-30-saos-deep-analysis.md`
 
 ---
 
-## Promoted From Short-Term Memory (2026-06-30)
+## Promoted From Short-Term Memory (2026-07-05)
 
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06-site-consistency-check.md:36:63 -->
-- | **SAOS Personal+** | $199/mo | pricing.html, personal-agent/, service-packages.md | | **SAOS Business Fleet** | $299/mo | pricing.html, personal-agent/, service-packages.md | | **SAOS Enterprise Fleet** | $799/mo | pricing.html, personal-agent/, service-packages.md | | **Systack Accelerate** | $249/mo | pricing.html, service-packages.md | | **Systack Private** | $799/mo | pricing.html, service-packages.md | ## Key Message Consistent All pages now say: - "We don't sell anything below 16GB RAM" - "We learned the hard way — smaller servers don't work" - "Optional cloud LLM — you pay provider directly" ## Files Changed - `systack-site/pricing.html` — Complete rewrite with consistent pricing [score=0.834 recalls=9 avg=0.496 source=memory/2026-06-06-site-consistency-check.md:36-50]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-17-session-end-0650.md:66:99 -->
-- - **task_queue** table: task dispatch to fleet agents - **agent_state** table: fleet status tracking - **execution_log** table: audit trail --- ## ⏳ TODO — Things To Finish ### Critical (Before First Client) | # | Task | Status | Notes | |---|------|--------|-------| | 1 | **Get Vultr API key** | ❌ Not done | my.vultr.com → Account → API → Add Key | | 2 | **Get Tailscale API key** | ❌ Not done | login.tailscale.com → Settings → Keys → Generate | | 3 | **Get n8n API key** | ❌ Not done | n8n UI → Settings → API | | 4 | **Test real VPS creation** | ⏳ Blocked | Needs Vultr API key; use --tier test first | | 5 | **Verify Tailscale URL works** | ⏳ Blocked | Needs real VPS to test HTTPS access | | 6 | **Create n8n webhook** | ⏳ Blocked | `saas-vps-ready` endpoint for cloud-init callback | ### Important (Before Production) | # | Task | Status | Notes | |---|------|--------|-------| | 7 | **Stripe webhook integration** | ⏳ Not done | n8n workflow for checkout.session.completed | | 8 | **Client dashboard authentication** | ⏳ Not done | Currently open, needs auth | | 9 | **JURIS workspace identity files** | ⏳ Not done | SOUL, AGENTS, USER, MEMORY, TOOLS for /workspaces/juris | | 10 | **CHATTY + GENI LaunchAgents** | ⏳ Not done | Persistent daemons for engagement agents | | 11 | **VALI + PESSI emoji fixes** | ⏳ Not done | May still have old emojis in some files | | 12 | **SMTP credentials** | ⏳ Not done | For send_client_email.py; set SMTP_USER and SMTP_PASS | ### Nice to Have (Post-Launch) | # | Task | Status | Notes | |---|------|--------|-------| [score=0.832 recalls=18 avg=0.460 source=memory/2026-06-17-session-end-0650.md:66-99]
 <!-- openclaw-memory-promotion:memory:memory/2026-06-26.md:1:45 -->
-- # Session — 2026-06-26 ## Utopia Deli Order System — COMPLETE FAILURE **Status:** 🔴 BROKEN — Multiple commits made, system worse than when started **Time:** 17:00-18:19 CDT **Source:** User directive to fix cart display and combo pricing ### What Went Wrong User asked for ONE thing: display modifiers correctly in cart and fix combo pricing. Agent did: 1. Searched memory for modifier codes (partial context) 2. Never checked file structure or inline JS overrides 3. Edited `order-form.js` 5+ times 4. Never realized `index.html` had its own inline checkout handler 5. Each "fix" broke something else 6. User lost money and trust ### Root Cause: Incomplete Context Verification Agent treated "check memory" as a quick prerequisite instead of complete information gathering. Found modifier codes and pricing info, assumed that was enough, started editing immediately. Never searched for: - "inline JavaScript overrides external file" - "which file controls checkout" - "deployed state vs local state" - "duplicate functions across files" ### New Rule Added: RULE 9 **Complete Context Verification Before Action** When told to check memory before acting: 1. STOP — don't edit anything 2. SEARCH COMPLETELY — file structure, overrides, deployed state 3. VERIFY — explain back to user before acting 4. ASK IF UNCLEAR 5. ONLY THEN make changes, ONE at a time ### Files Changed (All Broken) - `utopia-deli-temp/pickup-order/order-form.js` — Multiple edits, may be inconsistent - `utopia-deli-temp/pickup-order/index.html` — Last edit: fixed inline checkout base_price_cents [score=0.827 recalls=9 avg=0.533 source=memory/2026-06-26.md:1-45]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-11-meal-prep-images-update.md:1:47 -->
-- # Meal Prep Page Update — 2026-06-11 ## Changes Made ### 1. Real Meal Photos Added Copied 7 images from `utopia-deli-revamp/images/Meal Prep/` to `catering/images/` with descriptive names: | File | Food Item | |------|-----------| | `meal-buffalo-chickpea.jpg` | Buffalo Chickpea Ranch Bowl | | `meal-teriyaki-tofu.jpg` | Teriyaki Tofu Bowl | | `meal-red-lentil-masala.jpg` | Red Lentil Coconut Masala | | `meal-peanut-ginger.jpg` | Peanut Ginger Bowl | | `meal-cajun-northern-beans.jpg` | Cajun Northern Beans & Rice | | `meal-rainbow-bbq-tofu.jpg` | Rainbow BBQ Tofu Wild Rice | | `dessert-raspberry-mousse.jpg` | Raspberry Dark Chocolate Mousse | ### 2. Menu Items Updated (`catering-form.js`) [score=0.827 recalls=5 avg=0.562 source=memory/2026-06-11-meal-prep-images-update.md:1-18]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06-utopia-deli-modifiers.md:1:16 -->
-- # Utopia Deli — Complete Modifier System Data ## Raw Data Dump (2026-06-06 12:03 CDT) ### Items Table | item_id | name | base_price | sell_price | description | active | image_url | |---------|------|-----------|-----------|-------------|--------|-----------| | COWBOY | cowboy chikn sandwich | 13.00 | 13.00 | Grilled Cowboy Chik'n, Lettuce, Tomato, Ranch, Bac'n. | TRUE | https://cdn.shopify.com/... | | CLUB | chikn club sub | 15.00 | 15.00 | Grilled Chik'n Bac'n Cheese on a bed of Lettuce and Tomatoes. | TRUE | https://cdn.shopify.com/... | | FRIED | chikn fried chikn sub | 13.00 | 13.00 | Crispy Fried Chik'n on a hoagie with lettuce, tomato, ranch. | TRUE | https://cdn.shopify.com/... | | POPPERS | chikn poppers | 10.00 | 10.00 | Crispy chik'n dippers or sauced with choice of BBQ, Garlic Parm, Jerk, Buffalo, Lemon Pepper Wet. | TRUE | | | DUMPLING_TACOS | korean pork dumpling tacos | 10.00 | 10.00 | "Pork", pickled slaw, aioli, and sauce on a dumpling shell. Set of 4 tacos. | TRUE | | | PHILLY | philly sub | 13.00 | 13.00 | "Stek" OR Chik'n with sautéed onions & bell peppers. | TRUE | | | ROCKTOWN_SLIDERS | rocktown bourbon chikn sliders | 12.00 | 12.00 | Rocktown distillery bourbon‑infused chik'n with fresh slaw and aioli on a garlic butter slider bun. | TRUE | | | JUICE_CP_16 | 16 oz glass bottle | 10.00 | 10.00 | Select size and flavor: Green Juice, Orange Machine, and Sweet Dreams. | TRUE | | | JUICE_CP_10 | 10 oz plastic bottle | 5.00 | 5.00 | Select size and flavor: Green Juice, Orange Machine, and Sweet Dreams. | TRUE | | [score=0.823 recalls=16 avg=0.484 source=memory/2026-06-06-utopia-deli-modifiers.md:1-16]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-19-systack-service-manual-client.md:32:75 -->
-- | Section | Content | Purpose | |---------|---------|---------| | **About SyStack** | Mission, vision, values | Brand identity | | **What Is SAOS** | Concept, benefits, diagram | Education | | **Service Plans** | Prices ($49-$299+), specs, features | Sales enablement | | **Products** | Invoice automation, ordering, no-shows | Product catalog | | **Security** | Encryption, VPN, compliance | Trust building | | **Getting Started** | 7-step onboarding | Expectation setting | | **Support** | Response times, SLA | Confidence | | **FAQ** | 7 common questions | Objection handling | | **Glossary** | SAOS, agent, workflow, n8n | Education | --- ## Comparison | Metric | Internal Manual | Client Manual | |--------|-----------------|---------------| | **Pages (approx)** | ~30 | ~20 | | **File size** | 588 KB | 330 KB | | **Classification** | SyStack Proprietary | Client Deliverable | | **Pricing detail** | Cost + margin | Sell price only | | **Technical depth** | Deep (commands, APIs) | Conceptual (diagrams, benefits) | | **Fleet detail** | 10 agents with models | "Full fleet of AI agents" | --- ## Files | File | Location | Size | |------|----------|------| | SyStack-Service-Manual-Client-v1.0.pdf | workspace + repo `docs/` | 330 KB | | SyStack-Service-Manual-Client-v1.0.md | workspace + repo `docs/` | 12 KB | **Git:** `4ba4ed6` on `main` --- ## Usage - **Sales calls:** Email to prospects before discovery call - **Website:** Link from `/docs` or `/pricing` pages - **Onboarding:** Include in welcome email after signup - **Support:** Reference for SLA expectations [score=0.822 recalls=8 avg=0.493 source=memory/2026-06-19-systack-service-manual-client.md:32-75]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-25-0642-doby-loki-created.md:1:43 -->
-- # 2026-06-25 — DOOBY & LOKI Agents Created **Time:** 06:42 CDT **User Intent:** Create two new local-model agents for compute efficiency ## What Was Built ### DOOBY (🤖) — The Coding Workhorse - **Model:** `ollama/qwen2.5-coder:7b` (local, fast) - **Fallbacks:** `deepseek-v4-pro:cloud` → `qwen3.5:9b` - **Tools:** Full coding suite (browser, canvas, cron, exec, sessions_spawn, subagents, web_fetch, web_search) - **Profile:** `coding` - **Workspace:** `~/.openclaw/workspaces/dooby/` - **Files:** `IDENTITY.md`, `AGENTS.md`, `MEMORY.md` ### LOKI (🏠) — The House Manager - **Model:** `ollama/qwen3.5:9b` (local, balanced) - **Fallbacks:** `deepseek-v4-flash:cloud` → `qwen2.5-coder:7b` - **Tools:** Broad ops suite (browser, cron, exec, memory, message, read/write, sessions_spawn, subagents, web) - **Profile:** `coding` (general-purpose) - **Workspace:** `~/.openclaw/workspaces/loki/` - **Files:** `IDENTITY.md`, `AGENTS.md`, `MEMORY.md` ## Config Changes **File:** `~/.openclaw/openclaw.json` 1. Added `dooby` and `loki` to `agents.list` 2. Added `dooby` and `loki` to `agents.defaults.subagents.allowAgents` 3. Added `dooby` and `loki` to `sol.subagents.allowAgents` 4. Added `dooby` and `loki` to `tools.agentToAgent.allow` 5. Updated `meta.lastTouchedAt` ## Access Control - Both agents: **Green + designated users only** - No BlueBubbles routing bindings added (intentional — they don't need direct chat access) - Both can spawn subagents and talk to full fleet ## Next Steps 1. Restart OpenClaw gateway to load new agents 2. Test spawning DOOBY for a simple coding task [score=0.819 recalls=10 avg=0.471 source=memory/2026-06-25-0642-doby-loki-created.md:1-43]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-24-0529-cdt-dashboard-production.md:31:61 -->
-- - Dashboard shows "Setup: X% complete" with progress bar - Services tab has checklist of pending items with one-click setup requests - Business tier: 25% complete (2 of 8 services active) ### Error Visibility - Tasks tab now shows error_message column for failed tasks - Activity Log shows full error details with red highlighting - Failed tasks are visible to clients (8 FAILED, 61 DEAD in test DB) ### Mobile Support - Hamburger menu button (☰) on mobile - Nav links collapse into dropdown - Responsive grid layouts ### Files Changed - `Systack/content/saos/saos-data/customer-dashboard/index.html` — Complete production rebuild - `Systack/content/saos/saos-data/customer-dashboard/SAOS-Dashboard-User-Guide-v2.0.pdf` — Regenerated - `Systack/content/saos/saos-data/customer-dashboard/SAOS-Customer-Portal-README.pdf` — Regenerated ### What's Still Needed (Future) 1. Integrations tab — show connected apps (Square, Gmail, Slack, Twilio) 2. Billing tab — invoices, payment status, usage 3. Settings tab — profile, team management, notifications 4. Real agent status from DB — update agent_state with live data 5. Real workflow runs from n8n — show actual execution history 6. Onboarding wizard — first-time user guided setup [score=0.815 recalls=9 avg=0.502 source=memory/2026-06-24-0529-cdt-dashboard-production.md:31-61]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-06-session-save.md:31:59 -->
-- - Documented existing buttons (Business $299, Enterprise $799) - Created checklist for 7 new products - Added SAOS Fleet section to `service-packages.md` ## Files Created/Updated | File | Status | |------|--------| | `templates/private/*` | ✅ Created | | `templates/accelerate/*` | ✅ Moved | | `templates/README.md` | ✅ Updated | | `systack-site/services/service-packages.md` | ✅ Updated | | `systack-site/pricing.html` | ✅ Rewritten | | `systack-site/personal-agent/index.html` | ✅ Updated | | `systack-site/services.html` | ✅ Fixed | | `saos-products/FINAL-PRICING.md` | ✅ Created | | `saos-products/STRIPE-CATALOG.md` | ✅ Created | | `saos-products/STRIPE-CREATION-CHECKLIST.md` | ✅ Created | | `memory/2026-06-06-*` | ✅ Multiple files | ## Commit `3cdadc6` — "Session save: pricing alignment, site consistency, n8n templates, dashboard" ## Next 1. Create Stripe products (7 new) 2. Update site with new buy button IDs 3. Activate n8n workflows 4. Build P1 service line templates [score=0.815 recalls=8 avg=0.480 source=memory/2026-06-06-session-save.md:31-59]
-<!-- openclaw-memory-promotion:memory:memory/2026-06-03.md:1:38 -->
-- # 2026-06-03 — CODY: HTML Webhook Integration Build ## What I Did (15 min sprint) - Replaced `systack-site/niches/food/index.html` landing page with a working order form - Built `systack-site/niches/food/order-form.js` with: - Menu item selection with +/- quantity controls - Live cart with subtotal, tax (9.5%), total calculation - Customer info fields (name, email, phone) - Pickup time dropdown with business hours validation (10 AM–8 PM, 20 min lead time) - Special instructions textarea - JSON POST to `https://utopia-api.systack.net/webhook/utopia-deli-html-order-v1` - Success/error message handling - Form reset after successful order ## Key Technical Choices - **Integer cents for price math** — avoids floating point drift - **Snake_case field names** — matches n8n workflow expectations - `source: "web"` + ISO timestamp for traceability - Phone stripped to digits, validated 10+ chars - Submit button disabled until cart has items ## Files - `systack-site/niches/food/index.html` - `systack-site/niches/food/order-form.js` - `memory/agent-learnings/CODY-PITFALLS.md` - `memory/shared-learning-dump.md` ## Next Steps (for future sprints) - Test against live n8n webhook - Add modifier/upsell UI if needed - Style polish, mobile responsiveness already built in --- # 2026-06-03 — ASSEMBLY: HTML Order Webhook v1 Build & Fix ## What I Did (15 min sprint) - Reviewed existing `utopia-deli-html-order-v1.json` built on 2026-06-02 - Fixed critical issues from v1.0.0: [score=0.815 recalls=10 avg=0.468 source=memory/2026-06-03.md:1-38]
+- # Session — 2026-06-26 ## Utopia Deli Order System — COMPLETE FAILURE **Status:** 🔴 BROKEN — Multiple commits made, system worse than when started **Time:** 17:00-18:19 CDT **Source:** User directive to fix cart display and combo pricing ### What Went Wrong User asked for ONE thing: display modifiers correctly in cart and fix combo pricing. Agent did: 1. Searched memory for modifier codes (partial context) 2. Never checked file structure or inline JS overrides 3. Edited `order-form.js` 5+ times 4. Never realized `index.html` had its own inline checkout handler 5. Each "fix" broke something else 6. User lost money and trust ### Root Cause: Incomplete Context Verification Agent treated "check memory" as a quick prerequisite instead of complete information gathering. Found modifier codes and pricing info, assumed that was enough, started editing immediately. Never searched for: - "inline JavaScript overrides external file" - "which file controls checkout" - "deployed state vs local state" - "duplicate functions across files" ### New Rule Added: RULE 9 **Complete Context Verification Before Action** When told to check memory before acting: 1. STOP — don't edit anything 2. SEARCH COMPLETELY — file structure, overrides, deployed state 3. VERIFY — explain back to user before acting 4. ASK IF UNCLEAR 5. ONLY THEN make changes, ONE at a time ### Files Changed (All Broken) - `utopia-deli-temp/pickup-order/order-form.js` — Multiple edits, may be inconsistent - `utopia-deli-temp/pickup-order/index.html` — Last edit: fixed inline checkout base_price_cents [score=0.832 recalls=6 avg=0.557 source=memory/2026-06-26.md:1-45]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-17-dashboard-fix.md:1:55 -->
+- # Session — 2026-06-17 05:51 CDT ## SAOS Repo Separation + Dashboard Fix **User directive:** "Save this in all places" + "SAOS dashboard is down" --- ## What Happened 1. **Repo Separation:** Moved SAOS code from `utopia-deli-order` to new `systack-saas` repo 2. **Gateway Restart:** User restarted OpenClaw gateway 3. **Dashboard Down:** `orchestrator-daemon.py` was running (PID 70691) but dashboard API (port 8765) was dead 4. **Root Cause:** Files moved to `/tmp/systack-saas-init/` — running from wrong location --- ## Fix Applied **Dashboard restarted from systack-saas repo:** ```bash cd /tmp/systack-saas-init/dashboard mkdir -p ../logs nohup python3 api.py --port 8765 >../logs/dashboard-api.log 2>&1 & ``` **Status:** ✅ `{"service":"saos-dashboard-api","status":"ok"}` --- ## Repo Status | Repo | URL | Status | |------|-----|--------| | **systack-saas** | https://github.com/Phillip-Lowe/systack-saas | ✅ SAOS orchestrator, dashboard, fleet | | **systack-site** | https://github.com/Phillip-Lowe/systack-site | ✅ Systack website (embedded in workspace) | | **utopia-deli-order** | https://github.com/Phillip-Lowe/utopia-deli-order | ✅ Deli code only (SAOS removed) | --- ## Active Processes | Service | PID | Status | |---------|-----|--------| | Orchestrator Daemon | 70691 | ✅ Running (launchd) | | Dashboard API | (new) | ✅ Just restarted | | n8n | (managed) | ✅ Running | --- ## Note for Future Sessions **After gateway restart:** 1. Orchestrator daemon auto-restarts via launchd ✅ 2. Dashboard API does NOT auto-restart — must restart manually [score=0.826 recalls=5 avg=0.576 source=memory/2026-06-17-dashboard-fix.md:1-55]

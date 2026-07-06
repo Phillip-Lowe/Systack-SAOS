@@ -55,6 +55,49 @@ def check_rate_limit(key, max_attempts=5, window_seconds=300):
     _login_attempts[key].append(now)
     return True, len(recent)
 
+# ── ADVANCED RATE LIMITING ─────────────────────────────────
+# Per-endpoint rate limit configuration
+RATE_LIMITS = {
+    'login':         {'max': 5,   'window': 300},   # 5 per 5 min
+    'mfa_verify':    {'max': 5,   'window': 300},   # 5 per 5 min
+    'pin_reset':     {'max': 3,   'window': 3600},  # 3 per hour
+    'register':     {'max': 5,   'window': 3600},  # 5 per hour
+    'api_general':   {'max': 100, 'window': 60},    # 100 per min
+    'api_write':     {'max': 30,  'window': 60},    # 30 per min
+    'webhook':       {'max': 200, 'window': 60},    # 200 per min
+    'file_upload':   {'max': 10,  'window': 60},    # 10 per min
+}
+
+def rate_limit(endpoint_type, key_suffix=''):
+    """Decorator for advanced per-endpoint rate limiting."""
+    def decorator(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            config = RATE_LIMITS.get(endpoint_type, RATE_LIMITS['api_general'])
+            client_ip = request.remote_addr or 'unknown'
+            key = f"{endpoint_type}:{client_ip}:{key_suffix}"
+            allowed, attempts = check_rate_limit(key, max_attempts=config['max'], window_seconds=config['window'])
+            if not allowed:
+                log_audit(f'rate_limited_{endpoint_type}', ip=client_ip)
+                resp = jsonify({
+                    "error": "Rate limit exceeded",
+                    "message": f"Too many requests. Limit: {config['max']} per {config['window']}s. Try again later.",
+                    "limit": config['max'],
+                    "window_seconds": config['window']
+                })
+                resp.status_code = 429
+                resp.headers['Retry-After'] = str(config['window'])
+                resp.headers['X-RateLimit-Limit'] = str(config['max'])
+                resp.headers['X-RateLimit-Remaining'] = '0'
+                return resp
+            resp = f(*args, **kwargs)
+            if hasattr(resp, 'headers'):
+                resp.headers['X-RateLimit-Limit'] = str(config['max'])
+                resp.headers['X-RateLimit-Remaining'] = str(max(0, config['max'] - attempts))
+            return resp
+        return decorated
+    return decorator
+
 DB_HOST = os.environ.get("PGHOST", "localhost")
 DB_PORT = int(os.environ.get("PGPORT", "5432"))
 DB_NAME = os.environ.get("PGDATABASE", "systack_memory")
@@ -310,9 +353,115 @@ def require_auth_optional(f):
         return f(*args, **kwargs)
     return decorated
 
+# ── RBAC: ROLE-BASED ACCESS CONTROL ────────────────────────
+
+def get_client_role(client):
+    """Get the role for a client. Defaults to 'customer'."""
+    return client.get('role', 'customer') if client else 'customer'
+
+def get_role_permissions(role):
+    """Fetch permissions for a role from the database."""
+    result = db_query("SELECT permissions FROM saos_roles WHERE role = %s", (role,), one=True)
+    if result and 'permissions' in result:
+        return result['permissions']
+    # Fallback defaults
+    defaults = {
+        'customer': {'dashboard': True, 'tasks': True, 'chat': True, 'deliverables': True, 'docs': True, 'billing': False, 'admin': False, 'users': False},
+        'support': {'dashboard': True, 'tasks': True, 'chat': True, 'deliverables': True, 'docs': True, 'billing': False, 'admin': False, 'users': False, 'all_clients': True},
+        'billing': {'dashboard': True, 'billing': True, 'docs': True, 'admin': False, 'users': False},
+        'ops': {'dashboard': True, 'tasks': True, 'agents': True, 'provisioning': True, 'ops': True, 'billing': False, 'admin': False, 'users': False, 'all_clients': True},
+        'admin': {'dashboard': True, 'tasks': True, 'chat': True, 'deliverables': True, 'docs': True, 'billing': True, 'admin': True, 'users': True, 'agents': True, 'provisioning': True, 'ops': True, 'all_clients': True},
+    }
+    return defaults.get(role, defaults['customer'])
+
+def require_role(*roles):
+    """Decorator that requires the authenticated client to have one of the specified roles."""
+    def decorator(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            client = get_auth_client()
+            if not client:
+                return jsonify({"error": "Unauthorized", "message": "Valid Bearer token required"}), 401
+            client_role = get_client_role(client)
+            if client_role not in roles:
+                log_audit('access_denied_wrong_role', entity_type='client', entity_id=str(client['id']),
+                         new_value=f'Required: {roles}, Had: {client_role}', client_id=client['id'])
+                return jsonify({"error": "Forbidden", "message": f"Role '{client_role}' does not have access to this resource"}), 403
+            request.client = client
+            return f(*args, **kwargs)
+        return decorated
+    return decorator
+
+def require_permission(permission_name):
+    """Decorator that checks if the client's role has a specific permission."""
+    def decorator(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            client = get_auth_client()
+            if not client:
+                return jsonify({"error": "Unauthorized", "message": "Valid Bearer token required"}), 401
+            client_role = get_client_role(client)
+            permissions = get_role_permissions(client_role)
+            if not permissions.get(permission_name, False):
+                log_audit('access_denied_missing_permission', entity_type='client', entity_id=str(client['id']),
+                         new_value=f'Required: {permission_name}', client_id=client['id'])
+                return jsonify({"error": "Forbidden", "message": f"Permission '{permission_name}' required"}), 403
+            request.client = client
+            return f(*args, **kwargs)
+        return decorated
+    return decorator
+
+# ── MFA: MULTI-FACTOR AUTHENTICATION (TOTP) ────────────────
+
+import time as _time
+import base64 as _b64
+import struct as _struct
+import hmac as _hmac
+import hashlib as _hashlib
+
+def _totp_generate(secret, interval=None):
+    """Generate a TOTP code from a base32-encoded secret."""
+    if interval is None:
+        interval = int(_time.time() // 30)
+    # Decode base32 secret
+    key = _b64.b32decode(secret.upper() + '=' * (-len(secret) % 8))
+    # Pack interval as 8-byte big-endian
+    msg = _struct.pack('>Q', interval)
+    # HMAC-SHA1
+    h = _hmac.new(key, msg, _hashlib.sha1).digest()
+    # Dynamic truncation
+    offset = h[-1] & 0x0F
+    code = ((_struct.unpack('>I', h[offset:offset+4])[0] & 0x7FFFFFFF) % 1000000)
+    return f'{code:06d}'
+
+def _totp_verify(secret, code, window=1):
+    """Verify a TOTP code within a time window."""
+    if not secret or not code:
+        return False
+    interval = int(_time.time() // 30)
+    for offset in range(-window, window + 1):
+        if _totp_generate(secret, interval + offset) == str(code).strip():
+            return True
+    return False
+
+def _generate_totp_secret():
+    """Generate a random base32 TOTP secret."""
+    raw = os.urandom(20)
+    return _b64.b32encode(raw).decode('utf-8').rstrip('=')
+
+def _generate_recovery_codes(count=8):
+    """Generate one-time recovery codes."""
+    return [secrets.token_hex(8) for _ in range(count)]
+
+def _generate_totp_uri(secret, account_name, issuer='SAOS'):
+    """Generate otpauth:// URI for QR code."""
+    label = f'{issuer}:{account_name}'
+    return f'otpauth://totp/{label}?secret={secret}&issuer={issuer}&algorithm=SHA1&digits=6&period=30'
+
 # ── NEW: ONBOARDING & PIN MANAGEMENT ───────────────────────
 
 @app.route('/api/auth/register', methods=['POST'])
+@rate_limit('register')
 def register_client():
     """
     First-time client registration.
@@ -397,6 +546,7 @@ def change_pin():
     })
 
 @app.route('/api/auth/forgot-pin', methods=['POST'])
+@rate_limit('pin_reset')
 def forgot_pin():
     """Request PIN reset. Requires email + client_id."""
     data = request.get_json() or {}
@@ -841,11 +991,14 @@ def close_conversation(conv_id):
 # ── AUTH ENDPOINTS ─────────────────────────────────────────────
 
 @app.route('/api/auth/login', methods=['POST'])
+@rate_limit('login')
 def login():
-    """PIN-based login. Requires client_id + PIN. Rate limited: 5 attempts per 5 min."""
+    """PIN-based login with optional MFA. Requires client_id + PIN. Rate limited: 5 attempts per 5 min."""
     data = request.get_json() or {}
     client_id = data.get('client_id')
     pin = data.get('pin')
+    mfa_code = data.get('mfa_code')  # Optional: TOTP code if MFA is enabled
+    recovery_code = data.get('recovery_code')  # Optional: recovery code
     
     # Rate limiting
     client_ip = request.remote_addr or 'unknown'
@@ -881,6 +1034,32 @@ def login():
             "message": f"Login failed. Attempt {attempts} of 5 in 5 minutes."
         }), 401
     
+    # MFA check
+    if client.get('mfa_enabled') and client.get('mfa_secret'):
+        if not mfa_code and not recovery_code:
+            # PIN correct but MFA required — return partial success
+            log_audit('login_mfa_required', entity_type='client', entity_id=str(client_id))
+            return jsonify({
+                "mfa_required": True,
+                "message": "MFA code required. Provide mfa_code or recovery_code."
+            }), 200
+        
+        if recovery_code:
+            # Verify recovery code
+            codes = client.get('mfa_recovery_codes', [])
+            if recovery_code not in codes:
+                log_audit('login_failed_bad_recovery', entity_type='client', entity_id=str(client_id))
+                return jsonify({"error": "Invalid recovery code"}), 401
+            # Consume recovery code
+            codes.remove(recovery_code)
+            db_exec("UPDATE saos_clients SET mfa_recovery_codes = %s WHERE id = %s",
+                    (json.dumps(codes), client_id))
+        else:
+            # Verify TOTP code
+            if not _totp_verify(client['mfa_secret'], mfa_code):
+                log_audit('login_failed_bad_mfa', entity_type='client', entity_id=str(client_id))
+                return jsonify({"error": "Invalid MFA code"}), 401
+    
     # Generate token
     token = generate_token()
     token_hash = hash_token(token)
@@ -900,12 +1079,166 @@ def login():
     
     log_audit('login_success', entity_type='client', entity_id=str(client_id), client_id=client_id)
     
+    # Build response (exclude sensitive fields)
+    client_safe = {k: v for k, v in client.items() if k not in ('auth_pin', 'mfa_secret', 'mfa_recovery_codes', 'temp_pin')}
+    
     return jsonify({
         "token": token,
         "expires_at": expires.isoformat(),
-        "client": client,
-        "onboarding_status": client.get('onboarding_status')
+        "client": client_safe,
+        "onboarding_status": client.get('onboarding_status'),
+        "mfa_enabled": bool(client.get('mfa_enabled'))
     })
+
+# ── MFA ENDPOINTS ──────────────────────────────────────────
+
+@app.route('/api/auth/mfa/setup', methods=['POST'])
+@require_auth
+def mfa_setup():
+    """Initialize MFA for the authenticated client. Returns QR code URI and secret."""
+    client = request.client
+    client_id = client['id']
+    
+    # Check if MFA already enabled
+    if client.get('mfa_enabled'):
+        return jsonify({"error": "MFA already enabled. Disable first to re-setup."}), 400
+    
+    # Generate new secret
+    secret = _generate_totp_secret()
+    account_name = client.get('customer_email') or f'client-{client_id}'
+    uri = _generate_totp_uri(secret, account_name)
+    
+    # Store secret temporarily (not enabled yet — client must verify)
+    db_exec("UPDATE saos_clients SET mfa_secret = %s WHERE id = %s", (secret, client_id))
+    
+    log_audit('mfa_setup_initiated', entity_type='client', entity_id=str(client_id), client_id=client_id)
+    
+    return jsonify({
+        "secret": secret,
+        "otpauth_uri": uri,
+        "qr_url": f"https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={uri}",
+        "message": "Scan this QR code with your authenticator app (Google Authenticator, Authy, etc). Then verify with /api/auth/mfa/verify."
+    })
+
+@app.route('/api/auth/mfa/verify', methods=['POST'])
+@require_auth
+@rate_limit('mfa_verify')
+def mfa_verify():
+    """Verify MFA setup by checking a TOTP code. Enables MFA if correct."""
+    client = request.client
+    client_id = client['id']
+    data = request.get_json() or {}
+    code = data.get('mfa_code')
+    
+    if not code:
+        return jsonify({"error": "mfa_code required"}), 400
+    
+    # Get fresh client data (with secret)
+    fresh = db_query("SELECT mfa_secret, mfa_enabled FROM saos_clients WHERE id = %s", (client_id,), one=True)
+    if not fresh or not fresh.get('mfa_secret'):
+        return jsonify({"error": "MFA not initialized. Call /api/auth/mfa/setup first."}), 400
+    if fresh.get('mfa_enabled'):
+        return jsonify({"error": "MFA already enabled"}), 400
+    
+    if not _totp_verify(fresh['mfa_secret'], code):
+        return jsonify({"error": "Invalid MFA code"}), 401
+    
+    # Generate recovery codes
+    recovery_codes = _generate_recovery_codes(8)
+    
+    # Enable MFA
+    db_exec("""
+        UPDATE saos_clients 
+        SET mfa_enabled = true, mfa_recovery_codes = %s
+        WHERE id = %s
+    """, (json.dumps(recovery_codes), client_id))
+    
+    log_audit('mfa_enabled', entity_type='client', entity_id=str(client_id), client_id=client_id)
+    
+    return jsonify({
+        "success": True,
+        "message": "MFA enabled successfully. Save your recovery codes — these are shown only once.",
+        "recovery_codes": recovery_codes
+    })
+
+@app.route('/api/auth/mfa/disable', methods=['POST'])
+@require_auth
+def mfa_disable():
+    """Disable MFA. Requires PIN confirmation."""
+    client = request.client
+    client_id = client['id']
+    data = request.get_json() or {}
+    pin = data.get('pin')
+    mfa_code = data.get('mfa_code')
+    
+    if not pin:
+        return jsonify({"error": "PIN required to disable MFA"}), 400
+    
+    # Verify PIN
+    fresh = db_query("SELECT auth_pin, mfa_enabled, mfa_secret FROM saos_clients WHERE id = %s", (client_id,), one=True)
+    if not fresh or fresh.get('auth_pin') != pin:
+        return jsonify({"error": "Invalid PIN"}), 401
+    
+    # Verify MFA code if MFA is enabled
+    if fresh.get('mfa_enabled') and fresh.get('mfa_secret'):
+        if not mfa_code or not _totp_verify(fresh['mfa_secret'], mfa_code):
+            return jsonify({"error": "Valid MFA code required to disable MFA"}), 401
+    
+    db_exec("""
+        UPDATE saos_clients 
+        SET mfa_enabled = false, mfa_secret = NULL, mfa_recovery_codes = '[]'
+        WHERE id = %s
+    """, (client_id,))
+    
+    log_audit('mfa_disabled', entity_type='client', entity_id=str(client_id), client_id=client_id)
+    return jsonify({"success": True, "message": "MFA disabled."})
+
+@app.route('/api/auth/mfa/status', methods=['GET'])
+@require_auth
+def mfa_status():
+    """Check MFA status for the authenticated client."""
+    client = request.client
+    return jsonify({
+        "mfa_enabled": bool(client.get('mfa_enabled')),
+        "mfa_setup_required": not bool(client.get('mfa_enabled'))
+    })
+
+# ── RBAC ENDPOINTS ─────────────────────────────────────────
+
+@app.route('/api/auth/roles', methods=['GET'])
+@require_role('admin')
+def list_roles():
+    """List all available roles. Admin only."""
+    roles = db_query("SELECT role, description, permissions FROM saos_roles ORDER BY role")
+    return jsonify({"roles": roles})
+
+@app.route('/api/admin/client/<int:cid>/role', methods=['PUT'])
+@require_role('admin')
+def set_client_role(cid):
+    """Set the role for a client. Admin only."""
+    data = request.get_json() or {}
+    new_role = data.get('role')
+    if new_role not in ('customer', 'support', 'billing', 'ops', 'admin'):
+        return jsonify({"error": "Invalid role. Must be: customer, support, billing, ops, or admin"}), 400
+    
+    client = db_query("SELECT id, customer_name, role FROM saos_clients WHERE id = %s", (cid,), one=True)
+    if not client:
+        return jsonify({"error": "Client not found"}), 404
+    
+    old_role = client.get('role', 'customer')
+    db_exec("UPDATE saos_clients SET role = %s WHERE id = %s", (new_role, cid))
+    log_audit('role_changed', entity_type='client', entity_id=str(cid),
+             old_value=old_role, new_value=new_role, client_id=request.client['id'])
+    return jsonify({"success": True, "client_id": cid, "old_role": old_role, "new_role": new_role})
+
+@app.route('/api/auth/permissions', methods=['GET'])
+@require_auth
+def my_permissions():
+    """Get permissions for the current client's role."""
+    client = request.client
+    role = get_client_role(client)
+    perms = get_role_permissions(role)
+    return jsonify({"role": role, "permissions": perms})
 
 @app.route('/api/auth/logout', methods=['POST'])
 @require_auth
@@ -1615,6 +1948,14 @@ DOC_FILES = {
     'mobile-guide-v4': 'SAOS-Dashboard-Mobile-Access-Guide-v4.0.pdf',
     'mobile-guide-v3': 'SAOS-Dashboard-Mobile-Access-Guide-v4.0.pdf',  # backward compat
     'enterprise-guide': 'SyStack-Enterprise-Deployment-Guide-v1.0.pdf',
+    'technical-spec': 'SAOS-Dashboard-Technical-Spec.pdf',
+    'ios-cert-plan': 'SAOS-iOS-Cert-Trust-Plan.pdf',
+    'changelog': 'SAOS-Changes-2026-06-29.pdf',
+    'readme': 'SAOS-Customer-Portal-README-v2.pdf',
+    'security-arch': 'SAOS-Security-Architecture-v2.0.pdf',
+    'security-arch-v1': 'SAOS-Security-Architecture-v1.0.pdf',  # backward compat
+    'trust-center': 'SAOS-Compliance-Trust-Center-v1.0.pdf',
+    'backup-recovery': 'SAOS-Backup-Recovery-Guide-v1.0.pdf',
 }
 
 @app.route('/download/<doc_id>')
@@ -2013,6 +2354,637 @@ def update_setup_progress():
     
     return jsonify({'status': 'updated', 'service': service_name})
 
+# ════════════════════════════════════════════════════════════════
+# P2: BACKUP VERIFICATION & RECOVERY ENDPOINTS
+# ════════════════════════════════════════════════════════════════
+
+@app.route('/api/admin/backup-log')
+@require_role('admin', 'ops')
+def backup_log_list():
+    """List backup history. Admin/ops only."""
+    limit = min(int(request.args.get('limit', 50)), 200)
+    backups = db_query("""
+        SELECT * FROM backup_log 
+        ORDER BY started_at DESC 
+        LIMIT %s
+    """, (limit,))
+    return jsonify({
+        'backups': backups if isinstance(backups, list) else [],
+        'count': len(backups) if isinstance(backups, list) else 0
+    })
+
+@app.route('/api/admin/backup/run', methods=['POST'])
+@require_role('admin', 'ops')
+def backup_run():
+    """Trigger a backup verification cycle. Admin/ops only.
+    Runs pg_dump + restore test in background."""
+    import subprocess as sp
+    import threading
+    
+    script_path = os.path.join(BASE_DIR, 'scripts', 'backup_verify.py')
+    if not os.path.isfile(script_path):
+        return jsonify({'error': 'Backup script not found'}), 500
+    
+    def run_backup():
+        try:
+            sp.run(
+                ['python3', script_path, '--full'],
+                capture_output=True, text=True, timeout=120,
+                env={**os.environ}
+            )
+        except Exception as e:
+            print(f'[BACKUP] Background backup failed: {e}')
+    
+    thread = threading.Thread(target=run_backup, daemon=True)
+    thread.start()
+    
+    log_audit('backup_triggered', entity_type='system', 
+              client_id=request.client['id'])
+    
+    return jsonify({
+        'success': True,
+        'message': 'Backup verification started. Check /api/admin/backup-log for results.'
+    })
+
+@app.route('/api/admin/backup/rpo-rto')
+@require_role('admin', 'ops')
+def backup_rpo_rto():
+    """Return RPO/RTO metrics from latest verified backup."""
+    latest = db_query("""
+        SELECT * FROM backup_log 
+        WHERE status = 'verified' 
+        ORDER BY started_at DESC 
+        LIMIT 1
+    """, one=True)
+    
+    if not latest or 'error' in latest:
+        return jsonify({
+            'rpo_minutes': 1440,
+            'rto_minutes': 10,
+            'last_backup': None,
+            'message': 'No verified backups yet. Defaults: RPO=24h, RTO=10min'
+        })
+    
+    return jsonify({
+        'rpo_minutes': latest.get('rpo_minutes', 1440),
+        'rto_minutes': latest.get('rto_minutes', 10),
+        'last_backup': latest.get('started_at').isoformat() if latest.get('started_at') else None,
+        'last_verified': latest.get('verified_at').isoformat() if latest.get('verified_at') else None,
+        'file_size_bytes': latest.get('file_size_bytes'),
+        'checksum': latest.get('checksum_sha256', '')[:16] + '...',
+        'verification_result': latest.get('verification_result', '')
+    })
+
+# ════════════════════════════════════════════════════════════════
+# P3: SECURITY EVENTS DASHBOARD ENDPOINTS
+# ════════════════════════════════════════════════════════════════
+
+@app.route('/api/admin/security-events')
+@require_role('admin', 'ops', 'support')
+def security_events_list():
+    """List security events with filtering. Admin/ops/support only."""
+    limit = min(int(request.args.get('limit', 50)), 200)
+    severity = request.args.get('severity')
+    event_type = request.args.get('event_type')
+    resolved = request.args.get('resolved')
+    
+    sql = "SELECT * FROM security_events WHERE 1=1"
+    params = []
+    
+    if severity:
+        sql += " AND severity = %s"
+        params.append(severity)
+    if event_type:
+        sql += " AND event_type = %s"
+        params.append(event_type)
+    if resolved is not None:
+        sql += " AND resolved = %s"
+        params.append(resolved == 'true')
+    
+    sql += " ORDER BY created_at DESC LIMIT %s"
+    params.append(limit)
+    
+    events = db_query(sql, tuple(params))
+    return jsonify({
+        'events': events if isinstance(events, list) else [],
+        'count': len(events) if isinstance(events, list) else 0
+    })
+
+@app.route('/api/admin/security-events/stats')
+@require_role('admin', 'ops', 'support')
+def security_events_stats():
+    """Aggregated security event statistics."""
+    # Total counts by type
+    by_type = db_query("""
+        SELECT event_type, COUNT(*) as count, 
+               COUNT(*) FILTER (WHERE resolved = false) as unresolved
+        FROM security_events
+        WHERE created_at > NOW() - INTERVAL '30 days'
+        GROUP BY event_type
+        ORDER BY count DESC
+    """)
+    
+    # Counts by severity
+    by_severity = db_query("""
+        SELECT severity, COUNT(*) as count,
+               COUNT(*) FILTER (WHERE resolved = false) as unresolved
+        FROM security_events
+        WHERE created_at > NOW() - INTERVAL '30 days'
+        GROUP BY severity
+    """)
+    
+    # Recent critical events
+    critical = db_query("""
+        SELECT * FROM security_events 
+        WHERE severity IN ('critical', 'warning') AND resolved = false
+        ORDER BY created_at DESC LIMIT 10
+    """)
+    
+    # Top offending IPs
+    top_ips = db_query("""
+        SELECT ip_address, COUNT(*) as count,
+               MAX(created_at) as last_seen
+        FROM security_events
+        WHERE created_at > NOW() - INTERVAL '30 days'
+        AND ip_address IS NOT NULL
+        GROUP BY ip_address
+        ORDER BY count DESC
+        LIMIT 10
+    """)
+    
+    return jsonify({
+        'by_type': by_type if isinstance(by_type, list) else [],
+        'by_severity': by_severity if isinstance(by_severity, list) else [],
+        'critical_unresolved': critical if isinstance(critical, list) else [],
+        'top_offending_ips': top_ips if isinstance(top_ips, list) else [],
+        'period': '30 days'
+    })
+
+@app.route('/api/admin/security-events/<int:event_id>/resolve', methods=['POST'])
+@require_role('admin', 'ops')
+def resolve_security_event(event_id):
+    """Resolve a security event. Admin/ops only."""
+    data = request.get_json() or {}
+    notes = data.get('resolution_notes', '')
+    
+    event = db_query("SELECT * FROM security_events WHERE id = %s", (event_id,), one=True)
+    if not event:
+        return jsonify({'error': 'Security event not found'}), 404
+    
+    db_exec("""
+        UPDATE security_events 
+        SET resolved = true, resolved_at = NOW(), 
+            resolved_by = %s, resolution_notes = %s
+        WHERE id = %s
+    """, (request.client.get('customer_name', 'admin'), notes, event_id))
+    
+    log_audit('security_event_resolved', entity_type='security_event', 
+              entity_id=str(event_id), client_id=request.client['id'])
+    
+    return jsonify({
+        'success': True, 
+        'event_id': event_id,
+        'message': 'Security event resolved'
+    })
+
+# Internal: Log security event (called by auth endpoints)
+def log_security_event(event_type, severity='info', client_id=None, ip=None, 
+                       user_agent=None, details=None, blocked=False):
+    """Log a security event. Silently fails."""
+    try:
+        db_exec("""
+            INSERT INTO security_events 
+            (event_type, severity, client_id, ip_address, user_agent, details, blocked)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (event_type, severity, client_id, ip, user_agent,
+              json.dumps(details) if details else None, blocked))
+    except Exception as e:
+        print(f"[SECURITY] Failed to log event: {e}")
+
+# ════════════════════════════════════════════════════════════════
+# P4: ADMIN CONSOLE HARDENING & AUDIT EXPORT
+# ════════════════════════════════════════════════════════════════
+
+@app.route('/api/admin/audit-log')
+@require_role('admin')
+def admin_audit_log():
+    """Full audit trail. Admin only. Supports filtering."""
+    limit = min(int(request.args.get('limit', 100)), 500)
+    client_filter = request.args.get('client_id')
+    action_filter = request.args.get('action')
+    date_from = request.args.get('date_from')
+    date_to = request.args.get('date_to')
+    
+    sql = """
+        SELECT a.*, c.customer_name 
+        FROM audit_log a 
+        LEFT JOIN saos_clients c ON a.client_id = c.id
+        WHERE 1=1
+    """
+    params = []
+    
+    if client_filter:
+        sql += " AND a.client_id = %s"
+        params.append(int(client_filter))
+    if action_filter:
+        sql += " AND a.action ILIKE %s"
+        params.append(f'%{action_filter}%')
+    if date_from:
+        sql += " AND a.created_at >= %s"
+        params.append(date_from)
+    if date_to:
+        sql += " AND a.created_at <= %s"
+        params.append(date_to)
+    
+    sql += " ORDER BY a.created_at DESC LIMIT %s"
+    params.append(limit)
+    
+    logs = db_query(sql, tuple(params))
+    return jsonify({
+        'audit_logs': logs if isinstance(logs, list) else [],
+        'count': len(logs) if isinstance(logs, list) else 0,
+        'filters': {
+            'client_id': client_filter,
+            'action': action_filter,
+            'date_from': date_from,
+            'date_to': date_to
+        }
+    })
+
+@app.route('/api/admin/audit/export', methods=['POST'])
+@require_role('admin')
+def admin_audit_export():
+    """Export audit log as ZIP file. Admin only.
+    Exports full audit trail or filtered by client_id/date range."""
+    data = request.get_json() or {}
+    client_filter = data.get('client_id')
+    date_from = data.get('date_from')
+    date_to = data.get('date_to')
+    export_type = data.get('export_type', 'full_audit')
+    
+    sql = """
+        SELECT a.*, c.customer_name, c.customer_email
+        FROM audit_log a 
+        LEFT JOIN saos_clients c ON a.client_id = c.id
+        WHERE 1=1
+    """
+    params = []
+    
+    if client_filter:
+        sql += " AND a.client_id = %s"
+        params.append(int(client_filter))
+    if date_from:
+        sql += " AND a.created_at >= %s"
+        params.append(date_from)
+    if date_to:
+        sql += " AND a.created_at <= %s"
+        params.append(date_to)
+    
+    sql += " ORDER BY a.created_at DESC"
+    
+    logs = db_query(sql, tuple(params))
+    if not isinstance(logs, list):
+        logs = []
+    
+    # Also fetch security events if full export
+    security_events = []
+    if export_type in ('full_audit', 'security_events'):
+        sec_sql = "SELECT * FROM security_events WHERE 1=1"
+        sec_params = []
+        if date_from:
+            sec_sql += " AND created_at >= %s"
+            sec_params.append(date_from)
+        if date_to:
+            sec_sql += " AND created_at <= %s"
+            sec_params.append(date_to)
+        sec_sql += " ORDER BY created_at DESC"
+        security_events = db_query(sec_sql, tuple(sec_params)) or []
+    
+    # Create ZIP
+    import zipfile, io as _io
+    zip_buffer = _io.BytesIO()
+    
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr('audit_log.json', json.dumps(logs, indent=2, default=str))
+        if security_events:
+            zf.writestr('security_events.json', json.dumps(security_events, indent=2, default=str))
+        
+        # Add summary
+        summary = {
+            'export_type': export_type,
+            'exported_by': request.client.get('customer_name', 'admin'),
+            'exported_at': datetime.now().isoformat(),
+            'audit_record_count': len(logs),
+            'security_event_count': len(security_events),
+            'date_range': {'from': date_from, 'to': date_to},
+            'client_filter': client_filter
+        }
+        zf.writestr('export_summary.json', json.dumps(summary, indent=2))
+    
+    zip_buffer.seek(0)
+    
+    # Calculate checksum
+    zip_data = zip_buffer.getvalue()
+    checksum = hashlib.sha256(zip_data).hexdigest()
+    
+    # Log the export
+    db_exec("""
+        INSERT INTO audit_exports 
+        (exported_by, export_type, client_id_filter, date_from, date_to, 
+         record_count, file_size_bytes, checksum_sha256)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+    """, (request.client['id'], export_type, client_filter, date_from, date_to,
+          len(logs), len(zip_data), checksum))
+    
+    log_audit('audit_export', entity_type='audit_log', 
+              new_value=f'Exported {len(logs)} records', client_id=request.client['id'])
+    
+    from flask import Response
+    return Response(
+        zip_data,
+        mimetype='application/zip',
+        headers={
+            'Content-Disposition': f'attachment; filename=saos-audit-export-{datetime.now().strftime("%Y%m%d_%H%M%S")}.zip'
+        }
+    )
+
+@app.route('/api/admin/audit/client/<int:cid>')
+@require_role('admin', 'support')
+def admin_client_audit(cid):
+    """Get audit trail for a specific client. Admin/support only."""
+    client = db_query("SELECT id, customer_name, customer_email, tier, role FROM saos_clients WHERE id = %s", (cid,), one=True)
+    if not client:
+        return jsonify({'error': 'Client not found'}), 404
+    
+    limit = min(int(request.args.get('limit', 100)), 500)
+    logs = db_query("""
+        SELECT * FROM audit_log 
+        WHERE client_id = %s 
+        ORDER BY created_at DESC LIMIT %s
+    """, (cid, limit))
+    
+    # Security events for this client
+    sec_events = db_query("""
+        SELECT * FROM security_events 
+        WHERE client_id = %s 
+        ORDER BY created_at DESC LIMIT %s
+    """, (cid, limit))
+    
+    # Login history
+    logins = db_query("""
+        SELECT action, created_at, ip_address, user_agent 
+        FROM audit_log 
+        WHERE client_id = %s AND action LIKE 'login%'
+        ORDER BY created_at DESC LIMIT 20
+    """, (cid,))
+    
+    return jsonify({
+        'client': client,
+        'audit_logs': logs if isinstance(logs, list) else [],
+        'security_events': sec_events if isinstance(sec_events, list) else [],
+        'login_history': logins if isinstance(logins, list) else [],
+        'total_logs': len(logs) if isinstance(logs, list) else 0
+    })
+
+# ════════════════════════════════════════════════════════════════
+# P5: COMPLIANCE PACKAGE ENDPOINTS
+# ════════════════════════════════════════════════════════════════
+
+@app.route('/api/compliance/policies')
+@require_auth
+def compliance_policies_list():
+    """List all active compliance policies. Any authenticated user."""
+    policies = db_query("""
+        SELECT id, policy_type, title, version, effective_date, review_date, 
+               approved_by, status, created_at, updated_at
+        FROM compliance_policies 
+        WHERE status = 'active'
+        ORDER BY policy_type
+    """)
+    return jsonify({
+        'policies': policies if isinstance(policies, list) else [],
+        'count': len(policies) if isinstance(policies, list) else 0
+    })
+
+@app.route('/api/compliance/policies/<policy_type>')
+@require_auth
+def compliance_policy_by_type(policy_type):
+    """Get full policy content by type. Any authenticated user."""
+    policy = db_query("""
+        SELECT * FROM compliance_policies 
+        WHERE policy_type = %s AND status = 'active'
+        ORDER BY version DESC LIMIT 1
+    """, (policy_type,), one=True)
+    
+    if not policy:
+        return jsonify({'error': 'Policy not found'}), 404
+    
+    return jsonify(policy)
+
+@app.route('/api/compliance/incidents')
+@require_role('admin', 'ops', 'support')
+def compliance_incidents_list():
+    """List incident log entries. Admin/ops/support only."""
+    status = request.args.get('status')
+    severity = request.args.get('severity')
+    limit = min(int(request.args.get('limit', 50)), 200)
+    
+    sql = "SELECT * FROM incident_log WHERE 1=1"
+    params = []
+    
+    if status:
+        sql += " AND status = %s"
+        params.append(status)
+    if severity:
+        sql += " AND severity = %s"
+        params.append(severity)
+    
+    sql += " ORDER BY created_at DESC LIMIT %s"
+    params.append(limit)
+    
+    incidents = db_query(sql, tuple(params))
+    return jsonify({
+        'incidents': incidents if isinstance(incidents, list) else [],
+        'count': len(incidents) if isinstance(incidents, list) else 0
+    })
+
+@app.route('/api/compliance/incidents', methods=['POST'])
+@require_role('admin', 'ops')
+def compliance_create_incident():
+    """Create a new incident log entry. Admin/ops only."""
+    data = request.get_json() or {}
+    
+    required = ['incident_type', 'severity', 'title']
+    for field in required:
+        if not data.get(field):
+            return jsonify({'error': f'{field} required'}), 400
+    
+    result = db_query("""
+        INSERT INTO incident_log 
+        (incident_type, severity, title, description, affected_clients, 
+         status, detected_at, created_by)
+        VALUES (%s, %s, %s, %s, %s, 'open', NOW(), %s)
+        RETURNING id, title, status, created_at
+    """, (
+        data['incident_type'],
+        data['severity'],
+        data['title'],
+        data.get('description', ''),
+        json.dumps(data.get('affected_clients', [])),
+        request.client.get('customer_name', 'admin')
+    ), one=True)
+    
+    if not result or 'error' in result:
+        return jsonify({'error': 'Failed to create incident'}), 500
+    
+    log_audit('incident_created', entity_type='incident', 
+              entity_id=str(result.get('id')), client_id=request.client['id'])
+    
+    return jsonify({
+        'success': True,
+        'incident': result
+    })
+
+@app.route('/api/compliance/incidents/<int:incident_id>/resolve', methods=['POST'])
+@require_role('admin', 'ops')
+def compliance_resolve_incident(incident_id):
+    """Resolve an incident. Admin/ops only."""
+    data = request.get_json() or {}
+    
+    incident = db_query("SELECT * FROM incident_log WHERE id = %s", (incident_id,), one=True)
+    if not incident:
+        return jsonify({'error': 'Incident not found'}), 404
+    
+    # Calculate duration
+    detected = incident.get('detected_at') or incident.get('created_at')
+    duration = None
+    if detected:
+        duration = int((datetime.now() - detected).total_seconds() / 60)
+    
+    db_exec("""
+        UPDATE incident_log 
+        SET status = 'resolved', resolved_at = NOW(), duration_minutes = %s,
+            root_cause = %s, resolution = %s, preventive_measures = %s,
+            updated_at = NOW()
+        WHERE id = %s
+    """, (
+        duration,
+        data.get('root_cause', ''),
+        data.get('resolution', ''),
+        data.get('preventive_measures', ''),
+        incident_id
+    ))
+    
+    log_audit('incident_resolved', entity_type='incident',
+              entity_id=str(incident_id), client_id=request.client['id'])
+    
+    return jsonify({
+        'success': True,
+        'incident_id': incident_id,
+        'duration_minutes': duration,
+        'message': 'Incident resolved'
+    })
+
+@app.route('/api/compliance/trust-center')
+def trust_center():
+    """Public trust center — no auth required.
+    Returns security posture, compliance status, and policies summary."""
+    # Active policies count
+    policies = db_query("""
+        SELECT policy_type, title, version, effective_date, review_date
+        FROM compliance_policies 
+        WHERE status = 'active'
+        ORDER BY policy_type
+    """)
+    
+    # Recent incidents (last 90 days, no sensitive details)
+    incidents = db_query("""
+        SELECT incident_type, severity, title, status, 
+               detected_at, resolved_at, duration_minutes
+        FROM incident_log 
+        WHERE created_at > NOW() - INTERVAL '90 days'
+        ORDER BY created_at DESC
+        LIMIT 10
+    """)
+    
+    # Backup status
+    last_backup = db_query("""
+        SELECT status, started_at, file_size_bytes, verification_result
+        FROM backup_log 
+        ORDER BY started_at DESC LIMIT 1
+    """, one=True)
+    
+    # Security events summary (last 30 days)
+    sec_summary = db_query("""
+        SELECT severity, COUNT(*) as count,
+               COUNT(*) FILTER (WHERE resolved = true) as resolved_count
+        FROM security_events
+        WHERE created_at > NOW() - INTERVAL '30 days'
+        GROUP BY severity
+    """)
+    
+    return jsonify({
+        'company': 'Systack',
+        'product': 'SAOS (Systack AI Operations System)',
+        'security_posture': {
+            'mfa_available': True,
+            'rbac_enabled': True,
+            'rate_limiting': True,
+            'audit_logging': True,
+            'encryption_in_transit': 'TLS 1.3 / WireGuard',
+            'encryption_at_rest': 'AES-256',
+            'network_security': 'Tailscale mesh VPN — no public exposure',
+            'data_residency': 'United States (Dallas, TX)'
+        },
+        'compliance_policies': policies if isinstance(policies, list) else [],
+        'recent_incidents': incidents if isinstance(incidents, list) else [],
+        'last_backup': last_backup if last_backup and 'error' not in last_backup else None,
+        'security_events_30d': sec_summary if isinstance(sec_summary, list) else [],
+        'trust_center_version': '1.0',
+        'last_updated': datetime.now().isoformat()
+    })
+
+# ════════════════════════════════════════════════════════════════
+# INTEGRATION: Log security events on failed auth
+# ════════════════════════════════════════════════════════════════
+
+# Override log_audit to also log security events for auth failures
+_original_log_audit = log_audit
+
+def log_audit_with_security(action, entity_type=None, entity_id=None, old_value=None, 
+                            new_value=None, client_id=None):
+    """Extended audit logging that also creates security events for auth failures."""
+    _original_log_audit(action, entity_type, entity_id, old_value, new_value, client_id)
+    
+    # Auto-create security events for auth-related actions
+    security_actions = {
+        'login_failed_invalid_pin': ('failed_login', 'warning'),
+        'login_failed_rate_limit': ('rate_limit_hit', 'warning'),
+        'login_failed_not_found': ('failed_login', 'info'),
+        'login_failed_no_pin': ('failed_login', 'info'),
+        'login_failed_bad_mfa': ('mfa_failure', 'warning'),
+        'login_failed_bad_recovery': ('mfa_failure', 'warning'),
+        'access_denied_wrong_role': ('access_denied', 'warning'),
+        'access_denied_missing_permission': ('access_denied', 'warning'),
+    }
+    
+    if action in security_actions:
+        event_type, severity = security_actions[action]
+        ip = request.remote_addr if request else None
+        ua = request.headers.get('User-Agent', '') if request else None
+        log_security_event(
+            event_type=event_type,
+            severity=severity,
+            client_id=client_id,
+            ip=ip,
+            user_agent=ua,
+            details={'action': action, 'entity_id': entity_id},
+            blocked=(action in ['login_failed_rate_limit'])
+        )
+
+# Replace the global log_audit
+log_audit = log_audit_with_security
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
@@ -2055,5 +3027,27 @@ if __name__ == '__main__':
     print(f"")
     print(f"   NEW: Export Features:")
     print(f"   - POST /api/export/data (ZIP export of all client data)")
+    print(f"")
+    print(f"   P2: Backup & Recovery:")
+    print(f"   - GET  /api/admin/backup-log           (backup history)")
+    print(f"   - POST /api/admin/backup/run            (trigger backup)")
+    print(f"   - GET  /api/admin/backup/rpo-rto        (recovery metrics)")
+    print(f"")
+    print(f"   P3: Security Events:")
+    print(f"   - GET  /api/admin/security-events       (list events)")
+    print(f"   - GET  /api/admin/security-events/stats (aggregated stats)")
+    print(f"   - POST /api/admin/security-events/<id>/resolve (resolve event)")
+    print(f"")
+    print(f"   P4: Admin Audit:")
+    print(f"   - GET  /api/admin/audit-log             (full audit trail)")
+    print(f"   - POST /api/admin/audit/export           (export audit ZIP)")
+    print(f"   - GET  /api/admin/audit/client/<id>     (client audit report)")
+    print(f"")
+    print(f"   P5: Compliance:")
+    print(f"   - GET  /api/compliance/policies         (list policies)")
+    print(f"   - GET  /api/compliance/policies/<type>  (policy by type)")
+    print(f"   - GET  /api/compliance/incidents        (incident log)")
+    print(f"   - POST /api/compliance/incidents        (create incident)")
+    print(f"   - GET  /api/compliance/trust-center     (public trust info)")
 
     app.run(host='0.0.0.0', port=args.port, debug=False)

@@ -580,7 +580,7 @@ Source: memory/2026-06-27-0511-cdt-memory-hygiene-rule.md
   - ✅ ~~Build dashboard authentication (PIN + session tokens)~~ DONE 2026-06-25
   - ✅ ~~Fix mobile chat layout and auth~~ DONE 2026-06-25
   - ✅ ~~Test end-to-end provisioning with real Vultr/Tailscale/n8n credentials~~ DONE 2026-06-22 (see memory/2026-06-22-vps-provisioning-results.md)
-  - ⏳ Fix Tailscale `.ts.net` URL on iOS Safari (cert trust issue)
+  - ⏳ iOS Safari cert trust — Plan created, awaiting Green's decision (Cloudflare Tunnel recommended)
   - ✅ **Update PDF documentation** — COMPLETE 2026-06-30. All 5 docs refreshed to v7.0/v5.0/v3.0 with Live Ops, Activity trail, deliverable storage, error handling. Bug fix: removed duplicate JS functions in index.html. See `memory/2026-06-30-saos-pdf-refresh.md`
 
 ### Real-Time Voice Chat — Custom Provider Adapter (Added 2026-06-24)
@@ -664,16 +664,28 @@ Source: memory/2026-06-27-0511-cdt-memory-hygiene-rule.md
 7. ✅ Dashboard Authentication (PIN + session tokens, mobile login)
 8. ✅ Mobile Responsive Layout (hamburger menu, sidebar toggle, iOS fixes)
 9. ✅ End-to-End Provisioning (VPS creation, Tailscale join, webhook callback)
-10. ✅ **3 Missing Service Workflows** — Customer Support Drafting, Document Classification, Scheduled Report Generator (JSON built 2026-06-30)
+10. ✅ **3 Missing Service Workflows** — Customer Support Drafting, Document Classification, Scheduled Report Generator (JSON built 2026-06-30, imported + activated in n8n 2026-07-05)
+11. ✅ **PDF Documentation Complete** — 12 PDFs total (7 original + 4 new + 1 Security Architecture v1.0, generated 2026-07-05)
+12. ✅ **MFA (Multi-Factor Authentication)** — TOTP RFC 6238, QR setup, recovery codes, login flow updated (built 2026-07-05)
+13. ✅ **RBAC (Role-Based Access Control)** — 5 roles (customer/support/billing/ops/admin), require_role + require_permission decorators (built 2026-07-05)
+14. ✅ **Advanced Rate Limiting** — 8 per-endpoint configs with HTTP headers (built 2026-07-05)
+15. ✅ **n8n Workflow Activation** — All 3 SAOS service workflows imported, added to shared_workflow, activated (2026-07-05)
+16. ✅ **PDF Generator Fix** — Reordered browser paths so Brave is used first instead of broken Chromium (2026-07-05)
+17. ✅ **P2: Backup Verification** — `scripts/backup_verify.py`, `backup_log` table, 3 API endpoints, verified RPO=24h/RTO=6min (2026-07-05)
+18. ✅ **P3: Security Events Dashboard** — `security_events` table, auto-logging on auth failures, 3 API endpoints (2026-07-05)
+19. ✅ **P4: Admin Audit Export** — `audit_exports` table, ZIP export with checksums, client audit reports, 3 API endpoints (2026-07-05)
+20. ✅ **P5: Compliance Package** — 5 default policies, `incident_log` table, PUBLIC trust center endpoint, 6 API endpoints (2026-07-05)
+21. ✅ **Security Architecture v2.0 PDF** — Comprehensive doc covering ALL P1-P5 (2026-07-05)
+22. ✅ **Compliance Trust Center PDF** — Public-facing compliance summary (2026-07-05)
+23. ✅ **Backup & Recovery Guide PDF** — Backup strategy, restore procedures, DR scenarios (2026-07-05)
 
-**Next Priority:**
+**Oracle Priorities: ✅ ALL P1-P5 COMPLETE**
+
+**Remaining (Non-Oracle):**
 1. ⏳ iOS Safari cert trust — Plan created (Cloudflare Tunnel recommended), awaiting Green's decision
-2. ✅ PDF documentation update — COMPLETE (v7.0/v5.0/v3.0 refreshed 2026-06-30)
-3. ⏳ Production deployment — Move from dev to production credentials
-4. ⏳ Monitoring dashboard — Agent health, task queue depth, error rates
-5. ⏳ Client onboarding flow — Automated first-time setup
-6. ⏳ Billing integration — Stripe subscription management
-7. ⏳ Security audit — Penetration test, credential rotation
-8. ⏳ Import 3 new workflows to n8n — JSON files ready, needs import + test
+2. ⏳ Production deployment — Move from dev to production credentials
+3. ⏳ Monitoring dashboard — Agent health, task queue depth, error rates
+4. ⏳ Client onboarding flow — Automated first-time setup
+5. ⏳ Billing integration — Stripe subscription management
 
 ---

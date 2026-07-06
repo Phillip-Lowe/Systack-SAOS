@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Systack Command Center API — hardened for internal use only
+Systack Command Center API v2.0 — hardened for internal use only
 Green's master dashboard. Tailscale-only access. PIN-locked.
 
 Security:
@@ -11,6 +11,14 @@ Security:
 - Generic error handling (no stack leaks)
 - Access logging to stdout
 - Connection pooling
+
+NEW in v2.0:
+- Security events monitoring (P3 integration)
+- Backup status & RPO/RTO (P2 integration)
+- Compliance & incident tracking (P5 integration)
+- Audit trail view (P4 integration)
+- SAOS client detail with MFA/RBAC status
+- Live service health checks (not hardcoded)
 
 Usage:
     python3 api.py              # Start on port 8770
@@ -98,6 +106,7 @@ CORS(app, origins=[
     r"http://100\..*",      # Tailscale IPv4
     r"http://localhost.*",   # Local development
     r"http://127\.0\.0\.1.*",
+    r"https://*.ts.net",     # Tailscale MagicDNS
 ])
 
 # Database config from environment ONLY
@@ -215,6 +224,37 @@ def fleet_status():
         cur.execute("SELECT COUNT(*) as n FROM message_bus WHERE status = 'UNREAD'")
         unread = cur.fetchone()['n']
         
+        # Security events count (unresolved, warning+)
+        try:
+            cur.execute("""
+                SELECT COUNT(*) as n FROM security_events 
+                WHERE resolved = false AND severity IN ('warning', 'critical')
+            """)
+            sec_alerts = cur.fetchone()['n']
+        except:
+            sec_alerts = 0
+        
+        # Open incidents
+        try:
+            cur.execute("""
+                SELECT COUNT(*) as n FROM incident_log 
+                WHERE status NOT IN ('resolved', 'closed')
+            """)
+            open_incidents = cur.fetchone()['n']
+        except:
+            open_incidents = 0
+        
+        # Backup status
+        try:
+            cur.execute("""
+                SELECT status, started_at, verification_result 
+                FROM backup_log ORDER BY started_at DESC LIMIT 1
+            """)
+            backup = cur.fetchone()
+            backup_status = dict(backup) if backup else None
+        except:
+            backup_status = None
+        
         cur.close()
         
         return jsonify({
@@ -222,14 +262,17 @@ def fleet_status():
             "agents_running": agents_running,
             "agents_total": agents_total,
             "mrr": 0,  # TODO: connect Stripe
-            "alerts_count": 0,  # TODO: alert engine
+            "alerts_count": sec_alerts + open_incidents,
+            "security_alerts": sec_alerts,
+            "open_incidents": open_incidents,
             "tasks": tasks,
             "recent_deployments": deployments,
             "unread_messages": unread,
+            "backup_status": backup_status,
             "services": [
                 {"name": "SAOS Customer Portal", "port": 8768, "status": "healthy"},
                 {"name": "Invoice Dashboard", "port": 8766, "status": "healthy"},
-                {"name": "Customer Fleet Dashboard", "port": 8765, "status": "healthy"},
+                {"name": "SAOS Webhook Bridge", "port": 8767, "status": "healthy"},
                 {"name": "n8n Workflows", "port": 5678, "status": "healthy"},
                 {"name": "PostgreSQL", "port": 5432, "status": "healthy"},
                 {"name": "Tailscale", "port": "VPN", "status": "healthy"},
@@ -255,7 +298,9 @@ def fleet_clients():
     try:
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("""
-            SELECT c.id, c.customer_name, c.customer_email, c.tier, c.vps_status, c.created_at
+            SELECT c.id, c.customer_name, c.customer_email, c.tier, c.role,
+                   c.vps_status, c.vps_ip, c.onboarding_status, 
+                   c.mfa_enabled, c.created_at, c.activated_at, c.last_login_at
             FROM saos_clients c
             ORDER BY c.created_at DESC
         """)
@@ -474,12 +519,418 @@ def record_usage():
 
 # ── ALERTS ─────────────────────────────────────────────
 
+# ── SECURITY EVENTS (P3 Integration) ──────────────────
+
+@app.route('/api/fleet/security-events')
+@require_pin
+@log_access
+def fleet_security_events():
+    """Security events across all clients. From security_events table."""
+    conn = get_db()
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        
+        # Recent security events
+        cur.execute("""
+            SELECT se.*, c.customer_name
+            FROM security_events se
+            LEFT JOIN saos_clients c ON se.client_id = c.id
+            ORDER BY se.created_at DESC
+            LIMIT 50
+        """)
+        events = [dict(r) for r in cur.fetchall()]
+        
+        # Stats by type (30 days)
+        cur.execute("""
+            SELECT event_type, COUNT(*) as count,
+                   COUNT(*) FILTER (WHERE resolved = false) as unresolved
+            FROM security_events
+            WHERE created_at > NOW() - INTERVAL '30 days'
+            GROUP BY event_type
+            ORDER BY count DESC
+        """)
+        by_type = [dict(r) for r in cur.fetchall()]
+        
+        # Unresolved count
+        cur.execute("""
+            SELECT COUNT(*) as n FROM security_events 
+            WHERE resolved = false AND severity IN ('warning', 'critical')
+        """)
+        critical_unresolved = cur.fetchone()['n']
+        
+        cur.close()
+        return jsonify({
+            'events': events,
+            'count': len(events),
+            'by_type': by_type,
+            'critical_unresolved': critical_unresolved
+        })
+    except Exception as e:
+        print(f"[ERROR] fleet_security_events: {e}")
+        return jsonify({'error': 'Database error'}), 500
+    finally:
+        put_db(conn)
+
+# ── BACKUP STATUS (P2 Integration) ─────────────────────
+
+@app.route('/api/fleet/backup-status')
+@require_pin
+@log_access
+def fleet_backup_status():
+    """Latest backup verification status and RPO/RTO metrics."""
+    conn = get_db()
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        
+        # Latest verified backup
+        cur.execute("""
+            SELECT * FROM backup_log
+            ORDER BY started_at DESC LIMIT 5
+        """)
+        recent = [dict(r) for r in cur.fetchall()]
+        
+        # Latest verified
+        cur.execute("""
+            SELECT * FROM backup_log 
+            WHERE status = 'verified' 
+            ORDER BY started_at DESC LIMIT 1
+        """)
+        latest = cur.fetchone()
+        
+        cur.close()
+        
+        rpo = latest['rpo_minutes'] if latest and latest.get('rpo_minutes') else 1440
+        rto = latest['rto_minutes'] if latest and latest.get('rto_minutes') else 10
+        
+        return jsonify({
+            'recent_backups': recent,
+            'latest_verified': dict(latest) if latest else None,
+            'rpo_minutes': rpo,
+            'rto_minutes': rto,
+            'rpo_display': f'{rpo // 60}h {rpo % 60}min' if rpo >= 60 else f'{rpo}min',
+            'rto_display': f'{rto}min',
+            'backup_count': len(recent),
+            'last_backup_at': latest['started_at'].isoformat() if latest and latest.get('started_at') else None
+        })
+    except Exception as e:
+        print(f"[ERROR] fleet_backup_status: {e}")
+        return jsonify({'error': 'Database error'}), 500
+    finally:
+        put_db(conn)
+
+# ── COMPLIANCE STATUS (P5 Integration) ─────────────────
+
+@app.route('/api/fleet/compliance')
+@require_pin
+@log_access
+def fleet_compliance():
+    """Compliance posture: policies, incidents, trust center summary."""
+    conn = get_db()
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        
+        # Active policies
+        cur.execute("""
+            SELECT policy_type, title, version, effective_date, review_date, status
+            FROM compliance_policies 
+            WHERE status = 'active'
+            ORDER BY policy_type
+        """)
+        policies = [dict(r) for r in cur.fetchall()]
+        
+        # Recent incidents
+        cur.execute("""
+            SELECT id, incident_type, severity, title, status, 
+                   detected_at, resolved_at, duration_minutes
+            FROM incident_log
+            ORDER BY created_at DESC LIMIT 10
+        """)
+        incidents = [dict(r) for r in cur.fetchall()]
+        
+        # Open incidents count
+        cur.execute("""
+            SELECT COUNT(*) as n FROM incident_log 
+            WHERE status NOT IN ('resolved', 'closed')
+        """)
+        open_incidents = cur.fetchone()['n']
+        
+        cur.close()
+        return jsonify({
+            'policies': policies,
+            'policy_count': len(policies),
+            'incidents': incidents,
+            'open_incidents': open_incidents,
+            'incident_count': len(incidents)
+        })
+    except Exception as e:
+        print(f"[ERROR] fleet_compliance: {e}")
+        return jsonify({'error': 'Database error'}), 500
+    finally:
+        put_db(conn)
+
+# ── AUDIT TRAIL (P4 Integration) ───────────────────────
+
+@app.route('/api/fleet/audit-trail')
+@require_pin
+@log_access
+def fleet_audit_trail():
+    """Recent audit trail across all clients."""
+    conn = get_db()
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        limit = min(int(request.args.get('limit', 50)), 200)
+        
+        cur.execute("""
+            SELECT a.*, c.customer_name
+            FROM audit_log a
+            LEFT JOIN saos_clients c ON a.client_id = c.id
+            ORDER BY a.created_at DESC
+            LIMIT %s
+        """, (limit,))
+        logs = [dict(r) for r in cur.fetchall()]
+        
+        cur.close()
+        return jsonify({
+            'audit_logs': logs,
+            'count': len(logs)
+        })
+    except Exception as e:
+        print(f"[ERROR] fleet_audit_trail: {e}")
+        return jsonify({'error': 'Database error'}), 500
+    finally:
+        put_db(conn)
+
+# ── SAOS CLIENT DETAIL (Enterprise View) ───────────────
+
+@app.route('/api/fleet/clients/<int:client_id>')
+@require_pin
+@log_access
+def fleet_client_detail(client_id):
+    """Detailed view of a single SAOS client — enterprise readiness."""
+    conn = get_db()
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        
+        # Client info
+        cur.execute("""
+            SELECT id, customer_name, customer_email, tier, role, vps_status,
+                   vps_ip, tailscale_url, onboarding_status, 
+                   mfa_enabled, created_at, activated_at, last_login_at, login_count
+            FROM saos_clients WHERE id = %s
+        """, (client_id,))
+        client = cur.fetchone()
+        if not client:
+            return jsonify({'error': 'Client not found'}), 404
+        client = dict(client)
+        
+        # Task counts
+        cur.execute("""
+            SELECT status, COUNT(*) as n FROM task_queue
+            WHERE payload_json->>'client_id' = %s
+            GROUP BY status
+        """, (str(client_id),))
+        task_counts = {r['status']: r['n'] for r in cur.fetchall()}
+        
+        # Recent tasks
+        cur.execute("""
+            SELECT id, task_type, display_name, status, assigned_agent, created_at, completed_at
+            FROM task_queue
+            WHERE payload_json->>'client_id' = %s
+            ORDER BY created_at DESC LIMIT 10
+        """, (str(client_id),))
+        recent_tasks = [dict(r) for r in cur.fetchall()]
+        
+        # Security events for this client
+        cur.execute("""
+            SELECT event_type, severity, created_at, resolved, ip_address
+            FROM security_events 
+            WHERE client_id = %s
+            ORDER BY created_at DESC LIMIT 10
+        """, (client_id,))
+        sec_events = [dict(r) for r in cur.fetchall()]
+        
+        # Audit log for this client
+        cur.execute("""
+            SELECT action, created_at, ip_address
+            FROM audit_log 
+            WHERE client_id = %s
+            ORDER BY created_at DESC LIMIT 10
+        """, (client_id,))
+        audit = [dict(r) for r in cur.fetchall()]
+        
+        # Usage metrics summary
+        cur.execute("""
+            SELECT metric_type, COUNT(*) as calls, SUM(quantity) as total
+            FROM usage_metrics
+            WHERE client_id = %s AND recorded_at > NOW() - INTERVAL '30 days'
+            GROUP BY metric_type
+            ORDER BY total DESC
+        """, (client_id,))
+        usage = [dict(r) for r in cur.fetchall()]
+        
+        cur.close()
+        
+        return jsonify({
+            'client': client,
+            'task_counts': task_counts,
+            'recent_tasks': recent_tasks,
+            'security_events': sec_events,
+            'audit_trail': audit,
+            'usage_metrics': usage,
+            'enterprise_readiness': {
+                'mfa_enabled': client.get('mfa_enabled', False),
+                'role_assigned': bool(client.get('role')),
+                'onboarding_complete': client.get('onboarding_status') == 'active',
+                'has_vps': bool(client.get('vps_ip')),
+                'has_tailscale': bool(client.get('tailscale_url')),
+            }
+        })
+    except Exception as e:
+        print(f"[ERROR] fleet_client_detail: {e}")
+        return jsonify({'error': 'Database error'}), 500
+    finally:
+        put_db(conn)
+
+# ── LIVE SERVICE HEALTH ─────────────────────────────────
+
+@app.route('/api/fleet/services-health')
+@require_pin
+@log_access
+def fleet_services_health():
+    """Live health check of all services — not hardcoded."""
+    services = []
+    checks = [
+        ('SAOS Customer Portal', 8768, '/api/portal/health'),
+        ('Invoice Dashboard', 8766, '/api/summary'),
+        ('SAOS Webhook Bridge', 8767, '/api/health'),
+        ('Booking Dashboard', 8772, '/api/health'),
+        ('n8n Workflows', 5678, '/healthz'),
+        ('BlueBubbles', 1234, '/'),
+    ]
+    
+    for name, port, path in checks:
+        try:
+            res = requests.get(f'http://localhost:{port}{path}', timeout=2)
+            status = 'healthy' if res.status_code == 200 else 'degraded'
+        except:
+            status = 'down'
+        services.append({
+            'name': name,
+            'port': port,
+            'path': path,
+            'status': status,
+            'url': f'http://localhost:{port}'
+        })
+    
+    # PostgreSQL check
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute('SELECT 1')
+        cur.fetchone()
+        cur.close()
+        put_db(conn)
+        services.append({'name': 'PostgreSQL', 'port': 5432, 'path': 'tcp', 'status': 'healthy', 'url': ''})
+    except:
+        services.append({'name': 'PostgreSQL', 'port': 5432, 'path': 'tcp', 'status': 'down', 'url': ''})
+    
+    # Ollama check
+    try:
+        res = requests.get('http://localhost:11434/api/tags', timeout=2)
+        services.append({'name': 'Ollama', 'port': 11434, 'path': '/api/tags', 'status': 'healthy' if res.status_code == 200 else 'degraded', 'url': ''})
+    except:
+        services.append({'name': 'Ollama', 'port': 11434, 'path': '/api/tags', 'status': 'down', 'url': ''})
+    
+    # Tailscale check
+    try:
+        import subprocess
+        result = subprocess.run(['tailscale', 'status'], capture_output=True, text=True, timeout=3)
+        ts_status = 'healthy' if result.returncode == 0 else 'degraded'
+        ts_peers = len(result.stdout.strip().split('\n')) if result.returncode == 0 else 0
+        services.append({'name': 'Tailscale VPN', 'port': 'VPN', 'path': 'wg', 'status': ts_status, 'url': '', 'peers': ts_peers})
+    except:
+        services.append({'name': 'Tailscale VPN', 'port': 'VPN', 'path': 'wg', 'status': 'down', 'url': '', 'peers': 0})
+    
+    healthy = sum(1 for s in services if s['status'] == 'healthy')
+    total = len(services)
+    
+    return jsonify({
+        'services': services,
+        'healthy_count': healthy,
+        'total_count': total,
+        'health_percent': round((healthy / total) * 100) if total > 0 else 0
+    })
+
+# ── ALERTS (Now with real security events) ─────────────
+
 @app.route('/api/fleet/alerts')
 @require_pin
 @log_access
 def fleet_alerts():
-    """Active alerts."""
-    return jsonify({"alerts": [], "count": 0})
+    """Active alerts — now pulls from security_events and service health."""
+    conn = get_db()
+    try:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        
+        # Unresolved security events (warning + critical)
+        cur.execute("""
+            SELECT se.*, c.customer_name
+            FROM security_events se
+            LEFT JOIN saos_clients c ON se.client_id = c.id
+            WHERE se.resolved = false AND se.severity IN ('warning', 'critical')
+            ORDER BY se.created_at DESC
+            LIMIT 20
+        """)
+        sec_alerts = [dict(r) for r in cur.fetchall()]
+        
+        # Open incidents
+        cur.execute("""
+            SELECT id, incident_type, severity, title, status, detected_at
+            FROM incident_log 
+            WHERE status NOT IN ('resolved', 'closed')
+            ORDER BY detected_at DESC
+        """)
+        incidents = [dict(r) for r in cur.fetchall()]
+        
+        cur.close()
+        
+        all_alerts = []
+        
+        # Add security events as alerts
+        for se in sec_alerts:
+            all_alerts.append({
+                'id': se['id'],
+                'type': 'security',
+                'severity': se['severity'],
+                'title': se['event_type'].replace('_', ' ').title(),
+                'description': f"IP: {se.get('ip_address', 'unknown')} | Client: {se.get('customer_name', 'N/A')}",
+                'created_at': se['created_at'].isoformat() if se.get('created_at') else None,
+                'resolved': se['resolved']
+            })
+        
+        # Add incidents as alerts
+        for inc in incidents:
+            all_alerts.append({
+                'id': inc['id'],
+                'type': 'incident',
+                'severity': inc['severity'].lower(),
+                'title': inc['title'],
+                'description': f"Type: {inc['incident_type']} | Status: {inc['status']}",
+                'created_at': inc['detected_at'].isoformat() if inc.get('detected_at') else None,
+                'resolved': False
+            })
+        
+        return jsonify({
+            'alerts': all_alerts,
+            'count': len(all_alerts),
+            'security_alerts': len(sec_alerts),
+            'open_incidents': len(incidents)
+        })
+    except Exception as e:
+        print(f"[ERROR] fleet_alerts: {e}")
+        return jsonify({'alerts': [], 'count': 0, 'error': 'Database error'}), 500
+    finally:
+        put_db(conn)
 
 # ── MAIN ──────────────────────────────────────────────
 

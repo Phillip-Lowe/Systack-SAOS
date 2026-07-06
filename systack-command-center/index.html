@@ -20,293 +20,93 @@
             justify-content: space-between;
             align-items: center;
         }
-        .header-left h1 {
-            font-size: 26px;
-            color: white;
-            margin-bottom: 4px;
-        }
-        .header-left p {
-            color: #94a3b8;
-            font-size: 13px;
-        }
-        .header-right {
-            text-align: right;
-        }
+        .header-left h1 { font-size: 26px; color: white; margin-bottom: 4px; }
+        .header-left p { color: #94a3b8; font-size: 13px; }
+        .header-right { text-align: right; }
         .header-right .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #00d4aa;
-            margin-right: 6px;
-            animation: pulse 2s infinite;
+            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+            background: #00d4aa; margin-right: 6px; animation: pulse 2s infinite;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
         .nav {
             background: rgba(255,255,255,0.03);
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding: 0 40px;
-            display: flex;
-            gap: 0;
+            padding: 0 40px; display: flex; gap: 0; overflow-x: auto;
         }
         .nav button {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            padding: 14px 24px;
-            cursor: pointer;
-            font-size: 14px;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
+            background: none; border: none; color: #94a3b8;
+            padding: 14px 20px; cursor: pointer; font-size: 13px;
+            border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap;
         }
-        .nav button:hover {
-            color: white;
-            background: rgba(255,255,255,0.03);
-        }
-        .nav button.active {
-            color: #00d4aa;
-            border-bottom-color: #00d4aa;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px 40px;
-        }
+        .nav button:hover { color: white; background: rgba(255,255,255,0.03); }
+        .nav button.active { color: #00d4aa; border-bottom-color: #00d4aa; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 40px; }
         .tab-panel { display: none; }
         .tab-panel.active { display: block; }
-
-        /* Metrics Row */
-        .metrics-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+        .metrics-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-bottom: 30px; }
         .metric-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 24px;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 24px;
         }
-        .metric-card .label {
-            color: #94a3b8;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-        .metric-card .value {
-            font-size: 32px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 8px;
-        }
-        .metric-card .change {
-            font-size: 13px;
-        }
+        .metric-card .label { color: #94a3b8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .metric-card .value { font-size: 32px; font-weight: 700; color: white; margin-bottom: 8px; }
+        .metric-card .change { font-size: 13px; }
         .change.up { color: #00d4aa; }
         .change.down { color: #ef4444; }
         .change.neutral { color: #94a3b8; }
-
-        /* Section Headers */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 0 16px;
-        }
-        .section-header h2 {
-            font-size: 18px;
-            color: white;
-        }
-        .section-header .count {
-            background: rgba(255,255,255,0.06);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            color: #94a3b8;
-        }
-
-        /* Tables */
-        .table-container {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th {
-            text-align: left;
-            padding: 14px 20px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #94a3b8;
-            background: rgba(255,255,255,0.03);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-        td {
-            padding: 14px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 14px;
-        }
-        tr:hover td {
-            background: rgba(255,255,255,0.02);
-        }
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        .status-healthy {
-            background: rgba(0,212,170,0.1);
-            color: #00d4aa;
-        }
-        .status-warning {
-            background: rgba(234,179,8,0.1);
-            color: #eab308;
-        }
-        .status-error {
-            background: rgba(239,68,68,0.1);
-            color: #ef4444;
-        }
-        .status-dot-inline {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .dot-green { background: #00d4aa; }
-        .dot-yellow { background: #eab308; }
-        .dot-red { background: #ef4444; }
-
-        /* Service Cards Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .service-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 20px;
-            transition: all 0.2s;
-        }
-        .service-card:hover {
-            border-color: rgba(0,212,170,0.3);
-        }
-        .service-card .service-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .service-card .service-name {
-            font-weight: 600;
-            color: white;
-        }
-        .service-card .service-port {
-            font-size: 12px;
-            color: #64748b;
-            font-family: monospace;
-        }
-        .service-card .service-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        .service-card .service-uptime {
-            font-size: 13px;
-            color: #94a3b8;
-        }
-        .service-card .service-actions {
-            margin-top: 12px;
-            display: flex;
-            gap: 8px;
-        }
-        .service-card .service-actions button {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #e2e8f0;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .service-card .service-actions button:hover {
-            background: rgba(0,212,170,0.1);
-            border-color: rgba(0,212,170,0.3);
-        }
-
-        /* Alerts Panel */
-        .alert-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-        }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin: 30px 0 16px; }
+        .section-header h2 { font-size: 18px; color: white; }
+        .section-header .count { background: rgba(255,255,255,0.06); padding: 4px 12px; border-radius: 20px; font-size: 13px; color: #94a3b8; }
+        .table-container { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 14px 20px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.08); }
+        td { padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 14px; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .status-healthy { background: rgba(0,212,170,0.1); color: #00d4aa; }
+        .status-warning { background: rgba(234,179,8,0.1); color: #eab308; }
+        .status-error { background: rgba(239,68,68,0.1); color: #ef4444; }
+        .status-info { background: rgba(59,130,246,0.1); color: #3b82f6; }
+        .status-dot-inline { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+        .dot-green { background: #00d4aa; } .dot-yellow { background: #eab308; } .dot-red { background: #ef4444; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .service-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; transition: all 0.2s; }
+        .service-card:hover { border-color: rgba(0,212,170,0.3); }
+        .service-card .service-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .service-card .service-name { font-weight: 600; color: white; }
+        .service-card .service-port { font-size: 12px; color: #64748b; font-family: monospace; }
+        .service-card .service-status { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .service-card .service-uptime { font-size: 13px; color: #94a3b8; }
+        .service-card .service-actions { margin-top: 12px; display: flex; gap: 8px; }
+        .service-card .service-actions button { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+        .service-card .service-actions button:hover { background: rgba(0,212,170,0.1); border-color: rgba(0,212,170,0.3); }
+        .alert-item { display: flex; align-items: flex-start; gap: 12px; padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); }
         .alert-item:last-child { border-bottom: none; }
-        .alert-icon {
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-        .alert-content {
-            flex: 1;
-        }
-        .alert-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .alert-desc {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 4px;
-        }
-        .alert-time {
-            font-size: 12px;
-            color: #64748b;
-        }
+        .alert-icon { font-size: 18px; flex-shrink: 0; }
+        .alert-content { flex: 1; }
+        .alert-title { font-weight: 600; margin-bottom: 4px; }
+        .alert-desc { font-size: 13px; color: #94a3b8; margin-bottom: 4px; }
+        .alert-time { font-size: 12px; color: #64748b; }
         .alert-critical .alert-icon { color: #ef4444; }
         .alert-warning .alert-icon { color: #eab308; }
         .alert-info .alert-icon { color: #00d4aa; }
-
-        /* Revenue Chart placeholder */
-        .chart-placeholder {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 40px;
-            text-align: center;
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .metrics-row { grid-template-columns: repeat(2, 1fr); }
-            .nav { overflow-x: auto; }
-            .nav button { white-space: nowrap; }
-        }
+        .chart-placeholder { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 40px; text-align: center; color: #64748b; font-size: 14px; }
+        .badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+        .mini-badge { padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+        .mini-badge.green { background: rgba(0,212,170,0.1); color: #00d4aa; }
+        .mini-badge.yellow { background: rgba(234,179,8,0.1); color: #eab308; }
+        .mini-badge.red { background: rgba(239,68,68,0.1); color: #ef4444; }
+        .mini-badge.blue { background: rgba(59,130,246,0.1); color: #3b82f6; }
+        .readiness-bar { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+        .readiness-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+        @media (max-width: 900px) { .metrics-row { grid-template-columns: repeat(2,1fr); } .nav { overflow-x: auto; } .nav button { white-space: nowrap; } }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-left">
             <h1>🛰️ Systack Command Center</h1>
-            <p>Master view of all deployments, agents, and services</p>
+            <p>Master view — all deployments, clients, security, and services</p>
         </div>
         <div class="header-right">
             <span class="status-dot"></span>
@@ -319,8 +119,10 @@
         <button class="active" onclick="showTab('overview', this)">🗺️ Overview</button>
         <button onclick="showTab('infrastructure', this)">🖥️ Infrastructure</button>
         <button onclick="showTab('clients', this)">👥 Clients</button>
-        <button onclick="showTab('services', this)">⚡ Services</button>
-        <button onclick="showTab('revenue', this)">💰 Revenue</button>
+        <button onclick="showTab('security', this)">🔒 Security</button>
+        <button onclick="showTab('backup', this)">💾 Backup</button>
+        <button onclick="showTab('compliance', this)">⚖️ Compliance</button>
+        <button onclick="showTab('audit', this)">📋 Audit</button>
         <button onclick="showTab('alerts', this)">🔔 Alerts</button>
     </div>
 
@@ -330,204 +132,125 @@
             <div style="font-size:48px;margin-bottom:16px;">🔐</div>
             <h2 style="color:white;margin-bottom:8px;">Systack Command Center</h2>
             <p style="color:#94a3b8;font-size:14px;margin-bottom:24px;">Enter your admin PIN to access fleet data</p>
-            <input type="password" id="pin-input" placeholder="••••" maxlength="8" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:white;padding:12px 16px;border-radius:8px;font-size:18px;text-align:center;letter-spacing:4px;width:100%;margin-bottom:16px;outline:none;"
-                onkeydown="if(event.key==='Enter')submitPIN()">
+            <input type="password" id="pin-input" placeholder="••••" maxlength="8" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:white;padding:12px 16px;border-radius:8px;font-size:18px;text-align:center;letter-spacing:4px;width:100%;margin-bottom:16px;outline:none;" onkeydown="if(event.key==='Enter')submitPIN()">
             <div id="pin-error" style="color:#ef4444;font-size:13px;margin-bottom:12px;display:none;">Incorrect PIN. Try again.</div>
             <button onclick="submitPIN()" style="background:#00d4aa;color:#000814;border:none;padding:12px 32px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%;">Unlock</button>
         </div>
     </div>
 
-    <!-- Auth Error Banner -->
-    <div id="auth-banner" style="display:none;background:rgba(239,68,68,0.1);border-bottom:1px solid rgba(239,68,68,0.3);padding:12px 40px;color:#ef4444;font-size:13px;">
-        ⚠️ Session expired. Please re-enter your PIN.
-    </div>
+    <div id="auth-banner" style="display:none;background:rgba(239,68,68,0.1);border-bottom:1px solid rgba(239,68,68,0.3);padding:12px 40px;color:#ef4444;font-size:13px;">⚠️ Session expired. Please re-enter your PIN.</div>
 
     <div class="container">
-        <!-- OVERVIEW TAB -->
+        <!-- OVERVIEW -->
         <div id="overview" class="tab-panel active">
             <div class="metrics-row">
-                <div class="metric-card">
-                    <div class="label">Active Clients</div>
-                    <div class="value" id="metric-clients">0</div>
-                    <div class="change up">↑ 2 this month</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Running Agents</div>
-                    <div class="value" id="metric-agents">0</div>
-                    <div class="change neutral">→ stable</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Monthly Revenue</div>
-                    <div class="value" id="metric-revenue">$0</div>
-                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Active Alerts</div>
-                    <div class="value" id="metric-alerts">0</div>
-                    <div class="change up" id="alert-status">→ all clear</div>
-                </div>
+                <div class="metric-card"><div class="label">Active Clients</div><div class="value" id="metric-clients">0</div><div class="change up" id="clients-change">—</div></div>
+                <div class="metric-card"><div class="label">Running Agents</div><div class="value" id="metric-agents">0</div><div class="change neutral">→ stable</div></div>
+                <div class="metric-card"><div class="label">Security Alerts</div><div class="value" id="metric-alerts">0</div><div class="change up" id="alert-status">→ all clear</div></div>
+                <div class="metric-card"><div class="label">Service Health</div><div class="value" id="metric-health">—</div><div class="change neutral" id="health-detail">Checking...</div></div>
             </div>
-
-            <div class="section-header">
-                <h2>Recent Deployments</h2>
-                <span class="count" id="recent-deployments-count">0 total</span>
-            </div>
-            <div class="table-container">
-                <table id="recent-deployments-table">
-                    <thead>
-                        <tr><th>Client</th><th>Service</th><th>Status</th><th>Deployed</th><th>VPS</th><th>Actions</th></tr>
-                    </thead>
-                    <tbody id="recent-deployments-body">
-                        <tr><td colspan="6" style="text-align:center;color:#64748b;padding:40px;">Loading...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="section-header">
-                <h2>Fleet Health</h2>
-                <span class="count">Live</span>
-            </div>
-            <div class="services-grid" id="fleet-health-grid">
-                <!-- Populated by JS -->
-            </div>
+            <div class="section-header"><h2>Recent Deployments</h2><span class="count" id="recent-deployments-count">0 total</span></div>
+            <div class="table-container"><table><thead><tr><th>Client</th><th>Tier</th><th>Status</th><th>VPS</th><th>MFA</th><th>Created</th><th>Actions</th></tr></thead>
+                <tbody id="recent-deployments-body"><tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">Loading...</td></tr></tbody></table></div>
+            <div class="section-header"><h2>Fleet Health</h2><span class="count">Live</span></div>
+            <div class="services-grid" id="fleet-health-grid"></div>
         </div>
 
-        <!-- INFRASTRUCTURE TAB -->
+        <!-- INFRASTRUCTURE -->
         <div id="infrastructure" class="tab-panel">
             <div class="metrics-row">
-                <div class="metric-card">
-                    <div class="label">VPS Count</div>
-                    <div class="value">3</div>
-                    <div class="change up">↑ 1 provisioning</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Uptime (30d)</div>
-                    <div class="value">99.7%</div>
-                    <div class="change up">↑ 0.2%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Tailscale Nodes</div>
-                    <div class="value">7</div>
-                    <div class="change neutral">→ stable</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Open Ports</div>
-                    <div class="value">6</div>
-                    <div class="change neutral">→ all healthy</div>
-                </div>
+                <div class="metric-card"><div class="label">Services Up</div><div class="value" id="infra-services-up">—</div><div class="change neutral" id="infra-services-detail">Checking...</div></div>
+                <div class="metric-card"><div class="label">Tailscale Peers</div><div class="value" id="infra-peers">—</div><div class="change neutral">→ stable</div></div>
+                <div class="metric-card"><div class="label">PostgreSQL</div><div class="value" id="infra-pg">—</div><div class="change neutral">Checking...</div></div>
+                <div class="metric-card"><div class="label">Ollama</div><div class="value" id="infra-ollama">—</div><div class="change neutral">Checking...</div></div>
             </div>
-
-            <div class="section-header">
-                <h2>VPS Infrastructure</h2>
-                <span class="count">3 active</span>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr><th>Hostname</th><th>IP</th><th>Location</th><th>RAM</th><th>Disk</th><th>Uptime</th><th>Status</th></tr>
-                    </thead>
-                    <tbody id="vps-body">
-                        <tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">Loading from API...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="section-header">
-                <h2>Service Endpoints</h2>
-                <span class="count">Live</span>
-            </div>
-            <div class="services-grid" id="endpoints-grid">
-                <!-- Populated by JS -->
-            </div>
+            <div class="section-header"><h2>Service Endpoints (Live)</h2><span class="count" id="services-live-count">—</span></div>
+            <div class="services-grid" id="endpoints-grid"></div>
         </div>
 
-        <!-- CLIENTS TAB -->
+        <!-- CLIENTS -->
         <div id="clients" class="tab-panel">
-            <div class="section-header">
-                <h2>All Clients</h2>
-                <span class="count" id="clients-count">Loading...</span>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr><th>Client</th><th>Tier</th><th>MRR</th><th>Agents</th><th>Tasks</th><th>Status</th><th>Since</th></tr>
-                    </thead>
-                    <tbody id="clients-body">
-                        <tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">Loading from API...</td></tr>
-                    </tbody>
-                </table>
+            <div class="section-header"><h2>All Clients</h2><span class="count" id="clients-count">Loading...</span></div>
+            <div class="table-container"><table><thead><tr><th>Client</th><th>Tier</th><th>Role</th><th>MFA</th><th>Onboarding</th><th>VPS Status</th><th>Last Login</th><th>Actions</th></tr></thead>
+                <tbody id="clients-body"><tr><td colspan="8" style="text-align:center;color:#64748b;padding:40px;">Loading from API...</td></tr></tbody></table></div>
+            <!-- Client Detail Panel -->
+            <div id="client-detail-panel" style="display:none; margin-top:30px;">
+                <div class="section-header"><h2 id="detail-client-name">Client Detail</h2><button onclick="closeDetail()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#e2e8f0;padding:6px 16px;border-radius:6px;cursor:pointer;font-size:12px;">✕ Close</button></div>
+                <div id="client-detail-content"></div>
             </div>
         </div>
 
-        <!-- SERVICES TAB -->
-        <div id="services" class="tab-panel">
-            <div class="section-header">
-                <h2>Running Services</h2>
-                <span class="count">Active</span>
-            </div>
-            <div class="services-grid" id="services-grid">
-                <!-- Service cards -->
-            </div>
-        </div>
-
-        <!-- REVENUE TAB -->
-        <div id="revenue" class="tab-panel">
+        <!-- SECURITY -->
+        <div id="security" class="tab-panel">
             <div class="metrics-row">
-                <div class="metric-card">
-                    <div class="label">MRR</div>
-                    <div class="value">$0</div>
-                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Setup Fees</div>
-                    <div class="value">$0</div>
-                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">ARR</div>
-                    <div class="value">$0</div>
-                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Outstanding</div>
-                    <div class="value">$0</div>
-                    <div class="change neutral" style="font-size:11px;color:#64748b;">Stripe not connected</div>
-                </div>
+                <div class="metric-card"><div class="label">Unresolved Events</div><div class="value" id="sec-unresolved">—</div><div class="change neutral">30-day window</div></div>
+                <div class="metric-card"><div class="label">Critical Events</div><div class="value" id="sec-critical">—</div><div class="change neutral">Unresolved</div></div>
+                <div class="metric-card"><div class="label">Failed Logins</div><div class="value" id="sec-failed-logins">—</div><div class="change neutral">30 days</div></div>
+                <div class="metric-card"><div class="label">MFA Enabled Clients</div><div class="value" id="sec-mfa-clients">—</div><div class="change neutral">Enterprise readiness</div></div>
             </div>
-            <div class="chart-placeholder">
-                Revenue chart will render here<br>
-                <span style="font-size:12px;color:#64748b;">Connect Stripe API in Settings for live data</span>
-            </div>
+            <div class="section-header"><h2>Security Events</h2><span class="count" id="sec-events-count">—</span></div>
+            <div class="table-container"><table><thead><tr><th>Type</th><th>Severity</th><th>Client</th><th>IP Address</th><th>Created</th><th>Status</th></tr></thead>
+                <tbody id="sec-events-body"><tr><td colspan="6" style="text-align:center;color:#64748b;padding:40px;">Loading...</td></tr></tbody></table></div>
+            <div class="section-header"><h2>Events by Type (30 days)</h2></div>
+            <div class="table-container"><table><thead><tr><th>Event Type</th><th>Total</th><th>Unresolved</th></tr></thead>
+                <tbody id="sec-by-type-body"></tbody></table></div>
         </div>
 
-        <!-- ALERTS TAB -->
+        <!-- BACKUP -->
+        <div id="backup" class="tab-panel">
+            <div class="metrics-row">
+                <div class="metric-card"><div class="label">RPO</div><div class="value" id="backup-rpo">—</div><div class="change neutral">Recovery Point Objective</div></div>
+                <div class="metric-card"><div class="label">RTO</div><div class="value" id="backup-rto">—</div><div class="change neutral">Recovery Time Objective</div></div>
+                <div class="metric-card"><div class="label">Last Backup</div><div class="value" id="backup-last" style="font-size:18px;">—</div><div class="change neutral" id="backup-size">—</div></div>
+                <div class="metric-card"><div class="label">Status</div><div class="value" id="backup-status">—</div><div class="change neutral" id="backup-verified">—</div></div>
+            </div>
+            <div class="section-header"><h2>Backup History</h2><span class="count" id="backup-count">—</span></div>
+            <div class="table-container"><table><thead><tr><th>Type</th><th>Status</th><th>Size</th><th>Checksum</th><th>Started</th><th>Verified</th><th>RPO/RTO</th></tr></thead>
+                <tbody id="backup-history-body"><tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">Loading...</td></tr></tbody></table></div>
+        </div>
+
+        <!-- COMPLIANCE -->
+        <div id="compliance" class="tab-panel">
+            <div class="metrics-row">
+                <div class="metric-card"><div class="label">Active Policies</div><div class="value" id="comp-policies">—</div><div class="change neutral">Compliance package</div></div>
+                <div class="metric-card"><div class="label">Open Incidents</div><div class="value" id="comp-open-incidents">—</div><div class="change neutral">Active incidents</div></div>
+                <div class="metric-card"><div class="label">Total Incidents</div><div class="value" id="comp-total-incidents">—</div><div class="change neutral">All time</div></div>
+                <div class="metric-card"><div class="label">Trust Center</div><div class="value" style="font-size:18px;">✅ Active</div><div class="change up">Public endpoint</div></div>
+            </div>
+            <div class="section-header"><h2>Compliance Policies</h2><span class="count" id="comp-policies-count">—</span></div>
+            <div class="table-container"><table><thead><tr><th>Type</th><th>Title</th><th>Version</th><th>Effective</th><th>Review Date</th><th>Approved By</th><th>Status</th></tr></thead>
+                <tbody id="comp-policies-body"><tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">Loading...</td></tr></tbody></table></div>
+            <div class="section-header"><h2>Incident Log</h2><span class="count" id="comp-incidents-count">—</span></div>
+            <div class="table-container"><table><thead><tr><th>Severity</th><th>Type</th><th>Title</th><th>Status</th><th>Detected</th><th>Resolved</th><th>Duration</th></tr></thead>
+                <tbody id="comp-incidents-body"><tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">Loading...</td></tr></tbody></table></div>
+        </div>
+
+        <!-- AUDIT -->
+        <div id="audit" class="tab-panel">
+            <div class="section-header"><h2>Audit Trail</h2><span class="count" id="audit-count">—</span></div>
+            <div class="table-container"><table><thead><tr><th>Action</th><th>Client</th><th>Entity</th><th>IP</th><th>Timestamp</th></tr></thead>
+                <tbody id="audit-body"><tr><td colspan="5" style="text-align:center;color:#64748b;padding:40px;">Loading...</td></tr></tbody></table></div>
+        </div>
+
+        <!-- ALERTS -->
         <div id="alerts" class="tab-panel">
-            <div class="section-header">
-                <h2>Active Alerts</h2>
-                <span class="count" id="alerts-count">0</span>
-            </div>
-            <div class="table-container" id="alerts-container">
-                <div style="text-align:center;color:#64748b;padding:40px;">No active alerts — all systems healthy</div>
-            </div>
+            <div class="section-header"><h2>Active Alerts</h2><span class="count" id="alerts-count">0</span></div>
+            <div class="table-container" id="alerts-container"><div style="text-align:center;color:#64748b;padding:40px;">Loading...</div></div>
         </div>
     </div>
 
     <script>
-        // Tab switching
+        const API_BASE = window.location.origin;
+        let ADMIN_PIN = localStorage.getItem('systack_admin_pin') || '';
+
         function showTab(tabName, btn) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             btn.classList.add('active');
-            if (tabName === 'overview') loadOverview();
-            if (tabName === 'infrastructure') loadInfrastructure();
-            if (tabName === 'clients') loadClients();
-            if (tabName === 'services') loadServices();
-            if (tabName === 'alerts') loadAlerts();
+            const loaders = { overview: loadOverview, infrastructure: loadInfrastructure, clients: loadClients, security: loadSecurity, backup: loadBackup, compliance: loadCompliance, audit: loadAudit, alerts: loadAlerts };
+            if (loaders[tabName]) loaders[tabName]();
         }
-
-        // Auth
-        let ADMIN_PIN = localStorage.getItem('systack_admin_pin') || '';
 
         function showPINModal() {
             document.getElementById('pin-modal').style.display = 'flex';
@@ -535,251 +258,365 @@
             document.querySelector('.container').style.opacity = '0.3';
             setTimeout(() => document.getElementById('pin-input').focus(), 100);
         }
-
         function hidePINModal() {
             document.getElementById('pin-modal').style.display = 'none';
             document.getElementById('main-nav').style.pointerEvents = '';
             document.querySelector('.container').style.opacity = '1';
             document.getElementById('pin-error').style.display = 'none';
         }
-
         async function submitPIN() {
             const pin = document.getElementById('pin-input').value.trim();
             if (!pin) return;
-
-            // Test PIN against API
             try {
-                const res = await fetch(API_BASE + '/api/fleet/status', {
-                    headers: { 'X-Admin-PIN': pin }
-                });
-                if (res.status === 200) {
-                    ADMIN_PIN = pin;
-                    localStorage.setItem('systack_admin_pin', pin);
-                    hidePINModal();
-                    loadOverview();
-                } else {
-                    document.getElementById('pin-error').style.display = 'block';
-                    document.getElementById('pin-input').value = '';
-                    document.getElementById('pin-input').focus();
-                }
-            } catch (e) {
-                document.getElementById('pin-error').textContent = 'API unreachable. Check backend.';
-                document.getElementById('pin-error').style.display = 'block';
-            }
+                const res = await fetch(API_BASE + '/api/fleet/status', { headers: { 'X-Admin-PIN': pin } });
+                if (res.status === 200) { ADMIN_PIN = pin; localStorage.setItem('systack_admin_pin', pin); hidePINModal(); loadOverview(); }
+                else { document.getElementById('pin-error').style.display = 'block'; document.getElementById('pin-input').value = ''; document.getElementById('pin-input').focus(); }
+            } catch (e) { document.getElementById('pin-error').textContent = 'API unreachable. Check backend.'; document.getElementById('pin-error').style.display = 'block'; }
+        }
+        function checkAuth() { if (!ADMIN_PIN) { showPINModal(); return false; } return true; }
+        function handleAuthError() { ADMIN_PIN = ''; localStorage.removeItem('systack_admin_pin'); document.getElementById('auth-banner').style.display = 'block'; showPINModal(); }
+
+        async function apiGet(path) {
+            if (!checkAuth()) return null;
+            const res = await fetch(API_BASE + path, { headers: { 'X-Admin-PIN': ADMIN_PIN } });
+            if (res.status === 401) { handleAuthError(); return null; }
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
         }
 
-        function checkAuth() {
-            if (!ADMIN_PIN) {
-                showPINModal();
-                return false;
-            }
-            return true;
-        }
-
-        function handleAuthError() {
-            ADMIN_PIN = '';
-            localStorage.removeItem('systack_admin_pin');
-            document.getElementById('auth-banner').style.display = 'block';
-            showPINModal();
-        }
-        const API_BASE = window.location.origin;
-
-        // Load overview data
+        // ── OVERVIEW ──────────────────────────────────
         async function loadOverview() {
             if (!checkAuth()) return;
             try {
-                const res = await fetch(API_BASE + '/api/fleet/status', {
-                    headers: { 'X-Admin-PIN': ADMIN_PIN }
-                });
-                if (res.status === 401) { handleAuthError(); return; }
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                const data = await res.json();
-
-                document.getElementById('metric-clients').textContent = data.clients_count || 0;
-                document.getElementById('metric-agents').textContent = data.agents_running || 0;
-                document.getElementById('metric-revenue').textContent = '$' + (data.mrr || 0).toLocaleString();
-                document.getElementById('metric-alerts').textContent = data.alerts_count || 0;
-
+                const [statusData, healthData] = await Promise.all([
+                    fetch(API_BASE + '/api/fleet/status', { headers: { 'X-Admin-PIN': ADMIN_PIN } }).then(r => r.ok ? r.json() : null),
+                    fetch(API_BASE + '/api/fleet/services-health', { headers: { 'X-Admin-PIN': ADMIN_PIN } }).then(r => r.ok ? r.json() : null).catch(() => null),
+                ]);
+                if (!statusData) return;
+                document.getElementById('metric-clients').textContent = statusData.clients_count || 0;
+                document.getElementById('metric-agents').textContent = statusData.agents_running || 0;
+                document.getElementById('metric-alerts').textContent = (statusData.security_alerts || 0) + (statusData.open_incidents || 0);
                 const alertStatus = document.getElementById('alert-status');
-                if (data.alerts_count > 0) {
-                    alertStatus.textContent = `⚠️ ${data.alerts_count} need attention`;
-                    alertStatus.className = 'change down';
-                } else {
-                    alertStatus.textContent = '→ all clear';
-                    alertStatus.className = 'change up';
+                const totalAlerts = (statusData.security_alerts || 0) + (statusData.open_incidents || 0);
+                if (totalAlerts > 0) { alertStatus.textContent = `⚠️ ${totalAlerts} need attention`; alertStatus.className = 'change down'; }
+                else { alertStatus.textContent = '→ all clear'; alertStatus.className = 'change up'; }
+
+                if (healthData) {
+                    document.getElementById('metric-health').textContent = healthData.health_percent + '%';
+                    document.getElementById('health-detail').textContent = `${healthData.healthy_count}/${healthData.total_count} services up`;
                 }
 
-                renderRecentDeployments(data.recent_deployments || []);
-                renderFleetHealth(data.services || []);
+                const deployments = statusData.recent_deployments || [];
+                const tbody = document.getElementById('recent-deployments-body');
+                if (deployments.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">No deployments yet</td></tr>';
+                } else {
+                    tbody.innerHTML = deployments.map(d => `
+                        <tr>
+                            <td><strong>${d.customer_name || 'Unknown'}</strong></td>
+                            <td><span class="mini-badge blue">${d.tier || 'business'}</span></td>
+                            <td><span class="status-badge status-${d.vps_status === 'active' ? 'healthy' : 'warning'}"><span class="status-dot-inline dot-${d.vps_status === 'active' ? 'green' : 'yellow'}"></span>${d.vps_status || 'pending'}</span></td>
+                            <td>${d.vps_ip || 'N/A'}</td>
+                            <td>—</td>
+                            <td>${d.created_at ? new Date(d.created_at).toLocaleDateString() : '—'}</td>
+                            <td><button onclick="loadClientDetail(${d.id})" style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:#00d4aa;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px;">Details</button></td>
+                        </tr>`).join('');
+                }
+                document.getElementById('recent-deployments-count').textContent = deployments.length + ' total';
+
+                // Fleet health grid
+                const grid = document.getElementById('fleet-health-grid');
+                const services = statusData.services || [];
+                grid.innerHTML = services.map(s => `
+                    <div class="service-card">
+                        <div class="service-header"><span class="service-name">${s.name}</span><span class="service-port">:${s.port}</span></div>
+                        <div class="service-status"><span class="status-badge status-healthy"><span class="status-dot-inline dot-green"></span>healthy</span></div>
+                    </div>`).join('');
             } catch (e) {
-                console.error('Failed to load overview:', e);
-                document.getElementById('recent-deployments-body').innerHTML =
-                    '<tr><td colspan="6" style="text-align:center;color:#ef4444;padding:40px;">API unreachable. Is the backend running?</td></tr>';
+                console.error('Overview failed:', e);
+                document.getElementById('recent-deployments-body').innerHTML = '<tr><td colspan="7" style="text-align:center;color:#ef4444;padding:40px;">API unreachable</td></tr>';
             }
         }
 
-        function renderRecentDeployments(deployments) {
-            const tbody = document.getElementById('recent-deployments-body');
-            if (deployments.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:40px;">No deployments yet</td></tr>';
-                return;
-            }
-            tbody.innerHTML = deployments.map(d => `
-                <tr>
-                    <td><strong>${d.client_name}</strong></td>
-                    <td>${d.service}</td>
-                    <td><span class="status-badge status-${d.status}"><span class="status-dot-inline dot-${d.status === 'healthy' ? 'green' : d.status === 'warning' ? 'yellow' : 'red'}"></span>${d.status}</span></td>
-                    <td>${new Date(d.deployed_at).toLocaleDateString()}</td>
-                    <td>${d.vps_ip || 'N/A'}</td>
-                    <td><button style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:#00d4aa;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px;">Details</button></td>
-                </tr>
-            `).join('');
-            document.getElementById('recent-deployments-count').textContent = deployments.length + ' total';
-        }
-
-        function renderFleetHealth(services) {
-            const grid = document.getElementById('fleet-health-grid');
-            const healthData = [
-                { name: 'SAOS Customer Portal', status: 'healthy', port: 8768 },
-                { name: 'Invoice Dashboard', status: 'healthy', port: 8766 },
-                { name: 'Fleet API', status: 'healthy', port: 8765 },
-                { name: 'n8n Workflows', status: 'healthy', port: 5678 },
-                { name: 'PostgreSQL', status: 'healthy', port: 5432 },
-                { name: 'Tailscale', status: 'healthy', port: 'VPN' },
-            ];
-            grid.innerHTML = healthData.map(s => `
-                <div class="service-card">
-                    <div class="service-header">
-                        <span class="service-name">${s.name}</span>
-                        <span class="service-port">${s.port}</span>
-                    </div>
-                    <div class="service-status">
-                        <span class="status-badge status-${s.status}"><span class="status-dot-inline dot-green"></span>${s.status}</span>
-                    </div>
-                    <div class="service-uptime">Uptime: 99.9%</div>
-                </div>
-            `).join('');
-        }
-
-        // Load infrastructure
+        // ── INFRASTRUCTURE ────────────────────────────
         async function loadInfrastructure() {
-            const vpsData = [
-                { hostname: 'percy-systack', ip: '66.42.121.145', location: 'Vultr NJ', ram: '4GB', disk: '80GB', uptime: '14d 3h', status: 'healthy' },
-                { hostname: 'systack-macbook', ip: '100.x.x.x', location: 'Tailscale', ram: '16GB', disk: '500GB', uptime: '30d+', status: 'healthy' },
-            ];
-            document.getElementById('vps-body').innerHTML = vpsData.map(v => `
-                <tr>
-                    <td><strong>${v.hostname}</strong></td>
-                    <td><code style="background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;font-size:12px;">${v.ip}</code></td>
-                    <td>${v.location}</td>
-                    <td>${v.ram}</td>
-                    <td>${v.disk}</td>
-                    <td>${v.uptime}</td>
-                    <td><span class="status-badge status-${v.status}"><span class="status-dot-inline dot-green"></span>${v.status}</span></td>
-                </tr>
-            `).join('');
+            if (!checkAuth()) return;
+            try {
+                const data = await apiGet('/api/fleet/services-health');
+                if (!data) return;
+                document.getElementById('infra-services-up').textContent = data.health_percent + '%';
+                document.getElementById('infra-services-detail').textContent = `${data.healthy_count}/${data.total_count} up`;
+                document.getElementById('infra-services-count') && (document.getElementById('infra-services-count').textContent = data.total_count + ' services');
 
-            const endpoints = [
-                { name: 'SAOS Customer Portal', port: 8768, path: '/api/health', status: 'healthy' },
-                { name: 'Invoice Dashboard', port: 8766, path: '/api/health', status: 'healthy' },
-                { name: 'n8n Web', port: 5678, path: '/', status: 'healthy' },
-                { name: 'Booking API', port: 8772, path: '/api/health', status: 'provisioning' },
-            ];
-            document.getElementById('endpoints-grid').innerHTML = endpoints.map(e => `
-                <div class="service-card">
-                    <div class="service-header">
-                        <span class="service-name">${e.name}</span>
-                        <span class="service-port">:${e.port}</span>
-                    </div>
-                    <div class="service-status">
-                        <span class="status-badge status-${e.status}"><span class="status-dot-inline dot-${e.status === 'healthy' ? 'green' : 'yellow'}"></span>${e.status}</span>
-                    </div>
-                    <div class="service-actions">
-                        <button onclick="window.open('http://localhost:${e.port}${e.path}', '_blank')">Check</button>
-                        <button>Restart</button>
-                    </div>
-                </div>
-            `).join('');
+                const pg = data.services.find(s => s.name === 'PostgreSQL');
+                document.getElementById('infra-pg').textContent = pg ? (pg.status === 'healthy' ? '✅ Up' : '❌ Down') : '—';
+
+                const ollama = data.services.find(s => s.name === 'Ollama');
+                document.getElementById('infra-ollama').textContent = ollama ? (ollama.status === 'healthy' ? '✅ Up' : '❌ Down') : '—';
+
+                const ts = data.services.find(s => s.name === 'Tailscale VPN');
+                document.getElementById('infra-peers').textContent = ts ? (ts.peers || '—') : '—';
+
+                // Services grid
+                const grid = document.getElementById('endpoints-grid');
+                grid.innerHTML = data.services.map(s => {
+                    const statusClass = s.status === 'healthy' ? 'healthy' : s.status === 'degraded' ? 'warning' : 'error';
+                    const dotClass = s.status === 'healthy' ? 'green' : s.status === 'degraded' ? 'yellow' : 'red';
+                    return `
+                    <div class="service-card">
+                        <div class="service-header"><span class="service-name">${s.name}</span><span class="service-port">:${s.port}</span></div>
+                        <div class="service-status"><span class="status-badge status-${statusClass}"><span class="status-dot-inline dot-${dotClass}"></span>${s.status}</span></div>
+                        <div class="service-actions">
+                            ${s.url ? `<button onclick="window.open('${s.url}', '_blank')">Open</button>` : ''}
+                        </div>
+                    </div>`;
+                }).join('');
+                document.getElementById('services-live-count').textContent = data.total_count + ' services';
+            } catch (e) {
+                console.error('Infrastructure failed:', e);
+            }
         }
 
-        // Load clients
+        // ── CLIENTS ────────────────────────────────────
         async function loadClients() {
             if (!checkAuth()) return;
             try {
-                const res = await fetch(API_BASE + '/api/fleet/clients', {
-                    headers: { 'X-Admin-PIN': ADMIN_PIN }
-                });
-                if (res.status === 401) { handleAuthError(); return; }
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                const data = await res.json();
+                const data = await apiGet('/api/fleet/clients');
+                if (!data) return;
                 const tbody = document.getElementById('clients-body');
                 if (data.clients.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">No clients yet. Deployments will appear here.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748b;padding:40px;">No clients yet</td></tr>';
                 } else {
                     tbody.innerHTML = data.clients.map(c => `
                         <tr>
                             <td><strong>${c.customer_name}</strong><br><span style="color:#64748b;font-size:12px;">${c.customer_email}</span></td>
-                            <td><span class="status-badge status-${c.tier === 'enterprise' ? 'warning' : 'healthy'}">${c.tier}</span></td>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>—</td>
+                            <td><span class="mini-badge blue">${c.tier}</span></td>
+                            <td><span class="mini-badge ${c.role === 'admin' ? 'yellow' : 'green'}">${c.role || 'customer'}</span></td>
+                            <td>${c.mfa_enabled ? '<span class="mini-badge green">✅ MFA</span>' : '<span class="mini-badge yellow">⚠️ No MFA</span>'}</td>
+                            <td>${c.onboarding_status || 'pending'}</td>
                             <td><span class="status-badge status-${c.vps_status === 'active' ? 'healthy' : 'warning'}">${c.vps_status}</span></td>
-                            <td>${new Date(c.created_at).toLocaleDateString()}</td>
-                        </tr>
-                    `).join('');
+                            <td>${c.last_login_at ? new Date(c.last_login_at).toLocaleDateString() : 'Never'}</td>
+                            <td><button onclick="loadClientDetail(${c.id})" style="background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:#00d4aa;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px;">Details</button></td>
+                        </tr>`).join('');
                 }
                 document.getElementById('clients-count').textContent = data.count + ' total';
             } catch (e) {
-                document.getElementById('clients-body').innerHTML = '<tr><td colspan="7" style="text-align:center;color:#ef4444;padding:40px;">Failed to load clients: ' + e.message + '</td></tr>';
+                document.getElementById('clients-body').innerHTML = '<tr><td colspan="8" style="text-align:center;color:#ef4444;padding:40px;">Failed to load</td></tr>';
             }
         }
 
-        // Load services
-        async function loadServices() {
-            const services = [
-                { name: 'SAOS Fleet', description: 'AI agent operating system', clients: 3, status: 'active' },
-                { name: 'Booking System', description: 'No-show prevention + reminders', clients: 2, status: 'active' },
-                { name: 'Invoice Pipeline', description: 'Email parsing + CRM sync', clients: 1, status: 'active' },
-                { name: 'Lead Scraper', description: 'Restaurant lead generation', clients: 1, status: 'paused' },
-            ];
-            document.getElementById('services-grid').innerHTML = services.map(s => `
-                <div class="service-card">
-                    <div class="service-header">
-                        <span class="service-name">${s.name}</span>
-                        <span class="status-badge status-${s.status === 'active' ? 'healthy' : 'warning'}">${s.status}</span>
+        async function loadClientDetail(clientId) {
+            if (!checkAuth()) return;
+            try {
+                const data = await apiGet('/api/fleet/clients/' + clientId);
+                if (!data) return;
+                const c = data.client;
+                const er = data.enterprise_readiness || {};
+                document.getElementById('detail-client-name').textContent = c.customer_name + ' — Enterprise Detail';
+                document.getElementById('client-detail-panel').style.display = 'block';
+
+                const readinessItems = [
+                    { label: 'MFA Enabled', ok: er.mfa_enabled },
+                    { label: 'Role Assigned', ok: er.role_assigned },
+                    { label: 'Onboarding Complete', ok: er.onboarding_complete },
+                    { label: 'VPS Provisioned', ok: er.has_vps },
+                    { label: 'Tailscale Connected', ok: er.has_tailscale },
+                ];
+                const readinessScore = readinessItems.filter(r => r.ok).length;
+                const readinessPct = Math.round((readinessScore / readinessItems.length) * 100);
+
+                document.getElementById('client-detail-content').innerHTML = `
+                    <div class="metrics-row">
+                        <div class="metric-card"><div class="label">Tier</div><div class="value" style="font-size:20px;">${c.tier}</div></div>
+                        <div class="metric-card"><div class="label">Role</div><div class="value" style="font-size:20px;">${c.role || 'customer'}</div></div>
+                        <div class="metric-card"><div class="label">MFA</div><div class="value" style="font-size:20px;">${c.mfa_enabled ? '✅' : '❌'}</div></div>
+                        <div class="metric-card"><div class="label">Enterprise Readiness</div><div class="value">${readinessPct}%</div>
+                            <div class="readiness-bar"><div class="readiness-fill" style="width:${readinessPct}%;background:${readinessPct >= 80 ? '#00d4aa' : readinessPct >= 50 ? '#eab308' : '#ef4444'}"></div></div>
+                        </div>
                     </div>
-                    <div style="color:#94a3b8;font-size:13px;margin-bottom:8px;">${s.description}</div>
-                    <div style="color:#64748b;font-size:13px;">${s.clients} client${s.clients !== 1 ? 's' : ''}</div>
-                </div>
-            `).join('');
+                    <div class="section-header"><h2>Recent Tasks</h2></div>
+                    <div class="table-container"><table><thead><tr><th>ID</th><th>Task</th><th>Status</th><th>Agent</th><th>Created</th></tr></thead>
+                        <tbody>${(data.recent_tasks || []).map(t => `<tr><td>${t.id}</td><td>${t.display_name || t.task_type}</td><td><span class="mini-badge ${t.status === 'DONE' ? 'green' : 'yellow'}">${t.status}</span></td><td>${t.assigned_agent || '—'}</td><td>${t.created_at ? new Date(t.created_at).toLocaleDateString() : '—'}</td></tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:#64748b;padding:20px;">No tasks</td></tr>'}</tbody></table></div>
+                    <div class="section-header"><h2>Security Events</h2></div>
+                    <div class="table-container"><table><thead><tr><th>Type</th><th>Severity</th><th>IP</th><th>Date</th><th>Resolved</th></tr></thead>
+                        <tbody>${(data.security_events || []).map(e => `<tr><td>${e.event_type}</td><td><span class="mini-badge ${e.severity === 'critical' ? 'red' : e.severity === 'warning' ? 'yellow' : 'green'}">${e.severity}</span></td><td>${e.ip_address || '—'}</td><td>${e.created_at ? new Date(e.created_at).toLocaleDateString() : '—'}</td><td>${e.resolved ? '✅' : '❌'}</td></tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:#64748b;padding:20px;">No security events</td></tr>'}</tbody></table></div>
+                    <div class="section-header"><h2>Usage (30 days)</h2></div>
+                    <div class="table-container"><table><thead><tr><th>Metric</th><th>Calls</th><th>Total</th></tr></thead>
+                        <tbody>${(data.usage_metrics || []).map(u => `<tr><td>${u.metric_type}</td><td>${u.calls}</td><td>${u.total}</td></tr>`).join('') || '<tr><td colspan="3" style="text-align:center;color:#64748b;padding:20px;">No usage data</td></tr>'}</tbody></table></div>
+                `;
+                document.getElementById('client-detail-panel').scrollIntoView({ behavior: 'smooth' });
+            } catch (e) {
+                console.error('Client detail failed:', e);
+            }
         }
+        function closeDetail() { document.getElementById('client-detail-panel').style.display = 'none'; }
 
-        // Load alerts
-        async function loadAlerts() {
-            const alerts = [];
-            const container = document.getElementById('alerts-container');
-            document.getElementById('alerts-count').textContent = alerts.length;
-            if (alerts.length === 0) {
-                container.innerHTML = '<div style="text-align:center;color:#00d4aa;padding:40px;">✅ All systems healthy — no alerts</div>';
-                return;
+        // ── SECURITY ───────────────────────────────────
+        async function loadSecurity() {
+            if (!checkAuth()) return;
+            try {
+                const data = await apiGet('/api/fleet/security-events');
+                if (!data) return;
+                document.getElementById('sec-unresolved').textContent = (data.by_type || []).reduce((s, t) => s + (t.unresolved || 0), 0);
+                document.getElementById('sec-critical').textContent = data.critical_unresolved || 0;
+                document.getElementById('sec-failed-logins').textContent = ((data.by_type || []).find(t => t.event_type === 'failed_login')?.count) || 0;
+
+                // MFA enabled clients
+                const clientData = await apiGet('/api/fleet/clients');
+                if (clientData) {
+                    const mfaCount = clientData.clients.filter(c => c.mfa_enabled).length;
+                    document.getElementById('sec-mfa-clients').textContent = mfaCount + '/' + clientData.clients.length;
+                }
+
+                const events = data.events || [];
+                document.getElementById('sec-events-count').textContent = events.length + ' recent';
+                document.getElementById('sec-events-body').innerHTML = events.length ? events.map(e => `
+                    <tr>
+                        <td>${e.event_type}</td>
+                        <td><span class="mini-badge ${e.severity === 'critical' ? 'red' : e.severity === 'warning' ? 'yellow' : 'green'}">${e.severity}</span></td>
+                        <td>${e.customer_name || 'N/A'}</td>
+                        <td><code style="font-size:12px;color:#64748b;">${e.ip_address || '—'}</code></td>
+                        <td>${e.created_at ? new Date(e.created_at).toLocaleString() : '—'}</td>
+                        <td>${e.resolved ? '<span class="mini-badge green">✅ Resolved</span>' : '<span class="mini-badge red">❌ Open</span>'}</td>
+                    </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:40px;">No security events</td></tr>';
+
+                const byType = data.by_type || [];
+                document.getElementById('sec-by-type-body').innerHTML = byType.length ? byType.map(t => `
+                    <tr><td>${t.event_type}</td><td>${t.count}</td><td>${t.unresolved || 0}</td></tr>`).join('') : '<tr><td colspan="3" style="text-align:center;color:#64748b;padding:20px;">No events in 30 days</td></tr>';
+            } catch (e) {
+                console.error('Security failed:', e);
+                document.getElementById('sec-events-body').innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ef4444;padding:40px;">Failed to load</td></tr>';
             }
         }
 
-        // Initial load
-        if (ADMIN_PIN) {
-            hidePINModal();
-            loadOverview();
-        } else {
-            showPINModal();
-        }
-        loadServices();
+        // ── BACKUP ─────────────────────────────────────
+        async function loadBackup() {
+            if (!checkAuth()) return;
+            try {
+                const data = await apiGet('/api/fleet/backup-status');
+                if (!data) return;
+                document.getElementById('backup-rpo').textContent = data.rpo_display || '—';
+                document.getElementById('backup-rto').textContent = data.rto_display || '—';
+                document.getElementById('backup-last').textContent = data.last_backup_at ? new Date(data.last_backup_at).toLocaleString() : 'Never';
+                document.getElementById('backup-size').textContent = data.latest_verified ? (Math.round((data.latest_verified.file_size_bytes || 0) / 1024 / 1024) + ' MB') : '—';
+                const latest = data.latest_verified;
+                if (latest) {
+                    document.getElementById('backup-status').textContent = latest.status === 'verified' ? '✅' : '❌';
+                    document.getElementById('backup-verified').textContent = latest.verification_result ? 'All checks passed' : '—';
+                }
 
-        // Auto-refresh every 30s
+                const backups = data.recent_backups || [];
+                document.getElementById('backup-count').textContent = backups.length + ' records';
+                document.getElementById('backup-history-body').innerHTML = backups.length ? backups.map(b => `
+                    <tr>
+                        <td>${b.backup_type}</td>
+                        <td><span class="mini-badge ${b.status === 'verified' ? 'green' : b.status === 'failed' ? 'red' : 'yellow'}">${b.status}</span></td>
+                        <td>${b.file_size_bytes ? Math.round(b.file_size_bytes / 1024 / 1024) + ' MB' : '—'}</td>
+                        <td><code style="font-size:11px;color:#64748b;">${b.checksum_sha256 ? b.checksum_sha256.substring(0, 16) + '...' : '—'}</code></td>
+                        <td>${b.started_at ? new Date(b.started_at).toLocaleString() : '—'}</td>
+                        <td>${b.verified_at ? new Date(b.verified_at).toLocaleString() : '—'}</td>
+                        <td>${b.rpo_minutes || '—'}m / ${b.rto_minutes || '—'}m</td>
+                    </tr>`).join('') : '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">No backups recorded</td></tr>';
+            } catch (e) {
+                console.error('Backup failed:', e);
+                document.getElementById('backup-history-body').innerHTML = '<tr><td colspan="7" style="text-align:center;color:#ef4444;padding:40px;">Failed to load</td></tr>';
+            }
+        }
+
+        // ── COMPLIANCE ─────────────────────────────────
+        async function loadCompliance() {
+            if (!checkAuth()) return;
+            try {
+                const data = await apiGet('/api/fleet/compliance');
+                if (!data) return;
+                document.getElementById('comp-policies').textContent = data.policy_count || 0;
+                document.getElementById('comp-open-incidents').textContent = data.open_incidents || 0;
+                document.getElementById('comp-total-incidents').textContent = data.incident_count || 0;
+                document.getElementById('comp-policies-count').textContent = data.policy_count + ' active';
+
+                const policies = data.policies || [];
+                document.getElementById('comp-policies-body').innerHTML = policies.length ? policies.map(p => `
+                    <tr>
+                        <td><span class="mini-badge blue">${p.policy_type}</span></td>
+                        <td>${p.title}</td>
+                        <td>v${p.version}</td>
+                        <td>${p.effective_date ? new Date(p.effective_date).toLocaleDateString() : '—'}</td>
+                        <td>${p.review_date ? new Date(p.review_date).toLocaleDateString() : '—'}</td>
+                        <td>${p.approved_by || '—'}</td>
+                        <td><span class="mini-badge green">${p.status}</span></td>
+                    </tr>`).join('') : '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:40px;">No policies</td></tr>';
+
+                const incidents = data.incidents || [];
+                document.getElementById('comp-incidents-count').textContent = incidents.length + ' records';
+                document.getElementById('comp-incidents-body').innerHTML = incidents.length ? incidents.map(i => `
+                    <tr>
+                        <td><span class="mini-badge ${i.severity === 'P1' ? 'red' : i.severity === 'P2' ? 'yellow' : 'green'}">${i.severity}</span></td>
+                        <td>${i.incident_type}</td>
+                        <td>${i.title}</td>
+                        <td><span class="mini-badge ${i.status === 'resolved' ? 'green' : 'yellow'}">${i.status}</span></td>
+                        <td>${i.detected_at ? new Date(i.detected_at).toLocaleString() : '—'}</td>
+                        <td>${i.resolved_at ? new Date(i.resolved_at).toLocaleString() : '—'}</td>
+                        <td>${i.duration_minutes ? i.duration_minutes + 'min' : '—'}</td>
+                    </tr>`).join('') : '<tr><td colspan="7" style="text-align:center;color:#00d4aa;padding:40px;">✅ No incidents recorded</td></tr>';
+            } catch (e) {
+                console.error('Compliance failed:', e);
+            }
+        }
+
+        // ── AUDIT ──────────────────────────────────────
+        async function loadAudit() {
+            if (!checkAuth()) return;
+            try {
+                const data = await apiGet('/api/fleet/audit-trail?limit=50');
+                if (!data) return;
+                const logs = data.audit_logs || [];
+                document.getElementById('audit-count').textContent = logs.length + ' recent';
+                document.getElementById('audit-body').innerHTML = logs.length ? logs.map(l => `
+                    <tr>
+                        <td><span class="mini-badge ${l.action.includes('failed') ? 'red' : l.action.includes('success') ? 'green' : 'blue'}">${l.action}</span></td>
+                        <td>${l.customer_name || '—'}</td>
+                        <td>${l.entity_type || '—'} ${l.entity_id || ''}</td>
+                        <td><code style="font-size:11px;color:#64748b;">${l.ip_address || '—'}</code></td>
+                        <td>${l.created_at ? new Date(l.created_at).toLocaleString() : '—'}</td>
+                    </tr>`).join('') : '<tr><td colspan="5" style="text-align:center;color:#64748b;padding:40px;">No audit entries</td></tr>';
+            } catch (e) {
+                console.error('Audit failed:', e);
+            }
+        }
+
+        // ── ALERTS ─────────────────────────────────────
+        async function loadAlerts() {
+            if (!checkAuth()) return;
+            try {
+                const data = await apiGet('/api/fleet/alerts');
+                if (!data) return;
+                const alerts = data.alerts || [];
+                document.getElementById('alerts-count').textContent = alerts.length;
+                const container = document.getElementById('alerts-container');
+                if (alerts.length === 0) {
+                    container.innerHTML = '<div style="text-align:center;color:#00d4aa;padding:40px;">✅ All systems healthy — no alerts</div>';
+                } else {
+                    container.innerHTML = alerts.map(a => `
+                        <div class="alert-item alert-${a.severity === 'critical' ? 'critical' : a.severity === 'warning' ? 'warning' : 'info'}">
+                            <span class="alert-icon">${a.type === 'security' ? '🔒' : '⚠️'}</span>
+                            <div class="alert-content">
+                                <div class="alert-title">${a.title}</div>
+                                <div class="alert-desc">${a.description}</div>
+                                <div class="alert-time">${a.created_at ? new Date(a.created_at).toLocaleString() : '—'}</div>
+                            </div>
+                        </div>`).join('');
+                }
+            } catch (e) {
+                console.error('Alerts failed:', e);
+            }
+        }
+
+        // ── INIT ───────────────────────────────────────
+        if (ADMIN_PIN) { hidePINModal(); loadOverview(); } else { showPINModal(); }
         setInterval(() => {
             const activeTab = document.querySelector('.tab-panel.active').id;
             if (activeTab === 'overview') loadOverview();
         }, 30000);
-
         document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
     </script>
 </body>

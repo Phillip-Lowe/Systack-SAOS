@@ -211,6 +211,13 @@ done
 | Architecture Overview | **v5.0** | **v5.0** | 10 | Internal |
 | Mobile Access Guide | **v4.0** | **v4.0** | 7 | Client |
 | Enterprise Deployment | — | v1.0 | 4 | Enterprise/Private |
+| Dashboard Technical Spec | — | v1.0 | 8 | Internal |
+| iOS Cert Trust Plan | — | v1.0 | 6 | Internal |
+| Changelog (Jun 29) | — | v1.0 | 4 | Internal |
+| Customer Portal README | — | v2.0 | 4 | Internal |
+| Security Architecture | **v2.0** | **v2.0** | 14 | Enterprise/Private |
+| Compliance Trust Center | **v1.0** | **v1.0** | 4 | Public |
+| Backup & Recovery Guide | **v1.0** | **v1.0** | 5 | Internal |
 
 ### Dashboard Doc Routes (api.py)
 - `/download/quickstart-v7` → Quick Start v7.0
@@ -219,7 +226,14 @@ done
 - `/download/architecture-v5` → Architecture v5.0 (internal)
 - `/download/mobile-guide-v4` → Mobile Guide v4.0
 - `/download/enterprise-guide` → Enterprise Deployment v1.0
-- *(Backward compat: `/download/user-guide-v5` → User Guide v6.0, `/download/mobile-guide-v3` → Mobile Guide v4.0)*
+- `/download/technical-spec` → Dashboard Technical Spec
+- `/download/ios-cert-plan` → iOS Cert Trust Plan
+- `/download/changelog` → Changelog (Jun 29)
+- `/download/readme` → Customer Portal README v2
+- `/download/security-arch` → Security Architecture v2.0
+- `/download/trust-center` → Compliance Trust Center v1.0
+- `/download/backup-recovery` → Backup & Recovery Guide v1.0
+- *(Backward compat: `/download/user-guide-v5` → User Guide v6.0, `/download/mobile-guide-v3` → Mobile Guide v4.0, `/download/security-arch-v1` → Security Architecture v1.0)*
 
 ### Known Issues
 - pyppeteer Chromium often fails on macOS — script falls back to Brave Browser
