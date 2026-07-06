@@ -1957,6 +1957,7 @@ DOC_FILES = {
     'security-arch-v1': 'SAOS-Security-Architecture-v1.0.pdf',  # backward compat
     'trust-center': 'SAOS-Compliance-Trust-Center-v1.0.pdf',
     'backup-recovery': 'SAOS-Backup-Recovery-Guide-v1.0.pdf',
+    'deployment-checklist': 'SAOS-Production-Deployment-Checklist-v1.0.pdf',
 }
 
 @app.route('/download/<doc_id>')
