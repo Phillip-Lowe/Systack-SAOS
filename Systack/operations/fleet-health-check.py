@@ -12,6 +12,8 @@ from datetime import datetime
 SERVICES = [
     {"name": "Customer Portal", "url": "http://localhost:8768/api/portal/health", "critical": True},
     {"name": "Command Center", "url": "http://localhost:8770/api/health", "critical": True},
+    {"name": "Portal (Cloudflare)", "url": "https://portal.systack.net/api/portal/health", "critical": True},
+    {"name": "Command (Cloudflare)", "url": "https://command.systack.net/api/health", "critical": True},
     {"name": "Invoice Dashboard", "url": "http://localhost:8766/api/summary", "critical": False},
     {"name": "Webhook Bridge", "url": "http://localhost:8767/api/health", "critical": False},
     {"name": "Booking Dashboard", "url": "http://localhost:8772/api/health", "critical": False},
